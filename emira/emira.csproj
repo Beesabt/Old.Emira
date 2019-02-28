@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="BusinessLogicLayer\Login.cs" />
     <Compile Include="BusinessLogicLayer\LogInfo.cs" />
+    <Compile Include="BusinessLogicLayer\Settings.cs" />
     <Compile Include="BusinessLogicLayer\Texts.cs" />
     <Compile Include="DataAccessLayer\DatabaseHandler.cs" />
     <Compile Include="Form1.cs">
@@ -92,6 +93,12 @@
     <Compile Include="GUI\Dummy.Designer.cs">
       <DependentUpon>Dummy.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\EmailChange.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\EmailChange.designer.cs">
+      <DependentUpon>EmailChange.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\HomePage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,17 +111,74 @@
     <Compile Include="GUI\LoginPage.designer.cs">
       <DependentUpon>LoginPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\PasswordChange.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\PasswordChange.designer.cs">
+      <DependentUpon>PasswordChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\PersonalDataChangePage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\PersonalDataChangePage.designer.cs">
+      <DependentUpon>PersonalDataChangePage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\PersonalInformation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\PersonalInformation.designer.cs">
+      <DependentUpon>PersonalInformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\SettingsPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\SettingsPage.designer.cs">
+      <DependentUpon>SettingsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\TaskManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\TaskManager.designer.cs">
+      <DependentUpon>TaskManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\TaskModificationPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\TaskModificationPage.designer.cs">
+      <DependentUpon>TaskModificationPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueObjects\Person.cs" />
     <EmbeddedResource Include="GUI\CustomMsgBox.resx">
       <DependentUpon>CustomMsgBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\EmailChange.resx">
+      <DependentUpon>EmailChange.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\HomePage.resx">
       <DependentUpon>HomePage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\LoginPage.resx">
       <DependentUpon>LoginPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\PasswordChange.resx">
+      <DependentUpon>PasswordChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\PersonalDataChangePage.resx">
+      <DependentUpon>PersonalDataChangePage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\PersonalInformation.resx">
+      <DependentUpon>PersonalInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\SettingsPage.resx">
+      <DependentUpon>SettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\TaskManager.resx">
+      <DependentUpon>TaskManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\TaskModificationPage.resx">
+      <DependentUpon>TaskModificationPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

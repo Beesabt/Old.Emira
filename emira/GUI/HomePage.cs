@@ -43,8 +43,8 @@ namespace emira.GUI
         private void btnSettings_Click(object sender, EventArgs e)
         {
             Hide();
-            Dummy _dummy = new Dummy();
-            _dummy.Show();
+            SettingsPage _settingsPage = new SettingsPage();
+            _settingsPage.Show();
         }
 
         private void btnHolidays_Click(object sender, EventArgs e)
