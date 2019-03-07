@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text.RegularExpressions;
+using emira.HelperFunctions;
 
 namespace emira.BusinessLogicLayer
 {
@@ -203,7 +204,6 @@ namespace emira.BusinessLogicLayer
 
         public bool SetNewValues(string Key, string OldValue, Dictionary<string, string> data)
         {
-
             _DBHandler = new DatabaseHandler();
             _bIsSuccess = _DBHandler.SetNewValueDB(data, Key, OldValue, _iUpdatedRow);
             return _bIsSuccess;

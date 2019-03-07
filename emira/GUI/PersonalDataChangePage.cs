@@ -1,9 +1,10 @@
-﻿using emira.BusinessLogicLayer;
-using emira.ValueObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using emira.BusinessLogicLayer;
+using emira.ValueObjects;
+using emira.HelperFunctions;
 
 namespace emira.GUI
 {
@@ -15,6 +16,7 @@ namespace emira.GUI
         int _iValY;
         Settings _settings;
         Person _person;
+        CustomMsgBox _msgBox;
 
         public PersonalDataChangePage()
         {
@@ -48,8 +50,26 @@ namespace emira.GUI
                 tbPosition.Text = _person.Position;
 
                 // Holiday Related Information
-                if (!string.IsNullOrEmpty(_person.DateOfBirth.ToShortDateString())) { dtpDateOfBirth.Text = _person.DateOfBirth.ToShortDateString(); }
-                if (!string.IsNullOrEmpty(_person.DateOfStart.ToShortDateString())) { dtpDateOfStart.Text = _person.DateOfStart.ToShortDateString(); }
+                if (!string.IsNullOrEmpty(_person.DateOfBirth.ToShortDateString()))
+                {
+                    dtpDateOfBirth.Text = _person.DateOfBirth.ToShortDateString();
+                }
+                else
+                {
+                    dtpDateOfBirth.Text = DateTime.Today.AddYears(-100).ToShortDateString();
+                    dtpDateOfBirth.MaxDate = DateTime.Today.AddYears(-15);
+                }
+
+                if (!string.IsNullOrEmpty(_person.DateOfStart.ToShortDateString()))
+                {
+                    dtpDateOfStart.Text = _person.DateOfStart.ToShortDateString();
+                }
+                else
+                {
+                    dtpDateOfStart.Text = DateTime.Today.AddYears(-15).ToShortDateString();
+                    dtpDateOfStart.MaxDate = DateTime.Today;
+                }
+
                 nupNumberOfChildren.Value = _person.NumberOfChildren;
                 nupNumberOfDisabledChildren.Value = _person.NumberOfDisabledChildren;
 
@@ -76,36 +96,29 @@ namespace emira.GUI
             try
             {
                 _settings = new Settings();
+                _msgBox = new CustomMsgBox();
                 bool _isSuccess = false;
 
                 // Null check
                 if (string.IsNullOrEmpty(tbName.Text.Trim()))
-                {
-                    MessageBox.Show(lName.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                if (string.IsNullOrEmpty(tbRegisterNumber.Text.Trim()))
-                {
-                    MessageBox.Show(lRegisterNumber.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                {                   
+                     _msgBox.Show(lName.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
+                    tbName.Focus();
                     return;
                 }
 
                 if (string.IsNullOrEmpty(tbCompany.Text.Trim()))
                 {
-                    MessageBox.Show(lCompany.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _msgBox.Show(lCompany.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
+                    tbCompany.Focus();
                     return;
                 }
 
-                if (string.IsNullOrEmpty(tbCostCenter.Text.Trim()))
+                // Name contains number or special character (exception: '.' and '-')
+                if (!System.Text.RegularExpressions.Regex.IsMatch(tbName.Text, @"^[a-zA-Z\s\.-]*$"))
                 {
-                    MessageBox.Show(lCostCenter.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                if (string.IsNullOrEmpty(tbPosition.Text.Trim()))
-                {
-                    MessageBox.Show(lPosition.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _msgBox.Show(lRegisterNumber.Text.Trim(':') + Texts.ErrorMessages.TextField, Texts.Captions.TextField, CustomMsgBox.MsgBoxIcon.Error);
+                    tbName.Focus();
                     return;
                 }
 
@@ -113,22 +126,23 @@ namespace emira.GUI
                 if (!System.Text.RegularExpressions.Regex.IsMatch(tbRegisterNumber.Text, "^[0-9]*$"))
                 {
                     MessageBox.Show(lRegisterNumber.Text.Trim(':') + Texts.ErrorMessages.NumericField, Texts.Captions.NumericField, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    lRegisterNumber.Focus();
                     return;
                 }
 
                 // Employee can not be younger than 15 years old
-                DateTime _IsSixteenYearsOld = new DateTime(DateTime.Today.Date.Year - 16, DateTime.Today.Date.Month, DateTime.Today.Date.Day);
-                if (_IsSixteenYearsOld < dtpDateOfBirth.Value)
+                if (dtpDateOfBirth.Value < DateTime.Today.AddYears(-16))
                 {
                     MessageBox.Show(Texts.ErrorMessages.WorkNotAllowed15, Texts.Captions.BirthOfDateError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dtpDateOfBirth.Focus();
                     return;
                 }
 
                 // Employee can not be older than 100 years old
-                DateTime _IsOneHundredYearsOld = new DateTime(DateTime.Today.Date.Year - 100, DateTime.Today.Date.Month, DateTime.Today.Date.Day);
-                if (_IsOneHundredYearsOld >= dtpDateOfBirth.Value)
+                if (dtpDateOfBirth.Value <= DateTime.Today.AddYears(-100) )
                 {
                     MessageBox.Show(Texts.ErrorMessages.WorkNotAllowed100, Texts.Captions.BirthOfDateError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dtpDateOfBirth.Focus();
                     return;
                 }
 
@@ -136,6 +150,15 @@ namespace emira.GUI
                 if (dtpDateOfBirth.Value > dtpDateOfStart.Value)
                 {
                     MessageBox.Show(Texts.ErrorMessages.StartOfDateTooSmall, Texts.Captions.StartOfDateError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dtpDateOfStart.Focus();
+                    return;
+                }
+
+                // Start date can not be bigger than the actual date
+                if (dtpDateOfStart.Value > DateTime.Today)
+                {
+                    MessageBox.Show(Texts.ErrorMessages.StartOfDateBiggerThanTodayDate, Texts.Captions.StartOfDateError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dtpDateOfStart.Focus();
                     return;
                 }
 
@@ -161,7 +184,7 @@ namespace emira.GUI
                 }
 
                 Dictionary<string, string> data = new Dictionary<string, string>();
-                data.Add(Texts.PersonProperties.Name, tbName.Text);
+                data.Add(Texts.PersonProperties.Name, tbName.Text.TrimStart().TrimEnd());
                 if (rbMale.Checked)
                 {
                     data.Add(Texts.PersonProperties.Gender, "true");
@@ -252,6 +275,11 @@ namespace emira.GUI
             btnSave.Enabled = true;
         }
 
+        private void nupWorkingHours_ValueChanged(object sender, EventArgs e)
+        {
+            btnSave.Enabled = true;
+        }
+
         private void dtpDateOfBirth_ValueChanged(object sender, EventArgs e)
         {
             btnSave.Enabled = true;
@@ -325,6 +353,5 @@ namespace emira.GUI
             e.Graphics.DrawRectangle(new Pen(_Win10BlueBorderColor), borderRectangle);
             base.OnPaint(e);
         }
-
     }
 }

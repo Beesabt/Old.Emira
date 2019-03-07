@@ -1,4 +1,5 @@
 ﻿using emira.DataAccessLayer;
+using emira.HelperFunctions;
 
 namespace emira.BusinessLogicLayer
 {

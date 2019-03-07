@@ -228,6 +228,7 @@
             this.pSettings.Controls.Add(this.UCpersonalInformation);
             this.pSettings.Controls.Add(this.UCusernameChange);
             this.pSettings.Controls.Add(this.UCpasswordChange);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.pSettings.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pSettings.Location = new System.Drawing.Point(0, 115);
             this.pSettings.Name = "pSettings";

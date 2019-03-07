@@ -1,7 +1,7 @@
-﻿using emira.BusinessLogicLayer;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using emira.HelperFunctions;
 
 namespace emira.GUI
 {
@@ -22,7 +22,7 @@ namespace emira.GUI
             {
                 if (LogInfo.AnnoyingMessage)
                 {
-                    MessageBox.Show(BusinessLogicLayer.Texts.ErrorMessages.DefaultEmailOrPassword, BusinessLogicLayer.Texts.Captions.DefaultLoginParameters, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(Texts.ErrorMessages.DefaultEmailOrPassword, Texts.Captions.DefaultLoginParameters, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LogInfo.AnnoyingMessage = false;
                     return;
                 }

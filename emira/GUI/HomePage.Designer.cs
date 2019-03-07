@@ -121,10 +121,10 @@
             // 
             // btnStatistics
             // 
-            this.btnStatistics.BackColor = System.Drawing.Color.DarkOrange;
+            this.btnStatistics.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(126)))), ((int)(((byte)(0)))));
             this.btnStatistics.FlatAppearance.BorderSize = 0;
-            this.btnStatistics.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(126)))), ((int)(((byte)(0)))));
-            this.btnStatistics.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(126)))), ((int)(((byte)(0)))));
+            this.btnStatistics.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkOrange;
+            this.btnStatistics.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
             this.btnStatistics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStatistics.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStatistics.ForeColor = System.Drawing.Color.White;
@@ -181,10 +181,10 @@
             // 
             // btnWorkingHours
             // 
-            this.btnWorkingHours.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.btnWorkingHours.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(120)))), ((int)(((byte)(167)))));
             this.btnWorkingHours.FlatAppearance.BorderSize = 0;
-            this.btnWorkingHours.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(133)))), ((int)(((byte)(218)))));
-            this.btnWorkingHours.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(120)))), ((int)(((byte)(167)))));
+            this.btnWorkingHours.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.btnWorkingHours.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
             this.btnWorkingHours.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnWorkingHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnWorkingHours.ForeColor = System.Drawing.Color.White;
@@ -213,6 +213,7 @@
             this.Controls.Add(this.btnWorkingHours);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "HomePage";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Shown += new System.EventHandler(this.MainPage_Shown);
             this.pHeader.ResumeLayout(false);
             this.pHeader.PerformLayout();

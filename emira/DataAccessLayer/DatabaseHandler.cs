@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Windows.Forms;
-using emira.BusinessLogicLayer;
+using emira.HelperFunctions;
 
 namespace emira.DataAccessLayer
 {
@@ -26,29 +26,30 @@ namespace emira.DataAccessLayer
 
         private int ExecuteScalar(string command)
         {
-
             try
             {
                 SQLiteCommand cmd;
                 cmd = _sqlite.CreateCommand();
                 cmd.CommandText = command;
+                cmd.Connection = _sqlite;
                 _sqlite.Open();
                 var obj = cmd.ExecuteScalar();
                 if (obj == null) { return 0; }
-                _iResult = Convert.ToInt32(obj);
+                _iResult = Convert.ToInt32(obj);                               
             }
             catch (SQLiteException error)
             {
                 MessageBox.Show(error.Message);
+            }
+            finally
+            {
                 _sqlite.Close();
             }
-            _sqlite.Close();
             return _iResult;
         }
 
         private string GetString(string command)
         {
-
             try
             {
                 SQLiteCommand cmd;
@@ -68,9 +69,13 @@ namespace emira.DataAccessLayer
             catch (SQLiteException error)
             {
                 MessageBox.Show(error.Message);
+                
+                
+            }
+            finally
+            {
                 _sqlite.Close();
             }
-            _sqlite.Close();
             return _sResult;
         }
 
@@ -81,7 +86,6 @@ namespace emira.DataAccessLayer
 
             try
             {
-
                 if (data.Count >= 1)
                 {
                     foreach (KeyValuePair<string, string> val in data)
@@ -96,15 +100,16 @@ namespace emira.DataAccessLayer
                 cmd.CommandText = command;
                 _sqlite.Open();
                 updatedRows = cmd.ExecuteNonQuery();
-                _sqlite.Close();
+                if (updatedRows >= 0) returnCode = true;               
             }
             catch (SQLiteException error)
             {
                 MessageBox.Show(error.Message);
+            }
+            finally
+            {
                 _sqlite.Close();
             }
-
-            if (updatedRows >= 0) returnCode = true;
             return returnCode;
         }
 
@@ -118,34 +123,35 @@ namespace emira.DataAccessLayer
                 _sqlite.Open();
                 _dataAdapter = new SQLiteDataAdapter(cmd);
                 _dataTable = new DataTable();
-                _dataAdapter.Fill(_dataTable);
-                _sqlite.Close();
+                _dataAdapter.Fill(_dataTable);               
             }
             catch (SQLiteException error)
             {
                 MessageBox.Show(error.Message);
-                _sqlite.Close();
+            }
+            finally
+            {
+                _sqlite.Close();               
             }
             return _dataTable;
         }
-
 
         #region Login.cs
 
         public bool LoginValidationDB(string Email, string Password)
         {
             bool isSuccess = false;
-            string cmd = string.Format("SELECT COUNT({1}) FROM {0} WHERE {1}='{2}' and {3}='{4}'", Texts.DataTableNames.Person,
+            string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE {1}='{2}' and {3}='{4}'", Texts.DataTableNames.Person,
                 Texts.PersonProperties.Email, Email, Texts.PersonProperties.Password, Password);
-            if (ExecuteScalar(cmd) != 0) isSuccess = true;
+            if (ExecuteScalar(command) != 0) isSuccess = true;
             return isSuccess;
         }
 
         public int GetUserID(string Email, string Password)
         {
-            string cmd = string.Format("SELECT {0} FROM {1} WHERE {2}='{3}' AND {4}='{5}'", Texts.PersonProperties.ID, Texts.DataTableNames.Person,
+            string command = string.Format("SELECT {0} FROM {1} WHERE {2}='{3}' AND {4}='{5}'", Texts.PersonProperties.ID, Texts.DataTableNames.Person,
                  Texts.PersonProperties.Email, Email, Texts.PersonProperties.Password, Password);
-            _iResult = ExecuteScalar(cmd);
+            _iResult = ExecuteScalar(command);
             return _iResult;
         }
 
@@ -155,8 +161,8 @@ namespace emira.DataAccessLayer
 
         public string GetPassword(string Email)
         {
-            string cmd = string.Format("SELECT {0} FROM {1} WHERE {2}='{3}'", BusinessLogicLayer.Texts.PersonProperties.Password, BusinessLogicLayer.Texts.DataTableNames.Person,
-                 BusinessLogicLayer.Texts.PersonProperties.Email, Email);
+            string cmd = string.Format("SELECT {0} FROM {1} WHERE {2}='{3}'", Texts.PersonProperties.Password, Texts.DataTableNames.Person,
+                 Texts.PersonProperties.Email, Email);
             _sResult = GetString(cmd);
             return _sResult;
         }
@@ -168,8 +174,8 @@ namespace emira.DataAccessLayer
         public bool OldValueValidationDB(string Key, string Value)
         {
             bool isSuccess = false;
-            string cmd = string.Format("SELECT COUNT({1}) FROM {0} WHERE {1}='{2}'", Texts.DataTableNames.Person, Key, Value);
-            if (ExecuteScalar(cmd) != 0) isSuccess = true;
+            string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE {1}='{2}'", Texts.DataTableNames.Person, Key, Value);
+            if (ExecuteScalar(command) != 0) isSuccess = true;
             return isSuccess;
         }
 
