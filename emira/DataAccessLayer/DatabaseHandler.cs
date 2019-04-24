@@ -68,15 +68,34 @@ namespace emira.DataAccessLayer
             }
             catch (SQLiteException error)
             {
-                MessageBox.Show(error.Message);
-                
-                
+                MessageBox.Show(error.Message);                           
             }
             finally
             {
                 _sqlite.Close();
             }
             return _sResult;
+        }
+
+        private int ExecuteNonQuery(string command)
+        {
+            try
+            {
+                SQLiteCommand cmd;
+                cmd = _sqlite.CreateCommand();
+                cmd.CommandText = command;
+                _sqlite.Open();
+                _iResult = cmd.ExecuteNonQuery();
+            }
+            catch(SQLiteException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+            finally
+            {
+                _sqlite.Close();
+            }
+            return _iResult;         
         }
 
         private bool Update(string tableName, Dictionary<string, string> data, string where, ref int updatedRows)
@@ -191,11 +210,68 @@ namespace emira.DataAccessLayer
 
         public DataTable GetPersonalInformationDB()
         {
-            string cmd = string.Format("SELECT * FROM {0} WHERE {1}='{2}'", Texts.DataTableNames.Person, Texts.PersonProperties.ID,
+            string command = string.Format("SELECT * FROM {0} WHERE {1}='{2}'", Texts.DataTableNames.Person, Texts.PersonProperties.ID,
                 LogInfo.UserID);
             _dataTable = new DataTable();
-            _dataTable = GetDataTable(cmd);
+            _dataTable = GetDataTable(command);
             return _dataTable;
+        }
+
+        #endregion
+
+        #region TaskModification.cs 
+
+        public DataTable GetTask(string command)
+        {
+            //string cmd = string.Format("SELECT * FROM {0} ORDER BY {1}", Texts.DataTableNames.Task, Texts.TaskProperties.TaskGroupID);
+            _dataTable = new DataTable();
+            _dataTable = GetDataTable(command);
+            return _dataTable;
+        }
+
+        public int InsertNewTask(string taskGroupID, string taskGroup, string taskID, string taskName)
+        {
+            int result = 0;
+            string cmd = string.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}, {5}) VALUES ('{6}', '{7}', '{8}', '{9}', {10})",
+                Texts.DataTableNames.Task, Texts.TaskProperties.TaskGroupID, Texts.TaskProperties.TaskGroup,
+                Texts.TaskProperties.TaskID, Texts.TaskProperties.TaskName,
+                Texts.TaskProperties.Selected, taskGroupID, taskGroup, taskID, taskName, 0);
+            result = ExecuteNonQuery(cmd);
+            return result;
+        }
+
+        public bool ModifyTask(Dictionary<string, string> data, string Key, string Value, int updatedRow)
+        {
+            bool isSuccess = false;
+            isSuccess = Update(Texts.DataTableNames.Task, data, string.Format("{0}='{1}'", Key, Value), ref updatedRow);
+            return isSuccess;
+        }
+
+        public int DeleteRow(string taskGroupID, string taskGroup, string taskID, string taskName)
+        {
+            int result = 0;
+            string cmd = string.Format("DELETE FROM {0} WHERE {1}='{2}' AND {3}='{4}' AND {5}='{6}' AND {7}='{8}'",
+                Texts.DataTableNames.Task, Texts.TaskProperties.TaskGroupID, taskGroupID, Texts.TaskProperties.TaskGroup,
+                taskGroup, Texts.TaskProperties.TaskID, taskID, Texts.TaskProperties.TaskName, taskName);
+            result = ExecuteNonQuery(cmd);
+            return result;
+        }
+
+        public bool DoesExist(string ColumName, string Value)
+        {
+            bool exist = false;
+            string cmd = string.Format("SELECT COUNT({1}) FROM {0} WHERE {1}='{2}'", Texts.DataTableNames.Task, ColumName, Value);
+            if (ExecuteScalar(cmd) != 0) exist = true;
+            return exist;
+        }
+
+        public bool DoesItHave(string GroupIDColumn, string GroupID, string GroupNameColumn, string GroupName)
+        {
+            bool same = false;
+            string cmd = string.Format("SELECT COUNT({1}) FROM {0} WHERE {1}='{2}' AND {3}='{4}'", Texts.DataTableNames.Task,
+                GroupIDColumn, GroupID, GroupNameColumn, GroupName);
+            if (ExecuteScalar(cmd) != 0) same = true;
+            return same;
         }
 
         #endregion

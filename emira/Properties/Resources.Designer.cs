@@ -133,6 +133,26 @@ namespace emira.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap export_icon_white_26 {
+            get {
+                object obj = ResourceManager.GetObject("export_icon_white_26", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap import_icon_white_26 {
+            get {
+                object obj = ResourceManager.GetObject("import_icon_white_26", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap info_icon {
             get {
                 object obj = ResourceManager.GetObject("info_icon", resourceCulture);
@@ -166,6 +186,16 @@ namespace emira.Properties {
         internal static System.Drawing.Bitmap piechart_icon_white_100 {
             get {
                 object obj = ResourceManager.GetObject("piechart_icon_white_100", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap print_icon_white_26 {
+            get {
+                object obj = ResourceManager.GetObject("print_icon_white_26", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

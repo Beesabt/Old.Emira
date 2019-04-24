@@ -7,7 +7,8 @@ namespace emira.HelperFunctions
         public static class DataTableNames
         {
             public const string Person = "Person";
-            
+
+            public const string Task = "Task";          
         }
 
         public static class PersonProperties
@@ -42,13 +43,24 @@ namespace emira.HelperFunctions
             
             public const string NumberOfNewBornBabies = "NumberOfNewBornBabies";
             
-            public const string HealthDamage = "HealthDamage"; 
+            public const string HealthDamage = "HealthDamage";             
+        }
+
+        public static class TaskProperties
+        {
+            public static string TaskGroupID = "TaskGroupID";
+
+            public static string TaskGroup = "TaskGroup";
             
+            public static string TaskID = "TaskID";
+            
+            public static string TaskName = "TaskName";
+            
+            public static string Selected = "Selected";            
         }
 
         public static class ErrorMessages
         {
-
             public const string WrongEmailPassword = "E-mail or password is wrong.";
 
             public const string FieldIsEmpty = " field is empty.";
@@ -93,11 +105,18 @@ namespace emira.HelperFunctions
 
             public const string EmailIsNotValid = "The format of the e-mail address is not proper.";
 
+            public const string RequiredFieldIsEmpty = "Required field is empty.";
+
+            public static string CheckValuesOfFields = 
+                         "The value of the field is not proper.\r\n\r\nPossible reasons:\r\n" +
+                         "* The Group name already exists with another Group ID\r\n" +
+                         "* The Group ID already exists with another Group name\r\n" +
+                         "* The Task ID already exists\r\n" +
+                         "* The Task name alraedy exists with another Task ID";
         }
 
         public static class InformationMessages
         {
-
             public const string PasswordChanged = "Password changed successfully.";
 
 
@@ -109,12 +128,10 @@ namespace emira.HelperFunctions
             public const string EmailChanged = "E-mail changed successfully.";
 
             public const string PersonalInformationChanged = "Personal information changed successfully.";
-
         }
 
         public static class Captions
         {
-
             public const string LoginFailed = "Login failed";
 
             public const string EmptyRequiredField = "Empty reqired field";
@@ -147,6 +164,7 @@ namespace emira.HelperFunctions
 
             public const string SuccessfulChange = "Successful action";
 
+            public static string InvalidValue = "Invalid value";
         }
 
     }

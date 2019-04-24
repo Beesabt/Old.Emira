@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogicLayer\Login.cs" />
+    <Compile Include="BusinessLogicLayer\TaskModification.cs" />
     <Compile Include="HelperFunctions\LogInfo.cs" />
     <Compile Include="BusinessLogicLayer\Settings.cs" />
     <Compile Include="HelperFunctions\Texts.cs" />
@@ -217,10 +218,13 @@
     <Content Include="Resources\close_icon_white_26.png" />
     <Content Include="Resources\email_icon_white_50.png" />
     <Content Include="Resources\error_icon_color_48.png" />
+    <Content Include="Resources\export_icon_white_26.png" />
+    <Content Include="Resources\import_icon_white_26.png" />
     <Content Include="Resources\info_icon.png" />
     <Content Include="Resources\info_icon_white_50.png" />
     <Content Include="Resources\lock_icon_white_50.png" />
     <Content Include="Resources\piechart_icon_white_100.png" />
+    <Content Include="Resources\print_icon_white_26.png" />
     <Content Include="Resources\restore_icon_white_26.png" />
     <Content Include="Resources\settings_icon_white_50.png" />
     <Content Include="Resources\subtract_icon_white_26.png" />

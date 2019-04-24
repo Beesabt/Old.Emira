@@ -1,20 +1,37 @@
-﻿using KiRA.DAL;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 
-namespace KiRA.BusinessLogic
+using emira.DataAccessLayer;
+using emira.HelperFunctions;
+
+namespace emira.BusinessLogicLayer
 {
     class TaskModification
     {
+
         DatabaseHandler _DBHandler;
         DataTable _dataTable;
 
-        public DataTable GetTasks()
+        public DataTable GetTasks(bool withSelected = true)
         {
+            string command = string.Empty;
+            if (!withSelected)
+            {
+                command = string.Format("SELECT {1},{2},{3},{4} FROM {0} ORDER BY {1}", Texts.DataTableNames.Task,
+                            Texts.TaskProperties.TaskGroupID,
+                            Texts.TaskProperties.TaskGroup,
+                            Texts.TaskProperties.TaskID,
+                            Texts.TaskProperties.TaskName);
+            }
+            else
+            {
+                command = string.Format("SELECT * FROM {0} ORDER BY {1}", Texts.DataTableNames.Task, Texts.TaskProperties.TaskGroupID);
+            }
+            
             _DBHandler = new DatabaseHandler();
             _dataTable = new DataTable();
 
-            _dataTable = _DBHandler.GetTask();
+            _dataTable = _DBHandler.GetTask(command);
             return _dataTable;
         }
 
@@ -22,10 +39,10 @@ namespace KiRA.BusinessLogic
         {
             bool _isSuccess = false;
             int _result = 0;
-            string _taskGroupID = Text.TaskProperties.TaskGroupID;
-            string _taskGroup = Text.TaskProperties.TaskGroup;
-            string _taskID = Text.TaskProperties.TaskID;
-            string _taskName = Text.TaskProperties.TaskName;
+            string _taskGroupID = Texts.TaskProperties.TaskGroupID;
+            string _taskGroup = Texts.TaskProperties.TaskGroup;
+            string _taskID = Texts.TaskProperties.TaskID;
+            string _taskName = Texts.TaskProperties.TaskName;
             bool existGroupID = false;
             bool existGroupName = false;
             bool existTaskID = false;
@@ -54,7 +71,7 @@ namespace KiRA.BusinessLogic
                 if (_result > 0) _isSuccess = true;
                 return _isSuccess;
             }
-            
+
             return _isSuccess;
         }
 
@@ -74,11 +91,11 @@ namespace KiRA.BusinessLogic
             int updatedRow = 0;
             _DBHandler = new DatabaseHandler();
             Dictionary<string, string> data = new Dictionary<string, string>();
-            data.Add(Text.TaskProperties.TaskGroupID, taskGroupID);
-            data.Add(Text.TaskProperties.TaskGroup, taskGroup);
-            data.Add(Text.TaskProperties.TaskID, taskID);
-            data.Add(Text.TaskProperties.TaskName, taskName);
-            isSuccess = _DBHandler.ModifyTask(data, Text.TaskProperties.TaskID, oldTaskID, updatedRow);
+            data.Add(Texts.TaskProperties.TaskGroupID, taskGroupID);
+            data.Add(Texts.TaskProperties.TaskGroup, taskGroup);
+            data.Add(Texts.TaskProperties.TaskID, taskID);
+            data.Add(Texts.TaskProperties.TaskName, taskName);
+            isSuccess = _DBHandler.ModifyTask(data, Texts.TaskProperties.TaskID, oldTaskID, updatedRow);
             return isSuccess;
         }
 
@@ -91,5 +108,6 @@ namespace KiRA.BusinessLogic
             if (result > 0) isSuccess = true;
             return isSuccess;
         }
+
     }
 }
