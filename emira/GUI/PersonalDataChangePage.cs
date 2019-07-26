@@ -131,7 +131,7 @@ namespace emira.GUI
                 }
 
                 // Employee can not be younger than 15 years old
-                if (dtpDateOfBirth.Value < DateTime.Today.AddYears(-16))
+                if (dtpDateOfBirth.Value > DateTime.Today.AddYears(-16))
                 {
                     MessageBox.Show(Texts.ErrorMessages.WorkNotAllowed15, Texts.Captions.BirthOfDateError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     dtpDateOfBirth.Focus();

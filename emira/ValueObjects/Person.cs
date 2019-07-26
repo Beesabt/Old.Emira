@@ -127,6 +127,14 @@ namespace emira.ValueObjects
             set { _NumberOfNewBornBabies = value; }
         }
 
+        private bool _HealthDamage;
+
+        public bool HealthDamage
+        {
+            get { return _HealthDamage; }
+            set { _HealthDamage = value; }
+        }
+
         #endregion
 
         /// <summary>
@@ -147,9 +155,10 @@ namespace emira.ValueObjects
         /// <param name="NumberOfChildren">Number of the user's children.</param>
         /// <param name="NumberOfDisabledChildren">Number of the user's disabled children.</param>
         /// <param name="NumberOfNewBornBabies">If the user is male then he gets extra holidays after new born babies.</param>
+        /// <param name="HealthDamage">If the user has 50% health damage then he gets extra holidays.</param>
         public Person(int ID, string Email, string Password, string Name, bool Gender, int RegisterNumber, string Company,
             string CostCenter, string Position, int WorkingHours, DateTime DateOfStart, DateTime DateOfBirth,
-            int NumberOfChildren, int NumberOfDisabledChildren, int NumberOfNewBornBabies)
+            int NumberOfChildren, int NumberOfDisabledChildren, int NumberOfNewBornBabies, bool HealthDamage)
         {
             _ID = ID;
             _Email = Email;
@@ -166,6 +175,7 @@ namespace emira.ValueObjects
             _NumberOfChildren = NumberOfChildren;
             _NumberOfDisabledChildren = NumberOfDisabledChildren;
             _NumberOfNewBornBabies = NumberOfNewBornBabies;
+            _HealthDamage = HealthDamage;
         }
 
         /// <summary>
