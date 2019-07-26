@@ -216,23 +216,6 @@ namespace emira.GUI
             }
         }
 
-        private void rbFemale_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (rbFemale.Checked)
-                {
-                    lNumberOfNewBornBabies.Hide();
-                    nupNumberOfNewBornBabies.Hide();
-                }
-                btnSave.Enabled = true;
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void cbNoChild_CheckedChanged(object sender, EventArgs e)
         {
             try
