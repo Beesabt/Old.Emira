@@ -49,9 +49,14 @@
             this.lCostCenter = new System.Windows.Forms.Label();
             this.lCompany = new System.Windows.Forms.Label();
             this.gbHolidayRelatedInformation = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.rbYesNo = new System.Windows.Forms.RadioButton();
-            this.rbYesChild = new System.Windows.Forms.RadioButton();
+            this.cbYesHealthDamage = new System.Windows.Forms.CheckBox();
+            this.cbNoHealthDamage = new System.Windows.Forms.CheckBox();
+            this.cbYesDisabledChild = new System.Windows.Forms.CheckBox();
+            this.cbNoDisabledChild = new System.Windows.Forms.CheckBox();
+            this.cbYesChild = new System.Windows.Forms.CheckBox();
+            this.cbNoChild = new System.Windows.Forms.CheckBox();
+            this.lHealthDamage = new System.Windows.Forms.Label();
+            this.lDoYouHaveDiasabledChild = new System.Windows.Forms.Label();
             this.lDoYouHaveChild = new System.Windows.Forms.Label();
             this.nupNumberOfNewBornBabies = new System.Windows.Forms.NumericUpDown();
             this.lNumberOfNewBornBabies = new System.Windows.Forms.Label();
@@ -65,11 +70,6 @@
             this.lDateOfBirth = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.lHealthDamage = new System.Windows.Forms.Label();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.pHeader.SuspendLayout();
             this.gbPersonalInformation.SuspendLayout();
             this.gbCompanyRelatedInformation.SuspendLayout();
@@ -160,7 +160,6 @@
             this.rbMale.TabStop = true;
             this.rbMale.Text = "Male";
             this.rbMale.UseVisualStyleBackColor = true;
-            this.rbMale.CheckedChanged += new System.EventHandler(this.rbMale_CheckedChanged);
             // 
             // lGender
             // 
@@ -230,7 +229,7 @@
             this.nupWorkingHours.Size = new System.Drawing.Size(70, 27);
             this.nupWorkingHours.TabIndex = 28;
             this.nupWorkingHours.Value = new decimal(new int[] {
-            4,
+            8,
             0,
             0,
             0});
@@ -328,14 +327,14 @@
             // 
             // gbHolidayRelatedInformation
             // 
-            this.gbHolidayRelatedInformation.Controls.Add(this.radioButton4);
-            this.gbHolidayRelatedInformation.Controls.Add(this.radioButton3);
+            this.gbHolidayRelatedInformation.Controls.Add(this.cbYesHealthDamage);
+            this.gbHolidayRelatedInformation.Controls.Add(this.cbNoHealthDamage);
+            this.gbHolidayRelatedInformation.Controls.Add(this.cbYesDisabledChild);
+            this.gbHolidayRelatedInformation.Controls.Add(this.cbNoDisabledChild);
+            this.gbHolidayRelatedInformation.Controls.Add(this.cbYesChild);
+            this.gbHolidayRelatedInformation.Controls.Add(this.cbNoChild);
             this.gbHolidayRelatedInformation.Controls.Add(this.lHealthDamage);
-            this.gbHolidayRelatedInformation.Controls.Add(this.radioButton2);
-            this.gbHolidayRelatedInformation.Controls.Add(this.radioButton1);
-            this.gbHolidayRelatedInformation.Controls.Add(this.label1);
-            this.gbHolidayRelatedInformation.Controls.Add(this.rbYesNo);
-            this.gbHolidayRelatedInformation.Controls.Add(this.rbYesChild);
+            this.gbHolidayRelatedInformation.Controls.Add(this.lDoYouHaveDiasabledChild);
             this.gbHolidayRelatedInformation.Controls.Add(this.lDoYouHaveChild);
             this.gbHolidayRelatedInformation.Controls.Add(this.nupNumberOfNewBornBabies);
             this.gbHolidayRelatedInformation.Controls.Add(this.lNumberOfNewBornBabies);
@@ -355,39 +354,94 @@
             this.gbHolidayRelatedInformation.TabStop = false;
             this.gbHolidayRelatedInformation.Text = "Holiday Related Information";
             // 
-            // label1
+            // cbYesHealthDamage
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(28, 164);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(196, 20);
-            this.label1.TabIndex = 31;
-            this.label1.Text = "Do you have disabled child?";
+            this.cbYesHealthDamage.AutoSize = true;
+            this.cbYesHealthDamage.Location = new System.Drawing.Point(390, 283);
+            this.cbYesHealthDamage.Name = "cbYesHealthDamage";
+            this.cbYesHealthDamage.Size = new System.Drawing.Size(52, 22);
+            this.cbYesHealthDamage.TabIndex = 42;
+            this.cbYesHealthDamage.Text = "Yes";
+            this.cbYesHealthDamage.UseVisualStyleBackColor = true;
+            this.cbYesHealthDamage.CheckedChanged += new System.EventHandler(this.cbYesHealthDamage_CheckedChanged);
             // 
-            // rbYesNo
+            // cbNoHealthDamage
             // 
-            this.rbYesNo.AutoSize = true;
-            this.rbYesNo.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbYesNo.Location = new System.Drawing.Point(222, 86);
-            this.rbYesNo.Name = "rbYesNo";
-            this.rbYesNo.Size = new System.Drawing.Size(47, 24);
-            this.rbYesNo.TabIndex = 30;
-            this.rbYesNo.TabStop = true;
-            this.rbYesNo.Text = "No";
-            this.rbYesNo.UseVisualStyleBackColor = true;
+            this.cbNoHealthDamage.AutoSize = true;
+            this.cbNoHealthDamage.Location = new System.Drawing.Point(310, 283);
+            this.cbNoHealthDamage.Name = "cbNoHealthDamage";
+            this.cbNoHealthDamage.Size = new System.Drawing.Size(47, 22);
+            this.cbNoHealthDamage.TabIndex = 41;
+            this.cbNoHealthDamage.Text = "No";
+            this.cbNoHealthDamage.UseVisualStyleBackColor = true;
+            this.cbNoHealthDamage.CheckedChanged += new System.EventHandler(this.cbNoHealthDamage_CheckedChanged);
             // 
-            // rbYesChild
+            // cbYesDisabledChild
             // 
-            this.rbYesChild.AutoSize = true;
-            this.rbYesChild.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbYesChild.Location = new System.Drawing.Point(292, 86);
-            this.rbYesChild.Name = "rbYesChild";
-            this.rbYesChild.Size = new System.Drawing.Size(48, 24);
-            this.rbYesChild.TabIndex = 29;
-            this.rbYesChild.TabStop = true;
-            this.rbYesChild.Text = "Yes";
-            this.rbYesChild.UseVisualStyleBackColor = true;
+            this.cbYesDisabledChild.AutoSize = true;
+            this.cbYesDisabledChild.Location = new System.Drawing.Point(390, 164);
+            this.cbYesDisabledChild.Name = "cbYesDisabledChild";
+            this.cbYesDisabledChild.Size = new System.Drawing.Size(52, 22);
+            this.cbYesDisabledChild.TabIndex = 40;
+            this.cbYesDisabledChild.Text = "Yes";
+            this.cbYesDisabledChild.UseVisualStyleBackColor = true;
+            this.cbYesDisabledChild.Visible = false;
+            this.cbYesDisabledChild.CheckedChanged += new System.EventHandler(this.cbYesDisabledChild_CheckedChanged);
+            // 
+            // cbNoDisabledChild
+            // 
+            this.cbNoDisabledChild.AutoSize = true;
+            this.cbNoDisabledChild.Location = new System.Drawing.Point(310, 164);
+            this.cbNoDisabledChild.Name = "cbNoDisabledChild";
+            this.cbNoDisabledChild.Size = new System.Drawing.Size(47, 22);
+            this.cbNoDisabledChild.TabIndex = 39;
+            this.cbNoDisabledChild.Text = "No";
+            this.cbNoDisabledChild.UseVisualStyleBackColor = true;
+            this.cbNoDisabledChild.Visible = false;
+            this.cbNoDisabledChild.CheckedChanged += new System.EventHandler(this.cbNoDisabledChild_CheckedChanged);
+            // 
+            // cbYesChild
+            // 
+            this.cbYesChild.AutoSize = true;
+            this.cbYesChild.Location = new System.Drawing.Point(390, 86);
+            this.cbYesChild.Name = "cbYesChild";
+            this.cbYesChild.Size = new System.Drawing.Size(52, 22);
+            this.cbYesChild.TabIndex = 38;
+            this.cbYesChild.Text = "Yes";
+            this.cbYesChild.UseVisualStyleBackColor = true;
+            this.cbYesChild.CheckedChanged += new System.EventHandler(this.cbYesChild_CheckedChanged);
+            // 
+            // cbNoChild
+            // 
+            this.cbNoChild.AutoSize = true;
+            this.cbNoChild.Location = new System.Drawing.Point(310, 86);
+            this.cbNoChild.Name = "cbNoChild";
+            this.cbNoChild.Size = new System.Drawing.Size(47, 22);
+            this.cbNoChild.TabIndex = 37;
+            this.cbNoChild.Text = "No";
+            this.cbNoChild.UseVisualStyleBackColor = true;
+            this.cbNoChild.CheckedChanged += new System.EventHandler(this.cbNoChild_CheckedChanged);
+            // 
+            // lHealthDamage
+            // 
+            this.lHealthDamage.AutoSize = true;
+            this.lHealthDamage.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lHealthDamage.Location = new System.Drawing.Point(28, 285);
+            this.lHealthDamage.Name = "lHealthDamage";
+            this.lHealthDamage.Size = new System.Drawing.Size(235, 20);
+            this.lHealthDamage.TabIndex = 34;
+            this.lHealthDamage.Text = "Do you have 50% health damage?";
+            // 
+            // lDoYouHaveDiasabledChild
+            // 
+            this.lDoYouHaveDiasabledChild.AutoSize = true;
+            this.lDoYouHaveDiasabledChild.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lDoYouHaveDiasabledChild.Location = new System.Drawing.Point(28, 164);
+            this.lDoYouHaveDiasabledChild.Name = "lDoYouHaveDiasabledChild";
+            this.lDoYouHaveDiasabledChild.Size = new System.Drawing.Size(196, 20);
+            this.lDoYouHaveDiasabledChild.TabIndex = 31;
+            this.lDoYouHaveDiasabledChild.Text = "Do you have disabled child?";
+            this.lDoYouHaveDiasabledChild.Visible = false;
             // 
             // lDoYouHaveChild
             // 
@@ -402,7 +456,7 @@
             // nupNumberOfNewBornBabies
             // 
             this.nupNumberOfNewBornBabies.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupNumberOfNewBornBabies.Location = new System.Drawing.Point(227, 241);
+            this.nupNumberOfNewBornBabies.Location = new System.Drawing.Point(310, 241);
             this.nupNumberOfNewBornBabies.Maximum = new decimal(new int[] {
             10,
             0,
@@ -411,6 +465,12 @@
             this.nupNumberOfNewBornBabies.Name = "nupNumberOfNewBornBabies";
             this.nupNumberOfNewBornBabies.Size = new System.Drawing.Size(70, 27);
             this.nupNumberOfNewBornBabies.TabIndex = 27;
+            this.nupNumberOfNewBornBabies.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nupNumberOfNewBornBabies.Visible = false;
             this.nupNumberOfNewBornBabies.ValueChanged += new System.EventHandler(this.nupNumberOfNewBornBabies_ValueChanged);
             // 
             // lNumberOfNewBornBabies
@@ -422,11 +482,12 @@
             this.lNumberOfNewBornBabies.Size = new System.Drawing.Size(198, 20);
             this.lNumberOfNewBornBabies.TabIndex = 26;
             this.lNumberOfNewBornBabies.Text = "Number of new born babies:";
+            this.lNumberOfNewBornBabies.Visible = false;
             // 
             // nupNumberOfDisabledChildren
             // 
             this.nupNumberOfDisabledChildren.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupNumberOfDisabledChildren.Location = new System.Drawing.Point(298, 200);
+            this.nupNumberOfDisabledChildren.Location = new System.Drawing.Point(310, 200);
             this.nupNumberOfDisabledChildren.Maximum = new decimal(new int[] {
             30,
             0,
@@ -435,12 +496,18 @@
             this.nupNumberOfDisabledChildren.Name = "nupNumberOfDisabledChildren";
             this.nupNumberOfDisabledChildren.Size = new System.Drawing.Size(70, 27);
             this.nupNumberOfDisabledChildren.TabIndex = 25;
+            this.nupNumberOfDisabledChildren.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nupNumberOfDisabledChildren.Visible = false;
             this.nupNumberOfDisabledChildren.ValueChanged += new System.EventHandler(this.nupNumberOfDisabledChildren_ValueChanged);
             // 
             // nupNumberOfChildren
             // 
             this.nupNumberOfChildren.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupNumberOfChildren.Location = new System.Drawing.Point(237, 124);
+            this.nupNumberOfChildren.Location = new System.Drawing.Point(310, 124);
             this.nupNumberOfChildren.Maximum = new decimal(new int[] {
             30,
             0,
@@ -449,6 +516,12 @@
             this.nupNumberOfChildren.Name = "nupNumberOfChildren";
             this.nupNumberOfChildren.Size = new System.Drawing.Size(70, 27);
             this.nupNumberOfChildren.TabIndex = 24;
+            this.nupNumberOfChildren.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nupNumberOfChildren.Visible = false;
             this.nupNumberOfChildren.ValueChanged += new System.EventHandler(this.nupNumberOfChildren_ValueChanged);
             // 
             // dtpDateOfStart
@@ -480,6 +553,7 @@
             this.lNumberOfDisabledChildren.Size = new System.Drawing.Size(264, 20);
             this.lNumberOfDisabledChildren.TabIndex = 18;
             this.lNumberOfDisabledChildren.Text = "Number of disabled children under 16:";
+            this.lNumberOfDisabledChildren.Visible = false;
             // 
             // lNumberOfChildren
             // 
@@ -490,6 +564,7 @@
             this.lNumberOfChildren.Size = new System.Drawing.Size(203, 20);
             this.lNumberOfChildren.TabIndex = 17;
             this.lNumberOfChildren.Text = "Number of children under 16:";
+            this.lNumberOfChildren.Visible = false;
             // 
             // lDateOfStart
             // 
@@ -544,64 +619,6 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton1.Location = new System.Drawing.Point(260, 162);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(47, 24);
-            this.radioButton1.TabIndex = 32;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "No";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton2.Location = new System.Drawing.Point(313, 162);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(48, 24);
-            this.radioButton2.TabIndex = 33;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Yes";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // lHealthDamage
-            // 
-            this.lHealthDamage.AutoSize = true;
-            this.lHealthDamage.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lHealthDamage.Location = new System.Drawing.Point(28, 285);
-            this.lHealthDamage.Name = "lHealthDamage";
-            this.lHealthDamage.Size = new System.Drawing.Size(235, 20);
-            this.lHealthDamage.TabIndex = 34;
-            this.lHealthDamage.Text = "Do you have 50% health damage?";
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton3.Location = new System.Drawing.Point(293, 283);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(47, 24);
-            this.radioButton3.TabIndex = 35;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "No";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            // 
-            // radioButton4
-            // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton4.Location = new System.Drawing.Point(353, 283);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(48, 24);
-            this.radioButton4.TabIndex = 36;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "Yes";
-            this.radioButton4.UseVisualStyleBackColor = true;
             // 
             // PersonalDataChangePage
             // 
@@ -673,14 +690,14 @@
         private System.Windows.Forms.Label lNumberOfNewBornBabies;
         private System.Windows.Forms.NumericUpDown nupWorkingHours;
         private System.Windows.Forms.Label lWorkingHours;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RadioButton rbYesNo;
-        private System.Windows.Forms.RadioButton rbYesChild;
+        private System.Windows.Forms.Label lDoYouHaveDiasabledChild;
         private System.Windows.Forms.Label lDoYouHaveChild;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.Label lHealthDamage;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.CheckBox cbYesHealthDamage;
+        private System.Windows.Forms.CheckBox cbNoHealthDamage;
+        private System.Windows.Forms.CheckBox cbYesDisabledChild;
+        private System.Windows.Forms.CheckBox cbNoDisabledChild;
+        private System.Windows.Forms.CheckBox cbYesChild;
+        private System.Windows.Forms.CheckBox cbNoChild;
     }
 }

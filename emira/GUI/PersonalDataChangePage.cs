@@ -101,8 +101,8 @@ namespace emira.GUI
 
                 // Null check
                 if (string.IsNullOrEmpty(tbName.Text.Trim()))
-                {                   
-                     _msgBox.Show(lName.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
+                {
+                    _msgBox.Show(lName.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     tbName.Focus();
                     return;
                 }
@@ -139,7 +139,7 @@ namespace emira.GUI
                 }
 
                 // Employee can not be older than 100 years old
-                if (dtpDateOfBirth.Value <= DateTime.Today.AddYears(-100) )
+                if (dtpDateOfBirth.Value <= DateTime.Today.AddYears(-100))
                 {
                     MessageBox.Show(Texts.ErrorMessages.WorkNotAllowed100, Texts.Captions.BirthOfDateError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     dtpDateOfBirth.Focus();
@@ -202,30 +202,13 @@ namespace emira.GUI
                 data.Add(Texts.PersonProperties.NumberOfChildren, nupNumberOfChildren.Value.ToString());
                 data.Add(Texts.PersonProperties.NumberOfDisabledChildren, nupNumberOfDisabledChildren.Value.ToString());
                 data.Add(Texts.PersonProperties.NumberOfNewBornBabies, nupNumberOfNewBornBabies.Value.ToString());
-               
+
                 _isSuccess = _settings.SetNewValues(Texts.PersonProperties.ID, LogInfo.UserID.ToString(), data);
                 if (_isSuccess)
                 {
                     MessageBox.Show(Texts.InformationMessages.PersonalInformationChanged, Texts.Captions.SuccessfulChange, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Close();
                 }
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void rbMale_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (rbMale.Checked)
-                {
-                    lNumberOfNewBornBabies.Show();
-                    nupNumberOfNewBornBabies.Show();
-                }
-                btnSave.Enabled = true;
             }
             catch (Exception error)
             {
@@ -242,6 +225,147 @@ namespace emira.GUI
                     lNumberOfNewBornBabies.Hide();
                     nupNumberOfNewBornBabies.Hide();
                 }
+                btnSave.Enabled = true;
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void cbNoChild_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cbNoChild.Checked)
+                {
+                    cbYesChild.Checked = false;
+                    lNumberOfChildren.Hide();
+                    nupNumberOfChildren.Hide();
+                    lDoYouHaveDiasabledChild.Hide();
+                    cbNoDisabledChild.Hide();
+                    cbYesDisabledChild.Hide();
+                    lNumberOfDisabledChildren.Hide();
+                    nupNumberOfDisabledChildren.Hide();
+                    lNumberOfNewBornBabies.Hide();
+                    nupNumberOfNewBornBabies.Hide();
+                }
+                btnSave.Enabled = true;
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void cbYesChild_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cbYesChild.Checked)
+                {
+                    cbNoChild.Checked = false;
+                    lNumberOfChildren.Show();
+                    nupNumberOfChildren.Show();
+                    lDoYouHaveDiasabledChild.Show();
+                    cbNoDisabledChild.Show();
+                    cbYesDisabledChild.Show();
+
+                    if (cbYesDisabledChild.Checked)
+                    {
+                        lNumberOfDisabledChildren.Show();
+                        nupNumberOfDisabledChildren.Show();
+                    }
+                    else
+                    {
+                        lNumberOfDisabledChildren.Hide();
+                        nupNumberOfDisabledChildren.Hide();
+                    }
+
+                    if (rbFemale.Checked)
+                    {
+                        lNumberOfNewBornBabies.Hide();
+                        nupNumberOfNewBornBabies.Hide();
+                    }
+                    else
+                    {
+                        lNumberOfNewBornBabies.Show();
+                        nupNumberOfNewBornBabies.Show();
+                    }
+                }
+
+                btnSave.Enabled = true;
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void cbYesDisabledChild_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cbYesDisabledChild.Checked)
+                {
+                    cbNoDisabledChild.Checked = false;
+                    lNumberOfDisabledChildren.Show();
+                    nupNumberOfDisabledChildren.Show();
+                }
+
+                btnSave.Enabled = true;
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void cbNoDisabledChild_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cbNoDisabledChild.Checked)
+                {
+                    cbYesDisabledChild.Checked = false;
+                    lNumberOfDisabledChildren.Hide();
+                    nupNumberOfDisabledChildren.Hide();
+                }
+
+                btnSave.Enabled = true;
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void cbYesHealthDamage_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cbYesHealthDamage.Checked)
+                {
+                    cbNoHealthDamage.Checked = false;
+                }
+
+                btnSave.Enabled = true;
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void cbNoHealthDamage_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cbNoHealthDamage.Checked)
+                {
+                    cbYesHealthDamage.Checked = false;
+                }
+
                 btnSave.Enabled = true;
             }
             catch (Exception error)
@@ -301,16 +425,6 @@ namespace emira.GUI
         }
 
         private void nupNumberOfNewBornBabies_ValueChanged(object sender, EventArgs e)
-        {
-            btnSave.Enabled = true;
-        }
-
-        private void rbYes_CheckedChanged(object sender, EventArgs e)
-        {
-            btnSave.Enabled = true;
-        }
-
-        private void rbNo_CheckedChanged(object sender, EventArgs e)
         {
             btnSave.Enabled = true;
         }
