@@ -66,10 +66,6 @@ namespace emira.BusinessLogicLayer
                 {
                     _actualPerson.Gender = Convert.ToBoolean(person[Texts.PersonProperties.Gender]);
                 }
-                else
-                {
-                    _actualPerson.Gender = true;
-                }
                 #endregion
                 #region RegisterNumber
                 if (!DBNull.Value.Equals(person[Texts.PersonProperties.RegisterNumber]))
@@ -169,6 +165,12 @@ namespace emira.BusinessLogicLayer
                 else
                 {
                     _actualPerson.NumberOfNewBornBabies = 0;
+                }
+                #endregion
+                #region HealthDamage
+                if (!DBNull.Value.Equals(person[Texts.PersonProperties.HealthDamage]))
+                {
+                    _actualPerson.HealthDamage = Convert.ToBoolean(person[Texts.PersonProperties.HealthDamage]);
                 }
                 #endregion
             }

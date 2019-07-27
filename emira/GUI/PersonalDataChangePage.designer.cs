@@ -153,6 +153,7 @@
             this.rbFemale.TabStop = true;
             this.rbFemale.Text = "Female";
             this.rbFemale.UseVisualStyleBackColor = true;
+            this.rbFemale.CheckedChanged += new System.EventHandler(this.rbFemale_CheckedChanged);
             // 
             // rbMale
             // 
@@ -166,6 +167,7 @@
             this.rbMale.TabStop = true;
             this.rbMale.Text = "Male";
             this.rbMale.UseVisualStyleBackColor = true;
+            this.rbMale.CheckedChanged += new System.EventHandler(this.rbMale_CheckedChanged);
             // 
             // lGender
             // 
@@ -498,11 +500,6 @@
             this.nupNumberOfNewBornBabies.Name = "nupNumberOfNewBornBabies";
             this.nupNumberOfNewBornBabies.Size = new System.Drawing.Size(93, 32);
             this.nupNumberOfNewBornBabies.TabIndex = 27;
-            this.nupNumberOfNewBornBabies.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.nupNumberOfNewBornBabies.Visible = false;
             this.nupNumberOfNewBornBabies.ValueChanged += new System.EventHandler(this.nupNumberOfNewBornBabies_ValueChanged);
             // 
@@ -531,11 +528,6 @@
             this.nupNumberOfDisabledChildren.Name = "nupNumberOfDisabledChildren";
             this.nupNumberOfDisabledChildren.Size = new System.Drawing.Size(93, 32);
             this.nupNumberOfDisabledChildren.TabIndex = 25;
-            this.nupNumberOfDisabledChildren.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.nupNumberOfDisabledChildren.Visible = false;
             this.nupNumberOfDisabledChildren.ValueChanged += new System.EventHandler(this.nupNumberOfDisabledChildren_ValueChanged);
             // 
@@ -552,11 +544,6 @@
             this.nupNumberOfChildren.Name = "nupNumberOfChildren";
             this.nupNumberOfChildren.Size = new System.Drawing.Size(93, 32);
             this.nupNumberOfChildren.TabIndex = 24;
-            this.nupNumberOfChildren.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.nupNumberOfChildren.Visible = false;
             this.nupNumberOfChildren.ValueChanged += new System.EventHandler(this.nupNumberOfChildren_ValueChanged);
             // 

@@ -19,7 +19,7 @@ namespace emira.BusinessLogicLayer
             {
                 command = string.Format("SELECT {1},{2},{3},{4} FROM {0} ORDER BY {1}", Texts.DataTableNames.Task,
                             Texts.TaskProperties.TaskGroupID,
-                            Texts.TaskProperties.TaskGroup,
+                            Texts.TaskProperties.TaskGroupName,
                             Texts.TaskProperties.TaskID,
                             Texts.TaskProperties.TaskName);
             }
@@ -40,7 +40,7 @@ namespace emira.BusinessLogicLayer
             bool _isSuccess = false;
             int _result = 0;
             string _taskGroupID = Texts.TaskProperties.TaskGroupID;
-            string _taskGroup = Texts.TaskProperties.TaskGroup;
+            string _taskGroup = Texts.TaskProperties.TaskGroupName;
             string _taskID = Texts.TaskProperties.TaskID;
             string _taskName = Texts.TaskProperties.TaskName;
             bool existGroupID = false;
@@ -92,7 +92,7 @@ namespace emira.BusinessLogicLayer
             _DBHandler = new DatabaseHandler();
             Dictionary<string, string> data = new Dictionary<string, string>();
             data.Add(Texts.TaskProperties.TaskGroupID, taskGroupID);
-            data.Add(Texts.TaskProperties.TaskGroup, taskGroup);
+            data.Add(Texts.TaskProperties.TaskGroupName, taskGroup);
             data.Add(Texts.TaskProperties.TaskID, taskID);
             data.Add(Texts.TaskProperties.TaskName, taskName);
             isSuccess = _DBHandler.ModifyTask(data, Texts.TaskProperties.TaskID, oldTaskID, updatedRow);

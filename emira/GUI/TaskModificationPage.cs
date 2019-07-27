@@ -7,7 +7,6 @@ using emira.HelperFunctions;
 using emira.BusinessLogicLayer;
 using System.Drawing.Printing;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace emira.GUI
 {
@@ -210,7 +209,7 @@ namespace emira.GUI
                 {
 
                     string[] _headers = {Texts.TaskProperties.TaskGroupID,
-                                         Texts.TaskProperties.TaskGroup,
+                                         Texts.TaskProperties.TaskGroupName,
                                          Texts.TaskProperties.TaskID,
                                          Texts.TaskProperties.TaskName };
 

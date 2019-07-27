@@ -70,17 +70,67 @@ namespace emira.GUI
                     dtpDateOfStart.MaxDate = DateTime.Today;
                 }
 
-                nupNumberOfChildren.Value = _person.NumberOfChildren;
-                nupNumberOfDisabledChildren.Value = _person.NumberOfDisabledChildren;
+                if (_person.NumberOfChildren > 0)
+                {
+                    cbYesChild.Checked = true;
+                    nupNumberOfChildren.Value = _person.NumberOfChildren;
+                    lDoYouHaveDiasabledChild.Show();
+                    cbNoDisabledChild.Show();
+                    cbYesDisabledChild.Show();
+                }
+                else
+                {
+                    cbNoChild.Checked = true;
+                }
+
+                if (_person.NumberOfDisabledChildren > 0)
+                {
+                    cbYesChild.Checked = true;
+                    lDoYouHaveDiasabledChild.Show();
+                    cbNoDisabledChild.Show();
+                    cbYesDisabledChild.Show();
+                    cbYesDisabledChild.Checked = true;
+                    nupNumberOfDisabledChildren.Value = _person.NumberOfDisabledChildren;
+                }
+                else
+                {
+                    cbNoDisabledChild.Checked = true;
+                }
+
+                if (_person.NumberOfNewBornBabies > 0 && rbMale.Checked)
+                {
+                    cbYesChild.Checked = true;
+                    lNumberOfChildren.Show();
+                    nupNumberOfChildren.Show();
+                    lDoYouHaveDiasabledChild.Show();
+                    cbNoDisabledChild.Show();
+                    cbYesDisabledChild.Show();
+                    lNumberOfNewBornBabies.Show();
+                    nupNumberOfNewBornBabies.Show();
+                    if (_person.NumberOfNewBornBabies > 0)
+                    {
+                        nupNumberOfNewBornBabies.Value = _person.NumberOfNewBornBabies;
+                    }
+                }
+                else
+                {
+                    lNumberOfNewBornBabies.Hide();
+                    nupNumberOfNewBornBabies.Hide();
+                }
 
                 if (rbFemale.Checked)
                 {
                     lNumberOfNewBornBabies.Hide();
                     nupNumberOfNewBornBabies.Hide();
                 }
+
+                if (_person.HealthDamage == true)
+                {
+                    cbYesHealthDamage.Checked = true;
+                }
                 else
                 {
-                    nupNumberOfNewBornBabies.Value = _person.NumberOfNewBornBabies;
+                    cbNoHealthDamage.Checked = true;
                 }
 
                 btnSave.Enabled = false;
@@ -162,24 +212,19 @@ namespace emira.GUI
                     return;
                 }
 
-                // Number of the disabled children can not bigger than the number of the children
-                if (nupNumberOfDisabledChildren.Value > nupNumberOfChildren.Value)
+                // If the checkbox of the disabled children is yes, then it can not be null
+                if (cbYesDisabledChild.Checked && nupNumberOfDisabledChildren.Value == 0)
                 {
-                    MessageBox.Show(lNumberOfDisabledChildren.Text.Trim(':') + Texts.ErrorMessages.BiggerNumberThanNumberOfChildren, Texts.Captions.NumberOfTheChildrenError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Texts.ErrorMessages.DisabledChildrenIsNull, Texts.Captions.NumberOfTheChildrenError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    nupNumberOfDisabledChildren.Focus();
                     return;
                 }
 
-                // Number of the new born babies can not bigger than the number of the children
-                if (nupNumberOfNewBornBabies.Value > nupNumberOfChildren.Value)
+                // if the 'Yes' is checked for the question 'Do you have children?', but nothing is added
+                if(nupNumberOfChildren.Value == 0 && nupNumberOfDisabledChildren.Value == 0 && nupNumberOfNewBornBabies.Value == 0 && cbYesChild.Checked)
                 {
-                    MessageBox.Show(lNumberOfNewBornBabies.Text.Trim(':') + Texts.ErrorMessages.BiggerNumberThanNumberOfChildren, Texts.Captions.NumberOfTheChildrenError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                // Number of the disabled children and new born babies can not bigger than the number of the children
-                if ((nupNumberOfNewBornBabies.Value + nupNumberOfDisabledChildren.Value) > nupNumberOfChildren.Value)
-                {
-                    MessageBox.Show(Texts.ErrorMessages.DiabledAndNewBornBigger, Texts.Captions.NumberOfTheChildrenError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Texts.ErrorMessages.NumberOfChildren, Texts.Captions.NumberOfTheChildrenError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    nupNumberOfChildren.Focus();
                     return;
                 }
 
@@ -202,6 +247,14 @@ namespace emira.GUI
                 data.Add(Texts.PersonProperties.NumberOfChildren, nupNumberOfChildren.Value.ToString());
                 data.Add(Texts.PersonProperties.NumberOfDisabledChildren, nupNumberOfDisabledChildren.Value.ToString());
                 data.Add(Texts.PersonProperties.NumberOfNewBornBabies, nupNumberOfNewBornBabies.Value.ToString());
+                if (cbYesHealthDamage.Checked)
+                {
+                    data.Add(Texts.PersonProperties.HealthDamage, "true");
+                }
+                else
+                {
+                    data.Add(Texts.PersonProperties.HealthDamage, "false");
+                }
 
                 _isSuccess = _settings.SetNewValues(Texts.PersonProperties.ID, LogInfo.UserID.ToString(), data);
                 if (_isSuccess)
@@ -223,6 +276,7 @@ namespace emira.GUI
                 if (cbNoChild.Checked)
                 {
                     cbYesChild.Checked = false;
+                    nupNumberOfChildren.Value = 0;
                     lNumberOfChildren.Hide();
                     nupNumberOfChildren.Hide();
                     lDoYouHaveDiasabledChild.Hide();
@@ -311,8 +365,46 @@ namespace emira.GUI
                 if (cbNoDisabledChild.Checked)
                 {
                     cbYesDisabledChild.Checked = false;
+                    nupNumberOfDisabledChildren.Value = 0;
                     lNumberOfDisabledChildren.Hide();
                     nupNumberOfDisabledChildren.Hide();
+                }
+
+                btnSave.Enabled = true;
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void rbMale_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (rbMale.Checked && cbYesChild.Checked)
+                {
+                    lNumberOfNewBornBabies.Show();
+                    nupNumberOfNewBornBabies.Show();
+                }
+
+                btnSave.Enabled = true;
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void rbFemale_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (rbFemale.Checked)
+                {
+                    nupNumberOfNewBornBabies.Value = 0;
+                    lNumberOfNewBornBabies.Hide();
+                    nupNumberOfNewBornBabies.Hide();
                 }
 
                 btnSave.Enabled = true;

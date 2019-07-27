@@ -35,9 +35,9 @@ namespace emira.GUI
 
         private void btnWorkingHours_Click(object sender, EventArgs e)
         {
-            //Hide();
-            //WorkingHoursPage _workingHoursPage = new WorkingHoursPage();
-            //_workingHoursPage.Show();
+            Hide();
+            WorkingHoursPage _workingHoursPage = new WorkingHoursPage();
+            _workingHoursPage.Show();
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
@@ -49,9 +49,9 @@ namespace emira.GUI
 
         private void btnHolidays_Click(object sender, EventArgs e)
         {
-            //Hide();
-            //HolidaysPage _holidaysPage = new HolidaysPage();
-            //_holidaysPage.Show();
+            Hide();
+            HolidaysPage _holidaysPage = new HolidaysPage();
+            _holidaysPage.Show();
         }
 
         private void btnStatistics_Click(object sender, EventArgs e)
