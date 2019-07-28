@@ -363,7 +363,7 @@ namespace emira.DataAccessLayer
 
         public DataTable GetSelectedTaskFromDB()
         {
-            string cmd = string.Format("SELECT * FROM {0} WHERE {1}='{2}'", Texts.DataTableNames.Task, Texts.TaskProperties.Selected, "True");
+            string cmd = string.Format("SELECT * FROM {0} WHERE {1}='{2}'", Texts.DataTableNames.Task, Texts.TaskProperties.Selected, "1");
             _dataTable = new DataTable();
             _dataTable = GetDataTable(cmd);
             return _dataTable;

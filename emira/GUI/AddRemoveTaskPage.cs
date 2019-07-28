@@ -111,16 +111,6 @@ namespace emira.GUI
             }
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
         private static bool ListCheck<T>(IEnumerable<T> l1, IEnumerable<T> l2)
         {
             if (l1 == null || l2 == null)
@@ -273,6 +263,16 @@ namespace emira.GUI
             }
         }
 
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
         private void pHeader_MouseUp(object sender, MouseEventArgs e)
         {
             _togMove = 0;
@@ -292,5 +292,6 @@ namespace emira.GUI
                 SetDesktopLocation(MousePosition.X - _mValX, MousePosition.Y - _mValY);
             }
         }
+
     }
 }
