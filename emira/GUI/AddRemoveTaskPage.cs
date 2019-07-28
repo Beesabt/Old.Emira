@@ -202,7 +202,7 @@ namespace emira.GUI
                     Dictionary<string, string> data = new Dictionary<string, string>();
                     data.Add(Texts.TaskProperties.Selected, "True");
 
-                    _addRemoveTask.SaveModification(data, _nodeID);
+                    _addRemoveTask.SaveModification(data, _nodeID.Trim());
                 }
 
                 foreach (TreeNode node in _unSelectedNodes)
@@ -223,7 +223,7 @@ namespace emira.GUI
                     Dictionary<string, string> data = new Dictionary<string, string>();
                     data.Add(Texts.TaskProperties.Selected, "False");
 
-                    _addRemoveTask.SaveModification(data, _nodeID);
+                    _addRemoveTask.SaveModification(data, _nodeID.Trim());
                 }
                 Cursor.Show();
                 Close();

@@ -21,6 +21,8 @@ namespace emira.GUI
 
             string _actualTaskID = string.Empty;
             string _acutalTaskName = string.Empty;
+            int _maxTaskLength = 0;
+            int _taskLength = 0;
 
             _dataTable = new DataTable();
             _workingHours = new WorkingHours();
@@ -31,6 +33,13 @@ namespace emira.GUI
             {
                 _actualTaskID = item[Texts.TaskProperties.TaskID].ToString();
                 _acutalTaskName = item[Texts.TaskProperties.TaskName].ToString();
+
+                _taskLength = _actualTaskID.Length + _acutalTaskName.Length;
+
+                if(_maxTaskLength < _taskLength)
+                {
+                    _maxTaskLength = _taskLength;
+                }
 
                 DataGridViewRow row = new DataGridViewRow();
                 row.CreateCells(dgvWorkingHours);
@@ -43,6 +52,8 @@ namespace emira.GUI
             sumRow.CreateCells(dgvWorkingHours);
             sumRow.HeaderCell.Value = "Total Hours:";
             dgvWorkingHours.Rows.Add(sumRow);
+
+            dgvWorkingHours.RowHeadersWidth = _maxTaskLength + 125;
         }
 
         public WorkingHoursPage()

@@ -238,7 +238,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationFiles\Icon\Emira.ico" />
     <Content Include="Resources\back_icon_white_50.png" />

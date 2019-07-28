@@ -119,7 +119,7 @@ namespace emira.DataAccessLayer
                 cmd.CommandText = command;
                 _sqlite.Open();
                 updatedRows = cmd.ExecuteNonQuery();
-                if (updatedRows >= 0) returnCode = true;               
+                if (updatedRows > 0) returnCode = true;               
             }
             catch (SQLiteException error)
             {
@@ -363,7 +363,7 @@ namespace emira.DataAccessLayer
 
         public DataTable GetSelectedTaskFromDB()
         {
-            string cmd = string.Format("SELECT * FROM {0} WHERE {1}='{2}'", Texts.DataTableNames.Task, Texts.TaskProperties.Selected, "1");
+            string cmd = string.Format("SELECT * FROM {0} WHERE {1}='{2}'", Texts.DataTableNames.Task, Texts.TaskProperties.Selected, "True");
             _dataTable = new DataTable();
             _dataTable = GetDataTable(cmd);
             return _dataTable;
