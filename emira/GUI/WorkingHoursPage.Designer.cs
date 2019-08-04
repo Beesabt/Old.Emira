@@ -33,7 +33,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pHeader = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.btnRestore = new System.Windows.Forms.Button();
+            this.lTitle = new System.Windows.Forms.Label();
             this.btnMinimalize = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.pMenuBar = new System.Windows.Forms.Panel();
@@ -42,10 +43,11 @@
             this.btnPrint = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.btnAddRemoveTask = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbYearWithMonth = new System.Windows.Forms.ComboBox();
             this.dgvWorkingHours = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.btnBack = new System.Windows.Forms.Button();
+            this.btnNext = new System.Windows.Forms.Button();
+            this.btnPrevious = new System.Windows.Forms.Button();
+            this.lMonth = new System.Windows.Forms.Label();
             this.pHeader.SuspendLayout();
             this.pMenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvWorkingHours)).BeginInit();
@@ -54,7 +56,8 @@
             // pHeader
             // 
             this.pHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.pHeader.Controls.Add(this.label1);
+            this.pHeader.Controls.Add(this.btnRestore);
+            this.pHeader.Controls.Add(this.lTitle);
             this.pHeader.Controls.Add(this.btnMinimalize);
             this.pHeader.Controls.Add(this.btnExit);
             this.pHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -66,20 +69,37 @@
             this.pHeader.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pHeader_MouseMove);
             this.pHeader.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pHeader_MouseUp);
             // 
-            // label1
+            // btnRestore
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold);
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(305, 29);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Emira - Munkaidő Kezelő";
+            this.btnRestore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRestore.BackgroundImage = global::emira.Properties.Resources.restore_icon_white_26;
+            this.btnRestore.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnRestore.FlatAppearance.BorderSize = 0;
+            this.btnRestore.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.btnRestore.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.btnRestore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRestore.Location = new System.Drawing.Point(930, 0);
+            this.btnRestore.Name = "btnRestore";
+            this.btnRestore.Size = new System.Drawing.Size(50, 30);
+            this.btnRestore.TabIndex = 4;
+            this.btnRestore.UseVisualStyleBackColor = true;
+            this.btnRestore.Click += new System.EventHandler(this.btnRestore_Click);
+            // 
+            // lTitle
+            // 
+            this.lTitle.AutoSize = true;
+            this.lTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold);
+            this.lTitle.ForeColor = System.Drawing.Color.White;
+            this.lTitle.Location = new System.Drawing.Point(0, 0);
+            this.lTitle.Name = "lTitle";
+            this.lTitle.Size = new System.Drawing.Size(305, 29);
+            this.lTitle.TabIndex = 2;
+            this.lTitle.Text = "Emira - Munkaidő Kezelő";
             // 
             // btnMinimalize
             // 
+            this.btnMinimalize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnMinimalize.BackColor = System.Drawing.Color.Transparent;
             this.btnMinimalize.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMinimalize.BackgroundImage")));
             this.btnMinimalize.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
@@ -87,7 +107,7 @@
             this.btnMinimalize.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.btnMinimalize.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.btnMinimalize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMinimalize.Location = new System.Drawing.Point(930, 0);
+            this.btnMinimalize.Location = new System.Drawing.Point(880, 0);
             this.btnMinimalize.Name = "btnMinimalize";
             this.btnMinimalize.Size = new System.Drawing.Size(50, 30);
             this.btnMinimalize.TabIndex = 3;
@@ -96,6 +116,7 @@
             // 
             // btnExit
             // 
+            this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExit.BackColor = System.Drawing.Color.Transparent;
             this.btnExit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnExit.BackgroundImage")));
             this.btnExit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
@@ -195,6 +216,7 @@
             // 
             // btnAddRemoveTask
             // 
+            this.btnAddRemoveTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddRemoveTask.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(195)))), ((int)(((byte)(0)))), ((int)(((byte)(82)))));
             this.btnAddRemoveTask.FlatAppearance.BorderSize = 0;
             this.btnAddRemoveTask.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(25)))), ((int)(((byte)(98)))));
@@ -212,14 +234,16 @@
             this.btnAddRemoveTask.UseVisualStyleBackColor = false;
             this.btnAddRemoveTask.Click += new System.EventHandler(this.btnAddRemoveTask_Click);
             // 
-            // comboBox1
+            // cbYearWithMonth
             // 
-            this.comboBox1.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(548, 164);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(180, 25);
-            this.comboBox1.TabIndex = 6;
+            this.cbYearWithMonth.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.cbYearWithMonth.FormattingEnabled = true;
+            this.cbYearWithMonth.Location = new System.Drawing.Point(571, 157);
+            this.cbYearWithMonth.MaxDropDownItems = 12;
+            this.cbYearWithMonth.Name = "cbYearWithMonth";
+            this.cbYearWithMonth.Size = new System.Drawing.Size(180, 32);
+            this.cbYearWithMonth.TabIndex = 6;
+            this.cbYearWithMonth.Text = "Select Month";
             // 
             // dgvWorkingHours
             // 
@@ -227,8 +251,10 @@
             this.dgvWorkingHours.AllowUserToDeleteRows = false;
             this.dgvWorkingHours.AllowUserToResizeColumns = false;
             this.dgvWorkingHours.AllowUserToResizeRows = false;
+            this.dgvWorkingHours.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvWorkingHours.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.dgvWorkingHours.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.dgvWorkingHours.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
@@ -236,7 +262,6 @@
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Info;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvWorkingHours.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvWorkingHours.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -247,7 +272,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvWorkingHours.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvWorkingHours.Location = new System.Drawing.Point(32, 214);
+            this.dgvWorkingHours.Location = new System.Drawing.Point(32, 261);
             this.dgvWorkingHours.Name = "dgvWorkingHours";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -258,38 +283,48 @@
             this.dgvWorkingHours.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvWorkingHours.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dgvWorkingHours.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvWorkingHours.Size = new System.Drawing.Size(967, 415);
+            this.dgvWorkingHours.Size = new System.Drawing.Size(967, 368);
             this.dgvWorkingHours.TabIndex = 7;
             this.dgvWorkingHours.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dgvWorkingHours.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvWorkingHours_CellValidating);
             // 
-            // button1
+            // btnNext
             // 
-            this.button1.BackColor = System.Drawing.Color.Transparent;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Century Gothic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.Location = new System.Drawing.Point(738, 164);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(25, 25);
-            this.button1.TabIndex = 9;
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnNext.BackColor = System.Drawing.Color.Transparent;
+            this.btnNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnNext.FlatAppearance.BorderSize = 0;
+            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNext.Font = new System.Drawing.Font("Century Gothic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnNext.Image = ((System.Drawing.Image)(resources.GetObject("btnNext.Image")));
+            this.btnNext.Location = new System.Drawing.Point(757, 157);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(25, 25);
+            this.btnNext.TabIndex = 9;
+            this.btnNext.UseVisualStyleBackColor = false;
             // 
-            // btnBack
+            // btnPrevious
             // 
-            this.btnBack.BackColor = System.Drawing.Color.Transparent;
-            this.btnBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnBack.FlatAppearance.BorderSize = 0;
-            this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBack.Font = new System.Drawing.Font("Century Gothic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnBack.Image = ((System.Drawing.Image)(resources.GetObject("btnBack.Image")));
-            this.btnBack.Location = new System.Drawing.Point(513, 164);
-            this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(25, 25);
-            this.btnBack.TabIndex = 8;
-            this.btnBack.UseVisualStyleBackColor = false;
+            this.btnPrevious.BackColor = System.Drawing.Color.Transparent;
+            this.btnPrevious.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnPrevious.FlatAppearance.BorderSize = 0;
+            this.btnPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPrevious.Font = new System.Drawing.Font("Century Gothic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnPrevious.Image = ((System.Drawing.Image)(resources.GetObject("btnPrevious.Image")));
+            this.btnPrevious.Location = new System.Drawing.Point(540, 157);
+            this.btnPrevious.Name = "btnPrevious";
+            this.btnPrevious.Size = new System.Drawing.Size(25, 25);
+            this.btnPrevious.TabIndex = 8;
+            this.btnPrevious.UseVisualStyleBackColor = false;
+            // 
+            // lMonth
+            // 
+            this.lMonth.AutoSize = true;
+            this.lMonth.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lMonth.Location = new System.Drawing.Point(452, 219);
+            this.lMonth.Name = "lMonth";
+            this.lMonth.Size = new System.Drawing.Size(113, 39);
+            this.lMonth.TabIndex = 10;
+            this.lMonth.Text = "Month";
             // 
             // WorkingHoursPage
             // 
@@ -297,10 +332,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1030, 650);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.btnBack);
+            this.Controls.Add(this.lMonth);
+            this.Controls.Add(this.btnNext);
+            this.Controls.Add(this.btnPrevious);
             this.Controls.Add(this.dgvWorkingHours);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cbYearWithMonth);
             this.Controls.Add(this.btnAddRemoveTask);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.btnPrint);
@@ -315,6 +351,7 @@
             this.pMenuBar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvWorkingHours)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -324,15 +361,17 @@
         private System.Windows.Forms.Panel pMenuBar;
         private System.Windows.Forms.Button btnMinimalize;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lTitle;
         private System.Windows.Forms.Button btnHome;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnPrint;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnAddRemoveTask;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbYearWithMonth;
         private System.Windows.Forms.DataGridView dgvWorkingHours;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button btnBack;
+        private System.Windows.Forms.Button btnNext;
+        private System.Windows.Forms.Button btnPrevious;
+        private System.Windows.Forms.Label lMonth;
+        private System.Windows.Forms.Button btnRestore;
     }
 }

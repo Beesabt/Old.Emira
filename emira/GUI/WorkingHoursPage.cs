@@ -1,8 +1,10 @@
 ﻿using emira.BusinessLogicLayer;
 using emira.HelperFunctions;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace emira.GUI
@@ -36,7 +38,7 @@ namespace emira.GUI
 
                 _taskLength = _actualTaskID.Length + _acutalTaskName.Length;
 
-                if(_maxTaskLength < _taskLength)
+                if (_maxTaskLength < _taskLength)
                 {
                     _maxTaskLength = _taskLength;
                 }
@@ -82,38 +84,84 @@ namespace emira.GUI
         {
             try
             {
-                int _columns = 0;
-                int _rows = 0;
+                WorkingHours _workingHours  = new WorkingHours();
+                int _monthLength = 0;
+                string _day = string.Empty;
+                string _monthInLabel = string.Empty;
                 string _actualCellColumnHeaderValue = string.Empty;
                 string _actualCellRowHeaderValue = string.Empty;
                 string _actualCellValue = string.Empty;
-                int _actualYear = DateTime.Now.Year;
-
                 DateTime _today = DateTime.UtcNow;
-                int _actualDay = (int)_today.DayOfWeek;
-                int _numberOfSubstracedDays = 0 - (_actualDay - 1);
-                DateTime _monday = _today;
-                if (!(_today.DayOfWeek == DayOfWeek.Monday))
+
+                // Fill the combox with months from DB
+                List<string> Dates = _workingHours.GetYearsAndMonths();
+
+                foreach (var item in Dates)
                 {
-                    _monday = _today.AddDays(_numberOfSubstracedDays);
+                    cbYearWithMonth.Items.Add(item);
                 }
 
-                // Add the days of the actual week
-                for (double day = 0; day <= 6; day++)
+                // Select the actual month in the combobox
+                cbYearWithMonth.SelectedItem = _workingHours.GetActualMonth();
+
+                // Give the name of the month to the table
+                lMonth.Text = DateTimeFormatInfo.CurrentInfo.GetMonthName(_today.Month);
+
+                // Lenght of the actual month + 1
+                _monthLength = _workingHours.GetDaysOfMonth() + 1;
+
+                // Add the days of the actual month
+                for (int i = 1; i < _monthLength; i++)
                 {
-                    DateTime date = _monday.AddDays(day);
 
-                    DayOfWeek dayofweek = date.DayOfWeek;
-
-                    string ConcatenatedHeaderText = date.ToShortDateString() + "\r\n (" + dayofweek.ToString() + ")";
+                    if (i < 10)
+                    {
+                        _day = "0" + i.ToString();
+                    }
+                    else
+                    {
+                        _day = i.ToString();
+                    }
 
                     DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn()
                     {
-                        Name = date.ToString(),
-                        HeaderText = ConcatenatedHeaderText
+                        Name = _day,
+                        HeaderText = _day
                     };
                     dgvWorkingHours.Columns.Add(col);
                 }
+
+
+                // Highlight the today in the table with color
+                int _todayColumn = _today.Day;
+                dgvWorkingHours.Columns[_todayColumn - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
+
+
+
+                //int _actualDay = (int)_today.DayOfWeek;
+                //int _numberOfSubstracedDays = 0 - (_actualDay - 1);
+                //DateTime _monday = _today;
+                //if (!(_today.DayOfWeek == DayOfWeek.Monday))
+                //{
+                //    _monday = _today.AddDays(_numberOfSubstracedDays);
+                //}
+
+                // Add the days of the actual week
+                //for (double day = 0; day <= 6; day++)
+                //{
+                //    DateTime date = _monday.AddDays(day);
+
+                //    DayOfWeek dayofweek = date.DayOfWeek;
+
+                //    string ConcatenatedHeaderText = date.ToShortDateString() + "\r\n (" + dayofweek.ToString() + ")";
+
+                //    DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn()
+                //    {
+                //        Name = date.ToString(),
+                //        HeaderText = ConcatenatedHeaderText
+                //    };
+                //    dgvWorkingHours.Columns.Add(col);
+                //}
 
                 // Add 'Summary' column in the end of the columns
                 DataGridViewTextBoxColumn sumCol = new DataGridViewTextBoxColumn()
@@ -126,29 +174,75 @@ namespace emira.GUI
                 // Add task from the database as rows
                 UpdateWorkingHoursTable();
 
-                // Add hours from Cathalogue
-                _columns = dgvWorkingHours.ColumnCount - 1;
-                _rows = dgvWorkingHours.RowCount - 1;
+                //// Add hours from Cathalogue
+                //_columns = dgvWorkingHours.ColumnCount - 1;
+                //_rows = dgvWorkingHours.RowCount - 1;
 
-                for (int i = 0; i < _rows; i++)
-                {
-                    for (int j = 0; j < _columns; j++)
-                    {
-                        DataGridViewCell cell = dgvWorkingHours.Rows[i].Cells[j];
-                        DataGridViewRow row = dgvWorkingHours.Rows[i];
-                        _workingHours = new WorkingHours();
+                //for (int i = 0; i < _rows; i++)
+                //{
+                //    for (int j = 0; j < _columns; j++)
+                //    {
+                //        DataGridViewCell cell = dgvWorkingHours.Rows[i].Cells[j];
+                //        DataGridViewRow row = dgvWorkingHours.Rows[i];
+                //        _workingHours = new WorkingHours();
 
-                        _actualCellColumnHeaderValue = dgvWorkingHours.Columns[j].HeaderText;
-                        _actualCellRowHeaderValue = row.HeaderCell.FormattedValue.ToString();
+                //        _actualCellColumnHeaderValue = dgvWorkingHours.Columns[j].HeaderText;
 
-                        _actualCellValue = _workingHours.GetHours(_actualCellRowHeaderValue, _actualCellColumnHeaderValue);
+                //        string _date = cbYearWithMonth.SelectedItem.ToString();
 
-                        if (!string.IsNullOrEmpty(_actualCellValue))
-                        {
-                            cell.Value = _actualCellValue;
-                        }                 
-                    }
-                }
+                //        string _year = _date.Remove(4);
+
+                //        switch (lMonth.Text)
+                //        {
+                //            case "July":
+                //                _monthInLabel = "7";
+                //                _monthInLabelInt = 7;
+                //                break;
+                //            case "August":
+                //                _monthInLabel = "8";
+                //                _monthInLabelInt = 8;
+                //                break;
+                //            case "September":
+                //                _monthInLabel = "9";
+                //                _monthInLabelInt = 9;
+                //                break;
+                //            default:
+                //                lMonth.Text = "Something went wrong";
+                //                break;
+                //        }
+
+                //        _date = _year;
+
+                //        if (_monthInLabelInt < 10)
+                //        {
+                //            _date = _date.Insert(_date.Length, "-0" + _monthInLabel);
+                //        }
+                //        else
+                //        {
+                //            _date = _date.Insert(_date.Length, "-" + _monthInLabel);
+                //        }
+
+
+                //        if (j < 9)
+                //        {
+                //            _date = _date.Insert(_date.Length, "-0" + _actualCellColumnHeaderValue);
+                //        }
+                //        else
+                //        {
+                //            _date = _date.Insert(_date.Length, "-" + _actualCellColumnHeaderValue);
+                //        }
+
+
+                //        _actualCellRowHeaderValue = row.HeaderCell.FormattedValue.ToString();
+
+                //        _actualCellValue = _workingHours.GetHours(_actualCellRowHeaderValue, _date);
+
+                //        if (!string.IsNullOrEmpty(_actualCellValue))
+                //        {
+                //            cell.Value = _actualCellValue;
+                //        }
+                //    }
+                //}
 
                 //dgvWorkingHours.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
                 //dgvWorkingHours.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -156,7 +250,7 @@ namespace emira.GUI
                 //dgvWorkingHours.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomCenter;
 
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -166,7 +260,7 @@ namespace emira.GUI
         {
 
         }
-      
+
         private void btnAddRemoveTask_Click(object sender, EventArgs e)
         {
             AddRemoveTaskPage adtp = new AddRemoveTaskPage();
@@ -195,8 +289,10 @@ namespace emira.GUI
                 _columns = dgvWorkingHours.ColumnCount - 1;
                 _rows = dgvWorkingHours.RowCount - 1;
 
+                DataGridViewColumn _lastColumn = dgvWorkingHours.Columns.GetLastColumn(DataGridViewElementStates.Displayed, DataGridViewElementStates.Visible);
+
                 _beginOfTheWeekValue = dgvWorkingHours.Columns[0].HeaderText;
-                _endOfTheWeekValue = dgvWorkingHours.Columns[6].HeaderText;
+                _endOfTheWeekValue = dgvWorkingHours.Columns[_lastColumn.Index].HeaderText;
 
                 _workingHours.DeleteHoursOfTheWeek(_beginOfTheWeekValue, _endOfTheWeekValue);
 
@@ -206,7 +302,7 @@ namespace emira.GUI
                     {
                         DataGridViewCell cell = dgvWorkingHours.Rows[i].Cells[j];
                         DataGridViewRow row = dgvWorkingHours.Rows[i];
-                        
+
                         if (!string.IsNullOrEmpty(cell.FormattedValue.ToString().Trim()))
                         {
                             _actualCellColumnHeaderValue = dgvWorkingHours.Columns[j].HeaderText;
@@ -231,7 +327,7 @@ namespace emira.GUI
                     MessageBox.Show(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -285,5 +381,18 @@ namespace emira.GUI
             }
         }
 
+        private void btnRestore_Click(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal)
+            {
+                WindowState = FormWindowState.Maximized;
+                Invalidate();
+            }
+            else
+            {
+                WindowState = FormWindowState.Normal;
+                Invalidate();
+            }
+        }
     }
 }
