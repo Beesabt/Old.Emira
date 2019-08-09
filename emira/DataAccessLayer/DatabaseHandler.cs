@@ -351,11 +351,27 @@ namespace emira.DataAccessLayer
             return isSuccess;
         }
 
+        #endregion
+
         #region WorkingHours.cs
 
         public DataTable GetTask()
         {
             string cmd = string.Format("SELECT * FROM {0} ORDER BY {1}", Texts.DataTableNames.Task, Texts.TaskProperties.TaskGroupID);
+            _dataTable = new DataTable();
+            _dataTable = GetDataTable(cmd);
+            return _dataTable;
+        }
+
+        public DataTable GetTasksByMonth(string date)
+        {
+            string cmd = string.Format("SELECT {0}.{1}, {0}.{2} FROM {0} JOIN {3} USING ({1}) WHERE {3}.{4} LIKE '{5}%'",
+                Texts.DataTableNames.Task,
+                Texts.TaskProperties.TaskID,
+                Texts.TaskProperties.TaskName,
+                Texts.DataTableNames.Catalog,
+                Texts.CatalogProperties.Date,
+                date);
             _dataTable = new DataTable();
             _dataTable = GetDataTable(cmd);
             return _dataTable;
@@ -387,26 +403,68 @@ namespace emira.DataAccessLayer
             return _result;
         }
 
-        public string GetMaxIDFromCathalogue()
+        public int IsRecordExist(string taskID, string date)
         {
-            string _result = string.Empty;
-            string cmd = string.Format("SELECT MAX({0}) FROM {1} WHERE {2}='{3}'", Texts.CatalogProperties.ID, Texts.DataTableNames.Catalog,
-                Texts.CatalogProperties.PersonID, LogInfo.UserID);
-            _result = GetString(cmd);
-            return _result;
-        }
+            int _rowid = 0;
+            string cmd = string.Format("SELECT rowid FROM {0} WHERE {1}='{2}' AND {3}='{4}'", 
+                Texts.DataTableNames.Catalog,
+                Texts.CatalogProperties.TaskID,
+                taskID,
+                Texts.CatalogProperties.Date,
+                date);
+            _rowid = ExecuteScalar(cmd);
 
-        public int SaveHourToCathalogue(int id, string taskID, string date, double numberOfHours)
+            return _rowid;
+        }
+        public int SaveHourToCathalog(string taskID, string date, double numberOfHours)
         {
             int _result = 0;
-            string cmd = string.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}, {5}) VALUES({6}, '{7}', '{8}', '{9}', {10})", Texts.DataTableNames.Catalog,
-                Texts.CatalogProperties.ID, Texts.CatalogProperties.PersonID, Texts.CatalogProperties.TaskID, Texts.CatalogProperties.Date,
-                Texts.CatalogProperties.NumberOfHours, id, LogInfo.UserID, taskID, date, numberOfHours);
+            string cmd = string.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}) VALUES({5}, '{6}', '{7}', '{8}')",
+                Texts.DataTableNames.Catalog,
+                Texts.CatalogProperties.PersonID,
+                Texts.CatalogProperties.TaskID,
+                Texts.CatalogProperties.Date,
+                Texts.CatalogProperties.NumberOfHours,
+                LogInfo.UserID,
+                taskID,
+                date,
+                numberOfHours);
             _result = ExecuteNonQuery(cmd);
             return _result;
         }
 
-        #endregion
+        public bool ModifyHourInCathalog(Dictionary<string, string> data, string Value, int updatedRow)
+        {
+            bool isSuccess = false;
+            isSuccess = Update(Texts.DataTableNames.Catalog, data, string.Format("{0}='{1}'", "rowid", Value), ref updatedRow);
+            return isSuccess;
+        }
+
+        public int DeleteHourFromCatalog(string taskID, string date)
+        {
+            int result = 0;
+            string cmd = string.Format("DELETE FROM {0} WHERE {1}='{2}' AND {3}='{4}'",
+                Texts.DataTableNames.Catalog,
+                Texts.CatalogProperties.TaskID,
+                taskID,
+                Texts.CatalogProperties.Date,
+                date);
+            result = ExecuteNonQuery(cmd);
+            return result;
+        }
+
+        public int DeleteHours(string date, string taskID)
+        {
+            int result = 0;
+            string cmd = string.Format("DELETE FROM {0} WHERE {1} LIKE '{2}%' AND {3}='{4}'",
+                Texts.DataTableNames.Catalog,
+                Texts.CatalogProperties.Date,
+                date,
+                Texts.CatalogProperties.TaskID,
+                taskID);
+            result = ExecuteNonQuery(cmd);
+            return result;
+        }
 
         #endregion
 

@@ -78,8 +78,6 @@ namespace emira.HelperFunctions
 
         public static class CatalogProperties
         {
-            public static string ID = "ID";
-
             public static string PersonID = "PersonID";
 
             public static string TaskID = "TaskID";
@@ -121,6 +119,10 @@ namespace emira.HelperFunctions
             public const string DisabledChildrenIsNull = "The number of the disabled children can not be null if the 'Yes' is checked";
 
             public const string NumberOfChildren = "The 'Yes' can not be check for the question of 'Do you have children?' if you don't add any";
+
+            public const string BiggerThan24Hours = "It has to be lower than 24 hours.";
+
+            public const string NumbericCell = "It is a numeric cell.";
 
             #endregion
 

@@ -41,6 +41,7 @@ namespace emira.BusinessLogicLayer
             {
                 _sID = "0";
             }
+
             _iID = Convert.ToInt32(_sID);    
             _result = _DBHandler.AddNewHolidayToDB(_iID+1, LogInfo.UserID, _startDate, _endDate);
             if (_result > 0) { _isSuccess = true; }

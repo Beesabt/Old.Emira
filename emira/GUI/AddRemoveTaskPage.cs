@@ -224,6 +224,19 @@ namespace emira.GUI
                     data.Add(Texts.TaskProperties.Selected, "False");
 
                     _addRemoveTask.SaveModification(data, _nodeID.Trim());
+
+                    // Get the date
+                    Form _workingHoursPage = Application.OpenForms["WorkingHoursPage"];
+                    Control[] _cbYearWithMonth = _workingHoursPage.Controls.Find("cbYearWithMonth", true);
+                    string date = string.Empty;
+
+                    foreach (var item in _cbYearWithMonth)
+                    {
+                        date = item.Text;
+                    }
+
+                    // Remove the hours from the Catalog for the task
+                    _addRemoveTask.DeleteHours(date, _nodeID.Trim());
                 }
                 Cursor.Show();
                 Close();

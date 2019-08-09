@@ -14,53 +14,309 @@ namespace emira.GUI
         int _togMove;
         int _mValX;
         int _mValY;
+        int _monthLength = 0;
+        string _day = string.Empty;
         WorkingHours _workingHours;
         DataTable _dataTable;
+        List<DataGridViewCell> _changedCells = new List<DataGridViewCell>();
 
         private void UpdateWorkingHoursTable()
         {
+            // Clean all modifications
+            dgvWorkingHours.Columns.Clear();
             dgvWorkingHours.Rows.Clear();
+            _changedCells.Clear();
 
-            string _actualTaskID = string.Empty;
-            string _acutalTaskName = string.Empty;
             int _maxTaskLength = 0;
             int _taskLength = 0;
+            int _columns = 0;
+            int _rows = 0;
+            int _resultMonth = 0;
+            int _resultYear = 0;
+            string _actualTaskID = string.Empty;
+            string _acutalTaskName = string.Empty;
+            string _actualCellColumnHeaderValue = string.Empty;
+            string _actualCellRowHeaderValue = string.Empty;
+            string _actualCellValue = string.Empty;
+            string _date = string.Empty;
 
+            DateTime _today = DateTime.UtcNow;
             _dataTable = new DataTable();
             _workingHours = new WorkingHours();
 
-            _dataTable = _workingHours.GetSelectedTask();
+            // Give the name of the month to the table
+            string _selectedYear = cbYearWithMonth.SelectedItem.ToString().Remove(4);
+            string _selectedMonth = cbYearWithMonth.SelectedItem.ToString().Substring(5);
 
-            foreach (DataRow item in _dataTable.Rows)
+            Int32.TryParse(_selectedYear, out _resultYear);
+
+            if (Int32.TryParse(_selectedMonth, out _resultMonth))
             {
-                _actualTaskID = item[Texts.TaskProperties.TaskID].ToString();
-                _acutalTaskName = item[Texts.TaskProperties.TaskName].ToString();
+                CultureInfo ci = new CultureInfo("en-US");
+                lMonth.Text = ci.DateTimeFormat.GetMonthName(_resultMonth);
+            }
+            else
+            {
+                lMonth.Text = "Month";
+            }
 
-                _taskLength = _actualTaskID.Length + _acutalTaskName.Length;
+            // Lenght of the actual month + 1
+            _monthLength = _workingHours.GetDaysOfMonth(_resultYear, _resultMonth);
 
-                if (_maxTaskLength < _taskLength)
+            // Add the days of the actual month
+            for (int i = 1; i < _monthLength + 1; i++)
+            {
+                if (i < 10)
                 {
-                    _maxTaskLength = _taskLength;
+                    _day = "0" + i.ToString();
+                }
+                else
+                {
+                    _day = i.ToString();
                 }
 
-                DataGridViewRow row = new DataGridViewRow();
-                row.CreateCells(dgvWorkingHours);
-                row.HeaderCell.Value = _actualTaskID + " " + _acutalTaskName;
-                dgvWorkingHours.Rows.Add(row);
+                DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn()
+                {
+                    Name = _day,
+                    HeaderText = _day
+                };
+                dgvWorkingHours.Columns.Add(col);
             }
+
+            // Add 'Summary' column in the end of the columns
+            DataGridViewTextBoxColumn sumCol = new DataGridViewTextBoxColumn()
+            {
+                Name = "TotalHoursHeader",
+                HeaderText = "Total"
+            };
+            dgvWorkingHours.Columns.Add(sumCol);
+
+            // Get selected tasks and fill the header row with it/them
+            // And if we choose a prevous monnth or a future months then the AddRemoveTask button is disabled
+            // and we can not edit the values
+            if (_today.Month != _resultMonth)
+            {
+
+                _dataTable = _workingHours.GetTasksByMonth(cbYearWithMonth.SelectedItem.ToString());
+
+                foreach (DataRow item in _dataTable.Rows)
+                {
+                    _actualTaskID = item[Texts.TaskProperties.TaskID].ToString();
+                    _acutalTaskName = item[Texts.TaskProperties.TaskName].ToString();
+
+
+                    _taskLength = _actualTaskID.Length + _acutalTaskName.Length;
+
+                    if (_maxTaskLength < _taskLength)
+                    {
+                        _maxTaskLength = _taskLength;
+                    }
+
+                    DataGridViewRow row = new DataGridViewRow();
+                    row.CreateCells(dgvWorkingHours);
+                    row.HeaderCell.Value = _actualTaskID + " " + _acutalTaskName;
+                    dgvWorkingHours.Rows.Add(row);
+                }
+
+                // AddRemoveTask button is disabled
+                btnAddRemoveTask.Enabled = false;
+
+                // Sorting is disabled and columns are read only
+                foreach (DataGridViewColumn column in dgvWorkingHours.Columns)
+                {
+                    column.ReadOnly = true;
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                }
+
+            }
+            else
+            {
+                _dataTable = _workingHours.GetSelectedTask();
+
+                foreach (DataRow item in _dataTable.Rows)
+                {
+                    _actualTaskID = item[Texts.TaskProperties.TaskID].ToString();
+                    _acutalTaskName = item[Texts.TaskProperties.TaskName].ToString();
+
+                    _taskLength = _actualTaskID.Length + _acutalTaskName.Length;
+
+                    if (_maxTaskLength < _taskLength)
+                    {
+                        _maxTaskLength = _taskLength;
+                    }
+
+                    DataGridViewRow row = new DataGridViewRow();
+                    row.CreateCells(dgvWorkingHours);
+                    row.HeaderCell.Value = _actualTaskID + " " + _acutalTaskName;
+                    dgvWorkingHours.Rows.Add(row);
+                }
+
+                // AddRemoveTask button is enabled
+                btnAddRemoveTask.Enabled = true;
+
+                // Sorting is disabled and columns are editable
+                foreach (DataGridViewColumn column in dgvWorkingHours.Columns)
+                {
+                    column.ReadOnly = false;
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                }
+
+                // Highlight the today in the table with color
+                int _todayColumn = _today.Day;
+                dgvWorkingHours.Columns[_todayColumn - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
+            }
+
+            // Set the 'Task' column's width
+            dgvWorkingHours.RowHeadersWidth = _maxTaskLength + 125;
+            dgvWorkingHours.RowHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             // Add 'Summary' row in the end of the rows
             DataGridViewRow sumRow = new DataGridViewRow();
             sumRow.CreateCells(dgvWorkingHours);
-            sumRow.HeaderCell.Value = "Total Hours:";
+            sumRow.HeaderCell.Value = "Total hours:";
             dgvWorkingHours.Rows.Add(sumRow);
 
-            dgvWorkingHours.RowHeadersWidth = _maxTaskLength + 125;
+            // Add hours from Cathalogue
+            _columns = dgvWorkingHours.ColumnCount - 1;
+            _rows = dgvWorkingHours.RowCount - 1;
+
+            for (int i = 0; i < _rows; i++)
+            {
+                for (int j = 0; j < _columns; j++)
+                {
+                    DataGridViewCell cell = dgvWorkingHours.Rows[i].Cells[j];
+                    DataGridViewRow row = dgvWorkingHours.Rows[i];
+
+                    _actualCellColumnHeaderValue = dgvWorkingHours.Columns[j].HeaderText;
+
+                    _date = cbYearWithMonth.SelectedItem.ToString();
+
+                    _date = _date + "-" + _actualCellColumnHeaderValue;
+
+                    _actualCellRowHeaderValue = row.HeaderCell.FormattedValue.ToString();
+
+                    _actualCellValue = _workingHours.GetHours(_actualCellRowHeaderValue, _date);
+
+                    if (!string.IsNullOrEmpty(_actualCellValue))
+                    {
+                        cell.Value = _actualCellValue;
+                    }
+                }
+            }
+
+            UpdateTotalHours();          
+        }
+
+        private void UpdateTotalHours()
+        {
+            try
+            {
+                int _columns = 0;
+                int _rows = 0;
+                int _tooManyHours = 0;
+                double _result = 0;
+                double _sumForDay = 0;
+                double _sumForTask = 0;
+
+                // Sum the hours of a day
+                _columns = dgvWorkingHours.ColumnCount;
+                _rows = dgvWorkingHours.RowCount - 1;
+
+                for (int j = 0; j < _columns; j++)
+                {
+                    for (int i = 0; i < _rows; i++)
+                    {
+                        DataGridViewCell cell = dgvWorkingHours.Rows[i].Cells[j];
+                        DataGridViewCell _TotalHoursCell = dgvWorkingHours.Rows[_rows].Cells[j];
+                        DataGridViewCell _sumCell = dgvWorkingHours.Rows[_rows].Cells[j];
+
+                        if (cell.Value != null)
+                        {
+                            if (Double.TryParse(cell.Value.ToString(), out _result))
+                            {
+                                _sumForDay += Convert.ToDouble(cell.Value);
+                                _TotalHoursCell.Value = _sumForDay;
+
+                                if (_sumForDay >= 25.0)
+                                {
+                                    _sumCell.Style.BackColor = Color.Red;
+                                }
+                                else
+                                {
+                                    _sumCell.Style.BackColor = Color.White;
+                                }
+                            }
+                        }
+
+                        if (_TotalHoursCell.Value == null)
+                        {
+                            _TotalHoursCell.Value = 0;
+                        }
+                    }
+                    _sumForDay = 0;
+                }
+
+                // Sum the hours of the task
+                _columns = dgvWorkingHours.ColumnCount - 1;
+                _rows = dgvWorkingHours.RowCount;
+                _tooManyHours = _columns * 24;
+
+                for (int i = 0; i < _rows; i++)
+                {
+                    for (int j = 0; j < _columns; j++)
+                    {
+                        DataGridViewCell cell = dgvWorkingHours.Rows[i].Cells[j];
+                        DataGridViewCell _TotalHoursCell = dgvWorkingHours.Rows[i].Cells[_columns];
+                        DataGridViewCell _sumCell = dgvWorkingHours.Rows[i].Cells[_columns];
+
+                        if (cell.Value != null)
+                        {
+                            if (Double.TryParse(cell.Value.ToString(), out _result))
+                            {
+                                _sumForTask += Convert.ToDouble(cell.Value);
+                                _TotalHoursCell.Value = _sumForTask;
+
+                                if (_sumForTask > _tooManyHours)
+                                {
+                                    _sumCell.Style.BackColor = Color.Red;
+                                }
+                                else
+                                {
+                                    _sumCell.Style.BackColor = Color.White;
+                                }
+                            }
+                        }
+
+                        if (_TotalHoursCell.Value == null)
+                        {
+                            _TotalHoursCell.Value = 0;
+                        }
+                    }
+                    _sumForTask = 0;
+                }
+
+                // Total Hours are read only
+                dgvWorkingHours.Columns[dgvWorkingHours.ColumnCount - 1].ReadOnly = true;
+                dgvWorkingHours.Rows[dgvWorkingHours.RowCount - 1].ReadOnly = true;
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public WorkingHoursPage()
         {
             InitializeComponent();
+
+            WorkingHours _workingHours = new WorkingHours();
+            // Fill the combox with months from DB
+            List<string> Dates = _workingHours.GetYearsAndMonths();
+
+            foreach (var item in Dates)
+            {
+                cbYearWithMonth.Items.Add(item);
+            }
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -84,181 +340,17 @@ namespace emira.GUI
         {
             try
             {
-                WorkingHours _workingHours  = new WorkingHours();
-                int _monthLength = 0;
-                string _day = string.Empty;
-                string _monthInLabel = string.Empty;
-                string _actualCellColumnHeaderValue = string.Empty;
-                string _actualCellRowHeaderValue = string.Empty;
-                string _actualCellValue = string.Empty;
-                DateTime _today = DateTime.UtcNow;
-
-                // Fill the combox with months from DB
-                List<string> Dates = _workingHours.GetYearsAndMonths();
-
-                foreach (var item in Dates)
-                {
-                    cbYearWithMonth.Items.Add(item);
-                }
+                WorkingHours _workingHours = new WorkingHours();
 
                 // Select the actual month in the combobox
                 cbYearWithMonth.SelectedItem = _workingHours.GetActualMonth();
 
-                // Give the name of the month to the table
-                lMonth.Text = DateTimeFormatInfo.CurrentInfo.GetMonthName(_today.Month);
-
-                // Lenght of the actual month + 1
-                _monthLength = _workingHours.GetDaysOfMonth() + 1;
-
-                // Add the days of the actual month
-                for (int i = 1; i < _monthLength; i++)
-                {
-
-                    if (i < 10)
-                    {
-                        _day = "0" + i.ToString();
-                    }
-                    else
-                    {
-                        _day = i.ToString();
-                    }
-
-                    DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn()
-                    {
-                        Name = _day,
-                        HeaderText = _day
-                    };
-                    dgvWorkingHours.Columns.Add(col);
-                }
-
-
-                // Highlight the today in the table with color
-                int _todayColumn = _today.Day;
-                dgvWorkingHours.Columns[_todayColumn - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
-
-
-
-                //int _actualDay = (int)_today.DayOfWeek;
-                //int _numberOfSubstracedDays = 0 - (_actualDay - 1);
-                //DateTime _monday = _today;
-                //if (!(_today.DayOfWeek == DayOfWeek.Monday))
-                //{
-                //    _monday = _today.AddDays(_numberOfSubstracedDays);
-                //}
-
-                // Add the days of the actual week
-                //for (double day = 0; day <= 6; day++)
-                //{
-                //    DateTime date = _monday.AddDays(day);
-
-                //    DayOfWeek dayofweek = date.DayOfWeek;
-
-                //    string ConcatenatedHeaderText = date.ToShortDateString() + "\r\n (" + dayofweek.ToString() + ")";
-
-                //    DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn()
-                //    {
-                //        Name = date.ToString(),
-                //        HeaderText = ConcatenatedHeaderText
-                //    };
-                //    dgvWorkingHours.Columns.Add(col);
-                //}
-
-                // Add 'Summary' column in the end of the columns
-                DataGridViewTextBoxColumn sumCol = new DataGridViewTextBoxColumn()
-                {
-                    Name = "TotalHoursHeader",
-                    HeaderText = "Total Hours"
-                };
-                dgvWorkingHours.Columns.Add(sumCol);
-
-                // Add task from the database as rows
                 UpdateWorkingHoursTable();
-
-                //// Add hours from Cathalogue
-                //_columns = dgvWorkingHours.ColumnCount - 1;
-                //_rows = dgvWorkingHours.RowCount - 1;
-
-                //for (int i = 0; i < _rows; i++)
-                //{
-                //    for (int j = 0; j < _columns; j++)
-                //    {
-                //        DataGridViewCell cell = dgvWorkingHours.Rows[i].Cells[j];
-                //        DataGridViewRow row = dgvWorkingHours.Rows[i];
-                //        _workingHours = new WorkingHours();
-
-                //        _actualCellColumnHeaderValue = dgvWorkingHours.Columns[j].HeaderText;
-
-                //        string _date = cbYearWithMonth.SelectedItem.ToString();
-
-                //        string _year = _date.Remove(4);
-
-                //        switch (lMonth.Text)
-                //        {
-                //            case "July":
-                //                _monthInLabel = "7";
-                //                _monthInLabelInt = 7;
-                //                break;
-                //            case "August":
-                //                _monthInLabel = "8";
-                //                _monthInLabelInt = 8;
-                //                break;
-                //            case "September":
-                //                _monthInLabel = "9";
-                //                _monthInLabelInt = 9;
-                //                break;
-                //            default:
-                //                lMonth.Text = "Something went wrong";
-                //                break;
-                //        }
-
-                //        _date = _year;
-
-                //        if (_monthInLabelInt < 10)
-                //        {
-                //            _date = _date.Insert(_date.Length, "-0" + _monthInLabel);
-                //        }
-                //        else
-                //        {
-                //            _date = _date.Insert(_date.Length, "-" + _monthInLabel);
-                //        }
-
-
-                //        if (j < 9)
-                //        {
-                //            _date = _date.Insert(_date.Length, "-0" + _actualCellColumnHeaderValue);
-                //        }
-                //        else
-                //        {
-                //            _date = _date.Insert(_date.Length, "-" + _actualCellColumnHeaderValue);
-                //        }
-
-
-                //        _actualCellRowHeaderValue = row.HeaderCell.FormattedValue.ToString();
-
-                //        _actualCellValue = _workingHours.GetHours(_actualCellRowHeaderValue, _date);
-
-                //        if (!string.IsNullOrEmpty(_actualCellValue))
-                //        {
-                //            cell.Value = _actualCellValue;
-                //        }
-                //    }
-                //}
-
-                //dgvWorkingHours.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
-                //dgvWorkingHours.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-                //dgvWorkingHours.ColumnHeadersHeight = dgvWorkingHours.ColumnHeadersHeight * 2;
-                //dgvWorkingHours.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomCenter;
-
             }
             catch (Exception error)
             {
                 MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
 
         private void btnAddRemoveTask_Click(object sender, EventArgs e)
@@ -272,60 +364,59 @@ namespace emira.GUI
         {
             try
             {
-                string _actualCellColumnHeaderValue = string.Empty;
-                string _actualCellRowHeaderValue = string.Empty;
-                string _beginOfTheWeekValue = string.Empty;
-                string _endOfTheWeekValue = string.Empty;
-                double _actualCellValue = 0;
-
-                int _columns = 0;
-                int _rows = 0;
-
-                bool _result = false;
-                bool _isSuccess = true;
-
-                _workingHours = new WorkingHours();
-
-                _columns = dgvWorkingHours.ColumnCount - 1;
-                _rows = dgvWorkingHours.RowCount - 1;
-
-                DataGridViewColumn _lastColumn = dgvWorkingHours.Columns.GetLastColumn(DataGridViewElementStates.Displayed, DataGridViewElementStates.Visible);
-
-                _beginOfTheWeekValue = dgvWorkingHours.Columns[0].HeaderText;
-                _endOfTheWeekValue = dgvWorkingHours.Columns[_lastColumn.Index].HeaderText;
-
-                _workingHours.DeleteHoursOfTheWeek(_beginOfTheWeekValue, _endOfTheWeekValue);
-
-                for (int i = 0; i < _rows; i++)
+                if (_changedCells != null && _changedCells.Count != 0)
                 {
-                    for (int j = 0; j < _columns; j++)
+                    _workingHours = new WorkingHours();
+                    string _actualCellColumnHeaderValue = string.Empty;
+                    string _actualCellRowHeaderValue = string.Empty;
+                    string _date = string.Empty;
+                    double _actualCellValue = 0;
+                    double _resultOfParse = 0;
+                    bool _result = false;
+                    bool _isSuccess = true;
+
+                    foreach (var cell in _changedCells)
                     {
-                        DataGridViewCell cell = dgvWorkingHours.Rows[i].Cells[j];
-                        DataGridViewRow row = dgvWorkingHours.Rows[i];
+                        _actualCellColumnHeaderValue = dgvWorkingHours.Columns[cell.ColumnIndex].HeaderText;
 
-                        if (!string.IsNullOrEmpty(cell.FormattedValue.ToString().Trim()))
+                        // Get the date from the dropdown list and the column header text
+                        _date = cbYearWithMonth.SelectedItem.ToString();
+                        _date = _date + "-" + _actualCellColumnHeaderValue;
+
+                        // Get task
+                        _actualCellRowHeaderValue = dgvWorkingHours.Rows[cell.RowIndex].HeaderCell.FormattedValue.ToString();
+
+                        if (cell.Value == null || cell.Value.ToString() == "0")
                         {
-                            _actualCellColumnHeaderValue = dgvWorkingHours.Columns[j].HeaderText;
-
-                            _actualCellRowHeaderValue = row.HeaderCell.FormattedValue.ToString();
-
-                            double.TryParse(cell.FormattedValue.ToString(), out _actualCellValue);
-
-                            _result = _workingHours.SaveHour(_actualCellRowHeaderValue, _actualCellColumnHeaderValue, _actualCellValue);
-                            _isSuccess &= _result;
+                            _result = _workingHours.RemoveHour(_actualCellRowHeaderValue, _date);
+                            continue;
                         }
+                        else
+                        {
+                            if (Double.TryParse(cell.Value.ToString(), out _resultOfParse))
+                            {
+                                _actualCellValue = Convert.ToDouble(cell.Value);
+                            }
+                        }
+
+                        _result = _workingHours.SaveHour(_actualCellRowHeaderValue, _date, _actualCellValue);
+
+                        _isSuccess &= _result;
                     }
 
+                    UpdateWorkingHoursTable();
+
+                    if (_isSuccess)
+                    {
+                        MessageBox.Show(Texts.InformationMessages.SuccessfulSave, Texts.Captions.SuccessfulSave, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
 
-                if (_isSuccess)
-                {
-                    MessageBox.Show(Texts.InformationMessages.SuccessfulSave, Texts.Captions.SuccessfulSave, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                btnSave.Enabled = false;
             }
             catch (Exception error)
             {
@@ -346,13 +437,16 @@ namespace emira.GUI
             if (!double.TryParse(e.FormattedValue.ToString(), out ignored))
             {
                 DataGridViewCell cell = dgvWorkingHours.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                cell.ErrorText = Texts.ErrorMessages.NumericField;
+                cell.ErrorText = Texts.ErrorMessages.NumbericCell;
 
             }
             else if (double.Parse(e.FormattedValue.ToString()) > 24.0)
             {
-                DataGridViewCell cell = dgvWorkingHours.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                cell.ErrorText = Texts.ErrorMessages.NumericField;
+                if (e.ColumnIndex != dgvWorkingHours.ColumnCount - 1 && e.RowIndex != dgvWorkingHours.RowCount - 1)
+                {
+                    DataGridViewCell cell = dgvWorkingHours.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                    cell.ErrorText = Texts.ErrorMessages.BiggerThan24Hours;
+                }
             }
             else
             {
@@ -386,13 +480,111 @@ namespace emira.GUI
             if (WindowState == FormWindowState.Normal)
             {
                 WindowState = FormWindowState.Maximized;
+                dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 Invalidate();
             }
             else
             {
                 WindowState = FormWindowState.Normal;
+                dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
                 Invalidate();
             }
+        }
+
+        private void dgvWorkingHours_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            btnSave.Enabled = true;
+            DataGridViewCell _changedCell = dgvWorkingHours.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            if (string.IsNullOrEmpty(_changedCell.ErrorText))
+            {
+                _changedCells.Add(_changedCell);
+            }
+
+            UpdateTotalHours();
+
+        }
+
+        private void dgvWorkingHours_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                foreach (DataGridViewCell cell in dgvWorkingHours.SelectedCells)
+                {                 
+                    cell.Value = cell.DefaultNewRowValue;
+                    DataGridViewCell _changedCell = dgvWorkingHours.Rows[cell.RowIndex].Cells[cell.ColumnIndex];
+                    if (string.IsNullOrEmpty(_changedCell.ErrorText))
+                    {
+                        _changedCells.Add(_changedCell);
+                    }
+                }
+                e.Handled = true;
+                btnSave.Enabled = true;
+                return;
+            }
+
+            if (e.KeyCode == Keys.V && e.Modifiers == Keys.Control)
+            {
+                foreach (DataGridViewCell cell in dgvWorkingHours.SelectedCells)
+                {
+                    cell.Value = Clipboard.GetText();
+                    DataGridViewCell _changedCell = dgvWorkingHours.Rows[cell.RowIndex].Cells[cell.ColumnIndex];
+                    if (string.IsNullOrEmpty(_changedCell.ErrorText))
+                    {
+                        _changedCells.Add(_changedCell);
+                    }
+                }
+                e.Handled = true;
+                btnSave.Enabled = true;
+                return;
+            }
+
+            if (e.KeyCode == Keys.X && e.Modifiers == Keys.Control)
+            {
+                foreach (DataGridViewCell cell in dgvWorkingHours.SelectedCells)
+                {
+                    Clipboard.SetText(cell.Value.ToString());
+                    cell.Value = cell.DefaultNewRowValue;
+                    DataGridViewCell _changedCell = dgvWorkingHours.Rows[cell.RowIndex].Cells[cell.ColumnIndex];
+                    if (string.IsNullOrEmpty(_changedCell.ErrorText))
+                    {
+                        _changedCells.Add(_changedCell);
+                    }
+                }
+                e.Handled = true;
+                btnSave.Enabled = true;
+                return;
+            }
+
+        }
+
+        private void cbYearWithMonth_DropDownClosed(object sender, EventArgs e)
+        {
+            UpdateWorkingHoursTable();
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            int _selectedIndex = cbYearWithMonth.SelectedIndex;
+            if (cbYearWithMonth.MaxDropDownItems != (_selectedIndex + 1))
+            {
+                cbYearWithMonth.SelectedIndex = _selectedIndex + 1;
+                UpdateWorkingHoursTable();
+            }
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            int _selectedIndex = cbYearWithMonth.SelectedIndex;
+            if (_selectedIndex != 0)
+            {
+                cbYearWithMonth.SelectedIndex = _selectedIndex - 1;
+                UpdateWorkingHoursTable();
+            }
+        }
+
+        private void cbYearWithMonth_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }

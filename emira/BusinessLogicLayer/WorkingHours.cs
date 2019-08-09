@@ -1,4 +1,5 @@
 ﻿using emira.DataAccessLayer;
+using emira.HelperFunctions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,6 +13,14 @@ namespace emira.BusinessLogicLayer
         DatabaseHandler _DBHandler;
         DataTable _dataTable;
         DateTime _today = DateTime.UtcNow;
+
+        public DataTable GetTasksByMonth(string date)
+        {
+            _DBHandler = new DatabaseHandler();
+            _dataTable = new DataTable();
+            _dataTable = _DBHandler.GetTasksByMonth(date);
+            return _dataTable;
+        }
 
         /// <summary>
         /// Get the selected task(s) from the DB
@@ -40,60 +49,65 @@ namespace emira.BusinessLogicLayer
             string _date = string.Empty;
 
             _index = taskID.IndexOf(' ');
-            _taskID = taskID.Remove(_index + 1);
+            _taskID = taskID.Remove(_index);
 
             result = _DBHandler.GetHoursFromCathalogue(_taskID, date);
             return result;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="beginOfTheWeek"></param>
-        /// <param name="endOfTheWeek"></param>
-        public void DeleteHoursOfTheWeek(string beginOfTheWeek, string endOfTheWeek)
-        {
-            int _result = 0;
-            int _index = 0;
-            string _beginDate = string.Empty;
-            string _endDate = string.Empty;
-            _DBHandler = new DatabaseHandler();
-
-            _result = _DBHandler.DeleteWeek(_beginDate, _endDate);
-        }
-
-        public bool SaveHour(string taskID, string date, double numberOfHours)
+        public bool SaveHour(string task, string date, double numberOfHours)
         {
             bool _isSuccess = false;
             int _result = 0;
-
-            int _index = 0;
-            string _sID = string.Empty;
-            int _iID = 0;
-            string _taskID = string.Empty;
-            string _date = string.Empty;
-
-
+            int _rowid = 0;
+            int updatedRow = 0;
             _DBHandler = new DatabaseHandler();
 
-            _index = taskID.IndexOf(' ');
-            _taskID = taskID.Remove(_index + 1);
+            // Get taskID
+            int _index = 0;
+            string _taskID = string.Empty;
 
-            // Cut the last point from the date
-            _index = date.IndexOf('(');
-            _date = date.Remove(_index - 4);
+            _index = task.IndexOf(' ');
+            _taskID = task.Remove(_index);
+            
+            // If it is update
+            _rowid = _DBHandler.IsRecordExist(_taskID, date);
 
-            // Replace the last two points to minus (SQL date format)
-            _date = _date.Replace(". ", "-");
-
-            _sID = _DBHandler.GetMaxIDFromCathalogue();
-            if (string.IsNullOrEmpty(_sID))
+            if (_rowid > 0)
             {
-                _sID = "0";
+                Dictionary<string, string> data = new Dictionary<string, string>();
+                data.Add(Texts.CatalogProperties.NumberOfHours, numberOfHours.ToString());
+
+                _isSuccess = _DBHandler.ModifyHourInCathalog(data, _rowid.ToString(), updatedRow);
+
+                return _isSuccess;
             }
-            _iID = Convert.ToInt32(_sID);
-            _result = _DBHandler.SaveHourToCathalogue(_iID + 1, _taskID, _date, numberOfHours);
+
+            _result = _DBHandler.SaveHourToCathalog(_taskID, date, numberOfHours);
+
             if (_result > 0) { _isSuccess = true; }
+
+            return _isSuccess;
+        }
+
+        public bool RemoveHour(string task, string date)
+        {
+            bool _isSuccess = false;
+            int _result = 0;
+            _DBHandler = new DatabaseHandler();
+
+            // Get taskID
+            int _index = 0;
+            string _taskID = string.Empty;
+
+            _index = task.IndexOf(' ');
+            _taskID = task.Remove(_index);
+
+            // Remove the record from the DB
+           _result = _DBHandler.DeleteHourFromCatalog(_taskID, date);
+
+            if (_result > 0) { _isSuccess = true; }
+
             return _isSuccess;
         }
 
@@ -128,7 +142,6 @@ namespace emira.BusinessLogicLayer
             }
 
             return Dates;
-
         }
 
         public string GetActualMonth()
@@ -153,11 +166,11 @@ namespace emira.BusinessLogicLayer
             return sb.ToString();
         }
 
-        public int GetDaysOfMonth()
+        public int GetDaysOfMonth(int year, int month)
         {
             int _DayOfMonth = 0;
 
-            _DayOfMonth = DateTime.DaysInMonth(_today.Year, _today.Month);
+            _DayOfMonth = DateTime.DaysInMonth(year, month);
 
             return _DayOfMonth;
         }

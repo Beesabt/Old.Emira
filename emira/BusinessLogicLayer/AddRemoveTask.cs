@@ -25,5 +25,11 @@ namespace emira.BusinessLogicLayer
             _DBHandler = new DatabaseHandler();
             _DBHandler.ModifyTask(data, Texts.TaskProperties.TaskID, _taskGroupID, updatedRow: 0);           
         }
+
+        public void DeleteHours(string date, string taskID)
+        {
+            _DBHandler = new DatabaseHandler();
+            _DBHandler.DeleteHours(date, taskID);
+        }
     }
 }
