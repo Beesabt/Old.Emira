@@ -586,5 +586,21 @@ namespace emira.GUI
         {
             e.Handled = true;
         }
+
+        private void pHeader_DoubleClick(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal)
+            {
+                WindowState = FormWindowState.Maximized;
+                dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                Invalidate();
+            }
+            else
+            {
+                WindowState = FormWindowState.Normal;
+                dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+                Invalidate();
+            }
+        }
     }
 }
