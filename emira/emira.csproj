@@ -96,24 +96,12 @@
     <Compile Include="BusinessLogicLayer\Settings.cs" />
     <Compile Include="HelperFunctions\Texts.cs" />
     <Compile Include="DataAccessLayer\DatabaseHandler.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GUI\CustomMsgBox.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\CustomMsgBox.Designer.cs">
       <DependentUpon>CustomMsgBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\Dummy.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\Dummy.Designer.cs">
-      <DependentUpon>Dummy.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\EmailChange.cs">
       <SubType>UserControl</SubType>
