@@ -87,9 +87,8 @@
             this.pHeader.Controls.Add(this.btnExit);
             this.pHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pHeader.Location = new System.Drawing.Point(0, 0);
-            this.pHeader.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pHeader.Name = "pHeader";
-            this.pHeader.Size = new System.Drawing.Size(907, 37);
+            this.pHeader.Size = new System.Drawing.Size(680, 30);
             this.pHeader.TabIndex = 0;
             this.pHeader.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pHeader_MouseDown);
             this.pHeader.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pHeader_MouseMove);
@@ -101,9 +100,8 @@
             this.lDataChange.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lDataChange.ForeColor = System.Drawing.Color.White;
             this.lDataChange.Location = new System.Drawing.Point(0, 0);
-            this.lDataChange.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lDataChange.Name = "lDataChange";
-            this.lDataChange.Size = new System.Drawing.Size(171, 37);
+            this.lDataChange.Size = new System.Drawing.Size(134, 30);
             this.lDataChange.TabIndex = 4;
             this.lDataChange.Text = "Data Change";
             // 
@@ -112,14 +110,14 @@
             this.btnExit.BackColor = System.Drawing.Color.Transparent;
             this.btnExit.BackgroundImage = global::emira.Properties.Resources.close_icon_white_26;
             this.btnExit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnExit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExit.Location = new System.Drawing.Point(840, 0);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnExit.Location = new System.Drawing.Point(630, 0);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(67, 37);
+            this.btnExit.Size = new System.Drawing.Size(50, 30);
             this.btnExit.TabIndex = 3;
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -132,11 +130,9 @@
             this.gbPersonalInformation.Controls.Add(this.tbName);
             this.gbPersonalInformation.Controls.Add(this.lName);
             this.gbPersonalInformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.gbPersonalInformation.Location = new System.Drawing.Point(40, 66);
-            this.gbPersonalInformation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbPersonalInformation.Location = new System.Drawing.Point(30, 54);
             this.gbPersonalInformation.Name = "gbPersonalInformation";
-            this.gbPersonalInformation.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.gbPersonalInformation.Size = new System.Drawing.Size(827, 140);
+            this.gbPersonalInformation.Size = new System.Drawing.Size(620, 114);
             this.gbPersonalInformation.TabIndex = 1;
             this.gbPersonalInformation.TabStop = false;
             this.gbPersonalInformation.Text = "Personal Information";
@@ -145,10 +141,9 @@
             // 
             this.rbFemale.AutoSize = true;
             this.rbFemale.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbFemale.Location = new System.Drawing.Point(296, 95);
-            this.rbFemale.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbFemale.Location = new System.Drawing.Point(222, 77);
             this.rbFemale.Name = "rbFemale";
-            this.rbFemale.Size = new System.Drawing.Size(93, 29);
+            this.rbFemale.Size = new System.Drawing.Size(75, 24);
             this.rbFemale.TabIndex = 9;
             this.rbFemale.TabStop = true;
             this.rbFemale.Text = "Female";
@@ -159,10 +154,9 @@
             // 
             this.rbMale.AutoSize = true;
             this.rbMale.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbMale.Location = new System.Drawing.Point(173, 95);
-            this.rbMale.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbMale.Location = new System.Drawing.Point(130, 77);
             this.rbMale.Name = "rbMale";
-            this.rbMale.Size = new System.Drawing.Size(75, 29);
+            this.rbMale.Size = new System.Drawing.Size(60, 24);
             this.rbMale.TabIndex = 8;
             this.rbMale.TabStop = true;
             this.rbMale.Text = "Male";
@@ -173,21 +167,19 @@
             // 
             this.lGender.AutoSize = true;
             this.lGender.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lGender.Location = new System.Drawing.Point(36, 100);
-            this.lGender.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lGender.Location = new System.Drawing.Point(27, 81);
             this.lGender.Name = "lGender";
-            this.lGender.Size = new System.Drawing.Size(78, 25);
+            this.lGender.Size = new System.Drawing.Size(60, 20);
             this.lGender.TabIndex = 7;
             this.lGender.Text = "Gender:";
             // 
             // tbName
             // 
             this.tbName.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbName.Location = new System.Drawing.Point(132, 43);
-            this.tbName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbName.Location = new System.Drawing.Point(99, 35);
             this.tbName.MaxLength = 800;
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(680, 32);
+            this.tbName.Size = new System.Drawing.Size(511, 27);
             this.tbName.TabIndex = 4;
             this.tbName.TextChanged += new System.EventHandler(this.tbName_TextChanged);
             // 
@@ -195,10 +187,9 @@
             // 
             this.lName.AutoSize = true;
             this.lName.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lName.Location = new System.Drawing.Point(36, 46);
-            this.lName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lName.Location = new System.Drawing.Point(27, 37);
             this.lName.Name = "lName";
-            this.lName.Size = new System.Drawing.Size(66, 25);
+            this.lName.Size = new System.Drawing.Size(52, 20);
             this.lName.TabIndex = 3;
             this.lName.Text = "Name:";
             // 
@@ -215,11 +206,9 @@
             this.gbCompanyRelatedInformation.Controls.Add(this.lCostCenter);
             this.gbCompanyRelatedInformation.Controls.Add(this.lCompany);
             this.gbCompanyRelatedInformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.gbCompanyRelatedInformation.Location = new System.Drawing.Point(40, 214);
-            this.gbCompanyRelatedInformation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbCompanyRelatedInformation.Location = new System.Drawing.Point(30, 174);
             this.gbCompanyRelatedInformation.Name = "gbCompanyRelatedInformation";
-            this.gbCompanyRelatedInformation.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.gbCompanyRelatedInformation.Size = new System.Drawing.Size(827, 282);
+            this.gbCompanyRelatedInformation.Size = new System.Drawing.Size(620, 229);
             this.gbCompanyRelatedInformation.TabIndex = 2;
             this.gbCompanyRelatedInformation.TabStop = false;
             this.gbCompanyRelatedInformation.Text = "Company Related Information";
@@ -227,8 +216,7 @@
             // nupWorkingHours
             // 
             this.nupWorkingHours.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupWorkingHours.Location = new System.Drawing.Point(215, 218);
-            this.nupWorkingHours.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nupWorkingHours.Location = new System.Drawing.Point(161, 177);
             this.nupWorkingHours.Maximum = new decimal(new int[] {
             12,
             0,
@@ -240,7 +228,7 @@
             0,
             0});
             this.nupWorkingHours.Name = "nupWorkingHours";
-            this.nupWorkingHours.Size = new System.Drawing.Size(93, 32);
+            this.nupWorkingHours.Size = new System.Drawing.Size(70, 27);
             this.nupWorkingHours.TabIndex = 28;
             this.nupWorkingHours.Value = new decimal(new int[] {
             8,
@@ -253,21 +241,19 @@
             // 
             this.lWorkingHours.AutoSize = true;
             this.lWorkingHours.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lWorkingHours.Location = new System.Drawing.Point(36, 226);
-            this.lWorkingHours.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lWorkingHours.Location = new System.Drawing.Point(27, 184);
             this.lWorkingHours.Name = "lWorkingHours";
-            this.lWorkingHours.Size = new System.Drawing.Size(140, 25);
+            this.lWorkingHours.Size = new System.Drawing.Size(107, 20);
             this.lWorkingHours.TabIndex = 18;
             this.lWorkingHours.Text = "Working hours:";
             // 
             // tbRegisterNumber
             // 
             this.tbRegisterNumber.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbRegisterNumber.Location = new System.Drawing.Point(215, 47);
-            this.tbRegisterNumber.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbRegisterNumber.Location = new System.Drawing.Point(161, 38);
             this.tbRegisterNumber.MaxLength = 100;
             this.tbRegisterNumber.Name = "tbRegisterNumber";
-            this.tbRegisterNumber.Size = new System.Drawing.Size(597, 32);
+            this.tbRegisterNumber.Size = new System.Drawing.Size(449, 27);
             this.tbRegisterNumber.TabIndex = 16;
             this.tbRegisterNumber.TextChanged += new System.EventHandler(this.tbRegisterNumber_TextChanged);
             // 
@@ -275,43 +261,39 @@
             // 
             this.lRegisterNumber.AutoSize = true;
             this.lRegisterNumber.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lRegisterNumber.Location = new System.Drawing.Point(36, 50);
-            this.lRegisterNumber.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lRegisterNumber.Location = new System.Drawing.Point(27, 41);
             this.lRegisterNumber.Name = "lRegisterNumber";
-            this.lRegisterNumber.Size = new System.Drawing.Size(154, 25);
+            this.lRegisterNumber.Size = new System.Drawing.Size(121, 20);
             this.lRegisterNumber.TabIndex = 15;
             this.lRegisterNumber.Text = "Register number:";
             // 
             // tbPosition
             // 
             this.tbPosition.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPosition.Location = new System.Drawing.Point(215, 176);
-            this.tbPosition.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbPosition.Location = new System.Drawing.Point(161, 143);
             this.tbPosition.MaxLength = 2000;
             this.tbPosition.Name = "tbPosition";
-            this.tbPosition.Size = new System.Drawing.Size(597, 32);
+            this.tbPosition.Size = new System.Drawing.Size(449, 27);
             this.tbPosition.TabIndex = 14;
             this.tbPosition.TextChanged += new System.EventHandler(this.tbPosition_TextChanged);
             // 
             // tbCostCenter
             // 
             this.tbCostCenter.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbCostCenter.Location = new System.Drawing.Point(215, 133);
-            this.tbCostCenter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbCostCenter.Location = new System.Drawing.Point(161, 108);
             this.tbCostCenter.MaxLength = 2000;
             this.tbCostCenter.Name = "tbCostCenter";
-            this.tbCostCenter.Size = new System.Drawing.Size(597, 32);
+            this.tbCostCenter.Size = new System.Drawing.Size(449, 27);
             this.tbCostCenter.TabIndex = 13;
             this.tbCostCenter.TextChanged += new System.EventHandler(this.tbCostCenter_TextChanged);
             // 
             // tbCompany
             // 
             this.tbCompany.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbCompany.Location = new System.Drawing.Point(215, 90);
-            this.tbCompany.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbCompany.Location = new System.Drawing.Point(161, 73);
             this.tbCompany.MaxLength = 2000;
             this.tbCompany.Name = "tbCompany";
-            this.tbCompany.Size = new System.Drawing.Size(597, 32);
+            this.tbCompany.Size = new System.Drawing.Size(449, 27);
             this.tbCompany.TabIndex = 10;
             this.tbCompany.TextChanged += new System.EventHandler(this.tbCompany_TextChanged);
             // 
@@ -319,10 +301,9 @@
             // 
             this.lPosition.AutoSize = true;
             this.lPosition.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lPosition.Location = new System.Drawing.Point(36, 180);
-            this.lPosition.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lPosition.Location = new System.Drawing.Point(27, 146);
             this.lPosition.Name = "lPosition";
-            this.lPosition.Size = new System.Drawing.Size(83, 25);
+            this.lPosition.Size = new System.Drawing.Size(64, 20);
             this.lPosition.TabIndex = 12;
             this.lPosition.Text = "Position:";
             // 
@@ -330,10 +311,9 @@
             // 
             this.lCostCenter.AutoSize = true;
             this.lCostCenter.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lCostCenter.Location = new System.Drawing.Point(36, 137);
-            this.lCostCenter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lCostCenter.Location = new System.Drawing.Point(27, 111);
             this.lCostCenter.Name = "lCostCenter";
-            this.lCostCenter.Size = new System.Drawing.Size(111, 25);
+            this.lCostCenter.Size = new System.Drawing.Size(86, 20);
             this.lCostCenter.TabIndex = 11;
             this.lCostCenter.Text = "Cost center:";
             // 
@@ -341,10 +321,9 @@
             // 
             this.lCompany.AutoSize = true;
             this.lCompany.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lCompany.Location = new System.Drawing.Point(36, 94);
-            this.lCompany.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lCompany.Location = new System.Drawing.Point(27, 76);
             this.lCompany.Name = "lCompany";
-            this.lCompany.Size = new System.Drawing.Size(96, 25);
+            this.lCompany.Size = new System.Drawing.Size(75, 20);
             this.lCompany.TabIndex = 10;
             this.lCompany.Text = "Company:";
             // 
@@ -370,11 +349,9 @@
             this.gbHolidayRelatedInformation.Controls.Add(this.lDateOfStart);
             this.gbHolidayRelatedInformation.Controls.Add(this.lDateOfBirth);
             this.gbHolidayRelatedInformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.gbHolidayRelatedInformation.Location = new System.Drawing.Point(40, 503);
-            this.gbHolidayRelatedInformation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbHolidayRelatedInformation.Location = new System.Drawing.Point(30, 409);
             this.gbHolidayRelatedInformation.Name = "gbHolidayRelatedInformation";
-            this.gbHolidayRelatedInformation.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.gbHolidayRelatedInformation.Size = new System.Drawing.Size(827, 405);
+            this.gbHolidayRelatedInformation.Size = new System.Drawing.Size(620, 329);
             this.gbHolidayRelatedInformation.TabIndex = 2;
             this.gbHolidayRelatedInformation.TabStop = false;
             this.gbHolidayRelatedInformation.Text = "Holiday Related Information";
@@ -382,10 +359,9 @@
             // cbYesHealthDamage
             // 
             this.cbYesHealthDamage.AutoSize = true;
-            this.cbYesHealthDamage.Location = new System.Drawing.Point(520, 348);
-            this.cbYesHealthDamage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbYesHealthDamage.Location = new System.Drawing.Point(390, 283);
             this.cbYesHealthDamage.Name = "cbYesHealthDamage";
-            this.cbYesHealthDamage.Size = new System.Drawing.Size(64, 28);
+            this.cbYesHealthDamage.Size = new System.Drawing.Size(52, 22);
             this.cbYesHealthDamage.TabIndex = 42;
             this.cbYesHealthDamage.Text = "Yes";
             this.cbYesHealthDamage.UseVisualStyleBackColor = true;
@@ -394,10 +370,9 @@
             // cbNoHealthDamage
             // 
             this.cbNoHealthDamage.AutoSize = true;
-            this.cbNoHealthDamage.Location = new System.Drawing.Point(413, 348);
-            this.cbNoHealthDamage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbNoHealthDamage.Location = new System.Drawing.Point(310, 283);
             this.cbNoHealthDamage.Name = "cbNoHealthDamage";
-            this.cbNoHealthDamage.Size = new System.Drawing.Size(57, 28);
+            this.cbNoHealthDamage.Size = new System.Drawing.Size(47, 22);
             this.cbNoHealthDamage.TabIndex = 41;
             this.cbNoHealthDamage.Text = "No";
             this.cbNoHealthDamage.UseVisualStyleBackColor = true;
@@ -406,10 +381,9 @@
             // cbYesDisabledChild
             // 
             this.cbYesDisabledChild.AutoSize = true;
-            this.cbYesDisabledChild.Location = new System.Drawing.Point(520, 202);
-            this.cbYesDisabledChild.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbYesDisabledChild.Location = new System.Drawing.Point(390, 164);
             this.cbYesDisabledChild.Name = "cbYesDisabledChild";
-            this.cbYesDisabledChild.Size = new System.Drawing.Size(64, 28);
+            this.cbYesDisabledChild.Size = new System.Drawing.Size(52, 22);
             this.cbYesDisabledChild.TabIndex = 40;
             this.cbYesDisabledChild.Text = "Yes";
             this.cbYesDisabledChild.UseVisualStyleBackColor = true;
@@ -419,10 +393,9 @@
             // cbNoDisabledChild
             // 
             this.cbNoDisabledChild.AutoSize = true;
-            this.cbNoDisabledChild.Location = new System.Drawing.Point(413, 202);
-            this.cbNoDisabledChild.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbNoDisabledChild.Location = new System.Drawing.Point(310, 164);
             this.cbNoDisabledChild.Name = "cbNoDisabledChild";
-            this.cbNoDisabledChild.Size = new System.Drawing.Size(57, 28);
+            this.cbNoDisabledChild.Size = new System.Drawing.Size(47, 22);
             this.cbNoDisabledChild.TabIndex = 39;
             this.cbNoDisabledChild.Text = "No";
             this.cbNoDisabledChild.UseVisualStyleBackColor = true;
@@ -432,10 +405,9 @@
             // cbYesChild
             // 
             this.cbYesChild.AutoSize = true;
-            this.cbYesChild.Location = new System.Drawing.Point(520, 106);
-            this.cbYesChild.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbYesChild.Location = new System.Drawing.Point(390, 86);
             this.cbYesChild.Name = "cbYesChild";
-            this.cbYesChild.Size = new System.Drawing.Size(64, 28);
+            this.cbYesChild.Size = new System.Drawing.Size(52, 22);
             this.cbYesChild.TabIndex = 38;
             this.cbYesChild.Text = "Yes";
             this.cbYesChild.UseVisualStyleBackColor = true;
@@ -444,10 +416,9 @@
             // cbNoChild
             // 
             this.cbNoChild.AutoSize = true;
-            this.cbNoChild.Location = new System.Drawing.Point(413, 106);
-            this.cbNoChild.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbNoChild.Location = new System.Drawing.Point(310, 86);
             this.cbNoChild.Name = "cbNoChild";
-            this.cbNoChild.Size = new System.Drawing.Size(57, 28);
+            this.cbNoChild.Size = new System.Drawing.Size(47, 22);
             this.cbNoChild.TabIndex = 37;
             this.cbNoChild.Text = "No";
             this.cbNoChild.UseVisualStyleBackColor = true;
@@ -457,10 +428,9 @@
             // 
             this.lHealthDamage.AutoSize = true;
             this.lHealthDamage.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lHealthDamage.Location = new System.Drawing.Point(37, 351);
-            this.lHealthDamage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lHealthDamage.Location = new System.Drawing.Point(28, 285);
             this.lHealthDamage.Name = "lHealthDamage";
-            this.lHealthDamage.Size = new System.Drawing.Size(298, 25);
+            this.lHealthDamage.Size = new System.Drawing.Size(235, 20);
             this.lHealthDamage.TabIndex = 34;
             this.lHealthDamage.Text = "Do you have 50% health damage?";
             // 
@@ -468,10 +438,9 @@
             // 
             this.lDoYouHaveDiasabledChild.AutoSize = true;
             this.lDoYouHaveDiasabledChild.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lDoYouHaveDiasabledChild.Location = new System.Drawing.Point(37, 202);
-            this.lDoYouHaveDiasabledChild.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lDoYouHaveDiasabledChild.Location = new System.Drawing.Point(28, 164);
             this.lDoYouHaveDiasabledChild.Name = "lDoYouHaveDiasabledChild";
-            this.lDoYouHaveDiasabledChild.Size = new System.Drawing.Size(248, 25);
+            this.lDoYouHaveDiasabledChild.Size = new System.Drawing.Size(196, 20);
             this.lDoYouHaveDiasabledChild.TabIndex = 31;
             this.lDoYouHaveDiasabledChild.Text = "Do you have disabled child?";
             this.lDoYouHaveDiasabledChild.Visible = false;
@@ -480,25 +449,23 @@
             // 
             this.lDoYouHaveChild.AutoSize = true;
             this.lDoYouHaveChild.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lDoYouHaveChild.Location = new System.Drawing.Point(36, 108);
-            this.lDoYouHaveChild.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lDoYouHaveChild.Location = new System.Drawing.Point(27, 88);
             this.lDoYouHaveChild.Name = "lDoYouHaveChild";
-            this.lDoYouHaveChild.Size = new System.Drawing.Size(187, 25);
+            this.lDoYouHaveChild.Size = new System.Drawing.Size(147, 20);
             this.lDoYouHaveChild.TabIndex = 28;
             this.lDoYouHaveChild.Text = "Do you have a child?";
             // 
             // nupNumberOfNewBornBabies
             // 
             this.nupNumberOfNewBornBabies.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupNumberOfNewBornBabies.Location = new System.Drawing.Point(413, 297);
-            this.nupNumberOfNewBornBabies.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nupNumberOfNewBornBabies.Location = new System.Drawing.Point(310, 241);
             this.nupNumberOfNewBornBabies.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
             this.nupNumberOfNewBornBabies.Name = "nupNumberOfNewBornBabies";
-            this.nupNumberOfNewBornBabies.Size = new System.Drawing.Size(93, 32);
+            this.nupNumberOfNewBornBabies.Size = new System.Drawing.Size(70, 27);
             this.nupNumberOfNewBornBabies.TabIndex = 27;
             this.nupNumberOfNewBornBabies.Visible = false;
             this.nupNumberOfNewBornBabies.ValueChanged += new System.EventHandler(this.nupNumberOfNewBornBabies_ValueChanged);
@@ -507,10 +474,9 @@
             // 
             this.lNumberOfNewBornBabies.AutoSize = true;
             this.lNumberOfNewBornBabies.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lNumberOfNewBornBabies.Location = new System.Drawing.Point(37, 299);
-            this.lNumberOfNewBornBabies.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lNumberOfNewBornBabies.Location = new System.Drawing.Point(28, 243);
             this.lNumberOfNewBornBabies.Name = "lNumberOfNewBornBabies";
-            this.lNumberOfNewBornBabies.Size = new System.Drawing.Size(252, 25);
+            this.lNumberOfNewBornBabies.Size = new System.Drawing.Size(198, 20);
             this.lNumberOfNewBornBabies.TabIndex = 26;
             this.lNumberOfNewBornBabies.Text = "Number of new born babies:";
             this.lNumberOfNewBornBabies.Visible = false;
@@ -518,15 +484,14 @@
             // nupNumberOfDisabledChildren
             // 
             this.nupNumberOfDisabledChildren.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupNumberOfDisabledChildren.Location = new System.Drawing.Point(413, 246);
-            this.nupNumberOfDisabledChildren.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nupNumberOfDisabledChildren.Location = new System.Drawing.Point(310, 200);
             this.nupNumberOfDisabledChildren.Maximum = new decimal(new int[] {
             30,
             0,
             0,
             0});
             this.nupNumberOfDisabledChildren.Name = "nupNumberOfDisabledChildren";
-            this.nupNumberOfDisabledChildren.Size = new System.Drawing.Size(93, 32);
+            this.nupNumberOfDisabledChildren.Size = new System.Drawing.Size(70, 27);
             this.nupNumberOfDisabledChildren.TabIndex = 25;
             this.nupNumberOfDisabledChildren.Visible = false;
             this.nupNumberOfDisabledChildren.ValueChanged += new System.EventHandler(this.nupNumberOfDisabledChildren_ValueChanged);
@@ -534,15 +499,14 @@
             // nupNumberOfChildren
             // 
             this.nupNumberOfChildren.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupNumberOfChildren.Location = new System.Drawing.Point(413, 153);
-            this.nupNumberOfChildren.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nupNumberOfChildren.Location = new System.Drawing.Point(310, 124);
             this.nupNumberOfChildren.Maximum = new decimal(new int[] {
             30,
             0,
             0,
             0});
             this.nupNumberOfChildren.Name = "nupNumberOfChildren";
-            this.nupNumberOfChildren.Size = new System.Drawing.Size(93, 32);
+            this.nupNumberOfChildren.Size = new System.Drawing.Size(70, 27);
             this.nupNumberOfChildren.TabIndex = 24;
             this.nupNumberOfChildren.Visible = false;
             this.nupNumberOfChildren.ValueChanged += new System.EventHandler(this.nupNumberOfChildren_ValueChanged);
@@ -551,10 +515,9 @@
             // 
             this.dtpDateOfStart.CustomFormat = "yyyy. hh. nn.";
             this.dtpDateOfStart.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.dtpDateOfStart.Location = new System.Drawing.Point(573, 38);
-            this.dtpDateOfStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpDateOfStart.Location = new System.Drawing.Point(430, 31);
             this.dtpDateOfStart.Name = "dtpDateOfStart";
-            this.dtpDateOfStart.Size = new System.Drawing.Size(221, 32);
+            this.dtpDateOfStart.Size = new System.Drawing.Size(167, 27);
             this.dtpDateOfStart.TabIndex = 23;
             this.dtpDateOfStart.ValueChanged += new System.EventHandler(this.dtpDateOfStart_ValueChanged);
             // 
@@ -562,10 +525,9 @@
             // 
             this.dtpDateOfBirth.CustomFormat = "yyyy. hh. nn.";
             this.dtpDateOfBirth.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.dtpDateOfBirth.Location = new System.Drawing.Point(173, 38);
-            this.dtpDateOfBirth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpDateOfBirth.Location = new System.Drawing.Point(130, 31);
             this.dtpDateOfBirth.Name = "dtpDateOfBirth";
-            this.dtpDateOfBirth.Size = new System.Drawing.Size(221, 32);
+            this.dtpDateOfBirth.Size = new System.Drawing.Size(167, 27);
             this.dtpDateOfBirth.TabIndex = 22;
             this.dtpDateOfBirth.ValueChanged += new System.EventHandler(this.dtpDateOfBirth_ValueChanged);
             // 
@@ -573,10 +535,9 @@
             // 
             this.lNumberOfDisabledChildren.AutoSize = true;
             this.lNumberOfDisabledChildren.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lNumberOfDisabledChildren.Location = new System.Drawing.Point(37, 249);
-            this.lNumberOfDisabledChildren.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lNumberOfDisabledChildren.Location = new System.Drawing.Point(28, 202);
             this.lNumberOfDisabledChildren.Name = "lNumberOfDisabledChildren";
-            this.lNumberOfDisabledChildren.Size = new System.Drawing.Size(337, 25);
+            this.lNumberOfDisabledChildren.Size = new System.Drawing.Size(264, 20);
             this.lNumberOfDisabledChildren.TabIndex = 18;
             this.lNumberOfDisabledChildren.Text = "Number of disabled children under 16:";
             this.lNumberOfDisabledChildren.Visible = false;
@@ -585,10 +546,9 @@
             // 
             this.lNumberOfChildren.AutoSize = true;
             this.lNumberOfChildren.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lNumberOfChildren.Location = new System.Drawing.Point(37, 155);
-            this.lNumberOfChildren.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lNumberOfChildren.Location = new System.Drawing.Point(28, 126);
             this.lNumberOfChildren.Name = "lNumberOfChildren";
-            this.lNumberOfChildren.Size = new System.Drawing.Size(261, 25);
+            this.lNumberOfChildren.Size = new System.Drawing.Size(203, 20);
             this.lNumberOfChildren.TabIndex = 17;
             this.lNumberOfChildren.Text = "Number of children under 16:";
             this.lNumberOfChildren.Visible = false;
@@ -597,10 +557,9 @@
             // 
             this.lDateOfStart.AutoSize = true;
             this.lDateOfStart.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lDateOfStart.Location = new System.Drawing.Point(439, 43);
-            this.lDateOfStart.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lDateOfStart.Location = new System.Drawing.Point(329, 35);
             this.lDateOfStart.Name = "lDateOfStart";
-            this.lDateOfStart.Size = new System.Drawing.Size(119, 25);
+            this.lDateOfStart.Size = new System.Drawing.Size(95, 20);
             this.lDateOfStart.TabIndex = 16;
             this.lDateOfStart.Text = "Date of start:";
             // 
@@ -608,26 +567,25 @@
             // 
             this.lDateOfBirth.AutoSize = true;
             this.lDateOfBirth.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lDateOfBirth.Location = new System.Drawing.Point(36, 43);
-            this.lDateOfBirth.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lDateOfBirth.Location = new System.Drawing.Point(27, 35);
             this.lDateOfBirth.Name = "lDateOfBirth";
-            this.lDateOfBirth.Size = new System.Drawing.Size(122, 25);
+            this.lDateOfBirth.Size = new System.Drawing.Size(97, 20);
             this.lDateOfBirth.TabIndex = 15;
             this.lDateOfBirth.Text = "Date of birth:";
             // 
             // btnSave
             // 
             this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(133)))), ((int)(((byte)(193)))));
+            this.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
             this.btnSave.FlatAppearance.BorderSize = 0;
             this.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
             this.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(172, 938);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSave.Location = new System.Drawing.Point(129, 762);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(193, 49);
+            this.btnSave.Size = new System.Drawing.Size(145, 40);
             this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
@@ -637,15 +595,15 @@
             // 
             this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(172)))), ((int)(((byte)(172)))));
             this.btnCancel.FlatAppearance.BorderSize = 0;
             this.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(172)))), ((int)(((byte)(172)))));
             this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(172)))), ((int)(((byte)(172)))));
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnCancel.Location = new System.Drawing.Point(484, 938);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancel.Location = new System.Drawing.Point(363, 762);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(193, 49);
+            this.btnCancel.Size = new System.Drawing.Size(145, 40);
             this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -654,11 +612,11 @@
             // PersonalDataChangePage
             // 
             this.AcceptButton = this.btnSave;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(907, 1040);
+            this.ClientSize = new System.Drawing.Size(680, 845);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.gbHolidayRelatedInformation);
@@ -666,7 +624,6 @@
             this.Controls.Add(this.gbPersonalInformation);
             this.Controls.Add(this.pHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "PersonalDataChangePage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DataChangePage";

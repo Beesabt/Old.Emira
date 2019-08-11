@@ -183,6 +183,26 @@ namespace emira.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap maximize_icon_white_26 {
+            get {
+                object obj = ResourceManager.GetObject("maximize_icon_white_26", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap minimize_icon_white_26 {
+            get {
+                object obj = ResourceManager.GetObject("minimize_icon_white_26", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap piechart_icon_white_100 {
             get {
                 object obj = ResourceManager.GetObject("piechart_icon_white_100", resourceCulture);
@@ -203,16 +223,6 @@ namespace emira.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap restore_2_icon_white_26 {
-            get {
-                object obj = ResourceManager.GetObject("restore_2_icon_white_26", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap restore_icon_white_26 {
             get {
                 object obj = ResourceManager.GetObject("restore_icon_white_26", resourceCulture);
@@ -226,26 +236,6 @@ namespace emira.Properties {
         internal static System.Drawing.Bitmap settings_icon_white_50 {
             get {
                 object obj = ResourceManager.GetObject("settings_icon_white_50", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap subtract_icon_white_26 {
-            get {
-                object obj = ResourceManager.GetObject("subtract_icon_white_26", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap subtract_icon_white_261 {
-            get {
-                object obj = ResourceManager.GetObject("subtract_icon_white_261", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
