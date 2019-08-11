@@ -69,6 +69,9 @@
             this.statusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnCancellation = new System.Windows.Forms.Button();
             this.cbYears = new System.Windows.Forms.ComboBox();
+            this.cbState = new System.Windows.Forms.ComboBox();
+            this.lYear = new System.Windows.Forms.Label();
+            this.lState = new System.Windows.Forms.Label();
             this.pHeader.SuspendLayout();
             this.pMenuBar.SuspendLayout();
             this.gbAddHoliday.SuspendLayout();
@@ -477,6 +480,9 @@
             // gbHolidaysSoFar
             // 
             this.gbHolidaysSoFar.BackColor = System.Drawing.Color.White;
+            this.gbHolidaysSoFar.Controls.Add(this.lState);
+            this.gbHolidaysSoFar.Controls.Add(this.lYear);
+            this.gbHolidaysSoFar.Controls.Add(this.cbState);
             this.gbHolidaysSoFar.Controls.Add(this.dgvHolidays);
             this.gbHolidaysSoFar.Controls.Add(this.btnCancellation);
             this.gbHolidaysSoFar.Controls.Add(this.cbYears);
@@ -566,12 +572,48 @@
             this.cbYears.FormattingEnabled = true;
             this.cbYears.IntegralHeight = false;
             this.cbYears.ItemHeight = 21;
-            this.cbYears.Location = new System.Drawing.Point(24, 40);
+            this.cbYears.Location = new System.Drawing.Point(74, 40);
             this.cbYears.MaxDropDownItems = 5;
             this.cbYears.Name = "cbYears";
             this.cbYears.Size = new System.Drawing.Size(121, 29);
             this.cbYears.TabIndex = 0;
             this.cbYears.SelectedIndexChanged += new System.EventHandler(this.cbYears_SelectedIndexChanged);
+            // 
+            // cbState
+            // 
+            this.cbState.BackColor = System.Drawing.Color.White;
+            this.cbState.DropDownHeight = 100;
+            this.cbState.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.cbState.FormattingEnabled = true;
+            this.cbState.IntegralHeight = false;
+            this.cbState.ItemHeight = 21;
+            this.cbState.Items.AddRange(new object[] {
+            "Active",
+            "Closed",
+            "All"});
+            this.cbState.Location = new System.Drawing.Point(283, 41);
+            this.cbState.MaxDropDownItems = 5;
+            this.cbState.Name = "cbState";
+            this.cbState.Size = new System.Drawing.Size(121, 29);
+            this.cbState.TabIndex = 3;
+            // 
+            // lYear
+            // 
+            this.lYear.AutoSize = true;
+            this.lYear.Location = new System.Drawing.Point(21, 48);
+            this.lYear.Name = "lYear";
+            this.lYear.Size = new System.Drawing.Size(40, 17);
+            this.lYear.TabIndex = 4;
+            this.lYear.Text = "Year:";
+            // 
+            // lState
+            // 
+            this.lState.AutoSize = true;
+            this.lState.Location = new System.Drawing.Point(230, 48);
+            this.lState.Name = "lState";
+            this.lState.Size = new System.Drawing.Size(45, 17);
+            this.lState.TabIndex = 5;
+            this.lState.Text = "State:";
             // 
             // HolidaysPage
             // 
@@ -599,6 +641,7 @@
             this.tlpHoliday.ResumeLayout(false);
             this.tlpHoliday.PerformLayout();
             this.gbHolidaysSoFar.ResumeLayout(false);
+            this.gbHolidaysSoFar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHolidays)).EndInit();
             this.ResumeLayout(false);
 
@@ -643,5 +686,8 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn CheckBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn statusDataGridViewTextBoxColumn;
+        private System.Windows.Forms.Label lState;
+        private System.Windows.Forms.Label lYear;
+        private System.Windows.Forms.ComboBox cbState;
     }
 }
