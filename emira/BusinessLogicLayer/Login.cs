@@ -7,7 +7,7 @@ namespace emira.BusinessLogicLayer
     {
         DatabaseHandler _DBHandler;
 
-        public bool LoginValidation(string Email, string Password)
+        private bool LoginValidation(string Email, string Password)
         {
             bool isSuccess = false;
             _DBHandler = new DatabaseHandler();

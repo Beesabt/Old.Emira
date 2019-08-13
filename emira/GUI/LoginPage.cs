@@ -6,7 +6,7 @@ using emira.HelperFunctions;
 
 namespace emira.GUI
 {
-    public partial class LoginPage : Form
+    partial class LoginPage : Form
     {
         bool _bTogMove;
         int _iValX;
