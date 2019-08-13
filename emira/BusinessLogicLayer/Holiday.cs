@@ -4,22 +4,142 @@ using emira.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using emira.GUI;
 
 namespace emira.BusinessLogicLayer
 {
     class Holiday
     {
+
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        CustomMsgBox _customMsgBox;
         DatabaseHandler _DBHandler;
         DataTable _dataTable;
         Person _actualPerson;
 
-        public DataTable GetHolidays(string selectedYear)
+        /// <summary>
+        /// It's fill out the dropdown list with years to the user can choose which year of holidays want to see.
+        /// </summary>
+        /// <returns>Return with the years as string list.</returns>
+        public List<string> GetYears()
         {
-            _DBHandler = new DatabaseHandler();
-            _dataTable = new DataTable();
-            _dataTable = _DBHandler.GetHolidaysFromDB(selectedYear);
+            try
+            {
+                _DBHandler = new DatabaseHandler();
+                List<string> _years = new List<string>();
+                int _year = 0;
+                int _smallestYear = 0;
+                int _actualYear = DateTime.Today.Year;
+                string _smallestUsedYear = _DBHandler.GetTheSmallestYear();
 
-            return _dataTable;
+                Int32.TryParse(_smallestUsedYear, out _smallestYear);
+
+                if (_smallestYear == 0 || _smallestYear == _actualYear)
+                {
+                    _years.Add(_actualYear.ToString());
+                    return _years;
+                }
+
+                for (int i = 0; _smallestYear < _actualYear; i++)
+                {
+                    _year = (_smallestYear + i);
+                    _years.Add(_year.ToString());
+                }
+
+                return _years;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                _customMsgBox = new CustomMsgBox();
+                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+
+                List<string> _years = new List<string>();
+                _years.Add(DateTime.Today.Year.ToString());
+                return _years;
+            }
+        }
+
+        /// <summary>
+        /// It gives back the table what the user will see in the Holidays form
+        /// </summary>
+        /// <param name="selectedYear">The selected year from the combobox</param>
+        /// <param name="selectedStatus">The selected status from the combobox</param>
+        /// <returns>The data table with all values</returns>
+        public DataTable GetHolidaysTable(string selectedYear, string selectedStatus)
+        {
+            try
+            {
+                _DBHandler = new DatabaseHandler();
+                _dataTable = new DataTable();
+                bool _selectedStatusDB = false;
+                bool _state = false;
+                int _numberOfDays = 0;
+                DateTime _startDate = new DateTime();
+                DateTime _endDate = new DateTime();
+
+                if (selectedStatus != "All" && selectedStatus == "Actual")
+                {
+                    _selectedStatusDB = true;
+                }
+
+                _dataTable = _DBHandler.GetHolidaysFromDB(selectedYear, _selectedStatusDB);
+
+                // Remove the PersonalID column because it is not necessary for the user
+                _dataTable.Columns.Remove(Texts.HolidayProperties.PersonID);
+
+                // Add checkbox column to the beginning table
+                _dataTable.Columns.Add("Select", typeof(Boolean)).SetOrdinal(0);
+
+                // Set 'Approved' or 'Storno' for holidays
+                _dataTable.Columns.Add("State", typeof(String));
+
+                foreach (DataRow row in _dataTable.Rows)
+                {
+                    if (Boolean.TryParse(row[Texts.HolidayProperties.Status].ToString(), out _state))
+                    {
+                        if (_state)
+                        {
+                            row["State"] = "Approved";
+                            row["Select"] = _state;
+                        }
+                        else
+                        {
+                            row["State"] = "Storno";
+                            row["Select"] = _state;
+                        }
+                    }
+                }
+
+                // Remove the original Status column
+                _dataTable.Columns.Remove(Texts.HolidayProperties.Status);
+
+                // Add Days column (Int32) to the end of the table
+                _dataTable.Columns.Add("Days", typeof(Int32)).SetOrdinal(3);
+
+                // Count the days
+                foreach (DataRow row in _dataTable.Rows)
+                {
+                    if (DateTime.TryParse(row[Texts.HolidayProperties.StartDate].ToString(), out _startDate))
+                    {
+                        if (DateTime.TryParse(row[Texts.HolidayProperties.EndDate].ToString(), out _endDate))
+                        {
+                            _numberOfDays = _endDate.Subtract(_startDate).Days;
+                            row["Days"] = _numberOfDays + 1;
+                        }
+                    }
+                }
+
+                return _dataTable;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                _customMsgBox = new CustomMsgBox();
+                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                _dataTable = new DataTable();
+                return _dataTable;
+            }
         }
 
         public bool AddNewHoliday(DateTime from, DateTime to)
@@ -42,8 +162,8 @@ namespace emira.BusinessLogicLayer
                 _sID = "0";
             }
 
-            _iID = Convert.ToInt32(_sID);    
-            _result = _DBHandler.AddNewHolidayToDB(_iID+1, LogInfo.UserID, _startDate, _endDate);
+            _iID = Convert.ToInt32(_sID);
+            _result = _DBHandler.AddNewHolidayToDB(_iID + 1, LogInfo.UserID, _startDate, _endDate);
             if (_result > 0) { _isSuccess = true; }
             return _isSuccess;
         }
@@ -51,47 +171,15 @@ namespace emira.BusinessLogicLayer
         public bool DeleteHoliday(string ID)
         {
             bool _isSuccess = false;
-            int updatedRow = 0;        
-            _DBHandler = new DatabaseHandler();
-            Dictionary<string, string> data = new Dictionary<string, string>();
-            data.Add(Texts.HolidayProperties.Status, "False");
-            _isSuccess = _DBHandler.UpdateHoliday(data, Texts.HolidayProperties.ID, ID, updatedRow);
+            //int updatedRow = 0;        
+            //_DBHandler = new DatabaseHandler();
+            //Dictionary<string, string> data = new Dictionary<string, string>();
+            //data.Add(Texts.HolidayProperties.Status, "False");
+            //_isSuccess = _DBHandler.UpdateHoliday(data, Texts.HolidayProperties.ID, ID, updatedRow);
             return _isSuccess;
         }
 
-        /// <summary>
-        /// It's fill out the dropdown list with years to the user can choose which year of holidays want to see.
-        /// </summary>
-        /// <returns>Return with the years as string.</returns>
-        public List<string> GetYears()
-        {
-            _DBHandler = new DatabaseHandler();
 
-            List<string> Years = new List<string>();
-            int year = 0;
-            int actualYear = DateTime.Today.Year;
-            int smallestUsedYear = _DBHandler.GetTheSmallestYear();
-
-            if (smallestUsedYear == 0)
-            {
-                Years.Add(actualYear.ToString());
-                return Years;
-            }
-           
-            if (smallestUsedYear == actualYear)
-            {
-                Years.Add(actualYear.ToString());
-                return Years;
-            }
-
-            for (int i = 0; year < actualYear; i++)
-            {
-                year = (smallestUsedYear + i);
-                Years.Add(year.ToString());
-            }
-
-            return Years;
-        }
 
         /// <summary>
         /// This method get the actual person's information related to holiday.
@@ -299,7 +387,7 @@ namespace emira.BusinessLogicLayer
             {
                 foreach (DataRow ID in _dataTable.Rows)
                 {
-                    _ID = ID[Texts.HolidayProperties.ID].ToString();
+                    // _ID = ID[Texts.HolidayProperties.ID].ToString();
                     _conflictedIDs.Add(_ID);
                 }
             }

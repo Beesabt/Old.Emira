@@ -35,23 +35,30 @@ namespace emira.GUI
 
         private void btnWorkingHours_Click(object sender, EventArgs e)
         {
-            Hide();
+            Cursor.Current = Cursors.WaitCursor;
             WorkingHoursPage _workingHoursPage = new WorkingHoursPage();
             _workingHoursPage.Show();
+            Hide();
+            Cursor.Current = Cursors.Default;
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
         {
-            Hide();
+            Cursor.Current = Cursors.WaitCursor;
             SettingsPage _settingsPage = new SettingsPage();
             _settingsPage.Show();
+            Hide();
+            Cursor.Current = Cursors.Default;
         }
 
         private void btnHolidays_Click(object sender, EventArgs e)
         {
-            Hide();
+            Cursor.Current = Cursors.WaitCursor;
             HolidaysPage _holidaysPage = new HolidaysPage();
             _holidaysPage.Show();
+            Hide();
+            Cursor.Current = Cursors.Default;
+
         }
 
         private void btnStatistics_Click(object sender, EventArgs e)

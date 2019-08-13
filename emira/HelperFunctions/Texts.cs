@@ -12,7 +12,7 @@ namespace emira.HelperFunctions
 
             public const string Holiday = "Holiday";
 
-            public const string Catalog = "Catalog";  
+            public const string Catalog = "Catalog";
         }
 
         public static class PersonProperties
@@ -21,33 +21,33 @@ namespace emira.HelperFunctions
 
             public const string Password = "Password";
 
-            public const string Email ="Email";
+            public const string Email = "Email";
 
             public const string Name = "Name";
-            
+
             public const string Gender = "Gender";
-            
+
             public const string RegisterNumber = "RegisterNumber";
-            
+
             public const string Company = "Company";
-            
+
             public const string CostCenter = "CostCenter";
-            
-            public const string Position = "Position"; 
-            
+
+            public const string Position = "Position";
+
             public const string WorkingHours = "WorkingHours";
-            
+
             public const string DateOfStart = "DateOfStart";
-            
+
             public const string DateOfBirth = "DateOfBirth";
-            
+
             public const string NumberOfChildren = "NumberOfChildren";
-            
+
             public const string NumberOfDisabledChildren = "NumberOfDisabledChildren";
-            
+
             public const string NumberOfNewBornBabies = "NumberOfNewBornBabies";
-            
-            public const string HealthDamage = "HealthDamage";             
+
+            public const string HealthDamage = "HealthDamage";
         }
 
         public static class TaskProperties
@@ -55,17 +55,17 @@ namespace emira.HelperFunctions
             public static string TaskGroupID = "TaskGroupID";
 
             public static string TaskGroupName = "TaskGroupName";
-            
+
             public static string TaskID = "TaskID";
-            
+
             public static string TaskName = "TaskName";
-            
-            public static string Selected = "Selected";            
+
+            public static string Selected = "Selected";
         }
 
         public static class HolidayProperties
         {
-            public static string ID = "ID";
+            public static string RowID = "rowid";
 
             public static string PersonID = "PersonID";
 
@@ -89,18 +89,30 @@ namespace emira.HelperFunctions
 
         public static class ErrorMessages
         {
+            #region General
+
+            // TODO : kicserélni a path-ot és dinamikussá tenni!
+            public const string SomethingUnexpectedHappened = "Something unexpected happened!\n"+
+                                                              @"Please check the log file here: C:\logs\Example.log";
+
+            #endregion
+
             #region Login
             public const string WrongEmailPassword = "E-mail or password is wrong.";
 
             public const string FieldIsEmpty = " field is empty.";
 
-            public const string DefaultEmailOrPassword = 
+            public const string DefaultEmailOrPassword =
                 "You use default e-mail or password, please change it in the Settings.\n" +
                 "This message appears until you change the default login parameters.";
 
             #endregion
 
+            #region PersonalInformation
+
             public const string UserIDDoesNotExistOrTableIsEmpty = " table is empty or the user with the ID does not exist!";
+
+            #endregion
 
             #region PersonalDataChange
 
@@ -136,7 +148,7 @@ namespace emira.HelperFunctions
 
             public const string NewPasswordSameAsOldPassword = "The new password can not be the old password.";
 
-            public const string NewPasswordIsNotAllowed= "The new password does not following the rules of the password.\n" +
+            public const string NewPasswordIsNotAllowed = "The new password does not following the rules of the password.\n" +
                                                           "If you need information from the rules then move your mouse above the information icon.";
 
             #endregion
@@ -155,7 +167,7 @@ namespace emira.HelperFunctions
 
             #region TaskModification
 
-            public static string CheckValuesOfFields = 
+            public static string CheckValuesOfFields =
                          "The value of the field is not proper.\r\n\r\nPossible reasons:\r\n" +
                          "* The Group name already exists with another Group ID\r\n" +
                          "* The Group ID already exists with another Group name\r\n" +
@@ -176,7 +188,11 @@ namespace emira.HelperFunctions
 
             #endregion
 
+            #region WorkingHours
+
             public static string ErrorDuringSave = "There was an error during save, try again.";
+
+            #endregion
         }
 
         public static class InformationMessages
@@ -184,9 +200,9 @@ namespace emira.HelperFunctions
             public const string PasswordChanged = "Password changed successfully.";
 
 
-            public const string RulesOfNewPassword = "The new password must contain:\n"+
-                                                      "- Capital and small letter\n"+
-                                                      "- At least one number\n"+
+            public const string RulesOfNewPassword = "The new password must contain:\n" +
+                                                      "- Capital and small letter\n" +
+                                                      "- At least one number\n" +
                                                       "- Required long is 8 letters";
 
             public const string EmailChanged = "E-mail changed successfully.";
@@ -200,11 +216,13 @@ namespace emira.HelperFunctions
         {
             public static string DeleteTask = "Warning\r\n\r\nThere are some unchecked task which are used already, if you delete them then the already setted values will be lost.\r\n\r\n" +
                                               "Do you continue the action?";
-                   
+
         }
 
         public static class Captions
         {
+            public const string Error = "Error";
+
             public const string LoginFailed = "Login failed";
 
             public const string EmptyRequiredField = "Empty reqired field";

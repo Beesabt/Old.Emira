@@ -29,9 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HolidaysPage));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pHeader = new System.Windows.Forms.Panel();
             this.lHeader = new System.Windows.Forms.Label();
             this.btnMinimalized = new System.Windows.Forms.Button();
@@ -64,14 +65,12 @@
             this.lAnnualOpeningFrameDays = new System.Windows.Forms.Label();
             this.lAnnualOpeningFrame = new System.Windows.Forms.Label();
             this.gbHolidaysSoFar = new System.Windows.Forms.GroupBox();
+            this.lState = new System.Windows.Forms.Label();
+            this.lYear = new System.Windows.Forms.Label();
+            this.cbState = new System.Windows.Forms.ComboBox();
             this.dgvHolidays = new System.Windows.Forms.DataGridView();
-            this.CheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.statusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnCancellation = new System.Windows.Forms.Button();
             this.cbYears = new System.Windows.Forms.ComboBox();
-            this.cbState = new System.Windows.Forms.ComboBox();
-            this.lYear = new System.Windows.Forms.Label();
-            this.lState = new System.Windows.Forms.Label();
             this.pHeader.SuspendLayout();
             this.pMenuBar.SuspendLayout();
             this.gbAddHoliday.SuspendLayout();
@@ -494,58 +493,80 @@
             this.gbHolidaysSoFar.TabStop = false;
             this.gbHolidaysSoFar.Text = "Holidays so far";
             // 
+            // lState
+            // 
+            this.lState.AutoSize = true;
+            this.lState.Location = new System.Drawing.Point(230, 48);
+            this.lState.Name = "lState";
+            this.lState.Size = new System.Drawing.Size(45, 17);
+            this.lState.TabIndex = 5;
+            this.lState.Text = "State:";
+            // 
+            // lYear
+            // 
+            this.lYear.AutoSize = true;
+            this.lYear.Location = new System.Drawing.Point(21, 48);
+            this.lYear.Name = "lYear";
+            this.lYear.Size = new System.Drawing.Size(40, 17);
+            this.lYear.TabIndex = 4;
+            this.lYear.Text = "Year:";
+            // 
+            // cbState
+            // 
+            this.cbState.BackColor = System.Drawing.Color.White;
+            this.cbState.DropDownHeight = 100;
+            this.cbState.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.cbState.FormattingEnabled = true;
+            this.cbState.IntegralHeight = false;
+            this.cbState.ItemHeight = 21;
+            this.cbState.Items.AddRange(new object[] {
+            "Actual",
+            "All"});
+            this.cbState.Location = new System.Drawing.Point(283, 41);
+            this.cbState.MaxDropDownItems = 5;
+            this.cbState.Name = "cbState";
+            this.cbState.Size = new System.Drawing.Size(121, 29);
+            this.cbState.TabIndex = 3;
+            this.cbState.Text = "Actual";
+            this.cbState.SelectedIndexChanged += new System.EventHandler(this.cbState_SelectedIndexChanged);
+            // 
             // dgvHolidays
             // 
             this.dgvHolidays.AllowUserToAddRows = false;
             this.dgvHolidays.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(239)))), ((int)(((byte)(249)))));
-            this.dgvHolidays.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(239)))), ((int)(((byte)(249)))));
+            this.dgvHolidays.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvHolidays.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvHolidays.BackgroundColor = System.Drawing.Color.White;
             this.dgvHolidays.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvHolidays.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.LightYellow;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHolidays.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.LightYellow;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHolidays.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvHolidays.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvHolidays.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.CheckBoxColumn,
-            this.statusDataGridViewTextBoxColumn});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHolidays.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.WhiteSmoke;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHolidays.DefaultCellStyle = dataGridViewCellStyle7;
             this.dgvHolidays.Location = new System.Drawing.Point(24, 96);
             this.dgvHolidays.Name = "dgvHolidays";
             this.dgvHolidays.RowHeadersVisible = false;
             this.dgvHolidays.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvHolidays.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dgvHolidays.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvHolidays.Size = new System.Drawing.Size(588, 380);
             this.dgvHolidays.TabIndex = 2;
             this.dgvHolidays.Sorted += new System.EventHandler(this.dgvHolidays_Sorted);
-            // 
-            // CheckBoxColumn
-            // 
-            this.CheckBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.CheckBoxColumn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CheckBoxColumn.HeaderText = "";
-            this.CheckBoxColumn.Name = "CheckBoxColumn";
-            // 
-            // statusDataGridViewTextBoxColumn
-            // 
-            this.statusDataGridViewTextBoxColumn.DataPropertyName = "Status";
-            this.statusDataGridViewTextBoxColumn.HeaderText = "Status";
-            this.statusDataGridViewTextBoxColumn.Name = "statusDataGridViewTextBoxColumn";
-            this.statusDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.statusDataGridViewTextBoxColumn.Visible = false;
             // 
             // btnCancellation
             // 
@@ -579,42 +600,6 @@
             this.cbYears.TabIndex = 0;
             this.cbYears.SelectedIndexChanged += new System.EventHandler(this.cbYears_SelectedIndexChanged);
             // 
-            // cbState
-            // 
-            this.cbState.BackColor = System.Drawing.Color.White;
-            this.cbState.DropDownHeight = 100;
-            this.cbState.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.cbState.FormattingEnabled = true;
-            this.cbState.IntegralHeight = false;
-            this.cbState.ItemHeight = 21;
-            this.cbState.Items.AddRange(new object[] {
-            "Active",
-            "Closed",
-            "All"});
-            this.cbState.Location = new System.Drawing.Point(283, 41);
-            this.cbState.MaxDropDownItems = 5;
-            this.cbState.Name = "cbState";
-            this.cbState.Size = new System.Drawing.Size(121, 29);
-            this.cbState.TabIndex = 3;
-            // 
-            // lYear
-            // 
-            this.lYear.AutoSize = true;
-            this.lYear.Location = new System.Drawing.Point(21, 48);
-            this.lYear.Name = "lYear";
-            this.lYear.Size = new System.Drawing.Size(40, 17);
-            this.lYear.TabIndex = 4;
-            this.lYear.Text = "Year:";
-            // 
-            // lState
-            // 
-            this.lState.AutoSize = true;
-            this.lState.Location = new System.Drawing.Point(230, 48);
-            this.lState.Name = "lState";
-            this.lState.Size = new System.Drawing.Size(45, 17);
-            this.lState.TabIndex = 5;
-            this.lState.Text = "State:";
-            // 
             // HolidaysPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -627,7 +612,10 @@
             this.Controls.Add(this.pMenuBar);
             this.Controls.Add(this.pHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.HelpButton = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "HolidaysPage";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.HolidaysPage_Load);
             this.pHeader.ResumeLayout(false);
             this.pHeader.PerformLayout();
@@ -684,8 +672,6 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Label lErrorMessage;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn CheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn statusDataGridViewTextBoxColumn;
         private System.Windows.Forms.Label lState;
         private System.Windows.Forms.Label lYear;
         private System.Windows.Forms.ComboBox cbState;

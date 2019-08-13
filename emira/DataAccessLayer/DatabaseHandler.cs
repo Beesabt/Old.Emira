@@ -35,7 +35,7 @@ namespace emira.DataAccessLayer
                 _sqlite.Open();
                 var obj = cmd.ExecuteScalar();
                 if (obj == null) { return 0; }
-                _iResult = Convert.ToInt32(obj);                               
+                _iResult = Convert.ToInt32(obj);
             }
             catch (SQLiteException error)
             {
@@ -68,7 +68,7 @@ namespace emira.DataAccessLayer
             }
             catch (SQLiteException error)
             {
-                MessageBox.Show(error.Message);                           
+                MessageBox.Show(error.Message);
             }
             finally
             {
@@ -87,7 +87,7 @@ namespace emira.DataAccessLayer
                 _sqlite.Open();
                 _iResult = cmd.ExecuteNonQuery();
             }
-            catch(SQLiteException error)
+            catch (SQLiteException error)
             {
                 MessageBox.Show(error.Message);
             }
@@ -95,7 +95,7 @@ namespace emira.DataAccessLayer
             {
                 _sqlite.Close();
             }
-            return _iResult;         
+            return _iResult;
         }
 
         private bool Update(string tableName, Dictionary<string, string> data, string where, ref int updatedRows)
@@ -119,7 +119,7 @@ namespace emira.DataAccessLayer
                 cmd.CommandText = command;
                 _sqlite.Open();
                 updatedRows = cmd.ExecuteNonQuery();
-                if (updatedRows > 0) returnCode = true;               
+                if (updatedRows > 0) returnCode = true;
             }
             catch (SQLiteException error)
             {
@@ -142,7 +142,7 @@ namespace emira.DataAccessLayer
                 _sqlite.Open();
                 _dataAdapter = new SQLiteDataAdapter(cmd);
                 _dataTable = new DataTable();
-                _dataAdapter.Fill(_dataTable);               
+                _dataAdapter.Fill(_dataTable);
             }
             catch (SQLiteException error)
             {
@@ -150,7 +150,7 @@ namespace emira.DataAccessLayer
             }
             finally
             {
-                _sqlite.Close();               
+                _sqlite.Close();
             }
             return _dataTable;
         }
@@ -278,28 +278,41 @@ namespace emira.DataAccessLayer
 
         #region Holiday.cs
 
-        public int GetTheSmallestYear()
+        public string GetTheSmallestYear()
         {
             string _theSmallestYear = string.Empty;
-            int _result = 0;
-            string cmd = string.Format("SELECT MIN({0}) FROM {1} WHERE {2}='{3}'", Texts.HolidayProperties.StartDate, Texts.DataTableNames.Holiday,
-               Texts.HolidayProperties.PersonID, LogInfo.UserID);
+            string cmd = string.Format("SELECT MIN({0}) FROM {1} WHERE {2}='{3}'",
+                Texts.HolidayProperties.StartDate,
+                Texts.DataTableNames.Holiday,
+                Texts.HolidayProperties.PersonID,
+                LogInfo.UserID);
             _theSmallestYear = GetString(cmd);
-            if (string.IsNullOrEmpty(_theSmallestYear))
+            return _theSmallestYear;
+        }
+
+        public DataTable GetHolidaysFromDB(string selectedYear, bool selectedStatus)
+        {
+            string cmd = string.Empty;
+            if (selectedStatus)
             {
-                return _result;
+                cmd = string.Format("SELECT * FROM {0} WHERE {1}='{2}' AND {3}='{4}' AND {5} LIKE '{6}%' ORDER BY {5}",
+                Texts.DataTableNames.Holiday,
+                Texts.HolidayProperties.PersonID,
+                LogInfo.UserID,
+                Texts.HolidayProperties.Status,
+                1,
+                Texts.HolidayProperties.StartDate,
+                selectedYear);
             }
             else
             {
-                _result = Convert.ToInt16(_theSmallestYear.Remove(4));
-                return _result;
+                cmd = string.Format("SELECT * FROM {0} WHERE {1}='{2}' AND {3} LIKE '{4}%' ORDER BY {3}",
+                Texts.DataTableNames.Holiday,
+                Texts.HolidayProperties.PersonID,
+                LogInfo.UserID,
+                Texts.HolidayProperties.StartDate,
+                selectedYear);
             }
-        }
-
-        public DataTable GetHolidaysFromDB(string selectedYear)
-        {
-            string cmd = string.Format("SELECT * FROM {0} WHERE {1}='{2}' AND {3} LIKE '{4}%' ORDER BY {3}", Texts.DataTableNames.Holiday, Texts.HolidayProperties.PersonID,
-                LogInfo.UserID, Texts.HolidayProperties.StartDate, selectedYear);
             _dataTable = new DataTable();
             _dataTable = GetDataTable(cmd);
             return _dataTable;
@@ -317,9 +330,17 @@ namespace emira.DataAccessLayer
 
         public DataTable GetConflictedDateIDs(string startDate, string endDate)
         {
-            string cmd = string.Format("SELECT {0} FROM {1} WHERE {2}='{3}' AND {4} BETWEEN '{5}' AND '{6}' AND {7} BETWEEN '{5}' AND '{6}' AND {8}='{9}'", Texts.HolidayProperties.ID, Texts.DataTableNames.Holiday,
-                Texts.HolidayProperties.Status, 1, Texts.HolidayProperties.StartDate, startDate, endDate,
-                Texts.HolidayProperties.EndDate, Texts.HolidayProperties.ID, LogInfo.UserID);
+            string cmd = string.Format("SELECT {0} FROM {1} WHERE {2}='{3}' AND {4} BETWEEN '{5}' AND '{6}' AND {7} BETWEEN '{5}' AND '{6}' AND {8}='{9}'",
+                Texts.HolidayProperties.RowID,
+                Texts.DataTableNames.Holiday,
+                Texts.HolidayProperties.Status,
+                1,
+                Texts.HolidayProperties.StartDate,
+                startDate,
+                endDate,
+                Texts.HolidayProperties.EndDate,
+                Texts.HolidayProperties.PersonID,
+                LogInfo.UserID);
             _dataTable = new DataTable();
             _dataTable = GetDataTable(cmd);
             return _dataTable;
@@ -328,19 +349,19 @@ namespace emira.DataAccessLayer
         public string GetMaxIDFromHoliday()
         {
             string _result = string.Empty;
-            string cmd = string.Format("SELECT MAX({0}) FROM {1} WHERE {2}='{3}'", Texts.HolidayProperties.ID, Texts.DataTableNames.Holiday,
-                Texts.HolidayProperties.PersonID, LogInfo.UserID);
-            _result = GetString(cmd);
+            //string cmd = string.Format("SELECT MAX({0}) FROM {1} WHERE {2}='{3}'", Texts.HolidayProperties.ID, Texts.DataTableNames.Holiday,
+            //    Texts.HolidayProperties.PersonID, LogInfo.UserID);
+            //_result = GetString(cmd);
             return _result;
         }
 
         public int AddNewHolidayToDB(int ID, int personID, string startDate, string endDate)
         {
             int _result = 0;
-            string cmd = string.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}, {5}) VALUES({6}, '{7}', '{8}', '{9}', {10})", Texts.DataTableNames.Holiday,
-                Texts.HolidayProperties.ID, Texts.HolidayProperties.PersonID, Texts.HolidayProperties.StartDate,
-                Texts.HolidayProperties.EndDate, Texts.HolidayProperties.Status, ID, personID, startDate, endDate, 1);
-            _result = ExecuteScalar(cmd);
+            //string cmd = string.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}, {5}) VALUES({6}, '{7}', '{8}', '{9}', {10})", Texts.DataTableNames.Holiday,
+            //    Texts.HolidayProperties.ID, Texts.HolidayProperties.PersonID, Texts.HolidayProperties.StartDate,
+            //    Texts.HolidayProperties.EndDate, Texts.HolidayProperties.Status, ID, personID, startDate, endDate, 1);
+            //_result = ExecuteScalar(cmd);
             return _result;
         }
 
@@ -406,7 +427,7 @@ namespace emira.DataAccessLayer
         public int IsRecordExist(string taskID, string date)
         {
             int _rowid = 0;
-            string cmd = string.Format("SELECT rowid FROM {0} WHERE {1}='{2}' AND {3}='{4}'", 
+            string cmd = string.Format("SELECT rowid FROM {0} WHERE {1}='{2}' AND {3}='{4}'",
                 Texts.DataTableNames.Catalog,
                 Texts.CatalogProperties.TaskID,
                 taskID,

@@ -11,6 +11,7 @@ namespace emira.GUI
 {
     public partial class WorkingHoursPage : Form
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         int _togMove;
         int _mValX;
         int _mValY;

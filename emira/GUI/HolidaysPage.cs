@@ -13,57 +13,15 @@ namespace emira.GUI
 {
     public partial class HolidaysPage : Form
     {
+
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         int _togMove;
         int _mValX;
         int _mValY;
         Holiday _holiday;
         DataTable _dataTable;
         BindingSource _bindingSource;
-
-        private void UpdateHolidayTable(string selectedItem)
-        {
-            _holiday = new Holiday();
-            _dataTable = new DataTable();
-            _dataTable = _holiday.GetHolidays(selectedItem);
-            _bindingSource = new BindingSource();
-            _bindingSource.Clear();
-            _bindingSource.DataSource = _dataTable;
-            dgvHolidays.DataSource = _bindingSource;
-
-            dgvHolidays.Columns.Remove("PersonID");
-            dgvHolidays.Columns["Days"].DisplayIndex = 5;
-
-            for (int i = 0; i < dgvHolidays.RowCount; i++)
-            {
-
-                if (!Convert.ToBoolean(dgvHolidays.Rows[i].Cells[5].Value.ToString()))
-                {
-                    dgvHolidays.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(239, 154, 154);
-                    DataGridViewCell cell = dgvHolidays.Rows[i].Cells[0];
-                    DataGridViewCheckBoxCell chkCell = cell as DataGridViewCheckBoxCell;
-                    chkCell.FlatStyle = FlatStyle.Flat;
-                    chkCell.Value = false;
-                    cell.ReadOnly = true;
-                }
-
-                // How much day the taken holday
-                DateTime from = DateTime.Today;
-                DateTime to = DateTime.Today;
-
-                if (!string.IsNullOrEmpty(dgvHolidays.Rows[i].Cells[3].Value.ToString()))
-                {
-                    from = Convert.ToDateTime(dgvHolidays.Rows[i].Cells[3].Value.ToString());
-                }
-
-                if (!string.IsNullOrEmpty(dgvHolidays.Rows[i].Cells[4].Value.ToString()))
-                {
-                    to = Convert.ToDateTime(dgvHolidays.Rows[i].Cells[4].Value.ToString());
-                }
-
-                int _NumberOfDays = to.Subtract(from).Days;
-                dgvHolidays.Rows[i].Cells[1].Value = _NumberOfDays + 1;
-            }
-        }
+        CustomMsgBox _customMsgBox;
 
         public HolidaysPage()
         {
@@ -72,74 +30,23 @@ namespace emira.GUI
 
         private void HolidaysPage_Load(object sender, EventArgs e)
         {
+            // Parameters
+            _holiday = new Holiday();
+            DateTime today = DateTime.Today;
+            int actualYear = today.Year;
+
             try
             {
-                DateTime today = DateTime.Today;
-                int actualYear = today.Year;
-                _holiday = new Holiday();
-
-                // Fill the combobox
+                // Fill the combobox               
                 List<string> years = new List<string>();
                 years = _holiday.GetYears();
                 years.Reverse();
                 foreach (var item in years)
                 {
-                    if (item == actualYear.ToString())
-                    {
-                        cbYears.SelectedText = item;
-                    }
                     cbYears.Items.Add(item);
                 }
 
-                // Fill the data grid view with the datas of Holiday table
-                _holiday = new Holiday();
-                _dataTable = new DataTable();
-                _dataTable = _holiday.GetHolidays(actualYear.ToString());
-                _bindingSource = new BindingSource();
-                _bindingSource.Clear();
-                _bindingSource.DataSource = _dataTable;
-                dgvHolidays.DataSource = _bindingSource;
-
-                dgvHolidays.Columns.Remove("PersonID");
-
-                dgvHolidays.Columns.Add("Days", "Days");
-                dgvHolidays.Columns["Days"].DisplayIndex = 5;
-                dgvHolidays.Columns["Days"].SortMode = DataGridViewColumnSortMode.Automatic;
-
-                for (int i = 0; i < dgvHolidays.RowCount; i++)
-                {
-                    if (!Convert.ToBoolean(dgvHolidays.Rows[i].Cells[4].Value.ToString()))
-                    {
-                        dgvHolidays.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(239, 154, 154);
-                        DataGridViewCell cell = dgvHolidays.Rows[i].Cells[0];
-                        DataGridViewCheckBoxCell chkCell = cell as DataGridViewCheckBoxCell;
-                        chkCell.FlatStyle = FlatStyle.Flat;
-                        chkCell.Value = false;
-                        cell.ReadOnly = true;
-                    }
-
-                    // How much day the taken holday
-                    DateTime from = DateTime.Today;
-                    DateTime to = DateTime.Today;
-
-                    if (!string.IsNullOrEmpty(dgvHolidays.Rows[i].Cells[2].Value.ToString()))
-                    {
-                        from = Convert.ToDateTime(dgvHolidays.Rows[i].Cells[2].Value.ToString());
-                    }
-
-                    if (!string.IsNullOrEmpty(dgvHolidays.Rows[i].Cells[3].Value.ToString()))
-                    {
-                        to = Convert.ToDateTime(dgvHolidays.Rows[i].Cells[3].Value.ToString());
-                    }
-
-                    int _NumberOfDays = to.Subtract(from).Days;
-                    dgvHolidays.Rows[i].Cells[5].Value = _NumberOfDays + 1;
-                }
-
-                // Set Frame and Selected numbers
-                int _remainingDays = _holiday.GetRemainingDaysForActualYear();
-                lFrameDays.Text = _remainingDays.ToString();
-                lSelectedDays.Text = "0";
+                cbYears.SelectedItem = years.First();
 
                 // Determine the day of the date time pickers
                 DayOfWeek day = today.DayOfWeek;
@@ -159,7 +66,78 @@ namespace emira.GUI
                         break;
                 }
 
+
                 // Set the national holidays in the date time pickers
+                // TODO Implement
+
+                UpdateHolidayTable();
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                _customMsgBox = new CustomMsgBox();
+                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+        }
+
+        public void UpdateHolidayTable()
+        {
+            // Parameters
+            _holiday = new Holiday();
+            DateTime today = DateTime.Today;
+            int actualYear = today.Year;
+
+            try
+            {
+                // Fill the data grid view with the datas of Holiday table
+                _holiday = new Holiday();
+                _dataTable = new DataTable();
+                bool _state = false;
+
+                if (string.IsNullOrEmpty(cbYears.Text))
+                {
+                    _dataTable = _holiday.GetHolidaysTable(actualYear.ToString(), cbState.SelectedItem.ToString());
+                }
+                else
+                {
+                    _dataTable = _holiday.GetHolidaysTable(cbYears.SelectedItem.ToString(), cbState.SelectedItem.ToString());
+                }
+
+
+                // Set the checkbox state according the state of the holiday
+                _bindingSource = new BindingSource();
+                _bindingSource.Clear();
+                _bindingSource.DataSource = _dataTable;
+                dgvHolidays.DataSource = _bindingSource;
+
+                for (int i = 0; i < dgvHolidays.RowCount; i++)
+                {
+                    if (Boolean.TryParse(dgvHolidays.Rows[i].Cells[0].Value.ToString(), out _state))
+                    {
+                        DataGridViewCell cell = dgvHolidays.Rows[i].Cells[0];
+                        cell.Value = false;
+
+                        if (!_state)
+                        {
+                            cell.ReadOnly = true;
+                        }
+                    }
+                }
+
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                _customMsgBox = new CustomMsgBox();
+                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+
+            try
+            {
+                // Set Frame and Selected numbers
+                int _remainingDays = _holiday.GetRemainingDaysForActualYear();
+                lFrameDays.Text = _remainingDays.ToString();
+                lSelectedDays.Text = "0";
 
 
                 // Set the holiday information
@@ -169,42 +147,37 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                _customMsgBox = new CustomMsgBox();
+                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
-        }
-
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void btnMinimalized_Click(object sender, EventArgs e)
-        {
-            WindowState = FormWindowState.Minimized;
-        }
-
-        private void btnHome_Click(object sender, EventArgs e)
-        {
-            Hide();
-            HomePage HP = new HomePage();
-            HP.Show();
-        }
-
-        private void btnHolidays_Click(object sender, EventArgs e)
-        {
-            Show();
         }
 
         private void cbYears_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                string selectedItem = cbYears.SelectedItem.ToString();
-                UpdateHolidayTable(selectedItem);
+                UpdateHolidayTable();
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                _customMsgBox = new CustomMsgBox();
+                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+        }
+
+        private void cbState_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                UpdateHolidayTable();
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                _customMsgBox = new CustomMsgBox();
+                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -280,7 +253,7 @@ namespace emira.GUI
                 int actualYear = DateTime.Today.Year;
                 _holiday = new Holiday();
                 _holiday.AddNewHoliday(from, to);
-                UpdateHolidayTable(actualYear.ToString());
+                //UpdateHolidayTable(actualYear.ToString());
                 btnCancel.Hide();
                 btnAdd.Hide();
                 btnCheck.Show();
@@ -326,7 +299,7 @@ namespace emira.GUI
                     _holiday = new Holiday();
                     _holiday.DeleteHoliday(_ID);
                 }
-                UpdateHolidayTable(actualYear.ToString());
+                //UpdateHolidayTable(actualYear.ToString());
                 lFrameDays.Text = _holiday.GetRemainingDaysForActualYear().ToString();
                 lAppliedDays.Text = _holiday.GetUsedHolidays(actualYear).ToString();
                 lPredictableDays.Text = lFrameDays.Text;
@@ -372,6 +345,23 @@ namespace emira.GUI
             }
         }
 
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btnMinimalized_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            Hide();
+            HomePage HP = new HomePage();
+            HP.Show();
+        }
+
         private void pHeader_MouseUp(object sender, MouseEventArgs e)
         {
             _togMove = 0;
@@ -391,5 +381,6 @@ namespace emira.GUI
                 SetDesktopLocation(MousePosition.X - _mValX, MousePosition.Y - _mValY);
             }
         }
+
     }
 }

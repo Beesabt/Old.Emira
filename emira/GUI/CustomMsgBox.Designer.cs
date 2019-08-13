@@ -30,12 +30,12 @@
         {
             this.pHeader = new System.Windows.Forms.Panel();
             this.lCaption = new System.Windows.Forms.Label();
+            this.btnExit = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnYes = new System.Windows.Forms.Button();
             this.btnNo = new System.Windows.Forms.Button();
             this.lblMessage = new System.Windows.Forms.Label();
             this.pbIcon = new System.Windows.Forms.PictureBox();
-            this.btnExit = new System.Windows.Forms.Button();
             this.pHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbIcon)).BeginInit();
             this.SuspendLayout();
@@ -44,10 +44,9 @@
             // 
             this.pHeader.BackColor = System.Drawing.Color.White;
             this.pHeader.Controls.Add(this.lCaption);
-            this.pHeader.Controls.Add(this.btnExit);
             this.pHeader.Location = new System.Drawing.Point(1, 1);
             this.pHeader.Name = "pHeader";
-            this.pHeader.Size = new System.Drawing.Size(398, 29);
+            this.pHeader.Size = new System.Drawing.Size(511, 30);
             this.pHeader.TabIndex = 2;
             this.pHeader.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pHeader_MouseDown);
             this.pHeader.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pHeader_MouseMove);
@@ -64,10 +63,28 @@
             this.lCaption.TabIndex = 2;
             this.lCaption.Text = "Captial of the Dialog Box";
             // 
+            // btnExit
+            // 
+            this.btnExit.BackColor = System.Drawing.Color.White;
+            this.btnExit.BackgroundImage = global::emira.Properties.Resources.close_icon_gray_26;
+            this.btnExit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnExit.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnExit.FlatAppearance.BorderSize = 0;
+            this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
+            this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
+            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExit.Location = new System.Drawing.Point(509, 1);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(50, 30);
+            this.btnExit.TabIndex = 1;
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
             // btnClose
             // 
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnClose.Location = new System.Drawing.Point(284, 158);
+            this.btnClose.Location = new System.Drawing.Point(228, 158);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(104, 30);
             this.btnClose.TabIndex = 8;
@@ -78,7 +95,7 @@
             // btnYes
             // 
             this.btnYes.DialogResult = System.Windows.Forms.DialogResult.Yes;
-            this.btnYes.Location = new System.Drawing.Point(164, 158);
+            this.btnYes.Location = new System.Drawing.Point(143, 158);
             this.btnYes.Name = "btnYes";
             this.btnYes.Size = new System.Drawing.Size(104, 30);
             this.btnYes.TabIndex = 9;
@@ -89,7 +106,7 @@
             // btnNo
             // 
             this.btnNo.DialogResult = System.Windows.Forms.DialogResult.No;
-            this.btnNo.Location = new System.Drawing.Point(284, 158);
+            this.btnNo.Location = new System.Drawing.Point(311, 158);
             this.btnNo.Name = "btnNo";
             this.btnNo.Size = new System.Drawing.Size(104, 30);
             this.btnNo.TabIndex = 10;
@@ -116,30 +133,14 @@
             this.pbIcon.TabIndex = 3;
             this.pbIcon.TabStop = false;
             // 
-            // btnExit
-            // 
-            this.btnExit.BackColor = System.Drawing.Color.Transparent;
-            this.btnExit.BackgroundImage = global::emira.Properties.Resources.close_icon_gray_26;
-            this.btnExit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnExit.FlatAppearance.BorderSize = 0;
-            this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
-            this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
-            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExit.Location = new System.Drawing.Point(350, 0);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(50, 29);
-            this.btnExit.TabIndex = 1;
-            this.btnExit.UseVisualStyleBackColor = false;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            // 
             // CustomMsgBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.ClientSize = new System.Drawing.Size(400, 200);
+            this.ClientSize = new System.Drawing.Size(560, 200);
             this.Controls.Add(this.lblMessage);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnNo);
             this.Controls.Add(this.btnYes);
             this.Controls.Add(this.btnClose);

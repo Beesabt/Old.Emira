@@ -35,11 +35,16 @@ namespace emira.GUI
         {
             _taskModification = new TaskModification();
             _dataTable = new DataTable();
+
             _dataTable = _taskModification.GetTasks();
-            BindingSource bSource = new BindingSource();
-            bSource.Clear();
-            bSource.DataSource = _dataTable;
-            dgvTaskModification.DataSource = bSource;
+
+            if (_dataTable != null)
+            {
+                BindingSource bSource = new BindingSource();
+                bSource.Clear();
+                bSource.DataSource = _dataTable;
+                dgvTaskModification.DataSource = bSource;
+            }         
         }
 
         private void dgvTaskModification_MouseDoubleClick(object sender, MouseEventArgs e)
