@@ -142,6 +142,250 @@ namespace emira.BusinessLogicLayer
             }
         }
 
+        /// <summary>
+        /// This method get the actual person's information related to holiday.
+        /// </summary>
+        /// <returns>Return with the actual person's informataion which are necessary for the holiday calculation.</returns>
+        private Person GetPersonalInformation()
+        {
+            try
+            {
+                DateTime _dateOfStart = new DateTime();
+                DateTime _dateOfBirth = new DateTime();
+                int _numberOfChildren = 0;
+                int _numberOfDisabledChildren = 0;
+                int _numberOfNewBornBabies = 0;
+                bool _healtDamage = false;
+                _actualPerson = new Person();
+                _DBHandler = new DatabaseHandler();
+                _dataTable = new DataTable();
+                _dataTable = _DBHandler.GetPersonalInformationDB();
+
+                foreach (DataRow person in _dataTable.Rows)
+                {
+                    if (DateTime.TryParse(person[Texts.PersonProperties.DateOfStart].ToString(), out _dateOfStart))
+                    {
+                        _actualPerson.DateOfStart = _dateOfStart;
+                    }
+
+                    if (DateTime.TryParse(person[Texts.PersonProperties.DateOfBirth].ToString(), out _dateOfBirth))
+                    {
+                        _actualPerson.DateOfBirth = _dateOfBirth;
+                    }
+
+                    if (Int32.TryParse(person[Texts.PersonProperties.NumberOfChildren].ToString(), out _numberOfChildren))
+                    {
+                        _actualPerson.NumberOfChildren = _numberOfChildren;
+                    }
+
+                    if (Int32.TryParse(person[Texts.PersonProperties.NumberOfChildren].ToString(), out _numberOfDisabledChildren))
+                    {
+                        _actualPerson.NumberOfDisabledChildren = _numberOfDisabledChildren;
+                    }
+
+                    if (Int32.TryParse(person[Texts.PersonProperties.NumberOfChildren].ToString(), out _numberOfNewBornBabies))
+                    {
+                        _actualPerson.NumberOfNewBornBabies = _numberOfNewBornBabies;
+                    }
+
+                    if (Boolean.TryParse(person[Texts.PersonProperties.NumberOfChildren].ToString(), out _healtDamage))
+                    {
+                        _actualPerson.HealthDamage = _healtDamage;
+                    }
+                }
+
+                return _actualPerson;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                _customMsgBox = new CustomMsgBox();
+                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                _actualPerson = new Person();
+                return _actualPerson;
+            }
+        }
+
+        /// <summary>
+        /// This method give back the number of the holidays which the actual person gets for the actual year.
+        /// </summary>
+        /// <returns>Returns back the number of the holdays for the actual year</returns>
+        public int CountHolidays()
+        {
+            int _numberOfBasicHolidays = 20;
+            int _holidays = 0;
+            DateTime _today = DateTime.Today;
+            int _actualYear = _today.Year;
+            Person _person;
+
+
+            //DateTime DateOfStart = person.DateOfStart;
+
+
+            //int NumberOfNewBornBabies = person.NumberOfNewBornBabies;
+            //bool HealthDamage = person.HealthDamage;
+
+            try
+            {
+                _person = new Person();
+                _person = GetPersonalInformation();
+
+                if (_person == null)
+                {
+                    _customMsgBox = new CustomMsgBox();
+                    _customMsgBox.Show(Texts.WarningMessages.PersonInformationMissing, Texts.Captions.Warning, CustomMsgBox.MsgBoxIcon.Warning, CustomMsgBox.Button.Close);
+                    return _holidays;
+                }
+
+                // Basic holidays
+                _holidays = _numberOfBasicHolidays;
+
+                // Age of the user
+                int _dateOfBirth = _person.DateOfBirth.Year;
+                int _age = _actualYear - _dateOfBirth;
+
+
+                // Days after age of the user
+                switch (_age)
+                {
+                    case 25:
+                        _holidays += 1;
+                        break;
+                    case 28:
+                        _holidays += 2;
+                        break;
+                    case 31:
+                        _holidays += 3;
+                        break;
+                    case 33:
+                        _holidays += 4;
+                        break;
+                    case 35:
+                        _holidays += 5;
+                        break;
+                    case 37:
+                        _holidays += 6;
+                        break;
+                    case 39:
+                        _holidays += 7;
+                        break;
+                    case 41:
+                        _holidays += 8;
+                        break;
+                    case 43:
+                        _holidays += 9;
+                        break;
+                    case 45:
+                        _holidays += 10;
+                        break;
+                    default:
+                        break;
+                }
+
+                // If the user starts to work in actual year
+                DateTime _dateOfStart = _person.DateOfStart;
+
+                if (_actualYear == _dateOfStart.Year)
+                {
+                    int _daysInYear = DateTime.IsLeapYear(_actualYear) ? 366 : 365;
+                    int _daysLeftInYear = _daysInYear - _dateOfStart.DayOfYear;
+                    _holidays = _holidays / _daysInYear + _daysLeftInYear;
+                }
+
+                // Days after children
+                int _numberOfChildren = _person.NumberOfChildren;
+
+                if (_numberOfChildren > 0)
+                {
+                    switch (_numberOfChildren)
+                    {
+                        case 1:
+                            _holidays += 2;
+                            break;
+                        case 2:
+                            _holidays += 4;
+                            break;
+                        default:
+                            _holidays += 7;
+                            break;
+                    }
+                }
+
+                // Days after disabled children
+                int _numberOfDisabledChildren = _person.NumberOfDisabledChildren;
+
+                if (_numberOfDisabledChildren > 0)
+                {
+                    _holidays += 2;
+                }
+
+
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                _customMsgBox = new CustomMsgBox();
+                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+
+
+           
+
+         
+
+            
+
+            // Days after new born babies
+            if (NumberOfNewBornBabies > 1)
+            {
+                HolidaysInTheYear += 7;
+            }
+            else if (NumberOfChildren == 1)
+            {
+                HolidaysInTheYear += 5;
+            }
+
+            // Days after 50% health damage
+            if (HealthDamage == true)
+            {
+                HolidaysInTheYear += 5;
+            }
+
+            // Remaining days, if he/she starts in the actual year
+            if (DateOfStart.Year == actualYear)
+            {
+                DateTime LastDayOfTheYear = new DateTime(actualYear, 12, 31);
+                double holidayForDay = Convert.ToDouble(HolidaysInTheYear) / 365;
+                int RemainingDays = Convert.ToInt32((LastDayOfTheYear.Subtract(DateOfStart)).TotalDays);
+                HolidaysInTheYear = Convert.ToInt32(Math.Ceiling(holidayForDay * RemainingDays));
+            }
+
+
+            // If the user starts after 1st of October
+            if (DateOfStart.Month == 10 && DateOfStart.Year == actualYear - 1 && today.Month <= 3 && today.Day <= 31)
+            {
+                int UsedHolidaysInLastYear = GetUsedHolidays(actualYear - 1);
+
+            }
+
+            return HolidaysInTheYear;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public bool AddNewHoliday(DateTime from, DateTime to)
         {
             bool _isSuccess = false;
@@ -181,30 +425,7 @@ namespace emira.BusinessLogicLayer
 
 
 
-        /// <summary>
-        /// This method get the actual person's information related to holiday.
-        /// </summary>
-        /// <returns>Return with the actual person's informataion which are necessary for the holiday calculation.</returns>
-        private Person GetPersonalInformation()
-        {
 
-            _actualPerson = new Person();
-            _DBHandler = new DatabaseHandler();
-            _dataTable = new DataTable();
-            _dataTable = _DBHandler.GetPersonalInformationDB();
-
-            foreach (DataRow person in _dataTable.Rows)
-            {
-                _actualPerson.DateOfStart = Convert.ToDateTime(person[Texts.PersonProperties.DateOfStart]);
-                _actualPerson.DateOfBirth = Convert.ToDateTime(person[Texts.PersonProperties.DateOfBirth]);
-                _actualPerson.NumberOfChildren = Convert.ToInt32(person[Texts.PersonProperties.NumberOfChildren]);
-                _actualPerson.NumberOfDisabledChildren = Convert.ToInt32(person[Texts.PersonProperties.NumberOfDisabledChildren]);
-                _actualPerson.NumberOfNewBornBabies = Convert.ToInt32(person[Texts.PersonProperties.NumberOfNewBornBabies]);
-                _actualPerson.HealthDamage = Convert.ToBoolean(person[Texts.PersonProperties.HealthDamage]);
-            }
-
-            return _actualPerson;
-        }
 
         /// <summary>
         /// This method give back the number of the used holidays which the actual person has used already in the actual year.
@@ -239,125 +460,7 @@ namespace emira.BusinessLogicLayer
             return Convert.ToInt32(UsedDays);
         }
 
-        /// <summary>
-        /// This method give back the number of the holidays which the actual person gets for the actual year.
-        /// </summary>
-        /// <returns>Returns back the number of the holdays for the actual year</returns>
-        public int CountHolidays()
-        {
-            int HolidaysInTheYear = 20;
 
-            DateTime today = DateTime.Today;
-            int actualYear = today.Year;
-
-            Person person = new Person();
-            person = GetPersonalInformation();
-
-            DateTime DateOfStart = person.DateOfStart;
-            int DateOfBirth = person.DateOfBirth.Year;
-            int NumberOfChildren = person.NumberOfChildren;
-            int NumberOfDisabledChildren = person.NumberOfDisabledChildren;
-            int NumberOfNewBornBabies = person.NumberOfNewBornBabies;
-            bool HealthDamage = person.HealthDamage;
-
-            int Age = actualYear - DateOfBirth;
-
-            // Days after Age
-            switch (Age)
-            {
-                case 25:
-                    HolidaysInTheYear += 1;
-                    break;
-                case 28:
-                    HolidaysInTheYear += 2;
-                    break;
-                case 31:
-                    HolidaysInTheYear += 3;
-                    break;
-                case 33:
-                    HolidaysInTheYear += 4;
-                    break;
-                case 35:
-                    HolidaysInTheYear += 5;
-                    break;
-                case 37:
-                    HolidaysInTheYear += 6;
-                    break;
-                case 39:
-                    HolidaysInTheYear += 7;
-                    break;
-                case 41:
-                    HolidaysInTheYear += 8;
-                    break;
-                case 43:
-                    HolidaysInTheYear += 9;
-                    break;
-                case 45:
-                    HolidaysInTheYear += 10;
-                    break;
-                default:
-                    HolidaysInTheYear += 0;
-                    break;
-            }
-
-            // Days after children
-            if (NumberOfChildren != 0)
-            {
-                switch (NumberOfChildren)
-                {
-                    case 1:
-                        HolidaysInTheYear += 2;
-                        break;
-                    case 2:
-                        HolidaysInTheYear += 4;
-                        break;
-                    default:
-                        HolidaysInTheYear += 7;
-                        break;
-                }
-            }
-
-            // Days after disabled children
-            if (NumberOfDisabledChildren != 0)
-            {
-                HolidaysInTheYear += 2;
-            }
-
-            // Days after new born babies
-            if (NumberOfNewBornBabies > 1)
-            {
-                HolidaysInTheYear += 7;
-            }
-            else if (NumberOfChildren == 1)
-            {
-                HolidaysInTheYear += 5;
-            }
-
-            // Days after 50% health damage
-            if (HealthDamage == true)
-            {
-                HolidaysInTheYear += 5;
-            }
-
-            // Remaining days, if he/she starts in the actual year
-            if (DateOfStart.Year == actualYear)
-            {
-                DateTime LastDayOfTheYear = new DateTime(actualYear, 12, 31);
-                double holidayForDay = Convert.ToDouble(HolidaysInTheYear) / 365;
-                int RemainingDays = Convert.ToInt32((LastDayOfTheYear.Subtract(DateOfStart)).TotalDays);
-                HolidaysInTheYear = Convert.ToInt32(Math.Ceiling(holidayForDay * RemainingDays));
-            }
-
-
-            // If the user starts after 1st of October
-            if (DateOfStart.Month == 10 && DateOfStart.Year == actualYear - 1 && today.Month <= 3 && today.Day <= 31)
-            {
-                int UsedHolidaysInLastYear = GetUsedHolidays(actualYear - 1);
-
-            }
-
-            return HolidaysInTheYear;
-        }
 
         public int GetRemainingDaysForActualYear()
         {

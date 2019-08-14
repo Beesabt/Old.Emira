@@ -210,7 +210,9 @@ namespace emira.DataAccessLayer
 
         public DataTable GetPersonalInformationDB()
         {
-            string command = string.Format("SELECT * FROM {0} WHERE {1}='{2}'", Texts.DataTableNames.Person, Texts.PersonProperties.ID,
+            string command = string.Format("SELECT * FROM {0} WHERE {1}='{2}'",
+                Texts.DataTableNames.Person,
+                Texts.PersonProperties.ID,
                 LogInfo.UserID);
             _dataTable = new DataTable();
             _dataTable = GetDataTable(command);

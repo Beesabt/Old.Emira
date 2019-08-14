@@ -217,11 +217,16 @@ namespace emira.HelperFunctions
             public static string DeleteTask = "Warning\r\n\r\nThere are some unchecked task which are used already, if you delete them then the already setted values will be lost.\r\n\r\n" +
                                               "Do you continue the action?";
 
+            public static string PersonInformationMissing = "For holiday calculation please fill out the 'Personal Information'.\n"
+                                                            +"You can find it under 'Settings'.";
+
         }
 
         public static class Captions
         {
             public const string Error = "Error";
+
+            public const string Warning = "Warning";
 
             public const string LoginFailed = "Login failed";
 
