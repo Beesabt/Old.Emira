@@ -190,6 +190,8 @@ namespace emira.HelperFunctions
 
             public static string TooFewRemainingDays = "Not enough days left to take vacation days!";
 
+            public static string ErrorDuringSaveHoliday = "There was an error during save, try again.";
+
             public static string ErrorDuringCancellation = "There was an error during cancellation, try again.";
 
             #endregion

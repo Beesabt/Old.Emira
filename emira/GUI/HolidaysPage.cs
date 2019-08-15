@@ -311,11 +311,21 @@ namespace emira.GUI
         {
             try
             {
+                bool _isSuccess = true;
+
                 // Add the selected holiday period
                 string _from = dtpFrom.Text;
                 string _to = dtpTo.Text;
                 holiday = new Holiday();
-                holiday.AddNewHoliday(_from, _to);
+                _isSuccess = holiday.AddNewHoliday(_from, _to);
+
+                if (!_isSuccess)
+                {
+                    Logger.Error(Texts.ErrorMessages.ErrorDuringSaveHoliday);
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorDuringSaveHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    return;
+                }
 
                 // Update the holiday table
                 UpdateHolidayTable();
