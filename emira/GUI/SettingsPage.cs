@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace emira.GUI
@@ -81,6 +82,13 @@ namespace emira.GUI
             {
                 SetDesktopLocation(MousePosition.X - _iValX, MousePosition.Y - _iValY);
             }
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Rectangle borderRectangle = new Rectangle(0, 0, ClientRectangle.Width - 1, ClientRectangle.Height - 1);
+            e.Graphics.DrawRectangle(Pens.Black, borderRectangle);
+            base.OnPaint(e);
         }
 
     }

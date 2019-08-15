@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
-using System.ComponentModel;
+using Nager.Date;
 
 namespace emira.GUI
 {
@@ -15,13 +15,13 @@ namespace emira.GUI
     {
 
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        int _togMove;
-        int _mValX;
-        int _mValY;
-        Holiday _holiday;
-        DataTable _dataTable;
-        BindingSource _bindingSource;
-        CustomMsgBox _customMsgBox;
+        int togMove;
+        int mValX;
+        int mValY;
+        Holiday holiday;
+        DataTable dataTable;
+        BindingSource bindingSource;
+        CustomMsgBox customMsgBox;
 
         public HolidaysPage()
         {
@@ -31,7 +31,7 @@ namespace emira.GUI
         private void HolidaysPage_Load(object sender, EventArgs e)
         {
             // Parameters
-            _holiday = new Holiday();
+            holiday = new Holiday();
             DateTime today = DateTime.Today;
             int actualYear = today.Year;
 
@@ -39,7 +39,7 @@ namespace emira.GUI
             {
                 // Fill the combobox               
                 List<string> years = new List<string>();
-                years = _holiday.GetYears();
+                years = holiday.GetYears();
                 years.Reverse();
                 foreach (var item in years)
                 {
@@ -75,40 +75,40 @@ namespace emira.GUI
             catch (Exception error)
             {
                 Logger.Error(error);
-                _customMsgBox = new CustomMsgBox();
-                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
         public void UpdateHolidayTable()
         {
             // Parameters
-            _holiday = new Holiday();
+            holiday = new Holiday();
             DateTime today = DateTime.Today;
             int actualYear = today.Year;
 
             try
             {
                 // Fill the data grid view with the datas of Holiday table
-                _holiday = new Holiday();
-                _dataTable = new DataTable();
+                holiday = new Holiday();
+                dataTable = new DataTable();
                 bool _state = false;
 
                 if (string.IsNullOrEmpty(cbYears.Text))
                 {
-                    _dataTable = _holiday.GetHolidaysTable(actualYear.ToString(), cbState.SelectedItem.ToString());
+                    dataTable = holiday.GetHolidaysTable(actualYear.ToString(), cbState.SelectedItem.ToString());
                 }
                 else
                 {
-                    _dataTable = _holiday.GetHolidaysTable(cbYears.SelectedItem.ToString(), cbState.SelectedItem.ToString());
+                    dataTable = holiday.GetHolidaysTable(cbYears.SelectedItem.ToString(), cbState.SelectedItem.ToString());
                 }
 
 
                 // Set the checkbox state according the state of the holiday
-                _bindingSource = new BindingSource();
-                _bindingSource.Clear();
-                _bindingSource.DataSource = _dataTable;
-                dgvHolidays.DataSource = _bindingSource;
+                bindingSource = new BindingSource();
+                bindingSource.Clear();
+                bindingSource.DataSource = dataTable;
+                dgvHolidays.DataSource = bindingSource;
 
                 for (int i = 0; i < dgvHolidays.RowCount; i++)
                 {
@@ -124,32 +124,37 @@ namespace emira.GUI
                     }
                 }
 
+                // Sorting is disabled and columns are read only
+                foreach (DataGridViewColumn column in dgvHolidays.Columns)
+                {
+                    column.ReadOnly = true;
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                }
+
             }
             catch (Exception error)
             {
                 Logger.Error(error);
-                _customMsgBox = new CustomMsgBox();
-                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
 
             try
             {
-                // Set Frame and Selected numbers
-                int _remainingDays = _holiday.GetRemainingDaysForActualYear();
-                lFrameDays.Text = _remainingDays.ToString();
+                // Set the numbers for Frame and Selected
+                lFrameDays.Text = holiday.GetRemainingDaysForActualYear().ToString();
                 lSelectedDays.Text = "0";
 
-
                 // Set the holiday information
-                lAnnualOpeningFrameDays.Text = _holiday.CountHolidays().ToString();
-                lAppliedDays.Text = _holiday.GetUsedHolidays(actualYear).ToString();
+                lAnnualOpeningFrameDays.Text = holiday.CountHolidays().ToString();
+                lAppliedDays.Text = holiday.GetUsedHolidays(actualYear).ToString();
                 lPredictableDays.Text = lFrameDays.Text;
             }
             catch (Exception error)
             {
                 Logger.Error(error);
-                _customMsgBox = new CustomMsgBox();
-                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -162,8 +167,8 @@ namespace emira.GUI
             catch (Exception error)
             {
                 Logger.Error(error);
-                _customMsgBox = new CustomMsgBox();
-                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -176,9 +181,24 @@ namespace emira.GUI
             catch (Exception error)
             {
                 Logger.Error(error);
-                _customMsgBox = new CustomMsgBox();
-                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
+        }
+
+        private void cbYears_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void cbState_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void dgvHolidays_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
         }
 
         private void btnCheck_Click(object sender, EventArgs e)
@@ -186,61 +206,104 @@ namespace emira.GUI
             try
             {
                 lErrorMessage.Text = string.Empty;
-                int actualYear = DateTime.Today.Year;
-                DateTime from = dtpFrom.Value;
-                DateTime to = dtpTo.Value;
-                to = to.AddHours(24.0);
-                _holiday = new Holiday();
+                DateTime _fromDate = dtpFrom.Value;
+                DateTime _toDate = dtpFrom.Value;
+                string _sToDate = dtpTo.Text;
+                string _sFromDate = dtpFrom.Text;
+                int _actualYear = DateTime.Today.Year;
+                int _numberOfSelectedDays = _toDate.Subtract(_fromDate).Days + 1;
+                int _remainingDays = 0;
+                _toDate = _toDate.AddHours(24.0);
+                holiday = new Holiday();
 
-                if (to < from)
+                // Error if the end date is smaller the the start date
+                if (_toDate < _fromDate)
                 {
                     lErrorMessage.Text = Texts.ErrorMessages.SmallerEndDate;
                     return;
                 }
 
-                if (from.Year > actualYear || from.Year < actualYear)
+                // Error if the start date year is in the past or the future year
+                if (_fromDate.Year > _actualYear || _fromDate.Year < _actualYear)
                 {
                     lErrorMessage.Text = Texts.ErrorMessages.StartDayInActualYear;
                     return;
                 }
 
-                double _NumberOfSelectedDays = to.Subtract(from).Days;
-                lSelectedDays.Text = _NumberOfSelectedDays.ToString();
-                int _remainingDays = _holiday.GetRemainingDaysForActualYear();
+                // Error if the selected start or end date is public holiday
+                var _publicHolidays = DateSystem.GetPublicHoliday(_actualYear, "HU");
+                foreach (var publicHoliday in _publicHolidays)
+                {
+                    if (_fromDate == publicHoliday.Date || _toDate == publicHoliday.Date)
+                    {
+                        lErrorMessage.Text = Texts.ErrorMessages.PublicHoliday;
+                        return;
+                    }
+                }
 
-                if (_remainingDays < _NumberOfSelectedDays)
+                // Error if the selected holiday period include public holiday
+                DateTime _day = new DateTime();
+
+                for (int i = 1; i < _numberOfSelectedDays; i++)
+                {
+                    _day = _fromDate.AddDays(i);
+
+                    foreach (var publicHoliday in _publicHolidays)
+                    {
+                        if (_day == publicHoliday.Date)
+                        {
+                            lErrorMessage.Text = Texts.ErrorMessages.PublicHolidayIncluded;
+                            return;
+                        }
+                    }
+                }
+
+                // Error if the user does not have enough remaining days
+                Int32.TryParse(lPredictableDays.Text, out _remainingDays);
+
+                if (_remainingDays < _numberOfSelectedDays)
                 {
                     lErrorMessage.Text = Texts.ErrorMessages.TooFewRemainingDays;
                     return;
                 }
 
+                // Error if the selected period is already approved
                 List<string> _conflictedIDs = new List<string>();
-                _conflictedIDs = _holiday.ChooseDateValidation(from, to);
-                StringBuilder sb = new StringBuilder();
-                sb.Append(Texts.ErrorMessages.ConflictIDs);
+                _conflictedIDs = holiday.ChooseDateValidation(_sFromDate, _sToDate);
+                StringBuilder _sb = new StringBuilder();
+                _sb.Append(Texts.ErrorMessages.ConflictIDs);
                 if (_conflictedIDs.Count != 0)
                 {
                     foreach (var item in _conflictedIDs)
                     {
-                        sb.Append(item);
+                        _sb.Append(item);
                         if (_conflictedIDs.Last() != item)
                         {
-                            sb.Append(", ");
+                            _sb.Append(", ");
                         }
                     }
-                    lErrorMessage.Text = sb.ToString();
+                    lErrorMessage.Text = _sb.ToString();
                     return;
                 }
 
+                lSelectedDays.Text = _numberOfSelectedDays.ToString();
+
+                // Hide check button
                 btnCheck.Hide();
+
+                // Make the dateTimePikers readonly
                 dtpFrom.Enabled = false;
                 dtpTo.Enabled = false;
-                btnCancel.Show();
+
+                // Show the Add and Cancel buttons
                 btnAdd.Show();
+                btnCancel.Show();
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -248,24 +311,34 @@ namespace emira.GUI
         {
             try
             {
-                DateTime from = dtpFrom.Value;
-                DateTime to = dtpTo.Value;
-                int actualYear = DateTime.Today.Year;
-                _holiday = new Holiday();
-                _holiday.AddNewHoliday(from, to);
-                //UpdateHolidayTable(actualYear.ToString());
-                btnCancel.Hide();
+                // Add the selected holiday period
+                string _from = dtpFrom.Text;
+                string _to = dtpTo.Text;
+                holiday = new Holiday();
+                holiday.AddNewHoliday(_from, _to);
+
+                // Update the holiday table
+                UpdateHolidayTable();
+
+                // Hide the Cancel and Add buttons 
                 btnAdd.Hide();
+                btnCancel.Hide();
+
+                // Show the Check button
                 btnCheck.Show();
-                lFrameDays.Text = _holiday.GetRemainingDaysForActualYear().ToString();
-                lAppliedDays.Text = _holiday.GetUsedHolidays(actualYear).ToString();
-                lPredictableDays.Text = lFrameDays.Text;
+
+                // Update the remaining days
+                lFrameDays.Text = holiday.GetRemainingDaysForActualYear().ToString();
+
+                // Enable the dateTimePikers
                 dtpFrom.Enabled = true;
                 dtpTo.Enabled = true;
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -273,18 +346,26 @@ namespace emira.GUI
         {
             try
             {
+                // Hide Add and Cancel buttons
                 btnCancel.Hide();
                 btnAdd.Hide();
+
+                // Enable the dateTimePikers
                 dtpFrom.Enabled = true;
                 dtpTo.Enabled = true;
+
+                // Show the Check button
                 btnCheck.Show();
 
+                // Clear the labels
                 lSelectedDays.Text = "0";
-                lErrorMessage.Text = String.Empty;
+                lErrorMessage.Text = string.Empty;
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -292,21 +373,34 @@ namespace emira.GUI
         {
             try
             {
-                int actualYear = DateTime.Today.Year;
+                bool _isSuccess = true;
+
+                // Delete the selected holiday(s)
                 foreach (DataGridViewRow actualRow in dgvHolidays.SelectedRows)
                 {
-                    string _ID = actualRow.Cells[1].Value.ToString();
-                    _holiday = new Holiday();
-                    _holiday.DeleteHoliday(_ID);
+                    string _startDate = actualRow.Cells[1].Value.ToString();
+                    string _endDate = actualRow.Cells[2].Value.ToString();
+                    holiday = new Holiday();
+                    _isSuccess = holiday.DeleteHoliday(_startDate, _endDate);
+                    _isSuccess &= _isSuccess;
                 }
-                //UpdateHolidayTable(actualYear.ToString());
-                lFrameDays.Text = _holiday.GetRemainingDaysForActualYear().ToString();
-                lAppliedDays.Text = _holiday.GetUsedHolidays(actualYear).ToString();
-                lPredictableDays.Text = lFrameDays.Text;
+
+                if (!_isSuccess)
+                {
+                    Logger.Error(Texts.ErrorMessages.ErrorDuringCancellation);
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorDuringCancellation, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    return;
+                }
+
+                // Update the holiday table
+                UpdateHolidayTable();
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -318,32 +412,12 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
-        private void dgvHolidays_Sorted(object sender, EventArgs e)
-        {
-            try
-            {
-                for (int i = 0; i < dgvHolidays.RowCount; i++)
-                {
-                    if (!Convert.ToBoolean(dgvHolidays.Rows[i].Cells[4].Value.ToString()))
-                    {
-                        dgvHolidays.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(239, 154, 154);
-                        DataGridViewCell cell = dgvHolidays.Rows[i].Cells[0];
-                        DataGridViewCheckBoxCell chkCell = cell as DataGridViewCheckBoxCell;
-                        chkCell.FlatStyle = FlatStyle.Flat;
-                        chkCell.Value = false;
-                        cell.ReadOnly = true;
-                    }
-                }
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
         private void btnExit_Click(object sender, EventArgs e)
         {
@@ -362,25 +436,33 @@ namespace emira.GUI
             HP.Show();
         }
 
+
         private void pHeader_MouseUp(object sender, MouseEventArgs e)
         {
-            _togMove = 0;
+            togMove = 0;
         }
 
         private void pHeader_MouseDown(object sender, MouseEventArgs e)
         {
-            _togMove = 1;
-            _mValX = e.X;
-            _mValY = e.Y;
+            togMove = 1;
+            mValX = e.X;
+            mValY = e.Y;
         }
 
         private void pHeader_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_togMove == 1)
+            if (togMove == 1)
             {
-                SetDesktopLocation(MousePosition.X - _mValX, MousePosition.Y - _mValY);
+                SetDesktopLocation(MousePosition.X - mValX, MousePosition.Y - mValY);
             }
         }
 
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Rectangle borderRectangle = new Rectangle(0, 0, ClientRectangle.Width - 1, ClientRectangle.Height - 1);
+            e.Graphics.DrawRectangle(Pens.Black, borderRectangle);
+            base.OnPaint(e);
+        }
     }
 }

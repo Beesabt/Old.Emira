@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using emira.GUI;
+using System.Globalization;
 
 namespace emira.BusinessLogicLayer
 {
@@ -23,10 +24,11 @@ namespace emira.BusinessLogicLayer
         /// <returns>Return with the years as string list.</returns>
         public List<string> GetYears()
         {
+            List<string> _years = new List<string>();
+
             try
             {
                 _DBHandler = new DatabaseHandler();
-                List<string> _years = new List<string>();
                 int _year = 0;
                 int _smallestYear = 0;
                 int _actualYear = DateTime.Today.Year;
@@ -54,7 +56,6 @@ namespace emira.BusinessLogicLayer
                 _customMsgBox = new CustomMsgBox();
                 _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
 
-                List<string> _years = new List<string>();
                 _years.Add(DateTime.Today.Year.ToString());
                 return _years;
             }
@@ -68,10 +69,11 @@ namespace emira.BusinessLogicLayer
         /// <returns>The data table with all values</returns>
         public DataTable GetHolidaysTable(string selectedYear, string selectedStatus)
         {
+            _dataTable = new DataTable();
+
             try
             {
                 _DBHandler = new DatabaseHandler();
-                _dataTable = new DataTable();
                 bool _selectedStatusDB = false;
                 bool _state = false;
                 int _numberOfDays = 0;
@@ -137,7 +139,6 @@ namespace emira.BusinessLogicLayer
                 Logger.Error(error);
                 _customMsgBox = new CustomMsgBox();
                 _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-                _dataTable = new DataTable();
                 return _dataTable;
             }
         }
@@ -218,13 +219,6 @@ namespace emira.BusinessLogicLayer
             int _actualYear = _today.Year;
             Person _person;
 
-
-            //DateTime DateOfStart = person.DateOfStart;
-
-
-            //int NumberOfNewBornBabies = person.NumberOfNewBornBabies;
-            //bool HealthDamage = person.HealthDamage;
-
             try
             {
                 _person = new Person();
@@ -246,50 +240,57 @@ namespace emira.BusinessLogicLayer
 
 
                 // Days after age of the user
-                switch (_age)
+                if (25 <= _age && _age < 28)
                 {
-                    case 25:
-                        _holidays += 1;
-                        break;
-                    case 28:
-                        _holidays += 2;
-                        break;
-                    case 31:
-                        _holidays += 3;
-                        break;
-                    case 33:
-                        _holidays += 4;
-                        break;
-                    case 35:
-                        _holidays += 5;
-                        break;
-                    case 37:
-                        _holidays += 6;
-                        break;
-                    case 39:
-                        _holidays += 7;
-                        break;
-                    case 41:
-                        _holidays += 8;
-                        break;
-                    case 43:
-                        _holidays += 9;
-                        break;
-                    case 45:
-                        _holidays += 10;
-                        break;
-                    default:
-                        break;
+                    _holidays += 1;
+                }
+                else if (_age < 31)
+                {
+                    _holidays += 2;
+                }
+                else if (_age < 33)
+                {
+                    _holidays += 3;
+                }
+                else if (_age < 35)
+                {
+                    _holidays += 4;
+                }
+                else if (_age < 37)
+                {
+                    _holidays += 5;
+                }
+                else if (_age < 39)
+                {
+                    _holidays += 6;
+                }
+                else if (_age < 41)
+                {
+                    _holidays += 7;
+                }
+                else if (_age < 43)
+                {
+                    _holidays += 8;
+                }
+                else if (_age < 45)
+                {
+                    _holidays += 9;
+                }
+                else if (45 <= _age)
+                {
+                    _holidays += 10;
                 }
 
                 // If the user starts to work in actual year
                 DateTime _dateOfStart = _person.DateOfStart;
-
+                double _remainHoliday = 0;
                 if (_actualYear == _dateOfStart.Year)
                 {
-                    int _daysInYear = DateTime.IsLeapYear(_actualYear) ? 366 : 365;
-                    int _daysLeftInYear = _daysInYear - _dateOfStart.DayOfYear;
-                    _holidays = _holidays / _daysInYear + _daysLeftInYear;
+                    double _daysInYear = DateTime.IsLeapYear(_actualYear) ? 366 : 365;
+                    double _daysLeftInYear = _daysInYear - _dateOfStart.DayOfYear;
+                    _remainHoliday = (_holidays / _daysInYear) * _daysLeftInYear;
+                    _remainHoliday = Math.Round(_remainHoliday, 0, MidpointRounding.AwayFromZero);
+                    Int32.TryParse(_remainHoliday.ToString(), out _holidays);
                 }
 
                 // Days after children
@@ -319,6 +320,30 @@ namespace emira.BusinessLogicLayer
                     _holidays += 2;
                 }
 
+                // Days after new born babies
+                int _numberOfNewBornBabies = _person.NumberOfNewBornBabies;
+
+                if (_numberOfNewBornBabies == 1)
+                {
+                    _holidays += 5;
+
+                }
+
+                if (_numberOfNewBornBabies > 1)
+                {
+                    _holidays += 7;
+                }
+
+                // Days after 50% health damage
+                bool _healthDamage = _person.HealthDamage;
+
+                if (_healthDamage)
+                {
+                    _holidays += 5;
+                }
+
+
+                return _holidays;
 
             }
             catch (Exception error)
@@ -326,106 +351,36 @@ namespace emira.BusinessLogicLayer
                 Logger.Error(error);
                 _customMsgBox = new CustomMsgBox();
                 _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _holidays;
             }
-
-
-           
-
-         
-
-            
-
-            // Days after new born babies
-            if (NumberOfNewBornBabies > 1)
-            {
-                HolidaysInTheYear += 7;
-            }
-            else if (NumberOfChildren == 1)
-            {
-                HolidaysInTheYear += 5;
-            }
-
-            // Days after 50% health damage
-            if (HealthDamage == true)
-            {
-                HolidaysInTheYear += 5;
-            }
-
-            // Remaining days, if he/she starts in the actual year
-            if (DateOfStart.Year == actualYear)
-            {
-                DateTime LastDayOfTheYear = new DateTime(actualYear, 12, 31);
-                double holidayForDay = Convert.ToDouble(HolidaysInTheYear) / 365;
-                int RemainingDays = Convert.ToInt32((LastDayOfTheYear.Subtract(DateOfStart)).TotalDays);
-                HolidaysInTheYear = Convert.ToInt32(Math.Ceiling(holidayForDay * RemainingDays));
-            }
-
-
-            // If the user starts after 1st of October
-            if (DateOfStart.Month == 10 && DateOfStart.Year == actualYear - 1 && today.Month <= 3 && today.Day <= 31)
-            {
-                int UsedHolidaysInLastYear = GetUsedHolidays(actualYear - 1);
-
-            }
-
-            return HolidaysInTheYear;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public bool AddNewHoliday(DateTime from, DateTime to)
+        /// <summary>
+        /// This method gives back the number of the remaining days for the actual years
+        /// </summary>
+        /// <returns>number of the remaining days for the year</returns>
+        public int GetRemainingDaysForActualYear()
         {
-            bool _isSuccess = false;
-            int _result = 0;
-            string _sID = string.Empty;
-            int _iID = 0;
-            string _startDate = string.Empty;
-            string _endDate = string.Empty;
-
-            _startDate = from.ToShortDateString().Replace(". ", "-").Trim('.');
-            _endDate = to.ToShortDateString().Replace(". ", "-").Trim('.');
-
-            _DBHandler = new DatabaseHandler();
-            _dataTable = new DataTable();
-            _sID = _DBHandler.GetMaxIDFromHoliday();
-            if (string.IsNullOrEmpty(_sID))
+            int _holidays = 0;
+            int _numberOfTheUsedDays = 0;
+            int _remainingDays = 0;
+            try
             {
-                _sID = "0";
+                _holidays = CountHolidays();
+                _numberOfTheUsedDays = GetUsedHolidays(DateTime.Today.Year);
+
+                _remainingDays = _holidays - _numberOfTheUsedDays;
+
+                return _remainingDays;
             }
-
-            _iID = Convert.ToInt32(_sID);
-            _result = _DBHandler.AddNewHolidayToDB(_iID + 1, LogInfo.UserID, _startDate, _endDate);
-            if (_result > 0) { _isSuccess = true; }
-            return _isSuccess;
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                _customMsgBox = new CustomMsgBox();
+                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _remainingDays;
+            }
         }
-
-        public bool DeleteHoliday(string ID)
-        {
-            bool _isSuccess = false;
-            //int updatedRow = 0;        
-            //_DBHandler = new DatabaseHandler();
-            //Dictionary<string, string> data = new Dictionary<string, string>();
-            //data.Add(Texts.HolidayProperties.Status, "False");
-            //_isSuccess = _DBHandler.UpdateHoliday(data, Texts.HolidayProperties.ID, ID, updatedRow);
-            return _isSuccess;
-        }
-
-
-
-
 
         /// <summary>
         /// This method give back the number of the used holidays which the actual person has used already in the actual year.
@@ -433,68 +388,142 @@ namespace emira.BusinessLogicLayer
         /// <returns>Return with the number of the used holidays in the actual year.</returns>
         public int GetUsedHolidays(int year)
         {
-            DateTime StartDate;
-            DateTime EndDate;
-            double UsedDays = 0;
+            DateTime _startDate = new DateTime();
+            DateTime _endDate = new DateTime();
+            int _usedDays = 0;
 
-            _DBHandler = new DatabaseHandler();
-            _dataTable = new DataTable();
-            _dataTable = _DBHandler.GetUsedHolidays(year);
-            foreach (DataRow holiday in _dataTable.Rows)
+            try
             {
-                StartDate = Convert.ToDateTime(holiday[Texts.HolidayProperties.StartDate]);
-                EndDate = Convert.ToDateTime(holiday[Texts.HolidayProperties.StartDate]);
+                _DBHandler = new DatabaseHandler();
+                _dataTable = new DataTable();
+                _dataTable = _DBHandler.GetUsedHolidays(year);
+                foreach (DataRow holiday in _dataTable.Rows)
+                {
+                    DateTime.TryParse(holiday[Texts.HolidayProperties.StartDate].ToString(), out _startDate);
 
-                //TODO: kiszedni ezt az if-et innen és megoldani 24h-val
-                if (StartDate == EndDate)
-                {
-                    UsedDays += 1;
+                    DateTime.TryParse(holiday[Texts.HolidayProperties.EndDate].ToString(), out _endDate);
+
+                    _usedDays += _endDate.Subtract(_startDate).Days + 1;
                 }
-                else
-                {
-                    TimeSpan Days = EndDate.Subtract(StartDate);
-                    UsedDays += Days.TotalDays;
-                }
+                return _usedDays;
             }
-
-            return Convert.ToInt32(UsedDays);
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                _customMsgBox = new CustomMsgBox();
+                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _usedDays;
+            }
         }
 
-
-
-        public int GetRemainingDaysForActualYear()
-        {
-
-            int HolidaysInTheYear = CountHolidays();
-            int NumberOfTheUsedDays = GetUsedHolidays(DateTime.Today.Year);
-
-            int RemainingDays = HolidaysInTheYear - NumberOfTheUsedDays;
-
-            return RemainingDays;
-        }
-
-        public List<string> ChooseDateValidation(DateTime startDate, DateTime endDate)
+        /// <summary>
+        /// The selected holiday period can be already approved therefore needs a date validation
+        /// </summary>
+        /// <param name="startDate">start date of the selected holiday period</param>
+        /// <param name="endDate">end date of the selected holiday period</param>
+        /// <returns>RowID(s) of the conflicted holiday(s)</returns>
+        public List<string> ChooseDateValidation(string startDate, string endDate)
         {
             List<string> _conflictedIDs = new List<string>();
-            string _startDate = string.Empty;
-            string _endDate = string.Empty;
-            string _ID = string.Empty;
 
-            _startDate = startDate.ToShortDateString().Replace(". ", "-").Trim('.');
-            _endDate = endDate.ToShortDateString().Replace(". ", "-").Trim('.');
-
-            _DBHandler = new DatabaseHandler();
-            _dataTable = new DataTable();
-            _dataTable = _DBHandler.GetConflictedDateIDs(_startDate, _endDate);
-            if (_dataTable != null)
+            try
             {
-                foreach (DataRow ID in _dataTable.Rows)
+                string _ID = string.Empty;
+                _DBHandler = new DatabaseHandler();
+                _dataTable = new DataTable();
+
+                _dataTable = _DBHandler.GetConflictedDateIDs(startDate, endDate);
+                if (_dataTable != null)
                 {
-                    // _ID = ID[Texts.HolidayProperties.ID].ToString();
-                    _conflictedIDs.Add(_ID);
+                    foreach (DataRow ID in _dataTable.Rows)
+                    {
+                        _ID = ID[Texts.HolidayProperties.RowID].ToString();
+                        _conflictedIDs.Add(_ID);
+                    }
                 }
+                return _conflictedIDs;
             }
-            return _conflictedIDs;
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                _customMsgBox = new CustomMsgBox();
+                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _conflictedIDs;
+            }
         }
+
+        /// <summary>
+        /// Add holiday
+        /// </summary>
+        /// <param name="startDate">start date of the selected holiday period</param>
+        /// <param name="endDate">end date of the selected holiday period</param>
+        /// <returns>True if the add was successful</returns>
+        public bool AddNewHoliday(string startDate, string endDate)
+        {
+            bool _isSuccess = false;
+
+            try
+            {
+                int _result = 0;
+
+                _DBHandler = new DatabaseHandler();
+                _dataTable = new DataTable();
+                _result = _DBHandler.AddNewHolidayToDB(LogInfo.UserID, startDate, endDate);
+                if (_result > 0)
+                    _isSuccess = true;
+                return _isSuccess;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                _customMsgBox = new CustomMsgBox();
+                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _isSuccess;
+            }
+        }
+
+        /// <summary>
+        /// Remove holiday from the Actual holidays
+        /// </summary>
+        /// <param name="startDate">start date of the selected holiday period</param>
+        /// <param name="endDate">end date of the selected holiday period</param>
+        /// <returns>True if the holiday is removed from Actual holidays</returns>
+        public bool DeleteHoliday(string startDate, string endDate)
+        {
+            bool _isSuccess = false;
+            try
+            {
+                _DBHandler = new DatabaseHandler();
+                string _ID = string.Empty;
+                int updatedRow = 0;
+
+                // Get the rowID of the holiday
+                // Cut the time
+                startDate = startDate.Remove(12);
+                endDate = endDate.Remove(12);
+
+                // Replace the delimiter to '-'
+                startDate = startDate.Replace(". ", "-");
+                endDate = endDate.Replace(". ", "-");
+
+                _ID = _DBHandler.GetRowID(startDate, endDate);
+     
+                // Remove the holiday from Actual
+                Dictionary<string, string> data = new Dictionary<string, string>();
+                data.Add(Texts.HolidayProperties.Status, "False");
+                updatedRow =_DBHandler.UpdateHoliday(data, Texts.HolidayProperties.RowID, _ID, updatedRow);
+                if (updatedRow > 0)
+                    _isSuccess = true;
+                return _isSuccess;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                _customMsgBox = new CustomMsgBox();
+                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _isSuccess;
+            }
+        }
+
     }
 }

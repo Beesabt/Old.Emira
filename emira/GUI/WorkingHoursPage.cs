@@ -21,6 +21,37 @@ namespace emira.GUI
         DataTable _dataTable;
         List<DataGridViewCell> _changedCells = new List<DataGridViewCell>();
 
+        public WorkingHoursPage()
+        {
+            InitializeComponent();
+
+            WorkingHours _workingHours = new WorkingHours();
+            // Fill the combox with months from DB
+            List<string> Dates = _workingHours.GetYearsAndMonths();
+
+            foreach (var item in Dates)
+            {
+                cbYearWithMonth.Items.Add(item);
+            }
+        }
+
+        private void WorkingHours_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                WorkingHours _workingHours = new WorkingHours();
+
+                // Select the actual month in the combobox
+                cbYearWithMonth.SelectedItem = _workingHours.GetActualMonth();
+
+                UpdateWorkingHoursTable();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void UpdateWorkingHoursTable()
         {
             // Clean all modifications
@@ -306,51 +337,129 @@ namespace emira.GUI
             }
         }
 
-        public WorkingHoursPage()
+        private void btnNext_Click(object sender, EventArgs e)
         {
-            InitializeComponent();
-
-            WorkingHours _workingHours = new WorkingHours();
-            // Fill the combox with months from DB
-            List<string> Dates = _workingHours.GetYearsAndMonths();
-
-            foreach (var item in Dates)
+            int _selectedIndex = cbYearWithMonth.SelectedIndex;
+            if (cbYearWithMonth.MaxDropDownItems != (_selectedIndex + 1))
             {
-                cbYearWithMonth.Items.Add(item);
-            }
-        }
-
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void btnMinimalize_Click(object sender, EventArgs e)
-        {
-            WindowState = FormWindowState.Minimized;
-        }
-
-        private void btnHome_Click(object sender, EventArgs e)
-        {
-            Hide();
-            HomePage _homePage = new HomePage();
-            _homePage.Show();
-        }
-
-        private void WorkingHours_Load(object sender, EventArgs e)
-        {
-            try
-            {
-                WorkingHours _workingHours = new WorkingHours();
-
-                // Select the actual month in the combobox
-                cbYearWithMonth.SelectedItem = _workingHours.GetActualMonth();
-
+                cbYearWithMonth.SelectedIndex = _selectedIndex + 1;
                 UpdateWorkingHoursTable();
             }
-            catch (Exception error)
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            int _selectedIndex = cbYearWithMonth.SelectedIndex;
+            if (_selectedIndex != 0)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cbYearWithMonth.SelectedIndex = _selectedIndex - 1;
+                UpdateWorkingHoursTable();
+            }
+        }
+
+        private void cbYearWithMonth_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void cbYearWithMonth_DropDownClosed(object sender, EventArgs e)
+        {
+            UpdateWorkingHoursTable();
+        }
+
+        private void dgvWorkingHours_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                foreach (DataGridViewCell cell in dgvWorkingHours.SelectedCells)
+                {
+                    cell.Value = cell.DefaultNewRowValue;
+                    DataGridViewCell _changedCell = dgvWorkingHours.Rows[cell.RowIndex].Cells[cell.ColumnIndex];
+                    if (string.IsNullOrEmpty(_changedCell.ErrorText))
+                    {
+                        _changedCells.Add(_changedCell);
+                    }
+                }
+                e.Handled = true;
+                btnSave.Enabled = true;
+                return;
+            }
+
+            if (e.KeyCode == Keys.V && e.Modifiers == Keys.Control)
+            {
+                foreach (DataGridViewCell cell in dgvWorkingHours.SelectedCells)
+                {
+                    cell.Value = Clipboard.GetText();
+                    DataGridViewCell _changedCell = dgvWorkingHours.Rows[cell.RowIndex].Cells[cell.ColumnIndex];
+                    if (string.IsNullOrEmpty(_changedCell.ErrorText))
+                    {
+                        _changedCells.Add(_changedCell);
+                    }
+                }
+                e.Handled = true;
+                btnSave.Enabled = true;
+                return;
+            }
+
+            if (e.KeyCode == Keys.X && e.Modifiers == Keys.Control)
+            {
+                foreach (DataGridViewCell cell in dgvWorkingHours.SelectedCells)
+                {
+                    Clipboard.SetText(cell.Value.ToString());
+                    cell.Value = cell.DefaultNewRowValue;
+                    DataGridViewCell _changedCell = dgvWorkingHours.Rows[cell.RowIndex].Cells[cell.ColumnIndex];
+                    if (string.IsNullOrEmpty(_changedCell.ErrorText))
+                    {
+                        _changedCells.Add(_changedCell);
+                    }
+                }
+                e.Handled = true;
+                btnSave.Enabled = true;
+            }
+
+        }
+
+        private void dgvWorkingHours_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            btnSave.Enabled = true;
+            DataGridViewCell _changedCell = dgvWorkingHours.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            if (string.IsNullOrEmpty(_changedCell.ErrorText))
+            {
+                _changedCells.Add(_changedCell);
+            }
+
+            UpdateTotalHours();
+
+        }
+
+        private void dgvWorkingHours_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            Double ignored = new Double();
+
+            if (string.IsNullOrEmpty(e.FormattedValue.ToString()))
+            {
+                DataGridViewCell cell = dgvWorkingHours.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                cell.ErrorText = string.Empty;
+                return;
+            }
+            if (!double.TryParse(e.FormattedValue.ToString(), out ignored))
+            {
+                DataGridViewCell cell = dgvWorkingHours.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                cell.ErrorText = Texts.ErrorMessages.NumbericCell;
+
+            }
+            else if (double.Parse(e.FormattedValue.ToString()) > 24.0)
+            {
+                if (e.ColumnIndex != dgvWorkingHours.ColumnCount - 1 && e.RowIndex != dgvWorkingHours.RowCount - 1)
+                {
+                    DataGridViewCell cell = dgvWorkingHours.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                    cell.ErrorText = Texts.ErrorMessages.BiggerThan24Hours;
+                }
+            }
+            else
+            {
+                DataGridViewCell cell = dgvWorkingHours.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                cell.ErrorText = string.Empty;
             }
         }
 
@@ -425,34 +534,58 @@ namespace emira.GUI
             }
         }
 
-        private void dgvWorkingHours_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+
+        private void btnExit_Click(object sender, EventArgs e)
         {
-            Double ignored = new Double();
+            Application.Exit();
+        }
 
-            if (string.IsNullOrEmpty(e.FormattedValue.ToString()))
-            {
-                DataGridViewCell cell = dgvWorkingHours.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                cell.ErrorText = string.Empty;
-                return;
-            }
-            if (!double.TryParse(e.FormattedValue.ToString(), out ignored))
-            {
-                DataGridViewCell cell = dgvWorkingHours.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                cell.ErrorText = Texts.ErrorMessages.NumbericCell;
+        private void btnMinimalize_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
 
-            }
-            else if (double.Parse(e.FormattedValue.ToString()) > 24.0)
+        private void btnRestore_Click(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal)
             {
-                if (e.ColumnIndex != dgvWorkingHours.ColumnCount - 1 && e.RowIndex != dgvWorkingHours.RowCount - 1)
-                {
-                    DataGridViewCell cell = dgvWorkingHours.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                    cell.ErrorText = Texts.ErrorMessages.BiggerThan24Hours;
-                }
+                WindowState = FormWindowState.Maximized;
+                btnMaximize.BackgroundImage = Properties.Resources.restore_icon_white_26;
+                dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                Invalidate();
             }
             else
             {
-                DataGridViewCell cell = dgvWorkingHours.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                cell.ErrorText = string.Empty;
+                WindowState = FormWindowState.Normal;
+                btnMaximize.BackgroundImage = Properties.Resources.maximize_icon_white_26;
+                dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+                Invalidate();
+            }
+        }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            Hide();
+            HomePage _homePage = new HomePage();
+            _homePage.Show();
+        }
+
+
+        private void pHeader_DoubleClick(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal)
+            {
+                WindowState = FormWindowState.Maximized;
+                btnMaximize.BackgroundImage = Properties.Resources.restore_icon_white_26;
+                dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                Invalidate();
+            }
+            else
+            {
+                WindowState = FormWindowState.Normal;
+                btnMaximize.BackgroundImage = Properties.Resources.maximize_icon_white_26;
+                dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+                Invalidate();
             }
         }
 
@@ -476,137 +609,12 @@ namespace emira.GUI
             }
         }
 
-        private void btnRestore_Click(object sender, EventArgs e)
+
+        protected override void OnPaint(PaintEventArgs e)
         {
-            if (WindowState == FormWindowState.Normal)
-            {
-                WindowState = FormWindowState.Maximized;
-                btnMaximize.BackgroundImage = Properties.Resources.restore_icon_white_26;
-                dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                Invalidate();
-            }
-            else
-            {
-                WindowState = FormWindowState.Normal;
-                btnMaximize.BackgroundImage = Properties.Resources.maximize_icon_white_26;
-                dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
-                Invalidate();
-            }
+            Rectangle borderRectangle = new Rectangle(0, 0, ClientRectangle.Width - 1, ClientRectangle.Height - 1);
+            e.Graphics.DrawRectangle(Pens.Black, borderRectangle);
+            base.OnPaint(e);
         }
-
-        private void pHeader_DoubleClick(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Normal)
-            {
-                WindowState = FormWindowState.Maximized;
-                btnMaximize.BackgroundImage = Properties.Resources.restore_icon_white_26;
-                dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                Invalidate();
-            }
-            else
-            {
-                WindowState = FormWindowState.Normal;
-                btnMaximize.BackgroundImage = Properties.Resources.maximize_icon_white_26;
-                dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
-                Invalidate();
-            }
-        }
-
-        private void dgvWorkingHours_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            btnSave.Enabled = true;
-            DataGridViewCell _changedCell = dgvWorkingHours.Rows[e.RowIndex].Cells[e.ColumnIndex];
-            if (string.IsNullOrEmpty(_changedCell.ErrorText))
-            {
-                _changedCells.Add(_changedCell);
-            }
-
-            UpdateTotalHours();
-
-        }
-
-        private void dgvWorkingHours_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-            {
-                foreach (DataGridViewCell cell in dgvWorkingHours.SelectedCells)
-                {                 
-                    cell.Value = cell.DefaultNewRowValue;
-                    DataGridViewCell _changedCell = dgvWorkingHours.Rows[cell.RowIndex].Cells[cell.ColumnIndex];
-                    if (string.IsNullOrEmpty(_changedCell.ErrorText))
-                    {
-                        _changedCells.Add(_changedCell);
-                    }
-                }
-                e.Handled = true;
-                btnSave.Enabled = true;
-                return;
-            }
-
-            if (e.KeyCode == Keys.V && e.Modifiers == Keys.Control)
-            {
-                foreach (DataGridViewCell cell in dgvWorkingHours.SelectedCells)
-                {
-                    cell.Value = Clipboard.GetText();
-                    DataGridViewCell _changedCell = dgvWorkingHours.Rows[cell.RowIndex].Cells[cell.ColumnIndex];
-                    if (string.IsNullOrEmpty(_changedCell.ErrorText))
-                    {
-                        _changedCells.Add(_changedCell);
-                    }
-                }
-                e.Handled = true;
-                btnSave.Enabled = true;
-                return;
-            }
-
-            if (e.KeyCode == Keys.X && e.Modifiers == Keys.Control)
-            {
-                foreach (DataGridViewCell cell in dgvWorkingHours.SelectedCells)
-                {
-                    Clipboard.SetText(cell.Value.ToString());
-                    cell.Value = cell.DefaultNewRowValue;
-                    DataGridViewCell _changedCell = dgvWorkingHours.Rows[cell.RowIndex].Cells[cell.ColumnIndex];
-                    if (string.IsNullOrEmpty(_changedCell.ErrorText))
-                    {
-                        _changedCells.Add(_changedCell);
-                    }
-                }
-                e.Handled = true;
-                btnSave.Enabled = true;
-                return;
-            }
-
-        }
-
-        private void cbYearWithMonth_DropDownClosed(object sender, EventArgs e)
-        {
-            UpdateWorkingHoursTable();
-        }
-
-        private void btnNext_Click(object sender, EventArgs e)
-        {
-            int _selectedIndex = cbYearWithMonth.SelectedIndex;
-            if (cbYearWithMonth.MaxDropDownItems != (_selectedIndex + 1))
-            {
-                cbYearWithMonth.SelectedIndex = _selectedIndex + 1;
-                UpdateWorkingHoursTable();
-            }
-        }
-
-        private void btnPrevious_Click(object sender, EventArgs e)
-        {
-            int _selectedIndex = cbYearWithMonth.SelectedIndex;
-            if (_selectedIndex != 0)
-            {
-                cbYearWithMonth.SelectedIndex = _selectedIndex - 1;
-                UpdateWorkingHoursTable();
-            }
-        }
-
-        private void cbYearWithMonth_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = true;
-        }
-
     }
 }

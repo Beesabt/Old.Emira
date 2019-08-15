@@ -178,13 +178,19 @@ namespace emira.HelperFunctions
 
             #region Holiday
 
-            public static string SmallerEndDate = "The end date has to be bigger than the start date";
+            public static string PublicHoliday = "There is no need to request holiday for this period.";
+
+            public static string PublicHolidayIncluded = "The period of the holiday contains public holiday!";
+
+            public static string SmallerEndDate = "The end date has to be bigger than the start date.";
 
             public static string StartDayInActualYear = "Start date can be only in this year.";
 
             public static string ConflictIDs = "These IDs are conflicting with the choosen interval: ";
 
-            public static string TooFewRemainingDays = "Not enough days left to take vacation days";
+            public static string TooFewRemainingDays = "Not enough days left to take vacation days!";
+
+            public static string ErrorDuringCancellation = "There was an error during cancellation, try again.";
 
             #endregion
 

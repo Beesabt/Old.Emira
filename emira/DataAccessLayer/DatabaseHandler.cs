@@ -225,7 +225,6 @@ namespace emira.DataAccessLayer
 
         public DataTable GetTask(string command)
         {
-            //string cmd = string.Format("SELECT * FROM {0} ORDER BY {1}", Texts.DataTableNames.Task, Texts.TaskProperties.TaskGroupID);
             _dataTable = new DataTable();
             _dataTable = GetDataTable(command);
             return _dataTable;
@@ -297,12 +296,11 @@ namespace emira.DataAccessLayer
             string cmd = string.Empty;
             if (selectedStatus)
             {
-                cmd = string.Format("SELECT * FROM {0} WHERE {1}='{2}' AND {3}='{4}' AND {5} LIKE '{6}%' ORDER BY {5}",
+                cmd = string.Format("SELECT * FROM {0} WHERE {1}='{2}' AND {3} = 1 AND {4} LIKE '{5}%' ORDER BY {4}",
                 Texts.DataTableNames.Holiday,
                 Texts.HolidayProperties.PersonID,
                 LogInfo.UserID,
                 Texts.HolidayProperties.Status,
-                1,
                 Texts.HolidayProperties.StartDate,
                 selectedYear);
             }
@@ -322,9 +320,15 @@ namespace emira.DataAccessLayer
 
         public DataTable GetUsedHolidays(int actualYear)
         {
-            string cmd = string.Format("SELECT {0}, {1} FROM {2} WHERE {3} = '1' AND {4} = '{5}' AND {6} LIKE '{7}%'",
-                Texts.HolidayProperties.StartDate, Texts.HolidayProperties.EndDate, Texts.DataTableNames.Holiday,
-                Texts.HolidayProperties.Status, Texts.HolidayProperties.PersonID, LogInfo.UserID, Texts.HolidayProperties.StartDate, actualYear);
+            string cmd = string.Format("SELECT {0}, {1} FROM {2} WHERE {3} = 1 AND {4} = '{5}' AND {6} LIKE '{7}%'",
+                Texts.HolidayProperties.StartDate,
+                Texts.HolidayProperties.EndDate,
+                Texts.DataTableNames.Holiday,
+                Texts.HolidayProperties.Status,
+                Texts.HolidayProperties.PersonID,
+                LogInfo.UserID,
+                Texts.HolidayProperties.StartDate,
+                actualYear);
             _dataTable = new DataTable();
             _dataTable = GetDataTable(cmd);
             return _dataTable;
@@ -332,11 +336,10 @@ namespace emira.DataAccessLayer
 
         public DataTable GetConflictedDateIDs(string startDate, string endDate)
         {
-            string cmd = string.Format("SELECT {0} FROM {1} WHERE {2}='{3}' AND {4} BETWEEN '{5}' AND '{6}' AND {7} BETWEEN '{5}' AND '{6}' AND {8}='{9}'",
+            string cmd = string.Format("SELECT {0} FROM {1} WHERE {2} = 1 AND {3} BETWEEN '{4}' AND '{5}' AND {6} BETWEEN '{4}' AND '{5}' AND {7}='{8}'",
                 Texts.HolidayProperties.RowID,
                 Texts.DataTableNames.Holiday,
                 Texts.HolidayProperties.Status,
-                1,
                 Texts.HolidayProperties.StartDate,
                 startDate,
                 endDate,
@@ -348,30 +351,40 @@ namespace emira.DataAccessLayer
             return _dataTable;
         }
 
-        public string GetMaxIDFromHoliday()
-        {
-            string _result = string.Empty;
-            //string cmd = string.Format("SELECT MAX({0}) FROM {1} WHERE {2}='{3}'", Texts.HolidayProperties.ID, Texts.DataTableNames.Holiday,
-            //    Texts.HolidayProperties.PersonID, LogInfo.UserID);
-            //_result = GetString(cmd);
-            return _result;
-        }
-
-        public int AddNewHolidayToDB(int ID, int personID, string startDate, string endDate)
+        public int AddNewHolidayToDB(int personID, string startDate, string endDate)
         {
             int _result = 0;
-            //string cmd = string.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}, {5}) VALUES({6}, '{7}', '{8}', '{9}', {10})", Texts.DataTableNames.Holiday,
-            //    Texts.HolidayProperties.ID, Texts.HolidayProperties.PersonID, Texts.HolidayProperties.StartDate,
-            //    Texts.HolidayProperties.EndDate, Texts.HolidayProperties.Status, ID, personID, startDate, endDate, 1);
-            //_result = ExecuteScalar(cmd);
+            string cmd = string.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}) VALUES({5}, '{6}', '{7}', 1)",
+                Texts.DataTableNames.Holiday,
+                Texts.HolidayProperties.PersonID,
+                Texts.HolidayProperties.StartDate,
+                Texts.HolidayProperties.EndDate,
+                Texts.HolidayProperties.Status,
+                personID,
+                startDate,
+                endDate);
+            _result = ExecuteScalar(cmd);
             return _result;
         }
 
-        public bool UpdateHoliday(Dictionary<string, string> data, string Key, string Value, int updatedRow)
+        public int UpdateHoliday(Dictionary<string, string> data, string Key, string Value, int updatedRow)
         {
-            bool isSuccess = false;
-            isSuccess = Update(Texts.DataTableNames.Holiday, data, string.Format("{0}='{1}'", Key, Value), ref updatedRow);
-            return isSuccess;
+            Update(Texts.DataTableNames.Holiday, data, string.Format("{0}='{1}'", Key, Value), ref updatedRow);
+            return updatedRow;
+        }
+
+        public string GetRowID(string startDate, string endDate)
+        {
+            string _result = string.Empty;
+            string cmd = string.Format("SELECT {0} FROM {1} WHERE {2}='{3}' AND {4}='{5}'",
+                Texts.HolidayProperties.RowID,
+                Texts.DataTableNames.Holiday,
+                Texts.HolidayProperties.StartDate,
+                startDate,
+                Texts.HolidayProperties.EndDate,
+                endDate);
+            _result = GetString(cmd);
+            return _result;
         }
 
         #endregion
