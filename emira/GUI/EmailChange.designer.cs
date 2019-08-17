@@ -44,7 +44,7 @@
             // 
             this.lUsernameChange.AutoSize = true;
             this.lUsernameChange.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lUsernameChange.Location = new System.Drawing.Point(109, 68);
+            this.lUsernameChange.Location = new System.Drawing.Point(100, 68);
             this.lUsernameChange.Name = "lUsernameChange";
             this.lUsernameChange.Size = new System.Drawing.Size(221, 37);
             this.lUsernameChange.TabIndex = 5;
@@ -53,14 +53,14 @@
             // btnUNameChange
             // 
             this.btnUNameChange.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(133)))), ((int)(((byte)(197)))));
-            this.btnUNameChange.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
+            this.btnUNameChange.FlatAppearance.BorderColor = System.Drawing.Color.Snow;
             this.btnUNameChange.FlatAppearance.BorderSize = 0;
             this.btnUNameChange.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
             this.btnUNameChange.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
             this.btnUNameChange.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUNameChange.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnUNameChange.ForeColor = System.Drawing.Color.White;
-            this.btnUNameChange.Location = new System.Drawing.Point(719, 423);
+            this.btnUNameChange.Location = new System.Drawing.Point(730, 425);
             this.btnUNameChange.Name = "btnUNameChange";
             this.btnUNameChange.Size = new System.Drawing.Size(203, 49);
             this.btnUNameChange.TabIndex = 3;
@@ -80,7 +80,7 @@
             // 
             this.lNewEmail.AutoSize = true;
             this.lNewEmail.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lNewEmail.Location = new System.Drawing.Point(252, 260);
+            this.lNewEmail.Location = new System.Drawing.Point(252, 255);
             this.lNewEmail.Name = "lNewEmail";
             this.lNewEmail.Size = new System.Drawing.Size(93, 21);
             this.lNewEmail.TabIndex = 7;
@@ -89,7 +89,7 @@
             // tbNewEmail
             // 
             this.tbNewEmail.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.tbNewEmail.Location = new System.Drawing.Point(384, 260);
+            this.tbNewEmail.Location = new System.Drawing.Point(384, 253);
             this.tbNewEmail.Name = "tbNewEmail";
             this.tbNewEmail.Size = new System.Drawing.Size(400, 26);
             this.tbNewEmail.TabIndex = 1;

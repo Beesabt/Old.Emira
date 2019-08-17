@@ -4,23 +4,35 @@ using System.Data;
 using System.Data.SQLite;
 using System.Windows.Forms;
 using emira.HelperFunctions;
+using emira.GUI;
 
 namespace emira.DataAccessLayer
 {
     class DatabaseHandler
     {
-        private SQLiteConnection _sqlite;
-        DataTable _dataTable;
-        SQLiteDataAdapter _dataAdapter;
-        string _sResult = string.Empty;
-        int _iResult = 0;
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        string sResult = string.Empty;
+        int iResult = 0;
+        private SQLiteConnection sqlite;
+        DataTable dataTable;
+        SQLiteDataAdapter dataAdapter;
+        CustomMsgBox customMsgBox;
 
         public DatabaseHandler()
         {
-            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string path = (System.IO.Path.GetDirectoryName(executable));
-            AppDomain.CurrentDomain.SetData("DataDirectory", path);
-            _sqlite = new SQLiteConnection(@"Data Source = |DataDirectory|\ApplicationFiles\DataBase\Emira_Database.db; Version = 3;");
+            try
+            {
+                string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                string path = (System.IO.Path.GetDirectoryName(executable));
+                AppDomain.CurrentDomain.SetData("DataDirectory", path);
+                sqlite = new SQLiteConnection(@"Data Source = |DataDirectory|\ApplicationFiles\DataBase\Emira_Database.db; Version = 3;");
+            }
+            catch(Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }          
         }
 
 
@@ -29,13 +41,13 @@ namespace emira.DataAccessLayer
             try
             {
                 SQLiteCommand cmd;
-                cmd = _sqlite.CreateCommand();
+                cmd = sqlite.CreateCommand();
                 cmd.CommandText = command;
-                cmd.Connection = _sqlite;
-                _sqlite.Open();
+                cmd.Connection = sqlite;
+                sqlite.Open();
                 var obj = cmd.ExecuteScalar();
                 if (obj == null) { return 0; }
-                _iResult = Convert.ToInt32(obj);
+                iResult = Convert.ToInt32(obj);
             }
             catch (SQLiteException error)
             {
@@ -43,9 +55,9 @@ namespace emira.DataAccessLayer
             }
             finally
             {
-                _sqlite.Close();
+                sqlite.Close();
             }
-            return _iResult;
+            return iResult;
         }
 
         private string GetString(string command)
@@ -53,9 +65,9 @@ namespace emira.DataAccessLayer
             try
             {
                 SQLiteCommand cmd;
-                cmd = _sqlite.CreateCommand();
+                cmd = sqlite.CreateCommand();
                 cmd.CommandText = command;
-                _sqlite.Open();
+                sqlite.Open();
                 var obj = cmd.ExecuteScalar();
                 if (obj == null || string.IsNullOrEmpty(obj.ToString()))
                 {
@@ -63,7 +75,7 @@ namespace emira.DataAccessLayer
                 }
                 else
                 {
-                    _sResult = obj.ToString();
+                    sResult = obj.ToString();
                 }
             }
             catch (SQLiteException error)
@@ -72,9 +84,9 @@ namespace emira.DataAccessLayer
             }
             finally
             {
-                _sqlite.Close();
+                sqlite.Close();
             }
-            return _sResult;
+            return sResult;
         }
 
         private int ExecuteNonQuery(string command)
@@ -82,10 +94,10 @@ namespace emira.DataAccessLayer
             try
             {
                 SQLiteCommand cmd;
-                cmd = _sqlite.CreateCommand();
+                cmd = sqlite.CreateCommand();
                 cmd.CommandText = command;
-                _sqlite.Open();
-                _iResult = cmd.ExecuteNonQuery();
+                sqlite.Open();
+                iResult = cmd.ExecuteNonQuery();
             }
             catch (SQLiteException error)
             {
@@ -93,9 +105,9 @@ namespace emira.DataAccessLayer
             }
             finally
             {
-                _sqlite.Close();
+                sqlite.Close();
             }
-            return _iResult;
+            return iResult;
         }
 
         private bool Update(string tableName, Dictionary<string, string> data, string where, ref int updatedRows)
@@ -115,9 +127,9 @@ namespace emira.DataAccessLayer
                 }
                 string command = string.Format("UPDATE {0} SET {1} WHERE {2}", tableName, vals, where);
                 SQLiteCommand cmd;
-                cmd = _sqlite.CreateCommand();
+                cmd = sqlite.CreateCommand();
                 cmd.CommandText = command;
-                _sqlite.Open();
+                sqlite.Open();
                 updatedRows = cmd.ExecuteNonQuery();
                 if (updatedRows > 0) returnCode = true;
             }
@@ -127,7 +139,7 @@ namespace emira.DataAccessLayer
             }
             finally
             {
-                _sqlite.Close();
+                sqlite.Close();
             }
             return returnCode;
         }
@@ -137,12 +149,12 @@ namespace emira.DataAccessLayer
             try
             {
                 SQLiteCommand cmd;
-                cmd = _sqlite.CreateCommand();
+                cmd = sqlite.CreateCommand();
                 cmd.CommandText = command;
-                _sqlite.Open();
-                _dataAdapter = new SQLiteDataAdapter(cmd);
-                _dataTable = new DataTable();
-                _dataAdapter.Fill(_dataTable);
+                sqlite.Open();
+                dataAdapter = new SQLiteDataAdapter(cmd);
+                dataTable = new DataTable();
+                dataAdapter.Fill(dataTable);
             }
             catch (SQLiteException error)
             {
@@ -150,9 +162,9 @@ namespace emira.DataAccessLayer
             }
             finally
             {
-                _sqlite.Close();
+                sqlite.Close();
             }
-            return _dataTable;
+            return dataTable;
         }
 
         #region Login.cs
@@ -170,8 +182,8 @@ namespace emira.DataAccessLayer
         {
             string command = string.Format("SELECT {0} FROM {1} WHERE {2}='{3}' AND {4}='{5}'", Texts.PersonProperties.ID, Texts.DataTableNames.Person,
                  Texts.PersonProperties.Email, Email, Texts.PersonProperties.Password, Password);
-            _iResult = ExecuteScalar(command);
-            return _iResult;
+            iResult = ExecuteScalar(command);
+            return iResult;
         }
 
         #endregion
@@ -182,8 +194,8 @@ namespace emira.DataAccessLayer
         {
             string cmd = string.Format("SELECT {0} FROM {1} WHERE {2}='{3}'", Texts.PersonProperties.Password, Texts.DataTableNames.Person,
                  Texts.PersonProperties.Email, Email);
-            _sResult = GetString(cmd);
-            return _sResult;
+            sResult = GetString(cmd);
+            return sResult;
         }
 
         #endregion
@@ -198,25 +210,37 @@ namespace emira.DataAccessLayer
             return isSuccess;
         }
 
-        public bool SetNewValueDB(Dictionary<string, string> data, string Key, string Value, int updatedRow)
+        public int SetNewValueDB(Dictionary<string, string> data, string Key, string Value, int updatedRow)
         {
-            bool isSuccess = false;
-            isSuccess = Update(Texts.DataTableNames.Person, data, string.Format("{0}='{1}'", Key, Value), ref updatedRow);
-            return isSuccess;
+            Update(Texts.DataTableNames.Person, data, string.Format("{0}='{1}'", Key, Value), ref updatedRow);
+            return updatedRow;
         }
-        #endregion
 
-        #region Settings.cs and Holiday.cs
+        public DataTable GetSomePersonalInforamtionFromDB()
+        {
+            string command = string.Format("SELECT {0},{1},{2},{3},{4} FROM {5} WHERE {6}='{7}'",
+                Texts.PersonProperties.Name,
+                Texts.PersonProperties.RegisterNumber,
+                Texts.PersonProperties.Company,
+                Texts.PersonProperties.CostCenter,
+                Texts.PersonProperties.Position,
+                Texts.DataTableNames.Person,
+                Texts.PersonProperties.ID,
+                GeneralInfo.UserID);
+            dataTable = new DataTable();
+            dataTable = GetDataTable(command);
+            return dataTable;
+        }
 
         public DataTable GetPersonalInformationDB()
         {
             string command = string.Format("SELECT * FROM {0} WHERE {1}='{2}'",
                 Texts.DataTableNames.Person,
                 Texts.PersonProperties.ID,
-                LogInfo.UserID);
-            _dataTable = new DataTable();
-            _dataTable = GetDataTable(command);
-            return _dataTable;
+                GeneralInfo.UserID);
+            dataTable = new DataTable();
+            dataTable = GetDataTable(command);
+            return dataTable;
         }
 
         #endregion
@@ -225,9 +249,9 @@ namespace emira.DataAccessLayer
 
         public DataTable GetTask(string command)
         {
-            _dataTable = new DataTable();
-            _dataTable = GetDataTable(command);
-            return _dataTable;
+            dataTable = new DataTable();
+            dataTable = GetDataTable(command);
+            return dataTable;
         }
 
         public int InsertNewTask(string taskGroupID, string taskGroup, string taskID, string taskName)
@@ -279,6 +303,25 @@ namespace emira.DataAccessLayer
 
         #region Holiday.cs
 
+        public DataTable GetPersonalInformationDBForHoliday()
+        {
+            string command = string.Format("SELECT {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7} FROM {8} WHERE {9}='{10}'",
+                Texts.PersonProperties.DateOfBirth,
+                Texts.PersonProperties.DateOfStart,
+                Texts.PersonProperties.NumberOfChildren,
+                Texts.PersonProperties.NumberOfDisabledChildren,
+                Texts.PersonProperties.NumberOfNewBornBabies,
+                Texts.PersonProperties.HealthDamage,
+                Texts.PersonProperties.HolidaysLeftFromPreviousYear,
+                Texts.PersonProperties.ExtraHoliday,
+                Texts.DataTableNames.Person,
+                Texts.PersonProperties.ID,
+                GeneralInfo.UserID);
+            dataTable = new DataTable();
+            dataTable = GetDataTable(command);
+            return dataTable;
+        }
+
         public string GetTheSmallestYear()
         {
             string _theSmallestYear = string.Empty;
@@ -286,7 +329,7 @@ namespace emira.DataAccessLayer
                 Texts.HolidayProperties.StartDate,
                 Texts.DataTableNames.Holiday,
                 Texts.HolidayProperties.PersonID,
-                LogInfo.UserID);
+                GeneralInfo.UserID);
             _theSmallestYear = GetString(cmd);
             return _theSmallestYear;
         }
@@ -296,26 +339,31 @@ namespace emira.DataAccessLayer
             string cmd = string.Empty;
             if (selectedStatus)
             {
-                cmd = string.Format("SELECT * FROM {0} WHERE {1}='{2}' AND {3} = 1 AND {4} LIKE '{5}%' ORDER BY {4}",
-                Texts.DataTableNames.Holiday,
-                Texts.HolidayProperties.PersonID,
-                LogInfo.UserID,
-                Texts.HolidayProperties.Status,
-                Texts.HolidayProperties.StartDate,
-                selectedYear);
+                cmd = string.Format("SELECT {0}, {1}, {2}, {3} FROM {4} WHERE {5}='{6}' AND {3} = 1 AND {1} LIKE '{7}%' ORDER BY {1}",
+                    Texts.HolidayProperties.RowID,
+                    Texts.HolidayProperties.StartDate,
+                    Texts.HolidayProperties.EndDate,
+                    Texts.HolidayProperties.Status,
+                    Texts.DataTableNames.Holiday,
+                    Texts.HolidayProperties.PersonID,
+                    GeneralInfo.UserID,
+                    selectedYear);
             }
             else
             {
-                cmd = string.Format("SELECT * FROM {0} WHERE {1}='{2}' AND {3} LIKE '{4}%' ORDER BY {3}",
-                Texts.DataTableNames.Holiday,
-                Texts.HolidayProperties.PersonID,
-                LogInfo.UserID,
-                Texts.HolidayProperties.StartDate,
-                selectedYear);
+                cmd = string.Format("SELECT {0}, {1}, {2}, {3} FROM {4} WHERE {5}='{6}' AND {1} LIKE '{7}%' ORDER BY {1}",
+                    Texts.HolidayProperties.RowID,
+                    Texts.HolidayProperties.StartDate,
+                    Texts.HolidayProperties.EndDate,
+                    Texts.HolidayProperties.Status,
+                    Texts.DataTableNames.Holiday,
+                    Texts.HolidayProperties.PersonID,
+                    GeneralInfo.UserID,
+                    selectedYear);
             }
-            _dataTable = new DataTable();
-            _dataTable = GetDataTable(cmd);
-            return _dataTable;
+            dataTable = new DataTable();
+            dataTable = GetDataTable(cmd);
+            return dataTable;
         }
 
         public DataTable GetUsedHolidays(int actualYear)
@@ -326,12 +374,12 @@ namespace emira.DataAccessLayer
                 Texts.DataTableNames.Holiday,
                 Texts.HolidayProperties.Status,
                 Texts.HolidayProperties.PersonID,
-                LogInfo.UserID,
+                GeneralInfo.UserID,
                 Texts.HolidayProperties.StartDate,
                 actualYear);
-            _dataTable = new DataTable();
-            _dataTable = GetDataTable(cmd);
-            return _dataTable;
+            dataTable = new DataTable();
+            dataTable = GetDataTable(cmd);
+            return dataTable;
         }
 
         public DataTable GetConflictedDateIDs(string startDate, string endDate)
@@ -345,16 +393,16 @@ namespace emira.DataAccessLayer
                 endDate,
                 Texts.HolidayProperties.EndDate,
                 Texts.HolidayProperties.PersonID,
-                LogInfo.UserID);
-            _dataTable = new DataTable();
-            _dataTable = GetDataTable(cmd);
-            return _dataTable;
+                GeneralInfo.UserID);
+            dataTable = new DataTable();
+            dataTable = GetDataTable(cmd);
+            return dataTable;
         }
 
         public int AddNewHolidayToDB(int personID, string startDate, string endDate)
         {
             int _result = 0;
-            string cmd = string.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}) VALUES({5}, '{6}', '{7}', 1)",
+            string cmd = string.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}) VALUES ({5}, '{6}', '{7}', 1)",
                 Texts.DataTableNames.Holiday,
                 Texts.HolidayProperties.PersonID,
                 Texts.HolidayProperties.StartDate,
@@ -363,7 +411,7 @@ namespace emira.DataAccessLayer
                 personID,
                 startDate,
                 endDate);
-            _result = ExecuteScalar(cmd);
+            _result = ExecuteNonQuery(cmd);
             return _result;
         }
 
@@ -394,9 +442,9 @@ namespace emira.DataAccessLayer
         public DataTable GetTask()
         {
             string cmd = string.Format("SELECT * FROM {0} ORDER BY {1}", Texts.DataTableNames.Task, Texts.TaskProperties.TaskGroupID);
-            _dataTable = new DataTable();
-            _dataTable = GetDataTable(cmd);
-            return _dataTable;
+            dataTable = new DataTable();
+            dataTable = GetDataTable(cmd);
+            return dataTable;
         }
 
         public DataTable GetTasksByMonth(string date)
@@ -408,24 +456,24 @@ namespace emira.DataAccessLayer
                 Texts.DataTableNames.Catalog,
                 Texts.CatalogProperties.Date,
                 date);
-            _dataTable = new DataTable();
-            _dataTable = GetDataTable(cmd);
-            return _dataTable;
+            dataTable = new DataTable();
+            dataTable = GetDataTable(cmd);
+            return dataTable;
         }
 
         public DataTable GetSelectedTaskFromDB()
         {
             string cmd = string.Format("SELECT * FROM {0} WHERE {1}='{2}'", Texts.DataTableNames.Task, Texts.TaskProperties.Selected, "True");
-            _dataTable = new DataTable();
-            _dataTable = GetDataTable(cmd);
-            return _dataTable;
+            dataTable = new DataTable();
+            dataTable = GetDataTable(cmd);
+            return dataTable;
         }
 
         public string GetHoursFromCathalogue(string taskID, string date)
         {
             string _result = string.Empty;
             string cmd = string.Format("SELECT {0} FROM {1} WHERE {2}='{3}' AND {4}='{5}' AND {6}='{7}'", Texts.CatalogProperties.NumberOfHours, Texts.DataTableNames.Catalog,
-                Texts.CatalogProperties.PersonID, LogInfo.UserID, Texts.CatalogProperties.TaskID, taskID, Texts.CatalogProperties.Date, date);
+                Texts.CatalogProperties.PersonID, GeneralInfo.UserID, Texts.CatalogProperties.TaskID, taskID, Texts.CatalogProperties.Date, date);
             _result = GetString(cmd);
             return _result;
         }
@@ -434,7 +482,7 @@ namespace emira.DataAccessLayer
         {
             int _result = 0;
             string cmd = string.Format("DELETE FROM {0} WHERE {1}='{2}' AND {3} BETWEEN '{4}' AND '{5}'", Texts.DataTableNames.Catalog,
-                Texts.CatalogProperties.PersonID, LogInfo.UserID, Texts.CatalogProperties.Date, beginDate, endDate);
+                Texts.CatalogProperties.PersonID, GeneralInfo.UserID, Texts.CatalogProperties.Date, beginDate, endDate);
             _result = ExecuteNonQuery(cmd);
             return _result;
         }
@@ -461,7 +509,7 @@ namespace emira.DataAccessLayer
                 Texts.CatalogProperties.TaskID,
                 Texts.CatalogProperties.Date,
                 Texts.CatalogProperties.NumberOfHours,
-                LogInfo.UserID,
+                GeneralInfo.UserID,
                 taskID,
                 date,
                 numberOfHours);

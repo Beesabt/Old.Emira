@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+
 using emira.BusinessLogicLayer;
 using emira.ValueObjects;
 using emira.HelperFunctions;
@@ -11,12 +12,13 @@ namespace emira.GUI
     public partial class PersonalDataChangePage : Form
     {
 
-        bool _bTogMove;
-        int _iValX;
-        int _iValY;
-        Settings _settings;
-        Person _person;
-        CustomMsgBox _msgBox;
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        bool bTogMove;
+        int iValX;
+        int iValY;
+        Settings settings;
+        Person person;
+        CustomMsgBox customMsgBox;
 
         public PersonalDataChangePage()
         {
@@ -27,14 +29,20 @@ namespace emira.GUI
         {
             try
             {
-                _settings = new Settings();
-                _person = new Person();
+                settings = new Settings();
+                person = new Person();
 
-                _person = _settings.GetPersonalInformation();
+                person = settings.GetPersonalInformation();
 
-                // Personal Informatiion
-                tbName.Text = _person.Name;
-                if (_person.Gender == true)
+                // If the Person object is null then it returns
+                if (person.Email == null)
+                    return;
+
+                //// Personal Information
+
+                tbName.Text = person.Name;
+
+                if (person.Gender)
                 {
                     rbMale.Select();
                 }
@@ -43,37 +51,28 @@ namespace emira.GUI
                     rbFemale.Select();
                 }
 
-                // Company Related Information
-                tbRegisterNumber.Text = _person.RegisterNumber.ToString();
-                tbCompany.Text = _person.Company;
-                tbCostCenter.Text = _person.CostCenter;
-                tbPosition.Text = _person.Position;
+                //// Company Related Information
 
-                // Holiday Related Information
-                if (!string.IsNullOrEmpty(_person.DateOfBirth.ToShortDateString()))
-                {
-                    dtpDateOfBirth.Text = _person.DateOfBirth.ToShortDateString();
-                }
-                else
-                {
-                    dtpDateOfBirth.Text = DateTime.Today.AddYears(-100).ToShortDateString();
-                    dtpDateOfBirth.MaxDate = DateTime.Today.AddYears(-15);
-                }
+                tbRegisterNumber.Text = person.RegisterNumber.ToString();
 
-                if (!string.IsNullOrEmpty(_person.DateOfStart.ToShortDateString()))
-                {
-                    dtpDateOfStart.Text = _person.DateOfStart.ToShortDateString();
-                }
-                else
-                {
-                    dtpDateOfStart.Text = DateTime.Today.AddYears(-15).ToShortDateString();
-                    dtpDateOfStart.MaxDate = DateTime.Today;
-                }
+                tbCompany.Text = person.Company;
 
-                if (_person.NumberOfChildren > 0)
+                tbCostCenter.Text = person.CostCenter;
+
+                tbPosition.Text = person.Position;
+
+                nupWorkingHours.Value = person.WorkingHours;
+
+                //// Holiday Related Information
+
+                dtpDateOfBirth.Text = person.DateOfBirth.ToShortDateString();
+                dtpDateOfStart.Text = person.DateOfStart.ToShortDateString();
+
+                if (person.NumberOfChildren > 0)
                 {
                     cbYesChild.Checked = true;
-                    nupNumberOfChildren.Value = _person.NumberOfChildren;
+                    nupNumberOfChildren.Value = person.NumberOfChildren;
+
                     lDoYouHaveDiasabledChild.Show();
                     cbNoDisabledChild.Show();
                     cbYesDisabledChild.Show();
@@ -83,34 +82,33 @@ namespace emira.GUI
                     cbNoChild.Checked = true;
                 }
 
-                if (_person.NumberOfDisabledChildren > 0)
+                if (person.NumberOfDisabledChildren > 0)
                 {
                     cbYesChild.Checked = true;
+                    nupNumberOfDisabledChildren.Value = person.NumberOfDisabledChildren;
+
                     lDoYouHaveDiasabledChild.Show();
                     cbNoDisabledChild.Show();
                     cbYesDisabledChild.Show();
                     cbYesDisabledChild.Checked = true;
-                    nupNumberOfDisabledChildren.Value = _person.NumberOfDisabledChildren;
                 }
                 else
                 {
                     cbNoDisabledChild.Checked = true;
                 }
 
-                if (_person.NumberOfNewBornBabies > 0 && rbMale.Checked)
+                if (person.NumberOfNewBornBabies > 0 && rbMale.Checked)
                 {
                     cbYesChild.Checked = true;
+                    nupNumberOfNewBornBabies.Value = person.NumberOfNewBornBabies;
+
                     lNumberOfChildren.Show();
                     nupNumberOfChildren.Show();
                     lDoYouHaveDiasabledChild.Show();
                     cbNoDisabledChild.Show();
                     cbYesDisabledChild.Show();
                     lNumberOfNewBornBabies.Show();
-                    nupNumberOfNewBornBabies.Show();
-                    if (_person.NumberOfNewBornBabies > 0)
-                    {
-                        nupNumberOfNewBornBabies.Value = _person.NumberOfNewBornBabies;
-                    }
+                    nupNumberOfNewBornBabies.Show();                                    
                 }
                 else
                 {
@@ -124,7 +122,7 @@ namespace emira.GUI
                     nupNumberOfNewBornBabies.Hide();
                 }
 
-                if (_person.HealthDamage == true)
+                if (person.HealthDamage)
                 {
                     cbYesHealthDamage.Checked = true;
                 }
@@ -133,266 +131,61 @@ namespace emira.GUI
                     cbNoHealthDamage.Checked = true;
                 }
 
+                int _actaulYear = DateTime.Today.Year;
+                if (person.DateOfStart.Year == _actaulYear)
+                {
+                    lHolidaysLeft.Show();
+                    nupHolidaysLeft.Show();
+                    if (person.HolidaysLeftFromPreviousYear > 0)
+                    {
+                        nupHolidaysLeft.Value = person.HolidaysLeftFromPreviousYear;
+                    }
+                }
+
+                if (person.ExtraHoliday > 0)
+                {
+                    nupExtraHoliday.Value = person.ExtraHoliday;
+                }
+
+                // Save button is not enabled
                 btnSave.Enabled = false;
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+
+
+        // Personal Information
+        private void tbName_TextChanged(object sender, EventArgs e)
         {
-            try
-            {
-                _settings = new Settings();
-                _msgBox = new CustomMsgBox();
-                bool _isSuccess = false;
-
-                // Null check
-                if (string.IsNullOrEmpty(tbName.Text.Trim()))
-                {
-                    _msgBox.Show(lName.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
-                    tbName.Focus();
-                    return;
-                }
-
-                if (string.IsNullOrEmpty(tbCompany.Text.Trim()))
-                {
-                    _msgBox.Show(lCompany.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
-                    tbCompany.Focus();
-                    return;
-                }
-
-                // Name contains number or special character (exception: '.' and '-')
-                if (!System.Text.RegularExpressions.Regex.IsMatch(tbName.Text, @"^[a-zA-Z\s\.-]*$"))
-                {
-                    _msgBox.Show(lRegisterNumber.Text.Trim(':') + Texts.ErrorMessages.TextField, Texts.Captions.TextField, CustomMsgBox.MsgBoxIcon.Error);
-                    tbName.Focus();
-                    return;
-                }
-
-                // Register number contains only numbers
-                if (!System.Text.RegularExpressions.Regex.IsMatch(tbRegisterNumber.Text, "^[0-9]*$"))
-                {
-                    MessageBox.Show(lRegisterNumber.Text.Trim(':') + Texts.ErrorMessages.NumericField, Texts.Captions.NumericField, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    lRegisterNumber.Focus();
-                    return;
-                }
-
-                // Employee can not be younger than 15 years old
-                if (dtpDateOfBirth.Value > DateTime.Today.AddYears(-16))
-                {
-                    MessageBox.Show(Texts.ErrorMessages.WorkNotAllowed15, Texts.Captions.BirthOfDateError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    dtpDateOfBirth.Focus();
-                    return;
-                }
-
-                // Employee can not be older than 100 years old
-                if (dtpDateOfBirth.Value <= DateTime.Today.AddYears(-100))
-                {
-                    MessageBox.Show(Texts.ErrorMessages.WorkNotAllowed100, Texts.Captions.BirthOfDateError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    dtpDateOfBirth.Focus();
-                    return;
-                }
-
-                // Birth date check with start of date
-                if (dtpDateOfBirth.Value > dtpDateOfStart.Value)
-                {
-                    MessageBox.Show(Texts.ErrorMessages.StartOfDateTooSmall, Texts.Captions.StartOfDateError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    dtpDateOfStart.Focus();
-                    return;
-                }
-
-                // Start date can not be bigger than the actual date
-                if (dtpDateOfStart.Value > DateTime.Today)
-                {
-                    MessageBox.Show(Texts.ErrorMessages.StartOfDateBiggerThanTodayDate, Texts.Captions.StartOfDateError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    dtpDateOfStart.Focus();
-                    return;
-                }
-
-                // If the checkbox of the disabled children is yes, then it can not be null
-                if (cbYesDisabledChild.Checked && nupNumberOfDisabledChildren.Value == 0)
-                {
-                    MessageBox.Show(Texts.ErrorMessages.DisabledChildrenIsNull, Texts.Captions.NumberOfTheChildrenError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    nupNumberOfDisabledChildren.Focus();
-                    return;
-                }
-
-                // if the 'Yes' is checked for the question 'Do you have children?', but nothing is added
-                if(nupNumberOfChildren.Value == 0 && nupNumberOfDisabledChildren.Value == 0 && nupNumberOfNewBornBabies.Value == 0 && cbYesChild.Checked)
-                {
-                    MessageBox.Show(Texts.ErrorMessages.NumberOfChildren, Texts.Captions.NumberOfTheChildrenError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    nupNumberOfChildren.Focus();
-                    return;
-                }
-
-                Dictionary<string, string> data = new Dictionary<string, string>();
-                data.Add(Texts.PersonProperties.Name, tbName.Text.TrimStart().TrimEnd());
-                if (rbMale.Checked)
-                {
-                    data.Add(Texts.PersonProperties.Gender, "true");
-                }
-                else
-                {
-                    data.Add(Texts.PersonProperties.Gender, "false");
-                }
-                data.Add(Texts.PersonProperties.RegisterNumber, tbRegisterNumber.Text);
-                data.Add(Texts.PersonProperties.Company, tbCompany.Text);
-                data.Add(Texts.PersonProperties.CostCenter, tbCostCenter.Text);
-                data.Add(Texts.PersonProperties.Position, tbPosition.Text);
-                data.Add(Texts.PersonProperties.DateOfStart, dtpDateOfStart.Value.ToShortDateString().Replace(". ", "-").Trim('.'));
-                data.Add(Texts.PersonProperties.DateOfBirth, dtpDateOfBirth.Value.ToShortDateString().Replace(". ", "-").Trim('.'));
-                data.Add(Texts.PersonProperties.NumberOfChildren, nupNumberOfChildren.Value.ToString());
-                data.Add(Texts.PersonProperties.NumberOfDisabledChildren, nupNumberOfDisabledChildren.Value.ToString());
-                data.Add(Texts.PersonProperties.NumberOfNewBornBabies, nupNumberOfNewBornBabies.Value.ToString());
-                if (cbYesHealthDamage.Checked)
-                {
-                    data.Add(Texts.PersonProperties.HealthDamage, "true");
-                }
-                else
-                {
-                    data.Add(Texts.PersonProperties.HealthDamage, "false");
-                }
-
-                _isSuccess = _settings.SetNewValues(Texts.PersonProperties.ID, LogInfo.UserID.ToString(), data);
-                if (_isSuccess)
-                {
-                    MessageBox.Show(Texts.InformationMessages.PersonalInformationChanged, Texts.Captions.SuccessfulChange, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Close();
-                }
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void cbNoChild_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (cbNoChild.Checked)
-                {
-                    cbYesChild.Checked = false;
-                    nupNumberOfChildren.Value = 0;
-                    lNumberOfChildren.Hide();
-                    nupNumberOfChildren.Hide();
-                    lDoYouHaveDiasabledChild.Hide();
-                    cbNoDisabledChild.Hide();
-                    cbYesDisabledChild.Hide();
-                    lNumberOfDisabledChildren.Hide();
-                    nupNumberOfDisabledChildren.Hide();
-                    lNumberOfNewBornBabies.Hide();
-                    nupNumberOfNewBornBabies.Hide();
-                }
-                btnSave.Enabled = true;
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void cbYesChild_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (cbYesChild.Checked)
-                {
-                    cbNoChild.Checked = false;
-                    lNumberOfChildren.Show();
-                    nupNumberOfChildren.Show();
-                    lDoYouHaveDiasabledChild.Show();
-                    cbNoDisabledChild.Show();
-                    cbYesDisabledChild.Show();
-
-                    if (cbYesDisabledChild.Checked)
-                    {
-                        lNumberOfDisabledChildren.Show();
-                        nupNumberOfDisabledChildren.Show();
-                    }
-                    else
-                    {
-                        lNumberOfDisabledChildren.Hide();
-                        nupNumberOfDisabledChildren.Hide();
-                    }
-
-                    if (rbFemale.Checked)
-                    {
-                        lNumberOfNewBornBabies.Hide();
-                        nupNumberOfNewBornBabies.Hide();
-                    }
-                    else
-                    {
-                        lNumberOfNewBornBabies.Show();
-                        nupNumberOfNewBornBabies.Show();
-                    }
-                }
-
-                btnSave.Enabled = true;
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void cbYesDisabledChild_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (cbYesDisabledChild.Checked)
-                {
-                    cbNoDisabledChild.Checked = false;
-                    lNumberOfDisabledChildren.Show();
-                    nupNumberOfDisabledChildren.Show();
-                }
-
-                btnSave.Enabled = true;
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void cbNoDisabledChild_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (cbNoDisabledChild.Checked)
-                {
-                    cbYesDisabledChild.Checked = false;
-                    nupNumberOfDisabledChildren.Value = 0;
-                    lNumberOfDisabledChildren.Hide();
-                    nupNumberOfDisabledChildren.Hide();
-                }
-
-                btnSave.Enabled = true;
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            btnSave.Enabled = true;
         }
 
         private void rbMale_CheckedChanged(object sender, EventArgs e)
         {
             try
             {
+                // If the user is male and he has child/children
+                // then the NewBornBabies is available for him
                 if (rbMale.Checked && cbYesChild.Checked)
                 {
                     lNumberOfNewBornBabies.Show();
                     nupNumberOfNewBornBabies.Show();
                 }
 
+                // Save button is enabled
                 btnSave.Enabled = true;
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -400,6 +193,8 @@ namespace emira.GUI
         {
             try
             {
+                // If the user is female then the NewBornBabies value is zero
+                // and the controls are hidden
                 if (rbFemale.Checked)
                 {
                     nupNumberOfNewBornBabies.Value = 0;
@@ -407,53 +202,20 @@ namespace emira.GUI
                     nupNumberOfNewBornBabies.Hide();
                 }
 
+                // Save button is enabled
                 btnSave.Enabled = true;
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
-        private void cbYesHealthDamage_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (cbYesHealthDamage.Checked)
-                {
-                    cbNoHealthDamage.Checked = false;
-                }
 
-                btnSave.Enabled = true;
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
-        private void cbNoHealthDamage_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (cbNoHealthDamage.Checked)
-                {
-                    cbYesHealthDamage.Checked = false;
-                }
-
-                btnSave.Enabled = true;
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void tbName_TextChanged(object sender, EventArgs e)
-        {
-            btnSave.Enabled = true;
-        }
-
+        // Company Related Information
         private void tbRegisterNumber_TextChanged(object sender, EventArgs e)
         {
             btnSave.Enabled = true;
@@ -479,6 +241,9 @@ namespace emira.GUI
             btnSave.Enabled = true;
         }
 
+
+
+        // Holiday Related Information
         private void dtpDateOfBirth_ValueChanged(object sender, EventArgs e)
         {
             btnSave.Enabled = true;
@@ -486,12 +251,161 @@ namespace emira.GUI
 
         private void dtpDateOfStart_ValueChanged(object sender, EventArgs e)
         {
+            if (dtpDateOfStart.Value.Year == DateTime.Today.Year)
+            {
+                // Show controls
+                lHolidaysLeft.Show();
+                nupHolidaysLeft.Show();
+            }
+            else
+            {
+                // Hide controls
+                lHolidaysLeft.Hide();
+                nupHolidaysLeft.Hide();
+                nupHolidaysLeft.Value = 0;
+            }
+
             btnSave.Enabled = true;
+        }
+
+        private void cbNoChild_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cbNoChild.Checked)
+                {
+                    // Set values
+                    cbYesChild.Checked = false;
+                    nupNumberOfChildren.Value = 0;
+                    cbYesDisabledChild.Checked = false;
+                    nupNumberOfDisabledChildren.Value = 0;
+                    nupNumberOfNewBornBabies.Value = 0;
+
+                    // Hide controls
+                    lNumberOfChildren.Hide();
+                    nupNumberOfChildren.Hide();
+                    lDoYouHaveDiasabledChild.Hide();
+                    cbNoDisabledChild.Hide();
+                    cbYesDisabledChild.Hide();
+                    lNumberOfDisabledChildren.Hide();
+                    nupNumberOfDisabledChildren.Hide();
+                    lNumberOfNewBornBabies.Hide();
+                    nupNumberOfNewBornBabies.Hide();
+                }
+
+                // Save button is enabled
+                btnSave.Enabled = true;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+        }
+
+        private void cbYesChild_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cbYesChild.Checked)
+                {
+                    // Set value
+                    cbNoChild.Checked = false;
+
+                    // Show controls
+                    lNumberOfChildren.Show();
+                    nupNumberOfChildren.Show();
+                    lDoYouHaveDiasabledChild.Show();
+                    cbNoDisabledChild.Show();
+                    cbYesDisabledChild.Show();
+
+                    if (cbYesDisabledChild.Checked)
+                    {
+                        lNumberOfDisabledChildren.Show();
+                        nupNumberOfDisabledChildren.Show();
+                    }
+                    else
+                    {
+                        lNumberOfDisabledChildren.Hide();
+                        nupNumberOfDisabledChildren.Hide();
+                    }
+
+                    // If the user is femaile then the NewBornBabies is hidden
+                    if (rbFemale.Checked)
+                    {
+                        lNumberOfNewBornBabies.Hide();
+                        nupNumberOfNewBornBabies.Hide();
+                    }
+                    else
+                    {
+                        lNumberOfNewBornBabies.Show();
+                        nupNumberOfNewBornBabies.Show();
+                    }
+                }
+
+                btnSave.Enabled = true;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
         }
 
         private void nupNumberOfChildren_ValueChanged(object sender, EventArgs e)
         {
             btnSave.Enabled = true;
+        }
+
+        private void cbNoDisabledChild_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cbNoDisabledChild.Checked)
+                {
+                    // Set value
+                    cbYesDisabledChild.Checked = false;
+                    nupNumberOfDisabledChildren.Value = 0;
+
+                    // Hide controls
+                    lNumberOfDisabledChildren.Hide();
+                    nupNumberOfDisabledChildren.Hide();
+                }
+
+                btnSave.Enabled = true;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+        }
+
+        private void cbYesDisabledChild_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cbYesDisabledChild.Checked)
+                {
+                    // Set value
+                    cbNoDisabledChild.Checked = false;
+
+                    // Show controls
+                    lNumberOfDisabledChildren.Show();
+                    nupNumberOfDisabledChildren.Show();
+                }
+
+                btnSave.Enabled = true;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
         }
 
         private void nupNumberOfDisabledChildren_ValueChanged(object sender, EventArgs e)
@@ -504,33 +418,268 @@ namespace emira.GUI
             btnSave.Enabled = true;
         }
 
+        private void cbNoHealthDamage_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cbNoHealthDamage.Checked)
+                {
+                    cbYesHealthDamage.Checked = false;
+                }
+
+                btnSave.Enabled = true;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+        }
+
+        private void cbYesHealthDamage_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cbYesHealthDamage.Checked)
+                {
+                    cbNoHealthDamage.Checked = false;
+                }
+
+                btnSave.Enabled = true;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+        }
+
+        private void nupHolidaysLeft_ValueChanged(object sender, EventArgs e)
+        {
+            btnSave.Enabled = true;
+        }
+
+        private void nupExtraHoliday_ValueChanged(object sender, EventArgs e)
+        {
+            btnSave.Enabled = true;
+        }
+
+
+
+        // The number up down and the date time picker controls can not modify by manual
+        private void nupWorkingHours_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void dtpDateOfBirth_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void dtpDateOfStart_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void nupNumberOfChildren_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void nupNumberOfDisabledChildren_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void nupNumberOfNewBornBabies_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void nupHolidaysLeft_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void nupExtraHoliday_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+
+
+        // Save and Cancel buttons
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
 
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                settings = new Settings();
+                customMsgBox = new CustomMsgBox();
+                bool _isSuccess = false;
+
+                // Null check
+                if (string.IsNullOrEmpty(tbName.Text.Trim()))
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(lName.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.OK);
+                    tbName.Focus();
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(tbCompany.Text.Trim()))
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(lCompany.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.OK);
+                    tbCompany.Focus();
+                    return;
+                }
+
+                // Name contains number or special character (exception: '.' and '-')
+                if (!System.Text.RegularExpressions.Regex.IsMatch(tbName.Text, @"^[a-zA-Z\s\.-]*$"))
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(lRegisterNumber.Text.Trim(':') + Texts.ErrorMessages.TextField, Texts.Captions.TextField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.OK);
+                    tbName.Focus();
+                    return;
+                }
+
+                // Register number contains only numbers
+                if (!System.Text.RegularExpressions.Regex.IsMatch(tbRegisterNumber.Text, "^[0-9]*$"))
+                {
+                    MessageBox.Show(lRegisterNumber.Text.Trim(':') + Texts.ErrorMessages.NumericField, Texts.Captions.NumericField, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    lRegisterNumber.Focus();
+                    return;
+                }
+
+                // Employee can not be younger than 15 years old
+                if (dtpDateOfBirth.Value > DateTime.Today.AddYears(-16))
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.WorkNotAllowed15, Texts.Captions.BirthOfDateError, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.OK);
+                    dtpDateOfBirth.Focus();
+                    return;
+                }
+
+                // Employee can not be older than 100 years old
+                if (dtpDateOfBirth.Value <= DateTime.Today.AddYears(-100))
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.WorkNotAllowed100, Texts.Captions.BirthOfDateError, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.OK);
+                    dtpDateOfBirth.Focus();
+                    return;
+                }
+
+                // Birth date check with start of date
+                if (dtpDateOfBirth.Value > dtpDateOfStart.Value)
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.StartOfDateTooSmall, Texts.Captions.StartOfDateError, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.OK);
+                    dtpDateOfStart.Focus();
+                    return;
+                }
+
+                // Start date can not be bigger than the actual date
+                if (dtpDateOfStart.Value > DateTime.Today)
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.StartOfDateBiggerThanTodayDate, Texts.Captions.StartOfDateError, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.OK);
+                    dtpDateOfStart.Focus();
+                    return;
+                }
+
+                // If the checkbox of the disabled children is yes, then it can not be null
+                if (cbYesDisabledChild.Checked && nupNumberOfDisabledChildren.Value == 0)
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.DisabledChildrenIsNull, Texts.Captions.NumberOfTheChildrenError, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.OK);
+                    nupNumberOfDisabledChildren.Focus();
+                    return;
+                }
+
+                // if the 'Yes' is checked for the question 'Do you have children?', but nothing is added
+                if (nupNumberOfChildren.Value == 0 && nupNumberOfDisabledChildren.Value == 0 && nupNumberOfNewBornBabies.Value == 0 && cbYesChild.Checked)
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.NumberOfChildren, Texts.Captions.NumberOfTheChildrenError, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.OK);
+                    nupNumberOfChildren.Focus();
+                    return;
+                }
+
+                // Collect information
+                Dictionary<string, string> _data = new Dictionary<string, string>();
+                _data.Add(Texts.PersonProperties.Name, tbName.Text.TrimStart().TrimEnd());
+                _data.Add(Texts.PersonProperties.Gender, rbMale.Checked.ToString().ToLower());
+                _data.Add(Texts.PersonProperties.RegisterNumber, tbRegisterNumber.Text);
+                _data.Add(Texts.PersonProperties.Company, tbCompany.Text);
+                _data.Add(Texts.PersonProperties.CostCenter, tbCostCenter.Text);
+                _data.Add(Texts.PersonProperties.Position, tbPosition.Text);
+                _data.Add(Texts.PersonProperties.WorkingHours, nupWorkingHours.Value.ToString());
+                _data.Add(Texts.PersonProperties.DateOfStart, dtpDateOfStart.Text.ToString());
+                _data.Add(Texts.PersonProperties.DateOfBirth, dtpDateOfBirth.Text.ToString());
+                _data.Add(Texts.PersonProperties.NumberOfChildren, nupNumberOfChildren.Value.ToString());
+                _data.Add(Texts.PersonProperties.NumberOfDisabledChildren, nupNumberOfDisabledChildren.Value.ToString());
+                _data.Add(Texts.PersonProperties.NumberOfNewBornBabies, nupNumberOfNewBornBabies.Value.ToString());
+                _data.Add(Texts.PersonProperties.HealthDamage, cbYesHealthDamage.Checked.ToString().ToLower());
+                _data.Add(Texts.PersonProperties.HolidaysLeftFromPreviousYear, nupHolidaysLeft.Value.ToString());
+                _data.Add(Texts.PersonProperties.ExtraHoliday, nupExtraHoliday.Value.ToString());
+
+                // Set new values
+                _isSuccess = settings.SetNewValues(Texts.PersonProperties.ID, GeneralInfo.UserID.ToString(), _data);
+
+                if (_isSuccess)
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.InformationMessages.PersonalInformationChanged, Texts.Captions.SuccessfulChange, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
+                    Close();
+                }
+                else
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.OK);
+                }
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+        }
+
+
+        // Exit button
         private void btnExit_Click(object sender, EventArgs e)
         {
             Close();
         }
 
+
+
         private void pHeader_MouseUp(object sender, MouseEventArgs e)
         {
-            _bTogMove = false;
+            bTogMove = false;
         }
 
         private void pHeader_MouseDown(object sender, MouseEventArgs e)
         {
-            _bTogMove = true;
-            _iValX = e.X;
-            _iValY = e.Y;
+            bTogMove = true;
+            iValX = e.X;
+            iValY = e.Y;
         }
 
         private void pHeader_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_bTogMove)
+            if (bTogMove)
             {
-                SetDesktopLocation(MousePosition.X - _iValX, MousePosition.Y - _iValY);
+                SetDesktopLocation(MousePosition.X - iValX, MousePosition.Y - iValY);
             }
         }
 

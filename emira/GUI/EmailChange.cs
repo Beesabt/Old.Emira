@@ -1,15 +1,18 @@
-﻿using emira.BusinessLogicLayer;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Windows.Forms;
+
+using emira.BusinessLogicLayer;
 using emira.HelperFunctions;
 
 namespace emira.GUI
 {
     public partial class EmailChange : UserControl
     {
-        Settings _settings;
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        CustomMsgBox customMsgBox;
+        Settings settings;
 
         public EmailChange()
         {
@@ -20,33 +23,37 @@ namespace emira.GUI
         {
             try
             {
-                _settings = new Settings();
+                settings = new Settings();
 
-                // Null check
+                // Null check for value of old e-mail
                 if (tbOldEmail.Text.Trim() == string.Empty)
                 {
-                    MessageBox.Show(lOldEmail.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(lOldEmail.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                     return;
                 }
 
-                // Null check
+                // Null check for value of new e-mail
                 if (tbNewEmail.Text.Trim() == string.Empty)
                 {
-                    MessageBox.Show(lNewEmail.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(lNewEmail.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                     return;
                 }
 
-                // Null check
+                // Null check for value of new e-mail again
                 if (tbNewEmailAgain.Text.Trim() == string.Empty)
                 {
-                    MessageBox.Show(lNewEmailAgain.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(lNewEmailAgain.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                     return;
                 }
 
                 // Wrong old e-mail
-                if (!_settings.OldValueValidation(Texts.PersonProperties.Email, tbOldEmail.Text))
+                if (!settings.OldValueValidation(Texts.PersonProperties.Email, tbOldEmail.Text))
                 {
-                    MessageBox.Show(Texts.ErrorMessages.WrongOldEmail, Texts.Captions.WrongOldValue, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.WrongOldEmail, Texts.Captions.WrongOldValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                     tbOldEmail.Text = string.Empty;
                     return;
                 }
@@ -54,7 +61,8 @@ namespace emira.GUI
                 // Mismatched new e-mails
                 if (tbNewEmail.Text != tbNewEmailAgain.Text)
                 {
-                    MessageBox.Show(Texts.ErrorMessages.NewEmailMismatched, Texts.Captions.MissmatchadEmails, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.NewEmailMismatched, Texts.Captions.MissmatchadEmails, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                     tbNewEmailAgain.Text = string.Empty;
                     return;
                 }
@@ -62,7 +70,8 @@ namespace emira.GUI
                 // New e-mail is the same as the old e-mail
                 if (tbOldEmail.Text == tbNewEmail.Text)
                 {
-                    MessageBox.Show(Texts.ErrorMessages.NewEmailSameAsOldEmail, Texts.Captions.NewEmaildIsNotAllowed, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.NewEmailSameAsOldEmail, Texts.Captions.NewEmaildIsNotAllowed, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                     tbNewEmail.Text = string.Empty;
                     tbNewEmailAgain.Text = string.Empty;
                     return;
@@ -72,20 +81,37 @@ namespace emira.GUI
                 var email = new EmailAddressAttribute();
                 if (!email.IsValid(tbNewEmail.Text))
                 {
-                    MessageBox.Show(Texts.ErrorMessages.EmailIsNotValid, Texts.Captions.InvalidEmail, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.EmailIsNotValid, Texts.Captions.InvalidEmail, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                     return;
                 }
 
-                _settings.SetNewValue(Texts.PersonProperties.Email, tbOldEmail.Text, tbNewEmail.Text);
-                MessageBox.Show(Texts.InformationMessages.EmailChanged, Texts.Captions.SuccessfulChange, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LogInfo.Email = tbNewEmail.Text;
-                tbOldEmail.Text = string.Empty;
-                tbNewEmail.Text = string.Empty;
-                tbNewEmailAgain.Text = string.Empty;
+                // Set new value
+                bool _isSuccess = false;
+                _isSuccess = settings.SetNewValue(Texts.PersonProperties.Email, tbOldEmail.Text, tbNewEmail.Text);
+
+                if (_isSuccess)
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.InformationMessages.EmailChanged, Texts.Captions.SuccessfulChange, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
+                    GeneralInfo.Email = tbNewEmail.Text;
+                    tbOldEmail.Text = string.Empty;
+                    tbNewEmail.Text = string.Empty;
+                    tbNewEmailAgain.Text = string.Empty;
+                }
+                else
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    tbOldEmail.Text = string.Empty;
+                }
+
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -95,6 +121,5 @@ namespace emira.GUI
             e.Graphics.DrawRectangle(Pens.Black, borderRectangle);
             base.OnPaint(e);
         }
-
     }
 }

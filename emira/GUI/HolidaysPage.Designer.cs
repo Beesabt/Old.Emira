@@ -50,7 +50,7 @@
             this.dtpTo = new System.Windows.Forms.DateTimePicker();
             this.lTitle = new System.Windows.Forms.Label();
             this.lFrame = new System.Windows.Forms.Label();
-            this.lAnnualLeave = new System.Windows.Forms.Label();
+            this.lNormalHoliday = new System.Windows.Forms.Label();
             this.lSelected = new System.Windows.Forms.Label();
             this.lFrom = new System.Windows.Forms.Label();
             this.lTo = new System.Windows.Forms.Label();
@@ -270,7 +270,7 @@
             this.tlpAddHoliday.Controls.Add(this.dtpTo, 1, 2);
             this.tlpAddHoliday.Controls.Add(this.lTitle, 0, 0);
             this.tlpAddHoliday.Controls.Add(this.lFrame, 0, 4);
-            this.tlpAddHoliday.Controls.Add(this.lAnnualLeave, 1, 0);
+            this.tlpAddHoliday.Controls.Add(this.lNormalHoliday, 1, 0);
             this.tlpAddHoliday.Controls.Add(this.lSelected, 0, 3);
             this.tlpAddHoliday.Controls.Add(this.lFrom, 0, 1);
             this.tlpAddHoliday.Controls.Add(this.lTo, 0, 2);
@@ -327,15 +327,15 @@
             this.lFrame.TabIndex = 5;
             this.lFrame.Text = "Frame";
             // 
-            // lAnnualLeave
+            // lNormalHoliday
             // 
-            this.lAnnualLeave.AutoSize = true;
-            this.lAnnualLeave.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lAnnualLeave.Location = new System.Drawing.Point(144, 0);
-            this.lAnnualLeave.Name = "lAnnualLeave";
-            this.lAnnualLeave.Size = new System.Drawing.Size(107, 20);
-            this.lAnnualLeave.TabIndex = 1;
-            this.lAnnualLeave.Text = "Annual leave";
+            this.lNormalHoliday.AutoSize = true;
+            this.lNormalHoliday.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lNormalHoliday.Location = new System.Drawing.Point(144, 0);
+            this.lNormalHoliday.Name = "lNormalHoliday";
+            this.lNormalHoliday.Size = new System.Drawing.Size(118, 20);
+            this.lNormalHoliday.TabIndex = 1;
+            this.lNormalHoliday.Text = "Normal holiday";
             // 
             // lSelected
             // 
@@ -652,7 +652,7 @@
         private System.Windows.Forms.TableLayoutPanel tlpAddHoliday;
         private System.Windows.Forms.Label lTitle;
         private System.Windows.Forms.Label lFrame;
-        private System.Windows.Forms.Label lAnnualLeave;
+        private System.Windows.Forms.Label lNormalHoliday;
         private System.Windows.Forms.Label lSelected;
         private System.Windows.Forms.Label lFrom;
         private System.Windows.Forms.Label lTo;

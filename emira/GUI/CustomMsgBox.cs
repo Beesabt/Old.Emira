@@ -6,9 +6,9 @@ namespace emira.GUI
 {
     public partial class CustomMsgBox : Form
     {
-        bool _bTogMove;
-        int _iValX;
-        int _iValY;
+        bool bTogMove;
+        int iValX;
+        int iValY;
         static CustomMsgBox MsgBox;
 
         public CustomMsgBox()
@@ -24,6 +24,9 @@ namespace emira.GUI
             MsgBox.lblMessage.Text = text;
             switch (icon)
             {
+                case MsgBoxIcon.Information:
+                    MsgBox.pbIcon.BackgroundImage = Properties.Resources.info_icon_color_48;
+                    break;
                 case MsgBoxIcon.Warning:
                     MsgBox.pbIcon.BackgroundImage = Properties.Resources.warning_icon_color_48;
                     break;
@@ -43,8 +46,12 @@ namespace emira.GUI
             MsgBox = new CustomMsgBox();
             MsgBox.lCaption.Text = caption;
             MsgBox.lblMessage.Text = text;
+
             switch (icon)
             {
+                case MsgBoxIcon.Information:
+                    MsgBox.pbIcon.BackgroundImage = Properties.Resources.info_icon_color_48;
+                    break;
                 case MsgBoxIcon.Warning:
                     MsgBox.pbIcon.BackgroundImage = Properties.Resources.warning_icon_color_48;
                     break;
@@ -57,20 +64,26 @@ namespace emira.GUI
             {
                 case Button.Close:
                     MsgBox.btnClose.Visible = true;
+                    MsgBox.btnClose.Text = "Close";
+                    break;
+                case Button.OK:
+                    MsgBox.btnClose.Visible = true;
+                    MsgBox.btnClose.Text = "OK";
                     break;
                 case Button.YesNo:
                     MsgBox.btnYes.Visible = true;
                     MsgBox.btnNo.Visible = true;
+                    MsgBox.btnNo.Text = "No";
+                    MsgBox.btnYes.Text = "Yes";
                     break;
                 default:
                     break;
             }
-            MsgBox.btnClose.Text = "Close";
+
             MsgBox.ShowDialog();
 
             return dlgResult;
         }
-
 
         public enum MsgBoxIcon
         {
@@ -84,7 +97,8 @@ namespace emira.GUI
         public enum Button
         {
             Close = 0,
-            YesNo = 1,
+            OK = 1,
+            YesNo = 2,
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -94,21 +108,21 @@ namespace emira.GUI
 
         private void pHeader_MouseUp(object sender, MouseEventArgs e)
         {
-            _bTogMove = false;
+            bTogMove = false;
         }
 
         private void pHeader_MouseDown(object sender, MouseEventArgs e)
         {
-            _bTogMove = true;
-            _iValX = e.X;
-            _iValY = e.Y;
+            bTogMove = true;
+            iValX = e.X;
+            iValY = e.Y;
         }
 
         private void pHeader_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_bTogMove)
+            if (bTogMove)
             {
-                SetDesktopLocation(MousePosition.X - _iValX, MousePosition.Y - _iValY);
+                SetDesktopLocation(MousePosition.X - iValX, MousePosition.Y - iValY);
             }
         }
 

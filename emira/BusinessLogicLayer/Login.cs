@@ -14,15 +14,15 @@ namespace emira.BusinessLogicLayer
             isSuccess = _DBHandler.LoginValidationDB(Email, Password);
             if (isSuccess)
             {
-                LogInfo.UserID = _DBHandler.GetUserID(Email, Password);
-                LogInfo.Email = Email;
-                if (Email == LogInfo.DefaultEmail || Password == LogInfo.DefaultPassword)
+                GeneralInfo.UserID = _DBHandler.GetUserID(Email, Password);
+                GeneralInfo.Email = Email;
+                if (Email == GeneralInfo.DefaultEmail || Password == GeneralInfo.DefaultPassword)
                 {
-                    LogInfo.AnnoyingMessage = true;
+                    GeneralInfo.AnnoyingMessage = true;
                 }
                 else
                 {
-                    LogInfo.AnnoyingMessage = false;
+                    GeneralInfo.AnnoyingMessage = false;
                 }
             }
             return isSuccess;

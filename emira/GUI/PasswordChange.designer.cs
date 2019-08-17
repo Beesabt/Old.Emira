@@ -46,7 +46,7 @@
             // 
             this.lPasswordChange.AutoSize = true;
             this.lPasswordChange.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lPasswordChange.Location = new System.Drawing.Point(109, 68);
+            this.lPasswordChange.Location = new System.Drawing.Point(100, 68);
             this.lPasswordChange.Name = "lPasswordChange";
             this.lPasswordChange.Size = new System.Drawing.Size(272, 37);
             this.lPasswordChange.TabIndex = 7;
@@ -55,14 +55,14 @@
             // btnPasswordChange
             // 
             this.btnPasswordChange.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(133)))), ((int)(((byte)(197)))));
-            this.btnPasswordChange.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
+            this.btnPasswordChange.FlatAppearance.BorderColor = System.Drawing.Color.Snow;
             this.btnPasswordChange.FlatAppearance.BorderSize = 0;
             this.btnPasswordChange.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
             this.btnPasswordChange.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
             this.btnPasswordChange.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPasswordChange.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnPasswordChange.ForeColor = System.Drawing.Color.White;
-            this.btnPasswordChange.Location = new System.Drawing.Point(719, 423);
+            this.btnPasswordChange.Location = new System.Drawing.Point(730, 425);
             this.btnPasswordChange.Name = "btnPasswordChange";
             this.btnPasswordChange.Size = new System.Drawing.Size(203, 49);
             this.btnPasswordChange.TabIndex = 3;
@@ -93,7 +93,7 @@
             // 
             this.lNewPassword.AutoSize = true;
             this.lNewPassword.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lNewPassword.Location = new System.Drawing.Point(252, 260);
+            this.lNewPassword.Location = new System.Drawing.Point(252, 255);
             this.lNewPassword.Name = "lNewPassword";
             this.lNewPassword.Size = new System.Drawing.Size(116, 21);
             this.lNewPassword.TabIndex = 5;
@@ -102,7 +102,7 @@
             // tbNewPassword
             // 
             this.tbNewPassword.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.tbNewPassword.Location = new System.Drawing.Point(384, 260);
+            this.tbNewPassword.Location = new System.Drawing.Point(384, 253);
             this.tbNewPassword.MaxLength = 10;
             this.tbNewPassword.Name = "tbNewPassword";
             this.tbNewPassword.Size = new System.Drawing.Size(400, 26);
@@ -132,7 +132,7 @@
             this.pbPasswordInformation.BackColor = System.Drawing.Color.Transparent;
             this.pbPasswordInformation.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbPasswordInformation.Image = global::emira.Properties.Resources.info_icon;
-            this.pbPasswordInformation.Location = new System.Drawing.Point(790, 260);
+            this.pbPasswordInformation.Location = new System.Drawing.Point(790, 253);
             this.pbPasswordInformation.Name = "pbPasswordInformation";
             this.pbPasswordInformation.Size = new System.Drawing.Size(26, 26);
             this.pbPasswordInformation.TabIndex = 9;

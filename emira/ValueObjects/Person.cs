@@ -135,48 +135,23 @@ namespace emira.ValueObjects
             set { _HealthDamage = value; }
         }
 
-        #endregion
+        private int _HolidaysLeftFromPreviousYear;
 
-        /// <summary>
-        /// Constructor of the People table in the Database.
-        /// </summary>
-        /// <param name="ID">ID of the user.</param>
-        /// <param name="Password">Password of the user.</param>
-        /// <param name="Email">Email address of the user.</param>
-        /// <param name="Name">Name of the user.</param>
-        /// <param name="Gender">Gender of the user. 0 - female, 1 - male </param>
-        /// <param name="RegisterNumber">Register number of the user.</param>
-        /// <param name="Company">Compay name where the user works.</param>
-        /// <param name="CostCenter">Cost center of the user.</param>
-        /// <param name="Position">Position of the user at his/her company.</param>
-        /// <param name="WorkingHours">Hours what the employee has to takes in the office.</param>
-        /// <param name="DateOfStart">First date of work.</param>
-        /// <param name="DateOfBirth">Birth date of the user.</param>
-        /// <param name="NumberOfChildren">Number of the user's children.</param>
-        /// <param name="NumberOfDisabledChildren">Number of the user's disabled children.</param>
-        /// <param name="NumberOfNewBornBabies">If the user is male then he gets extra holidays after new born babies.</param>
-        /// <param name="HealthDamage">If the user has 50% health damage then he gets extra holidays.</param>
-        public Person(int ID, string Email, string Password, string Name, bool Gender, int RegisterNumber, string Company,
-            string CostCenter, string Position, int WorkingHours, DateTime DateOfStart, DateTime DateOfBirth,
-            int NumberOfChildren, int NumberOfDisabledChildren, int NumberOfNewBornBabies, bool HealthDamage)
+        public int HolidaysLeftFromPreviousYear
         {
-            _ID = ID;
-            _Email = Email;
-            _Password = Password;
-            _Name = Name;
-            _Gender = Gender;
-            _RegisterNumber = RegisterNumber;
-            _Company = Company;
-            _CostCenter = CostCenter;
-            _Position = Position;
-            _WorkingHours = WorkingHours;
-            _DateOfStart = DateOfStart;
-            _DateOfBirth = DateOfBirth;
-            _NumberOfChildren = NumberOfChildren;
-            _NumberOfDisabledChildren = NumberOfDisabledChildren;
-            _NumberOfNewBornBabies = NumberOfNewBornBabies;
-            _HealthDamage = HealthDamage;
+            get { return _HolidaysLeftFromPreviousYear; }
+            set { _HolidaysLeftFromPreviousYear = value; }
         }
+
+        private int _ExtraHoliday;
+
+        public int ExtraHoliday
+        {
+            get { return _ExtraHoliday; }
+            set { _ExtraHoliday = value; }
+        }
+
+        #endregion
 
         /// <summary>
         /// Constructor of the People table in the Database without parameters.

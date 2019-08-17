@@ -61,7 +61,7 @@
             this.tlpPersonalInformation.Controls.Add(this.lRegisterNumberFromDatabase, 1, 1);
             this.tlpPersonalInformation.Controls.Add(this.lCompanyFromDatabase, 1, 2);
             this.tlpPersonalInformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.tlpPersonalInformation.Location = new System.Drawing.Point(115, 158);
+            this.tlpPersonalInformation.Location = new System.Drawing.Point(100, 158);
             this.tlpPersonalInformation.Name = "tlpPersonalInformation";
             this.tlpPersonalInformation.RowCount = 5;
             this.tlpPersonalInformation.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -70,7 +70,7 @@
             this.tlpPersonalInformation.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tlpPersonalInformation.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tlpPersonalInformation.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpPersonalInformation.Size = new System.Drawing.Size(831, 219);
+            this.tlpPersonalInformation.Size = new System.Drawing.Size(830, 220);
             this.tlpPersonalInformation.TabIndex = 1;
             this.tlpPersonalInformation.Paint += new System.Windows.Forms.PaintEventHandler(this.tlpPersonalInformation_Paint);
             // 
@@ -78,7 +78,7 @@
             // 
             this.lPositionFromDatabase.AutoSize = true;
             this.lPositionFromDatabase.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lPositionFromDatabase.Location = new System.Drawing.Point(237, 172);
+            this.lPositionFromDatabase.Location = new System.Drawing.Point(237, 176);
             this.lPositionFromDatabase.Name = "lPositionFromDatabase";
             this.lPositionFromDatabase.Size = new System.Drawing.Size(92, 25);
             this.lPositionFromDatabase.TabIndex = 4;
@@ -88,7 +88,7 @@
             // 
             this.lCostCenterFromDatabase.AutoSize = true;
             this.lCostCenterFromDatabase.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lCostCenterFromDatabase.Location = new System.Drawing.Point(237, 129);
+            this.lCostCenterFromDatabase.Location = new System.Drawing.Point(237, 132);
             this.lCostCenterFromDatabase.Name = "lCostCenterFromDatabase";
             this.lCostCenterFromDatabase.Size = new System.Drawing.Size(92, 25);
             this.lCostCenterFromDatabase.TabIndex = 3;
@@ -98,7 +98,7 @@
             // 
             this.lRegisterNumber.AutoSize = true;
             this.lRegisterNumber.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lRegisterNumber.Location = new System.Drawing.Point(3, 43);
+            this.lRegisterNumber.Location = new System.Drawing.Point(3, 44);
             this.lRegisterNumber.Name = "lRegisterNumber";
             this.lRegisterNumber.Size = new System.Drawing.Size(150, 25);
             this.lRegisterNumber.TabIndex = 6;
@@ -118,7 +118,7 @@
             // 
             this.lCompany.AutoSize = true;
             this.lCompany.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lCompany.Location = new System.Drawing.Point(3, 86);
+            this.lCompany.Location = new System.Drawing.Point(3, 88);
             this.lCompany.Name = "lCompany";
             this.lCompany.Size = new System.Drawing.Size(92, 25);
             this.lCompany.TabIndex = 7;
@@ -128,7 +128,7 @@
             // 
             this.lCostCenter.AutoSize = true;
             this.lCostCenter.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lCostCenter.Location = new System.Drawing.Point(3, 129);
+            this.lCostCenter.Location = new System.Drawing.Point(3, 132);
             this.lCostCenter.Name = "lCostCenter";
             this.lCostCenter.Size = new System.Drawing.Size(107, 25);
             this.lCostCenter.TabIndex = 8;
@@ -138,7 +138,7 @@
             // 
             this.lPosition.AutoSize = true;
             this.lPosition.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lPosition.Location = new System.Drawing.Point(3, 172);
+            this.lPosition.Location = new System.Drawing.Point(3, 176);
             this.lPosition.Name = "lPosition";
             this.lPosition.Size = new System.Drawing.Size(79, 25);
             this.lPosition.TabIndex = 9;
@@ -152,7 +152,7 @@
             this.lNameFromDatabase.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lNameFromDatabase.Location = new System.Drawing.Point(237, 0);
             this.lNameFromDatabase.Name = "lNameFromDatabase";
-            this.lNameFromDatabase.Size = new System.Drawing.Size(591, 25);
+            this.lNameFromDatabase.Size = new System.Drawing.Size(590, 25);
             this.lNameFromDatabase.TabIndex = 0;
             this.lNameFromDatabase.Text = "Unknown";
             // 
@@ -160,7 +160,7 @@
             // 
             this.lRegisterNumberFromDatabase.AutoSize = true;
             this.lRegisterNumberFromDatabase.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lRegisterNumberFromDatabase.Location = new System.Drawing.Point(237, 43);
+            this.lRegisterNumberFromDatabase.Location = new System.Drawing.Point(237, 44);
             this.lRegisterNumberFromDatabase.Name = "lRegisterNumberFromDatabase";
             this.lRegisterNumberFromDatabase.Size = new System.Drawing.Size(92, 25);
             this.lRegisterNumberFromDatabase.TabIndex = 1;
@@ -170,7 +170,7 @@
             // 
             this.lCompanyFromDatabase.AutoSize = true;
             this.lCompanyFromDatabase.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lCompanyFromDatabase.Location = new System.Drawing.Point(237, 86);
+            this.lCompanyFromDatabase.Location = new System.Drawing.Point(237, 88);
             this.lCompanyFromDatabase.Name = "lCompanyFromDatabase";
             this.lCompanyFromDatabase.Size = new System.Drawing.Size(92, 25);
             this.lCompanyFromDatabase.TabIndex = 2;
@@ -180,7 +180,7 @@
             // 
             this.lPersonalInformation.AutoSize = true;
             this.lPersonalInformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lPersonalInformation.Location = new System.Drawing.Point(109, 68);
+            this.lPersonalInformation.Location = new System.Drawing.Point(100, 68);
             this.lPersonalInformation.Name = "lPersonalInformation";
             this.lPersonalInformation.Size = new System.Drawing.Size(312, 37);
             this.lPersonalInformation.TabIndex = 2;
@@ -196,9 +196,9 @@
             this.btnChangeData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnChangeData.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnChangeData.ForeColor = System.Drawing.Color.White;
-            this.btnChangeData.Location = new System.Drawing.Point(743, 425);
+            this.btnChangeData.Location = new System.Drawing.Point(730, 425);
             this.btnChangeData.Name = "btnChangeData";
-            this.btnChangeData.Size = new System.Drawing.Size(203, 49);
+            this.btnChangeData.Size = new System.Drawing.Size(200, 50);
             this.btnChangeData.TabIndex = 0;
             this.btnChangeData.Text = "Change data";
             this.btnChangeData.UseVisualStyleBackColor = false;
@@ -215,7 +215,6 @@
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "PersonalInformation";
             this.Size = new System.Drawing.Size(1030, 535);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.tlpPersonalInformation_Paint);
             this.tlpPersonalInformation.ResumeLayout(false);
             this.tlpPersonalInformation.PerformLayout();
             this.ResumeLayout(false);

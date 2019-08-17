@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+
 using emira.BusinessLogicLayer;
 using emira.ValueObjects;
 using emira.HelperFunctions;
@@ -9,33 +10,40 @@ namespace emira.GUI
 {
     public partial class PersonalInformation : UserControl
     {
-
-        Settings _settings;
-        Person _person;
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        Settings settings;
+        Person person;
+        CustomMsgBox customMsgBox;
 
         public PersonalInformation()
         {
-            InitializeComponent();
+            InitializeComponent();           
         }
 
         private void tlpPersonalInformation_Paint(object sender, PaintEventArgs e)
         {
             try
             {
-                _settings = new Settings();
-                _person = new Person();
+                settings = new Settings();
+                person = new Person();
 
-                _person = _settings.GetPersonalInformation();
+                // Get the information
+                person = settings.GetSomePersonalInformation();
 
-                if (!string.IsNullOrEmpty(_person.Name)) { lNameFromDatabase.Text = _person.Name; }
-                lRegisterNumberFromDatabase.Text = _person.RegisterNumber.ToString();
-                if (!string.IsNullOrEmpty(_person.Company)) { lCompanyFromDatabase.Text = _person.Company; }
-                if (!string.IsNullOrEmpty(_person.CostCenter)) { lCostCenterFromDatabase.Text = _person.CostCenter; }
-                if (!string.IsNullOrEmpty(_person.Position)) { lPositionFromDatabase.Text = _person.Position; }
+                if (person != null)
+                {
+                    lNameFromDatabase.Text = person.Name;
+                    lRegisterNumberFromDatabase.Text = person.RegisterNumber.ToString();
+                    lCompanyFromDatabase.Text = person.Company;
+                    lCostCenterFromDatabase.Text = person.CostCenter;
+                    lPositionFromDatabase.Text = person.Position;
+                }
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -43,9 +51,10 @@ namespace emira.GUI
         {
             try
             {
-                if (_person.Name == null)
+                if (string.IsNullOrEmpty(person.Name))
                 {
-                    MessageBox.Show(Texts.DataTableNames.Person + Texts.ErrorMessages.UserIDDoesNotExistOrTableIsEmpty, Texts.Captions.PersonalInformationError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.DataTableNames.Person + Texts.ErrorMessages.UserIDDoesNotExistOrTableIsEmpty, Texts.Captions.PersonalInformationError, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                     btnChangeData.Enabled = false;
                     return;
                 }
@@ -55,7 +64,9 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -65,6 +76,5 @@ namespace emira.GUI
             e.Graphics.DrawRectangle(Pens.Black, borderRectangle);
             base.OnPaint(e);
         }
-
     }
 }

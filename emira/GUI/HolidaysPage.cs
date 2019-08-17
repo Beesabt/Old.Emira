@@ -26,6 +26,18 @@ namespace emira.GUI
         public HolidaysPage()
         {
             InitializeComponent();
+
+            Point _zeroLocation = new Point(0, 0);
+
+            if (LocationInfo._location == _zeroLocation)
+            {
+                this.StartPosition = FormStartPosition.CenterScreen;
+            }
+            else
+            {
+                this.StartPosition = FormStartPosition.Manual;
+                this.Location = LocationInfo._location;
+            }
         }
 
         private void HolidaysPage_Load(object sender, EventArgs e)
@@ -66,10 +78,6 @@ namespace emira.GUI
                         break;
                 }
 
-
-                // Set the national holidays in the date time pickers
-                // TODO Implement
-
                 UpdateHolidayTable();
             }
             catch (Exception error)
@@ -82,7 +90,6 @@ namespace emira.GUI
 
         public void UpdateHolidayTable()
         {
-            // Parameters
             holiday = new Holiday();
             DateTime today = DateTime.Today;
             int actualYear = today.Year;
@@ -102,7 +109,6 @@ namespace emira.GUI
                 {
                     dataTable = holiday.GetHolidaysTable(cbYears.SelectedItem.ToString(), cbState.SelectedItem.ToString());
                 }
-
 
                 // Set the checkbox state according the state of the holiday
                 bindingSource = new BindingSource();
@@ -127,9 +133,18 @@ namespace emira.GUI
                 // Sorting is disabled and columns are read only
                 foreach (DataGridViewColumn column in dgvHolidays.Columns)
                 {
-                    column.ReadOnly = true;
+                    if (column.Name != "Select")
+                    {
+                        column.ReadOnly = true;
+                    }
                     column.SortMode = DataGridViewColumnSortMode.NotSortable;
                 }
+
+                // Rename the columns headerText
+                dgvHolidays.Columns[1].HeaderText = Texts.HolidayProperties.ID;
+                dgvHolidays.Columns[2].HeaderText = Texts.HolidayProperties.StartDateHeaderText;
+                dgvHolidays.Columns[3].HeaderText = Texts.HolidayProperties.EndDateHeaderText;
+                dgvHolidays.Columns[5].HeaderText = Texts.HolidayProperties.Status;
 
             }
             catch (Exception error)
@@ -207,13 +222,13 @@ namespace emira.GUI
             {
                 lErrorMessage.Text = string.Empty;
                 DateTime _fromDate = dtpFrom.Value;
-                DateTime _toDate = dtpFrom.Value;
+                DateTime _toDate = dtpTo.Value;
                 string _sToDate = dtpTo.Text;
                 string _sFromDate = dtpFrom.Text;
                 int _actualYear = DateTime.Today.Year;
-                int _numberOfSelectedDays = _toDate.Subtract(_fromDate).Days + 1;
-                int _remainingDays = 0;
                 _toDate = _toDate.AddHours(24.0);
+                int _numberOfSelectedDays = _toDate.Subtract(_fromDate).Days;
+                int _remainingDays = 0;
                 holiday = new Holiday();
 
                 // Error if the end date is smaller the the start date
@@ -321,9 +336,9 @@ namespace emira.GUI
 
                 if (!_isSuccess)
                 {
-                    Logger.Error(Texts.ErrorMessages.ErrorDuringSaveHoliday);
+                    Logger.Error(Texts.ErrorMessages.ErrorDuringSave);
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.ErrorDuringSaveHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                     return;
                 }
 
@@ -388,8 +403,8 @@ namespace emira.GUI
                 // Delete the selected holiday(s)
                 foreach (DataGridViewRow actualRow in dgvHolidays.SelectedRows)
                 {
-                    string _startDate = actualRow.Cells[1].Value.ToString();
-                    string _endDate = actualRow.Cells[2].Value.ToString();
+                    string _startDate = actualRow.Cells[2].Value.ToString();
+                    string _endDate = actualRow.Cells[3].Value.ToString();
                     holiday = new Holiday();
                     _isSuccess = holiday.DeleteHoliday(_startDate, _endDate);
                     _isSuccess &= _isSuccess;
@@ -441,9 +456,12 @@ namespace emira.GUI
 
         private void btnHome_Click(object sender, EventArgs e)
         {
+            LocationInfo._location = this.Location;
+            Cursor.Current = Cursors.WaitCursor;
+            HomePage _homePage = new HomePage();
+            _homePage.Show();
             Hide();
-            HomePage HP = new HomePage();
-            HP.Show();
+            Cursor.Current = Cursors.Default;
         }
 
 

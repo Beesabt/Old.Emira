@@ -55,10 +55,15 @@ namespace emira.GUI
                     return;
                 }
 
+                // Save the e-mail address for identification
+                GeneralInfo.Email = tbEmail.Text;
+
+                // Wait until everything is loaded
+                Cursor.Current = Cursors.WaitCursor;
                 _homePage = new HomePage();
-                LogInfo.Email = tbEmail.Text;
-                Hide();
                 _homePage.Show();
+                Hide();
+                Cursor.Current = Cursors.Default;           
             }
             catch (Exception error)
             {

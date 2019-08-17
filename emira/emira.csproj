@@ -105,7 +105,7 @@
     <Compile Include="GUI\WorkingHoursPage.designer.cs">
       <DependentUpon>WorkingHoursPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="HelperFunctions\LogInfo.cs" />
+    <Compile Include="HelperFunctions\GeneralInfo.cs" />
     <Compile Include="BusinessLogicLayer\Settings.cs" />
     <Compile Include="HelperFunctions\Texts.cs" />
     <Compile Include="DataAccessLayer\DatabaseHandler.cs" />
@@ -251,6 +251,7 @@
     <Content Include="Resources\export_icon_white_26.png" />
     <Content Include="Resources\import_icon_white_26.png" />
     <Content Include="Resources\info_icon.png" />
+    <Content Include="Resources\info_icon_color_48.png" />
     <Content Include="Resources\info_icon_white_50.png" />
     <Content Include="Resources\lock_icon_white_50.png" />
     <Content Include="Resources\piechart_icon_white_100.png" />

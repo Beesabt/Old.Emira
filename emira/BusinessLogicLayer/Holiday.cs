@@ -13,10 +13,10 @@ namespace emira.BusinessLogicLayer
     {
 
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        CustomMsgBox _customMsgBox;
-        DatabaseHandler _DBHandler;
-        DataTable _dataTable;
-        Person _actualPerson;
+        DatabaseHandler DBHandler;
+        DataTable dataTable;
+        Person actualPerson;
+        CustomMsgBox customMsgBox;
 
         /// <summary>
         /// It's fill out the dropdown list with years to the user can choose which year of holidays want to see.
@@ -28,11 +28,11 @@ namespace emira.BusinessLogicLayer
 
             try
             {
-                _DBHandler = new DatabaseHandler();
+                DBHandler = new DatabaseHandler();
                 int _year = 0;
                 int _smallestYear = 0;
                 int _actualYear = DateTime.Today.Year;
-                string _smallestUsedYear = _DBHandler.GetTheSmallestYear();
+                string _smallestUsedYear = DBHandler.GetTheSmallestYear();
 
                 Int32.TryParse(_smallestUsedYear, out _smallestYear);
 
@@ -53,8 +53,8 @@ namespace emira.BusinessLogicLayer
             catch (Exception error)
             {
                 Logger.Error(error);
-                _customMsgBox = new CustomMsgBox();
-                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
 
                 _years.Add(DateTime.Today.Year.ToString());
                 return _years;
@@ -69,11 +69,11 @@ namespace emira.BusinessLogicLayer
         /// <returns>The data table with all values</returns>
         public DataTable GetHolidaysTable(string selectedYear, string selectedStatus)
         {
-            _dataTable = new DataTable();
+            dataTable = new DataTable();
 
             try
             {
-                _DBHandler = new DatabaseHandler();
+                DBHandler = new DatabaseHandler();
                 bool _selectedStatusDB = false;
                 bool _state = false;
                 int _numberOfDays = 0;
@@ -85,18 +85,17 @@ namespace emira.BusinessLogicLayer
                     _selectedStatusDB = true;
                 }
 
-                _dataTable = _DBHandler.GetHolidaysFromDB(selectedYear, _selectedStatusDB);
+                dataTable = DBHandler.GetHolidaysFromDB(selectedYear, _selectedStatusDB);
 
-                // Remove the PersonalID column because it is not necessary for the user
-                _dataTable.Columns.Remove(Texts.HolidayProperties.PersonID);
+
 
                 // Add checkbox column to the beginning table
-                _dataTable.Columns.Add("Select", typeof(Boolean)).SetOrdinal(0);
+                dataTable.Columns.Add("Select", typeof(Boolean)).SetOrdinal(0);
 
                 // Set 'Approved' or 'Storno' for holidays
-                _dataTable.Columns.Add("State", typeof(String));
+                dataTable.Columns.Add("State", typeof(String));
 
-                foreach (DataRow row in _dataTable.Rows)
+                foreach (DataRow row in dataTable.Rows)
                 {
                     if (Boolean.TryParse(row[Texts.HolidayProperties.Status].ToString(), out _state))
                     {
@@ -114,13 +113,13 @@ namespace emira.BusinessLogicLayer
                 }
 
                 // Remove the original Status column
-                _dataTable.Columns.Remove(Texts.HolidayProperties.Status);
+                dataTable.Columns.Remove(Texts.HolidayProperties.Status);
 
                 // Add Days column (Int32) to the end of the table
-                _dataTable.Columns.Add("Days", typeof(Int32)).SetOrdinal(3);
+                dataTable.Columns.Add("Days", typeof(Int32)).SetOrdinal(4);
 
                 // Count the days
-                foreach (DataRow row in _dataTable.Rows)
+                foreach (DataRow row in dataTable.Rows)
                 {
                     if (DateTime.TryParse(row[Texts.HolidayProperties.StartDate].ToString(), out _startDate))
                     {
@@ -132,14 +131,14 @@ namespace emira.BusinessLogicLayer
                     }
                 }
 
-                return _dataTable;
+                return dataTable;
             }
             catch (Exception error)
             {
                 Logger.Error(error);
-                _customMsgBox = new CustomMsgBox();
-                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-                return _dataTable;
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return dataTable;
             }
         }
 
@@ -156,54 +155,66 @@ namespace emira.BusinessLogicLayer
                 int _numberOfChildren = 0;
                 int _numberOfDisabledChildren = 0;
                 int _numberOfNewBornBabies = 0;
+                int _holidaysLeftFromPreviousYear = 0;
+                int _extraHoliday = 0;
                 bool _healtDamage = false;
-                _actualPerson = new Person();
-                _DBHandler = new DatabaseHandler();
-                _dataTable = new DataTable();
-                _dataTable = _DBHandler.GetPersonalInformationDB();
+                actualPerson = new Person();
+                DBHandler = new DatabaseHandler();
+                dataTable = new DataTable();
+                dataTable = DBHandler.GetPersonalInformationDBForHoliday();
 
-                foreach (DataRow person in _dataTable.Rows)
+                foreach (DataRow person in dataTable.Rows)
                 {
                     if (DateTime.TryParse(person[Texts.PersonProperties.DateOfStart].ToString(), out _dateOfStart))
                     {
-                        _actualPerson.DateOfStart = _dateOfStart;
+                        actualPerson.DateOfStart = _dateOfStart;
                     }
 
                     if (DateTime.TryParse(person[Texts.PersonProperties.DateOfBirth].ToString(), out _dateOfBirth))
                     {
-                        _actualPerson.DateOfBirth = _dateOfBirth;
+                        actualPerson.DateOfBirth = _dateOfBirth;
                     }
 
                     if (Int32.TryParse(person[Texts.PersonProperties.NumberOfChildren].ToString(), out _numberOfChildren))
                     {
-                        _actualPerson.NumberOfChildren = _numberOfChildren;
+                        actualPerson.NumberOfChildren = _numberOfChildren;
                     }
 
                     if (Int32.TryParse(person[Texts.PersonProperties.NumberOfChildren].ToString(), out _numberOfDisabledChildren))
                     {
-                        _actualPerson.NumberOfDisabledChildren = _numberOfDisabledChildren;
+                        actualPerson.NumberOfDisabledChildren = _numberOfDisabledChildren;
                     }
 
                     if (Int32.TryParse(person[Texts.PersonProperties.NumberOfChildren].ToString(), out _numberOfNewBornBabies))
                     {
-                        _actualPerson.NumberOfNewBornBabies = _numberOfNewBornBabies;
+                        actualPerson.NumberOfNewBornBabies = _numberOfNewBornBabies;
                     }
 
                     if (Boolean.TryParse(person[Texts.PersonProperties.NumberOfChildren].ToString(), out _healtDamage))
                     {
-                        _actualPerson.HealthDamage = _healtDamage;
+                        actualPerson.HealthDamage = _healtDamage;
+                    }
+
+                    if (Int32.TryParse(person[Texts.PersonProperties.HolidaysLeftFromPreviousYear].ToString(), out _holidaysLeftFromPreviousYear))
+                    {
+                        actualPerson.HolidaysLeftFromPreviousYear = _holidaysLeftFromPreviousYear;
+                    }
+
+                    if (Int32.TryParse(person[Texts.PersonProperties.ExtraHoliday].ToString(), out _extraHoliday))
+                    {
+                        actualPerson.ExtraHoliday = _extraHoliday;
                     }
                 }
 
-                return _actualPerson;
+                return actualPerson;
             }
             catch (Exception error)
             {
                 Logger.Error(error);
-                _customMsgBox = new CustomMsgBox();
-                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-                _actualPerson = new Person();
-                return _actualPerson;
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                actualPerson = new Person();
+                return actualPerson;
             }
         }
 
@@ -215,19 +226,17 @@ namespace emira.BusinessLogicLayer
         {
             int _numberOfBasicHolidays = 20;
             int _holidays = 0;
-            DateTime _today = DateTime.Today;
-            int _actualYear = _today.Year;
-            Person _person;
+            int _actualYear = DateTime.Today.Year;
 
             try
             {
-                _person = new Person();
-                _person = GetPersonalInformation();
+                actualPerson = new Person();
+                actualPerson = GetPersonalInformation();
 
-                if (_person == null)
+                if (actualPerson.DateOfBirth == null)
                 {
-                    _customMsgBox = new CustomMsgBox();
-                    _customMsgBox.Show(Texts.WarningMessages.PersonInformationMissing, Texts.Captions.Warning, CustomMsgBox.MsgBoxIcon.Warning, CustomMsgBox.Button.Close);
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.WarningMessages.PersonInformationMissing, Texts.Captions.Warning, CustomMsgBox.MsgBoxIcon.Warning, CustomMsgBox.Button.Close);
                     return _holidays;
                 }
 
@@ -235,7 +244,7 @@ namespace emira.BusinessLogicLayer
                 _holidays = _numberOfBasicHolidays;
 
                 // Age of the user
-                int _dateOfBirth = _person.DateOfBirth.Year;
+                int _dateOfBirth = actualPerson.DateOfBirth.Year;
                 int _age = _actualYear - _dateOfBirth;
 
 
@@ -282,7 +291,7 @@ namespace emira.BusinessLogicLayer
                 }
 
                 // If the user starts to work in actual year
-                DateTime _dateOfStart = _person.DateOfStart;
+                DateTime _dateOfStart = actualPerson.DateOfStart;
                 double _remainHoliday = 0;
                 if (_actualYear == _dateOfStart.Year)
                 {
@@ -294,7 +303,7 @@ namespace emira.BusinessLogicLayer
                 }
 
                 // Days after children
-                int _numberOfChildren = _person.NumberOfChildren;
+                int _numberOfChildren = actualPerson.NumberOfChildren;
 
                 if (_numberOfChildren > 0)
                 {
@@ -313,7 +322,7 @@ namespace emira.BusinessLogicLayer
                 }
 
                 // Days after disabled children
-                int _numberOfDisabledChildren = _person.NumberOfDisabledChildren;
+                int _numberOfDisabledChildren = actualPerson.NumberOfDisabledChildren;
 
                 if (_numberOfDisabledChildren > 0)
                 {
@@ -321,7 +330,7 @@ namespace emira.BusinessLogicLayer
                 }
 
                 // Days after new born babies
-                int _numberOfNewBornBabies = _person.NumberOfNewBornBabies;
+                int _numberOfNewBornBabies = actualPerson.NumberOfNewBornBabies;
 
                 if (_numberOfNewBornBabies == 1)
                 {
@@ -335,13 +344,28 @@ namespace emira.BusinessLogicLayer
                 }
 
                 // Days after 50% health damage
-                bool _healthDamage = _person.HealthDamage;
+                bool _healthDamage = actualPerson.HealthDamage;
 
                 if (_healthDamage)
                 {
                     _holidays += 5;
                 }
 
+                // Add holidays from last year
+                int _holidaysLeftFromPreviousYear = actualPerson.HolidaysLeftFromPreviousYear;
+
+                if (_holidaysLeftFromPreviousYear > 0)
+                {
+                    _holidays += _holidaysLeftFromPreviousYear;
+                }
+
+                // Extra holidays
+                int _extraHolidays = actualPerson.ExtraHoliday;
+
+                if (_extraHolidays > 0)
+                {
+                    _holidays += _extraHolidays;
+                }
 
                 return _holidays;
 
@@ -349,8 +373,8 @@ namespace emira.BusinessLogicLayer
             catch (Exception error)
             {
                 Logger.Error(error);
-                _customMsgBox = new CustomMsgBox();
-                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                 return _holidays;
             }
         }
@@ -376,8 +400,8 @@ namespace emira.BusinessLogicLayer
             catch (Exception error)
             {
                 Logger.Error(error);
-                _customMsgBox = new CustomMsgBox();
-                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                 return _remainingDays;
             }
         }
@@ -394,10 +418,10 @@ namespace emira.BusinessLogicLayer
 
             try
             {
-                _DBHandler = new DatabaseHandler();
-                _dataTable = new DataTable();
-                _dataTable = _DBHandler.GetUsedHolidays(year);
-                foreach (DataRow holiday in _dataTable.Rows)
+                DBHandler = new DatabaseHandler();
+                dataTable = new DataTable();
+                dataTable = DBHandler.GetUsedHolidays(year);
+                foreach (DataRow holiday in dataTable.Rows)
                 {
                     DateTime.TryParse(holiday[Texts.HolidayProperties.StartDate].ToString(), out _startDate);
 
@@ -410,8 +434,8 @@ namespace emira.BusinessLogicLayer
             catch (Exception error)
             {
                 Logger.Error(error);
-                _customMsgBox = new CustomMsgBox();
-                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                 return _usedDays;
             }
         }
@@ -429,13 +453,13 @@ namespace emira.BusinessLogicLayer
             try
             {
                 string _ID = string.Empty;
-                _DBHandler = new DatabaseHandler();
-                _dataTable = new DataTable();
+                DBHandler = new DatabaseHandler();
+                dataTable = new DataTable();
 
-                _dataTable = _DBHandler.GetConflictedDateIDs(startDate, endDate);
-                if (_dataTable != null)
+                dataTable = DBHandler.GetConflictedDateIDs(startDate, endDate);
+                if (dataTable != null)
                 {
-                    foreach (DataRow ID in _dataTable.Rows)
+                    foreach (DataRow ID in dataTable.Rows)
                     {
                         _ID = ID[Texts.HolidayProperties.RowID].ToString();
                         _conflictedIDs.Add(_ID);
@@ -446,8 +470,8 @@ namespace emira.BusinessLogicLayer
             catch (Exception error)
             {
                 Logger.Error(error);
-                _customMsgBox = new CustomMsgBox();
-                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                 return _conflictedIDs;
             }
         }
@@ -461,14 +485,12 @@ namespace emira.BusinessLogicLayer
         public bool AddNewHoliday(string startDate, string endDate)
         {
             bool _isSuccess = false;
-
             try
             {
                 int _result = 0;
-
-                _DBHandler = new DatabaseHandler();
-                _dataTable = new DataTable();
-                _result = _DBHandler.AddNewHolidayToDB(LogInfo.UserID, startDate, endDate);
+                DBHandler = new DatabaseHandler();
+                dataTable = new DataTable();
+                _result = DBHandler.AddNewHolidayToDB(GeneralInfo.UserID, startDate, endDate);
                 if (_result > 0)
                     _isSuccess = true;
                 return _isSuccess;
@@ -476,8 +498,8 @@ namespace emira.BusinessLogicLayer
             catch (Exception error)
             {
                 Logger.Error(error);
-                _customMsgBox = new CustomMsgBox();
-                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                 return _isSuccess;
             }
         }
@@ -493,7 +515,7 @@ namespace emira.BusinessLogicLayer
             bool _isSuccess = false;
             try
             {
-                _DBHandler = new DatabaseHandler();
+                DBHandler = new DatabaseHandler();
                 string _ID = string.Empty;
                 int updatedRow = 0;
 
@@ -506,12 +528,12 @@ namespace emira.BusinessLogicLayer
                 startDate = startDate.Replace(". ", "-");
                 endDate = endDate.Replace(". ", "-");
 
-                _ID = _DBHandler.GetRowID(startDate, endDate);
+                _ID = DBHandler.GetRowID(startDate, endDate);
      
                 // Remove the holiday from Actual
                 Dictionary<string, string> data = new Dictionary<string, string>();
                 data.Add(Texts.HolidayProperties.Status, "False");
-                updatedRow =_DBHandler.UpdateHoliday(data, Texts.HolidayProperties.RowID, _ID, updatedRow);
+                updatedRow =DBHandler.UpdateHoliday(data, Texts.HolidayProperties.RowID, _ID, updatedRow);
                 if (updatedRow > 0)
                     _isSuccess = true;
                 return _isSuccess;
@@ -519,11 +541,10 @@ namespace emira.BusinessLogicLayer
             catch (Exception error)
             {
                 Logger.Error(error);
-                _customMsgBox = new CustomMsgBox();
-                _customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                 return _isSuccess;
             }
         }
-
     }
 }

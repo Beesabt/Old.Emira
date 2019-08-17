@@ -3,7 +3,6 @@ namespace emira.HelperFunctions
 {
     public static class Texts
     {
-
         public static class DataTableNames
         {
             public const string Person = "Person";
@@ -48,6 +47,10 @@ namespace emira.HelperFunctions
             public const string NumberOfNewBornBabies = "NumberOfNewBornBabies";
 
             public const string HealthDamage = "HealthDamage";
+
+            public const string HolidaysLeftFromPreviousYear = "HolidaysLeftFromPreviousYear";
+
+            public const string ExtraHoliday = "ExtraHoliday";
         }
 
         public static class TaskProperties
@@ -67,11 +70,17 @@ namespace emira.HelperFunctions
         {
             public static string RowID = "rowid";
 
+            public static string ID = "ID";
+
             public static string PersonID = "PersonID";
 
             public static string StartDate = "StartDate";
 
+            public static string StartDateHeaderText = "Start date";
+
             public static string EndDate = "EndDate";
+
+            public static string EndDateHeaderText = "End data";
 
             public static string Status = "Status";
         }
@@ -94,6 +103,8 @@ namespace emira.HelperFunctions
             // TODO : kicserélni a path-ot és dinamikussá tenni!
             public const string SomethingUnexpectedHappened = "Something unexpected happened!\n"+
                                                               @"Please check the log file here: C:\logs\Example.log";
+
+            public static string ErrorDuringSave = "There was an error during save, try again.";
 
             #endregion
 
@@ -190,15 +201,7 @@ namespace emira.HelperFunctions
 
             public static string TooFewRemainingDays = "Not enough days left to take vacation days!";
 
-            public static string ErrorDuringSaveHoliday = "There was an error during save, try again.";
-
             public static string ErrorDuringCancellation = "There was an error during cancellation, try again.";
-
-            #endregion
-
-            #region WorkingHours
-
-            public static string ErrorDuringSave = "There was an error during save, try again.";
 
             #endregion
         }
@@ -276,7 +279,6 @@ namespace emira.HelperFunctions
 
             public static string LossOfData = "Loss of datas";
         }
-
     }
 }
 

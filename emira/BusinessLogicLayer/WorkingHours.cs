@@ -10,16 +10,16 @@ namespace emira.BusinessLogicLayer
     class WorkingHours
     {
 
-        DatabaseHandler _DBHandler;
-        DataTable _dataTable;
-        DateTime _today = DateTime.UtcNow;
+        DatabaseHandler DBHandler;
+        DataTable dataTable;
+        DateTime today = DateTime.UtcNow;
 
         public DataTable GetTasksByMonth(string date)
         {
-            _DBHandler = new DatabaseHandler();
-            _dataTable = new DataTable();
-            _dataTable = _DBHandler.GetTasksByMonth(date);
-            return _dataTable;
+            DBHandler = new DatabaseHandler();
+            dataTable = new DataTable();
+            dataTable = DBHandler.GetTasksByMonth(date);
+            return dataTable;
         }
 
         /// <summary>
@@ -28,10 +28,10 @@ namespace emira.BusinessLogicLayer
         /// <returns>data table with the task(s)</returns>
         public DataTable GetSelectedTask()
         {
-            _DBHandler = new DatabaseHandler();
-            _dataTable = new DataTable();
-            _dataTable = _DBHandler.GetSelectedTaskFromDB();
-            return _dataTable;
+            DBHandler = new DatabaseHandler();
+            dataTable = new DataTable();
+            dataTable = DBHandler.GetSelectedTaskFromDB();
+            return dataTable;
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace emira.BusinessLogicLayer
         public string GetHours(string taskID, string date)
         {
             string result = string.Empty;
-            _DBHandler = new DatabaseHandler();
+            DBHandler = new DatabaseHandler();
             int _index = 0;
             string _taskID = string.Empty;
             string _date = string.Empty;
@@ -51,7 +51,7 @@ namespace emira.BusinessLogicLayer
             _index = taskID.IndexOf(' ');
             _taskID = taskID.Remove(_index);
 
-            result = _DBHandler.GetHoursFromCathalogue(_taskID, date);
+            result = DBHandler.GetHoursFromCathalogue(_taskID, date);
             return result;
         }
 
@@ -61,7 +61,7 @@ namespace emira.BusinessLogicLayer
             int _result = 0;
             int _rowid = 0;
             int updatedRow = 0;
-            _DBHandler = new DatabaseHandler();
+            DBHandler = new DatabaseHandler();
 
             // Get taskID
             int _index = 0;
@@ -71,19 +71,19 @@ namespace emira.BusinessLogicLayer
             _taskID = task.Remove(_index);
             
             // If it is update
-            _rowid = _DBHandler.IsRecordExist(_taskID, date);
+            _rowid = DBHandler.IsRecordExist(_taskID, date);
 
             if (_rowid > 0)
             {
                 Dictionary<string, string> data = new Dictionary<string, string>();
                 data.Add(Texts.CatalogProperties.NumberOfHours, numberOfHours.ToString());
 
-                _isSuccess = _DBHandler.ModifyHourInCathalog(data, _rowid.ToString(), updatedRow);
+                _isSuccess = DBHandler.ModifyHourInCathalog(data, _rowid.ToString(), updatedRow);
 
                 return _isSuccess;
             }
 
-            _result = _DBHandler.SaveHourToCathalog(_taskID, date, numberOfHours);
+            _result = DBHandler.SaveHourToCathalog(_taskID, date, numberOfHours);
 
             if (_result > 0) { _isSuccess = true; }
 
@@ -94,7 +94,7 @@ namespace emira.BusinessLogicLayer
         {
             bool _isSuccess = false;
             int _result = 0;
-            _DBHandler = new DatabaseHandler();
+            DBHandler = new DatabaseHandler();
 
             // Get taskID
             int _index = 0;
@@ -104,7 +104,7 @@ namespace emira.BusinessLogicLayer
             _taskID = task.Remove(_index);
 
             // Remove the record from the DB
-           _result = _DBHandler.DeleteHourFromCatalog(_taskID, date);
+           _result = DBHandler.DeleteHourFromCatalog(_taskID, date);
 
             if (_result > 0) { _isSuccess = true; }
 
@@ -113,7 +113,7 @@ namespace emira.BusinessLogicLayer
 
         public List<string> GetYearsAndMonths()
         {
-            DateTime _start = _today.AddMonths(-7);
+            DateTime _start = today.AddMonths(-7);
             List<string> Dates = new List<string>();
             StringBuilder sb = new StringBuilder();
             string _actualMonth = string.Empty;
@@ -150,14 +150,14 @@ namespace emira.BusinessLogicLayer
             string _actualYear = string.Empty;
             StringBuilder sb = new StringBuilder();
 
-            _actualYear = _today.Year.ToString();
-            if (_today.Month < 10)
+            _actualYear = today.Year.ToString();
+            if (today.Month < 10)
             {
-                _actualMonth = "0" + _today.Month.ToString();
+                _actualMonth = "0" + today.Month.ToString();
             }
             else
             {
-                _actualMonth = _today.Month.ToString();
+                _actualMonth = today.Month.ToString();
             }
 
             sb.Append(_actualYear);

@@ -49,6 +49,10 @@
             this.lCostCenter = new System.Windows.Forms.Label();
             this.lCompany = new System.Windows.Forms.Label();
             this.gbHolidayRelatedInformation = new System.Windows.Forms.GroupBox();
+            this.nupExtraHoliday = new System.Windows.Forms.NumericUpDown();
+            this.lExtraHoliday = new System.Windows.Forms.Label();
+            this.nupHolidaysLeft = new System.Windows.Forms.NumericUpDown();
+            this.lHolidaysLeft = new System.Windows.Forms.Label();
             this.cbYesHealthDamage = new System.Windows.Forms.CheckBox();
             this.cbNoHealthDamage = new System.Windows.Forms.CheckBox();
             this.cbYesDisabledChild = new System.Windows.Forms.CheckBox();
@@ -75,6 +79,8 @@
             this.gbCompanyRelatedInformation.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nupWorkingHours)).BeginInit();
             this.gbHolidayRelatedInformation.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupExtraHoliday)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupHolidaysLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupNumberOfNewBornBabies)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupNumberOfDisabledChildren)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupNumberOfChildren)).BeginInit();
@@ -88,7 +94,7 @@
             this.pHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pHeader.Location = new System.Drawing.Point(0, 0);
             this.pHeader.Name = "pHeader";
-            this.pHeader.Size = new System.Drawing.Size(680, 30);
+            this.pHeader.Size = new System.Drawing.Size(670, 30);
             this.pHeader.TabIndex = 0;
             this.pHeader.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pHeader_MouseDown);
             this.pHeader.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pHeader_MouseMove);
@@ -110,12 +116,12 @@
             this.btnExit.BackColor = System.Drawing.Color.Transparent;
             this.btnExit.BackgroundImage = global::emira.Properties.Resources.close_icon_white_26;
             this.btnExit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnExit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
+            this.btnExit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(103)))), ((int)(((byte)(184)))));
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExit.Location = new System.Drawing.Point(630, 0);
+            this.btnExit.Location = new System.Drawing.Point(620, 0);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(50, 30);
             this.btnExit.TabIndex = 3;
@@ -132,7 +138,7 @@
             this.gbPersonalInformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.gbPersonalInformation.Location = new System.Drawing.Point(30, 54);
             this.gbPersonalInformation.Name = "gbPersonalInformation";
-            this.gbPersonalInformation.Size = new System.Drawing.Size(620, 114);
+            this.gbPersonalInformation.Size = new System.Drawing.Size(610, 115);
             this.gbPersonalInformation.TabIndex = 1;
             this.gbPersonalInformation.TabStop = false;
             this.gbPersonalInformation.Text = "Personal Information";
@@ -179,7 +185,7 @@
             this.tbName.Location = new System.Drawing.Point(99, 35);
             this.tbName.MaxLength = 800;
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(511, 27);
+            this.tbName.Size = new System.Drawing.Size(475, 27);
             this.tbName.TabIndex = 4;
             this.tbName.TextChanged += new System.EventHandler(this.tbName_TextChanged);
             // 
@@ -208,7 +214,7 @@
             this.gbCompanyRelatedInformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.gbCompanyRelatedInformation.Location = new System.Drawing.Point(30, 174);
             this.gbCompanyRelatedInformation.Name = "gbCompanyRelatedInformation";
-            this.gbCompanyRelatedInformation.Size = new System.Drawing.Size(620, 229);
+            this.gbCompanyRelatedInformation.Size = new System.Drawing.Size(610, 230);
             this.gbCompanyRelatedInformation.TabIndex = 2;
             this.gbCompanyRelatedInformation.TabStop = false;
             this.gbCompanyRelatedInformation.Text = "Company Related Information";
@@ -216,9 +222,14 @@
             // nupWorkingHours
             // 
             this.nupWorkingHours.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupWorkingHours.Location = new System.Drawing.Point(161, 177);
+            this.nupWorkingHours.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.nupWorkingHours.Location = new System.Drawing.Point(161, 181);
             this.nupWorkingHours.Maximum = new decimal(new int[] {
-            12,
+            8,
             0,
             0,
             0});
@@ -236,12 +247,13 @@
             0,
             0});
             this.nupWorkingHours.ValueChanged += new System.EventHandler(this.nupWorkingHours_ValueChanged);
+            this.nupWorkingHours.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nupWorkingHours_KeyPress);
             // 
             // lWorkingHours
             // 
             this.lWorkingHours.AutoSize = true;
             this.lWorkingHours.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lWorkingHours.Location = new System.Drawing.Point(27, 184);
+            this.lWorkingHours.Location = new System.Drawing.Point(27, 181);
             this.lWorkingHours.Name = "lWorkingHours";
             this.lWorkingHours.Size = new System.Drawing.Size(107, 20);
             this.lWorkingHours.TabIndex = 18;
@@ -253,7 +265,7 @@
             this.tbRegisterNumber.Location = new System.Drawing.Point(161, 38);
             this.tbRegisterNumber.MaxLength = 100;
             this.tbRegisterNumber.Name = "tbRegisterNumber";
-            this.tbRegisterNumber.Size = new System.Drawing.Size(449, 27);
+            this.tbRegisterNumber.Size = new System.Drawing.Size(413, 27);
             this.tbRegisterNumber.TabIndex = 16;
             this.tbRegisterNumber.TextChanged += new System.EventHandler(this.tbRegisterNumber_TextChanged);
             // 
@@ -270,30 +282,30 @@
             // tbPosition
             // 
             this.tbPosition.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPosition.Location = new System.Drawing.Point(161, 143);
+            this.tbPosition.Location = new System.Drawing.Point(161, 140);
             this.tbPosition.MaxLength = 2000;
             this.tbPosition.Name = "tbPosition";
-            this.tbPosition.Size = new System.Drawing.Size(449, 27);
+            this.tbPosition.Size = new System.Drawing.Size(413, 27);
             this.tbPosition.TabIndex = 14;
             this.tbPosition.TextChanged += new System.EventHandler(this.tbPosition_TextChanged);
             // 
             // tbCostCenter
             // 
             this.tbCostCenter.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbCostCenter.Location = new System.Drawing.Point(161, 108);
+            this.tbCostCenter.Location = new System.Drawing.Point(161, 106);
             this.tbCostCenter.MaxLength = 2000;
             this.tbCostCenter.Name = "tbCostCenter";
-            this.tbCostCenter.Size = new System.Drawing.Size(449, 27);
+            this.tbCostCenter.Size = new System.Drawing.Size(413, 27);
             this.tbCostCenter.TabIndex = 13;
             this.tbCostCenter.TextChanged += new System.EventHandler(this.tbCostCenter_TextChanged);
             // 
             // tbCompany
             // 
             this.tbCompany.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbCompany.Location = new System.Drawing.Point(161, 73);
+            this.tbCompany.Location = new System.Drawing.Point(161, 72);
             this.tbCompany.MaxLength = 2000;
             this.tbCompany.Name = "tbCompany";
-            this.tbCompany.Size = new System.Drawing.Size(449, 27);
+            this.tbCompany.Size = new System.Drawing.Size(413, 27);
             this.tbCompany.TabIndex = 10;
             this.tbCompany.TextChanged += new System.EventHandler(this.tbCompany_TextChanged);
             // 
@@ -329,6 +341,10 @@
             // 
             // gbHolidayRelatedInformation
             // 
+            this.gbHolidayRelatedInformation.Controls.Add(this.nupExtraHoliday);
+            this.gbHolidayRelatedInformation.Controls.Add(this.lExtraHoliday);
+            this.gbHolidayRelatedInformation.Controls.Add(this.nupHolidaysLeft);
+            this.gbHolidayRelatedInformation.Controls.Add(this.lHolidaysLeft);
             this.gbHolidayRelatedInformation.Controls.Add(this.cbYesHealthDamage);
             this.gbHolidayRelatedInformation.Controls.Add(this.cbNoHealthDamage);
             this.gbHolidayRelatedInformation.Controls.Add(this.cbYesDisabledChild);
@@ -351,15 +367,67 @@
             this.gbHolidayRelatedInformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.gbHolidayRelatedInformation.Location = new System.Drawing.Point(30, 409);
             this.gbHolidayRelatedInformation.Name = "gbHolidayRelatedInformation";
-            this.gbHolidayRelatedInformation.Size = new System.Drawing.Size(620, 329);
+            this.gbHolidayRelatedInformation.Size = new System.Drawing.Size(610, 450);
             this.gbHolidayRelatedInformation.TabIndex = 2;
             this.gbHolidayRelatedInformation.TabStop = false;
             this.gbHolidayRelatedInformation.Text = "Holiday Related Information";
             // 
+            // nupExtraHoliday
+            // 
+            this.nupExtraHoliday.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nupExtraHoliday.Location = new System.Drawing.Point(357, 393);
+            this.nupExtraHoliday.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.nupExtraHoliday.Name = "nupExtraHoliday";
+            this.nupExtraHoliday.Size = new System.Drawing.Size(70, 27);
+            this.nupExtraHoliday.TabIndex = 46;
+            this.nupExtraHoliday.ValueChanged += new System.EventHandler(this.nupExtraHoliday_ValueChanged);
+            this.nupExtraHoliday.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nupExtraHoliday_KeyPress);
+            // 
+            // lExtraHoliday
+            // 
+            this.lExtraHoliday.AutoSize = true;
+            this.lExtraHoliday.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lExtraHoliday.Location = new System.Drawing.Point(27, 395);
+            this.lExtraHoliday.Name = "lExtraHoliday";
+            this.lExtraHoliday.Size = new System.Drawing.Size(216, 20);
+            this.lExtraHoliday.TabIndex = 45;
+            this.lExtraHoliday.Text = "Do you have any extra holiday?";
+            // 
+            // nupHolidaysLeft
+            // 
+            this.nupHolidaysLeft.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nupHolidaysLeft.Location = new System.Drawing.Point(357, 348);
+            this.nupHolidaysLeft.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.nupHolidaysLeft.Name = "nupHolidaysLeft";
+            this.nupHolidaysLeft.Size = new System.Drawing.Size(70, 27);
+            this.nupHolidaysLeft.TabIndex = 44;
+            this.nupHolidaysLeft.Visible = false;
+            this.nupHolidaysLeft.ValueChanged += new System.EventHandler(this.nupHolidaysLeft_ValueChanged);
+            this.nupHolidaysLeft.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nupHolidaysLeft_KeyPress);
+            // 
+            // lHolidaysLeft
+            // 
+            this.lHolidaysLeft.AutoSize = true;
+            this.lHolidaysLeft.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lHolidaysLeft.Location = new System.Drawing.Point(27, 350);
+            this.lHolidaysLeft.Name = "lHolidaysLeft";
+            this.lHolidaysLeft.Size = new System.Drawing.Size(303, 20);
+            this.lHolidaysLeft.TabIndex = 43;
+            this.lHolidaysLeft.Text = "How many holidays were left from last year?";
+            this.lHolidaysLeft.Visible = false;
+            // 
             // cbYesHealthDamage
             // 
             this.cbYesHealthDamage.AutoSize = true;
-            this.cbYesHealthDamage.Location = new System.Drawing.Point(390, 283);
+            this.cbYesHealthDamage.Location = new System.Drawing.Point(449, 305);
             this.cbYesHealthDamage.Name = "cbYesHealthDamage";
             this.cbYesHealthDamage.Size = new System.Drawing.Size(52, 22);
             this.cbYesHealthDamage.TabIndex = 42;
@@ -370,7 +438,7 @@
             // cbNoHealthDamage
             // 
             this.cbNoHealthDamage.AutoSize = true;
-            this.cbNoHealthDamage.Location = new System.Drawing.Point(310, 283);
+            this.cbNoHealthDamage.Location = new System.Drawing.Point(357, 305);
             this.cbNoHealthDamage.Name = "cbNoHealthDamage";
             this.cbNoHealthDamage.Size = new System.Drawing.Size(47, 22);
             this.cbNoHealthDamage.TabIndex = 41;
@@ -381,7 +449,7 @@
             // cbYesDisabledChild
             // 
             this.cbYesDisabledChild.AutoSize = true;
-            this.cbYesDisabledChild.Location = new System.Drawing.Point(390, 164);
+            this.cbYesDisabledChild.Location = new System.Drawing.Point(449, 170);
             this.cbYesDisabledChild.Name = "cbYesDisabledChild";
             this.cbYesDisabledChild.Size = new System.Drawing.Size(52, 22);
             this.cbYesDisabledChild.TabIndex = 40;
@@ -393,7 +461,7 @@
             // cbNoDisabledChild
             // 
             this.cbNoDisabledChild.AutoSize = true;
-            this.cbNoDisabledChild.Location = new System.Drawing.Point(310, 164);
+            this.cbNoDisabledChild.Location = new System.Drawing.Point(357, 170);
             this.cbNoDisabledChild.Name = "cbNoDisabledChild";
             this.cbNoDisabledChild.Size = new System.Drawing.Size(47, 22);
             this.cbNoDisabledChild.TabIndex = 39;
@@ -405,7 +473,7 @@
             // cbYesChild
             // 
             this.cbYesChild.AutoSize = true;
-            this.cbYesChild.Location = new System.Drawing.Point(390, 86);
+            this.cbYesChild.Location = new System.Drawing.Point(449, 80);
             this.cbYesChild.Name = "cbYesChild";
             this.cbYesChild.Size = new System.Drawing.Size(52, 22);
             this.cbYesChild.TabIndex = 38;
@@ -416,7 +484,7 @@
             // cbNoChild
             // 
             this.cbNoChild.AutoSize = true;
-            this.cbNoChild.Location = new System.Drawing.Point(310, 86);
+            this.cbNoChild.Location = new System.Drawing.Point(357, 80);
             this.cbNoChild.Name = "cbNoChild";
             this.cbNoChild.Size = new System.Drawing.Size(47, 22);
             this.cbNoChild.TabIndex = 37;
@@ -428,7 +496,7 @@
             // 
             this.lHealthDamage.AutoSize = true;
             this.lHealthDamage.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lHealthDamage.Location = new System.Drawing.Point(28, 285);
+            this.lHealthDamage.Location = new System.Drawing.Point(27, 305);
             this.lHealthDamage.Name = "lHealthDamage";
             this.lHealthDamage.Size = new System.Drawing.Size(235, 20);
             this.lHealthDamage.TabIndex = 34;
@@ -438,7 +506,7 @@
             // 
             this.lDoYouHaveDiasabledChild.AutoSize = true;
             this.lDoYouHaveDiasabledChild.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lDoYouHaveDiasabledChild.Location = new System.Drawing.Point(28, 164);
+            this.lDoYouHaveDiasabledChild.Location = new System.Drawing.Point(27, 170);
             this.lDoYouHaveDiasabledChild.Name = "lDoYouHaveDiasabledChild";
             this.lDoYouHaveDiasabledChild.Size = new System.Drawing.Size(196, 20);
             this.lDoYouHaveDiasabledChild.TabIndex = 31;
@@ -449,7 +517,7 @@
             // 
             this.lDoYouHaveChild.AutoSize = true;
             this.lDoYouHaveChild.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lDoYouHaveChild.Location = new System.Drawing.Point(27, 88);
+            this.lDoYouHaveChild.Location = new System.Drawing.Point(27, 80);
             this.lDoYouHaveChild.Name = "lDoYouHaveChild";
             this.lDoYouHaveChild.Size = new System.Drawing.Size(147, 20);
             this.lDoYouHaveChild.TabIndex = 28;
@@ -458,7 +526,7 @@
             // nupNumberOfNewBornBabies
             // 
             this.nupNumberOfNewBornBabies.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupNumberOfNewBornBabies.Location = new System.Drawing.Point(310, 241);
+            this.nupNumberOfNewBornBabies.Location = new System.Drawing.Point(357, 258);
             this.nupNumberOfNewBornBabies.Maximum = new decimal(new int[] {
             10,
             0,
@@ -469,12 +537,13 @@
             this.nupNumberOfNewBornBabies.TabIndex = 27;
             this.nupNumberOfNewBornBabies.Visible = false;
             this.nupNumberOfNewBornBabies.ValueChanged += new System.EventHandler(this.nupNumberOfNewBornBabies_ValueChanged);
+            this.nupNumberOfNewBornBabies.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nupNumberOfNewBornBabies_KeyPress);
             // 
             // lNumberOfNewBornBabies
             // 
             this.lNumberOfNewBornBabies.AutoSize = true;
             this.lNumberOfNewBornBabies.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lNumberOfNewBornBabies.Location = new System.Drawing.Point(28, 243);
+            this.lNumberOfNewBornBabies.Location = new System.Drawing.Point(27, 260);
             this.lNumberOfNewBornBabies.Name = "lNumberOfNewBornBabies";
             this.lNumberOfNewBornBabies.Size = new System.Drawing.Size(198, 20);
             this.lNumberOfNewBornBabies.TabIndex = 26;
@@ -484,7 +553,7 @@
             // nupNumberOfDisabledChildren
             // 
             this.nupNumberOfDisabledChildren.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupNumberOfDisabledChildren.Location = new System.Drawing.Point(310, 200);
+            this.nupNumberOfDisabledChildren.Location = new System.Drawing.Point(357, 213);
             this.nupNumberOfDisabledChildren.Maximum = new decimal(new int[] {
             30,
             0,
@@ -495,11 +564,12 @@
             this.nupNumberOfDisabledChildren.TabIndex = 25;
             this.nupNumberOfDisabledChildren.Visible = false;
             this.nupNumberOfDisabledChildren.ValueChanged += new System.EventHandler(this.nupNumberOfDisabledChildren_ValueChanged);
+            this.nupNumberOfDisabledChildren.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nupNumberOfDisabledChildren_KeyPress);
             // 
             // nupNumberOfChildren
             // 
             this.nupNumberOfChildren.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupNumberOfChildren.Location = new System.Drawing.Point(310, 124);
+            this.nupNumberOfChildren.Location = new System.Drawing.Point(357, 123);
             this.nupNumberOfChildren.Maximum = new decimal(new int[] {
             30,
             0,
@@ -510,32 +580,41 @@
             this.nupNumberOfChildren.TabIndex = 24;
             this.nupNumberOfChildren.Visible = false;
             this.nupNumberOfChildren.ValueChanged += new System.EventHandler(this.nupNumberOfChildren_ValueChanged);
+            this.nupNumberOfChildren.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nupNumberOfChildren_KeyPress);
             // 
             // dtpDateOfStart
             // 
-            this.dtpDateOfStart.CustomFormat = "yyyy. hh. nn.";
+            this.dtpDateOfStart.CustomFormat = "yyyy-MM-dd";
             this.dtpDateOfStart.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.dtpDateOfStart.Location = new System.Drawing.Point(430, 31);
+            this.dtpDateOfStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpDateOfStart.Location = new System.Drawing.Point(454, 32);
+            this.dtpDateOfStart.MaxDate = new System.DateTime(2219, 12, 31, 0, 0, 0, 0);
+            this.dtpDateOfStart.MinDate = new System.DateTime(1909, 1, 1, 0, 0, 0, 0);
             this.dtpDateOfStart.Name = "dtpDateOfStart";
-            this.dtpDateOfStart.Size = new System.Drawing.Size(167, 27);
+            this.dtpDateOfStart.Size = new System.Drawing.Size(120, 27);
             this.dtpDateOfStart.TabIndex = 23;
             this.dtpDateOfStart.ValueChanged += new System.EventHandler(this.dtpDateOfStart_ValueChanged);
+            this.dtpDateOfStart.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dtpDateOfStart_KeyPress);
             // 
             // dtpDateOfBirth
             // 
-            this.dtpDateOfBirth.CustomFormat = "yyyy. hh. nn.";
+            this.dtpDateOfBirth.CustomFormat = "yyyy-MM-dd";
             this.dtpDateOfBirth.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.dtpDateOfBirth.Location = new System.Drawing.Point(130, 31);
+            this.dtpDateOfBirth.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpDateOfBirth.Location = new System.Drawing.Point(130, 32);
+            this.dtpDateOfBirth.MaxDate = new System.DateTime(2219, 12, 31, 0, 0, 0, 0);
+            this.dtpDateOfBirth.MinDate = new System.DateTime(1909, 1, 1, 0, 0, 0, 0);
             this.dtpDateOfBirth.Name = "dtpDateOfBirth";
-            this.dtpDateOfBirth.Size = new System.Drawing.Size(167, 27);
+            this.dtpDateOfBirth.Size = new System.Drawing.Size(120, 27);
             this.dtpDateOfBirth.TabIndex = 22;
             this.dtpDateOfBirth.ValueChanged += new System.EventHandler(this.dtpDateOfBirth_ValueChanged);
+            this.dtpDateOfBirth.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dtpDateOfBirth_KeyPress);
             // 
             // lNumberOfDisabledChildren
             // 
             this.lNumberOfDisabledChildren.AutoSize = true;
             this.lNumberOfDisabledChildren.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lNumberOfDisabledChildren.Location = new System.Drawing.Point(28, 202);
+            this.lNumberOfDisabledChildren.Location = new System.Drawing.Point(27, 215);
             this.lNumberOfDisabledChildren.Name = "lNumberOfDisabledChildren";
             this.lNumberOfDisabledChildren.Size = new System.Drawing.Size(264, 20);
             this.lNumberOfDisabledChildren.TabIndex = 18;
@@ -546,7 +625,7 @@
             // 
             this.lNumberOfChildren.AutoSize = true;
             this.lNumberOfChildren.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lNumberOfChildren.Location = new System.Drawing.Point(28, 126);
+            this.lNumberOfChildren.Location = new System.Drawing.Point(27, 125);
             this.lNumberOfChildren.Name = "lNumberOfChildren";
             this.lNumberOfChildren.Size = new System.Drawing.Size(203, 20);
             this.lNumberOfChildren.TabIndex = 17;
@@ -557,7 +636,7 @@
             // 
             this.lDateOfStart.AutoSize = true;
             this.lDateOfStart.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lDateOfStart.Location = new System.Drawing.Point(329, 35);
+            this.lDateOfStart.Location = new System.Drawing.Point(353, 37);
             this.lDateOfStart.Name = "lDateOfStart";
             this.lDateOfStart.Size = new System.Drawing.Size(95, 20);
             this.lDateOfStart.TabIndex = 16;
@@ -583,7 +662,7 @@
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(129, 762);
+            this.btnSave.Location = new System.Drawing.Point(127, 880);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(145, 40);
             this.btnSave.TabIndex = 3;
@@ -601,7 +680,7 @@
             this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(172)))), ((int)(((byte)(172)))));
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnCancel.Location = new System.Drawing.Point(363, 762);
+            this.btnCancel.Location = new System.Drawing.Point(380, 880);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(145, 40);
             this.btnCancel.TabIndex = 4;
@@ -616,7 +695,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(680, 845);
+            this.ClientSize = new System.Drawing.Size(670, 950);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.gbHolidayRelatedInformation);
@@ -637,6 +716,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nupWorkingHours)).EndInit();
             this.gbHolidayRelatedInformation.ResumeLayout(false);
             this.gbHolidayRelatedInformation.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupExtraHoliday)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupHolidaysLeft)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupNumberOfNewBornBabies)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupNumberOfDisabledChildren)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupNumberOfChildren)).EndInit();
@@ -688,5 +769,9 @@
         private System.Windows.Forms.CheckBox cbNoDisabledChild;
         private System.Windows.Forms.CheckBox cbYesChild;
         private System.Windows.Forms.CheckBox cbNoChild;
+        private System.Windows.Forms.NumericUpDown nupHolidaysLeft;
+        private System.Windows.Forms.Label lHolidaysLeft;
+        private System.Windows.Forms.NumericUpDown nupExtraHoliday;
+        private System.Windows.Forms.Label lExtraHoliday;
     }
 }

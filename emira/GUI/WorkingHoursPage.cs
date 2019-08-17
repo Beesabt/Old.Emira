@@ -1,29 +1,43 @@
-﻿using emira.BusinessLogicLayer;
-using emira.HelperFunctions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 
+using emira.BusinessLogicLayer;
+using emira.HelperFunctions;
+
 namespace emira.GUI
 {
     public partial class WorkingHoursPage : Form
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        int _togMove;
-        int _mValX;
-        int _mValY;
-        int _monthLength = 0;
-        string _day = string.Empty;
-        WorkingHours _workingHours;
-        DataTable _dataTable;
-        List<DataGridViewCell> _changedCells = new List<DataGridViewCell>();
+        int togMove;
+        int mValX;
+        int mValY;
+        int monthLength = 0;
+        string day = string.Empty;
+        WorkingHours workingHours;
+        DataTable dataTable;
+        List<DataGridViewCell> changedCells = new List<DataGridViewCell>();
+        CustomMsgBox customMsgBox;
 
         public WorkingHoursPage()
         {
             InitializeComponent();
+
+            Point _zeroLocation = new Point(0, 0);
+
+            if (LocationInfo._location == _zeroLocation)
+            {
+                this.StartPosition = FormStartPosition.CenterScreen;
+            }
+            else
+            {
+                this.StartPosition = FormStartPosition.Manual;
+                this.Location = LocationInfo._location;
+            }
 
             WorkingHours _workingHours = new WorkingHours();
             // Fill the combox with months from DB
@@ -57,7 +71,7 @@ namespace emira.GUI
             // Clean all modifications
             dgvWorkingHours.Columns.Clear();
             dgvWorkingHours.Rows.Clear();
-            _changedCells.Clear();
+            changedCells.Clear();
 
             int _maxTaskLength = 0;
             int _taskLength = 0;
@@ -73,8 +87,8 @@ namespace emira.GUI
             string _date = string.Empty;
 
             DateTime _today = DateTime.UtcNow;
-            _dataTable = new DataTable();
-            _workingHours = new WorkingHours();
+            dataTable = new DataTable();
+            workingHours = new WorkingHours();
 
             // Give the name of the month to the table
             string _selectedYear = cbYearWithMonth.SelectedItem.ToString().Remove(4);
@@ -93,24 +107,24 @@ namespace emira.GUI
             }
 
             // Lenght of the actual month + 1
-            _monthLength = _workingHours.GetDaysOfMonth(_resultYear, _resultMonth);
+            monthLength = workingHours.GetDaysOfMonth(_resultYear, _resultMonth);
 
             // Add the days of the actual month
-            for (int i = 1; i < _monthLength + 1; i++)
+            for (int i = 1; i < monthLength + 1; i++)
             {
                 if (i < 10)
                 {
-                    _day = "0" + i.ToString();
+                    day = "0" + i.ToString();
                 }
                 else
                 {
-                    _day = i.ToString();
+                    day = i.ToString();
                 }
 
                 DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn()
                 {
-                    Name = _day,
-                    HeaderText = _day
+                    Name = day,
+                    HeaderText = day
                 };
                 dgvWorkingHours.Columns.Add(col);
             }
@@ -129,9 +143,9 @@ namespace emira.GUI
             if (_today.Month != _resultMonth)
             {
 
-                _dataTable = _workingHours.GetTasksByMonth(cbYearWithMonth.SelectedItem.ToString());
+                dataTable = workingHours.GetTasksByMonth(cbYearWithMonth.SelectedItem.ToString());
 
-                foreach (DataRow item in _dataTable.Rows)
+                foreach (DataRow item in dataTable.Rows)
                 {
                     _actualTaskID = item[Texts.TaskProperties.TaskID].ToString();
                     _acutalTaskName = item[Texts.TaskProperties.TaskName].ToString();
@@ -163,9 +177,9 @@ namespace emira.GUI
             }
             else
             {
-                _dataTable = _workingHours.GetSelectedTask();
+                dataTable = workingHours.GetSelectedTask();
 
-                foreach (DataRow item in _dataTable.Rows)
+                foreach (DataRow item in dataTable.Rows)
                 {
                     _actualTaskID = item[Texts.TaskProperties.TaskID].ToString();
                     _acutalTaskName = item[Texts.TaskProperties.TaskName].ToString();
@@ -227,7 +241,7 @@ namespace emira.GUI
 
                     _actualCellRowHeaderValue = row.HeaderCell.FormattedValue.ToString();
 
-                    _actualCellValue = _workingHours.GetHours(_actualCellRowHeaderValue, _date);
+                    _actualCellValue = workingHours.GetHours(_actualCellRowHeaderValue, _date);
 
                     if (!string.IsNullOrEmpty(_actualCellValue))
                     {
@@ -236,7 +250,7 @@ namespace emira.GUI
                 }
             }
 
-            UpdateTotalHours();          
+            UpdateTotalHours();
         }
 
         private void UpdateTotalHours()
@@ -377,7 +391,7 @@ namespace emira.GUI
                     DataGridViewCell _changedCell = dgvWorkingHours.Rows[cell.RowIndex].Cells[cell.ColumnIndex];
                     if (string.IsNullOrEmpty(_changedCell.ErrorText))
                     {
-                        _changedCells.Add(_changedCell);
+                        changedCells.Add(_changedCell);
                     }
                 }
                 e.Handled = true;
@@ -393,7 +407,7 @@ namespace emira.GUI
                     DataGridViewCell _changedCell = dgvWorkingHours.Rows[cell.RowIndex].Cells[cell.ColumnIndex];
                     if (string.IsNullOrEmpty(_changedCell.ErrorText))
                     {
-                        _changedCells.Add(_changedCell);
+                        changedCells.Add(_changedCell);
                     }
                 }
                 e.Handled = true;
@@ -410,7 +424,7 @@ namespace emira.GUI
                     DataGridViewCell _changedCell = dgvWorkingHours.Rows[cell.RowIndex].Cells[cell.ColumnIndex];
                     if (string.IsNullOrEmpty(_changedCell.ErrorText))
                     {
-                        _changedCells.Add(_changedCell);
+                        changedCells.Add(_changedCell);
                     }
                 }
                 e.Handled = true;
@@ -425,7 +439,7 @@ namespace emira.GUI
             DataGridViewCell _changedCell = dgvWorkingHours.Rows[e.RowIndex].Cells[e.ColumnIndex];
             if (string.IsNullOrEmpty(_changedCell.ErrorText))
             {
-                _changedCells.Add(_changedCell);
+                changedCells.Add(_changedCell);
             }
 
             UpdateTotalHours();
@@ -474,9 +488,9 @@ namespace emira.GUI
         {
             try
             {
-                if (_changedCells != null && _changedCells.Count != 0)
+                if (changedCells != null && changedCells.Count != 0)
                 {
-                    _workingHours = new WorkingHours();
+                    workingHours = new WorkingHours();
                     string _actualCellColumnHeaderValue = string.Empty;
                     string _actualCellRowHeaderValue = string.Empty;
                     string _date = string.Empty;
@@ -485,7 +499,7 @@ namespace emira.GUI
                     bool _result = false;
                     bool _isSuccess = true;
 
-                    foreach (var cell in _changedCells)
+                    foreach (var cell in changedCells)
                     {
                         _actualCellColumnHeaderValue = dgvWorkingHours.Columns[cell.ColumnIndex].HeaderText;
 
@@ -498,7 +512,7 @@ namespace emira.GUI
 
                         if (cell.Value == null || cell.Value.ToString() == "0")
                         {
-                            _result = _workingHours.RemoveHour(_actualCellRowHeaderValue, _date);
+                            _result = workingHours.RemoveHour(_actualCellRowHeaderValue, _date);
                             continue;
                         }
                         else
@@ -509,7 +523,7 @@ namespace emira.GUI
                             }
                         }
 
-                        _result = _workingHours.SaveHour(_actualCellRowHeaderValue, _date, _actualCellValue);
+                        _result = workingHours.SaveHour(_actualCellRowHeaderValue, _date, _actualCellValue);
 
                         _isSuccess &= _result;
                     }
@@ -565,10 +579,14 @@ namespace emira.GUI
 
         private void btnHome_Click(object sender, EventArgs e)
         {
-            Hide();
+            LocationInfo._location = this.Location;
+            Cursor.Current = Cursors.WaitCursor;
             HomePage _homePage = new HomePage();
             _homePage.Show();
+            Hide();
+            Cursor.Current = Cursors.Default;
         }
+
 
 
         private void pHeader_DoubleClick(object sender, EventArgs e)
@@ -591,21 +609,21 @@ namespace emira.GUI
 
         private void pHeader_MouseUp(object sender, MouseEventArgs e)
         {
-            _togMove = 0;
+            togMove = 0;
         }
 
         private void pHeader_MouseDown(object sender, MouseEventArgs e)
         {
-            _togMove = 1;
-            _mValX = e.X;
-            _mValY = e.Y;
+            togMove = 1;
+            mValX = e.X;
+            mValY = e.Y;
         }
 
         private void pHeader_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_togMove == 1)
+            if (togMove == 1)
             {
-                SetDesktopLocation(MousePosition.X - _mValX, MousePosition.Y - _mValY);
+                SetDesktopLocation(MousePosition.X - mValX, MousePosition.Y - mValY);
             }
         }
 
