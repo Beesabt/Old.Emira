@@ -82,12 +82,12 @@ namespace emira.GUI
 
         private void btnStatistics_Click(object sender, EventArgs e)
         {
-            //LocationInfo._location = this.Location;
-            //Cursor.Current = Cursors.WaitCursor;
-            //StatisticsPage _statisticsPage = new StatisticsPage();
-            //_statisticsPage.Show();
-            //Hide();
-            //Cursor.Current = Cursors.Default;
+            LocationInfo._location = this.Location;
+            Cursor.Current = Cursors.WaitCursor;
+            StatisticsPage _statisticsPage = new StatisticsPage();
+            _statisticsPage.Show();
+            Hide();
+            Cursor.Current = Cursors.Default;
         }
 
         private void btnExit_Click(object sender, EventArgs e)

@@ -99,6 +99,12 @@
     <Compile Include="GUI\HolidaysPage.designer.cs">
       <DependentUpon>HolidaysPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\StatisticsPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\StatisticsPage.Designer.cs">
+      <DependentUpon>StatisticsPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\WorkingHoursPage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,6 +207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\SettingsPage.resx">
       <DependentUpon>SettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatisticsPage.resx">
+      <DependentUpon>StatisticsPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\TaskManager.resx">
       <DependentUpon>TaskManager.cs</DependentUpon>
