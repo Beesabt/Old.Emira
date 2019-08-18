@@ -48,6 +48,7 @@
             this.btnNext = new System.Windows.Forms.Button();
             this.btnPrevious = new System.Windows.Forms.Button();
             this.lMonth = new System.Windows.Forms.Label();
+            this.btnLock = new System.Windows.Forms.Button();
             this.pHeader.SuspendLayout();
             this.pMenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvWorkingHours)).BeginInit();
@@ -75,7 +76,7 @@
             this.btnMaximize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnMaximize.BackgroundImage = global::emira.Properties.Resources.maximize_icon_white_26;
             this.btnMaximize.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnMaximize.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.btnMaximize.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.btnMaximize.FlatAppearance.BorderSize = 0;
             this.btnMaximize.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.btnMaximize.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
@@ -105,7 +106,7 @@
             this.btnMinimalize.BackColor = System.Drawing.Color.Transparent;
             this.btnMinimalize.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMinimalize.BackgroundImage")));
             this.btnMinimalize.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnMinimalize.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.btnMinimalize.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.btnMinimalize.FlatAppearance.BorderSize = 0;
             this.btnMinimalize.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.btnMinimalize.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
@@ -123,7 +124,7 @@
             this.btnExit.BackColor = System.Drawing.Color.Transparent;
             this.btnExit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnExit.BackgroundImage")));
             this.btnExit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnExit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
+            this.btnExit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
@@ -149,7 +150,7 @@
             // 
             this.btnHome.BackColor = System.Drawing.Color.Transparent;
             this.btnHome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnHome.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.btnHome.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.btnHome.FlatAppearance.BorderSize = 0;
             this.btnHome.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.btnHome.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
@@ -168,14 +169,14 @@
             // 
             this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(186)))), ((int)(((byte)(62)))));
             this.btnSave.Enabled = false;
-            this.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(167)))), ((int)(((byte)(55)))));
+            this.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnSave.FlatAppearance.BorderSize = 0;
             this.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(167)))), ((int)(((byte)(55)))));
             this.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(167)))), ((int)(((byte)(55)))));
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
+            this.btnSave.Image = global::emira.Properties.Resources.save_icon_white_32;
             this.btnSave.Location = new System.Drawing.Point(32, 142);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(120, 50);
@@ -188,15 +189,15 @@
             // btnPrint
             // 
             this.btnPrint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
-            this.btnPrint.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(133)))), ((int)(((byte)(218)))));
+            this.btnPrint.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnPrint.FlatAppearance.BorderSize = 0;
             this.btnPrint.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(133)))), ((int)(((byte)(218)))));
             this.btnPrint.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(133)))), ((int)(((byte)(218)))));
             this.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPrint.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnPrint.ForeColor = System.Drawing.Color.White;
-            this.btnPrint.Image = ((System.Drawing.Image)(resources.GetObject("btnPrint.Image")));
-            this.btnPrint.Location = new System.Drawing.Point(168, 142);
+            this.btnPrint.Image = global::emira.Properties.Resources.print_icon_white_32;
+            this.btnPrint.Location = new System.Drawing.Point(284, 142);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(120, 50);
             this.btnPrint.TabIndex = 3;
@@ -207,15 +208,15 @@
             // btnExport
             // 
             this.btnExport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(185)))), ((int)(((byte)(0)))));
-            this.btnExport.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(166)))), ((int)(((byte)(0)))));
+            this.btnExport.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnExport.FlatAppearance.BorderSize = 0;
             this.btnExport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(166)))), ((int)(((byte)(0)))));
             this.btnExport.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(166)))), ((int)(((byte)(0)))));
             this.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExport.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnExport.ForeColor = System.Drawing.Color.White;
-            this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
-            this.btnExport.Location = new System.Drawing.Point(304, 142);
+            this.btnExport.Image = global::emira.Properties.Resources.export_icon_white_32;
+            this.btnExport.Location = new System.Drawing.Point(410, 142);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(120, 50);
             this.btnExport.TabIndex = 4;
@@ -227,14 +228,14 @@
             // 
             this.btnAddRemoveTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddRemoveTask.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(195)))), ((int)(((byte)(0)))), ((int)(((byte)(82)))));
-            this.btnAddRemoveTask.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(25)))), ((int)(((byte)(98)))));
+            this.btnAddRemoveTask.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnAddRemoveTask.FlatAppearance.BorderSize = 0;
             this.btnAddRemoveTask.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(25)))), ((int)(((byte)(98)))));
             this.btnAddRemoveTask.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(25)))), ((int)(((byte)(98)))));
             this.btnAddRemoveTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddRemoveTask.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnAddRemoveTask.ForeColor = System.Drawing.Color.White;
-            this.btnAddRemoveTask.Image = ((System.Drawing.Image)(resources.GetObject("btnAddRemoveTask.Image")));
+            this.btnAddRemoveTask.Image = global::emira.Properties.Resources.task_icon_white_32;
             this.btnAddRemoveTask.Location = new System.Drawing.Point(879, 142);
             this.btnAddRemoveTask.Name = "btnAddRemoveTask";
             this.btnAddRemoveTask.Size = new System.Drawing.Size(120, 50);
@@ -248,7 +249,7 @@
             // 
             this.cbYearWithMonth.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.cbYearWithMonth.FormattingEnabled = true;
-            this.cbYearWithMonth.Location = new System.Drawing.Point(571, 154);
+            this.cbYearWithMonth.Location = new System.Drawing.Point(648, 154);
             this.cbYearWithMonth.MaxDropDownItems = 12;
             this.cbYearWithMonth.Name = "cbYearWithMonth";
             this.cbYearWithMonth.Size = new System.Drawing.Size(96, 32);
@@ -313,7 +314,7 @@
             this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNext.Font = new System.Drawing.Font("Century Gothic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnNext.Image = ((System.Drawing.Image)(resources.GetObject("btnNext.Image")));
-            this.btnNext.Location = new System.Drawing.Point(673, 157);
+            this.btnNext.Location = new System.Drawing.Point(750, 157);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(25, 25);
             this.btnNext.TabIndex = 9;
@@ -331,7 +332,7 @@
             this.btnPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPrevious.Font = new System.Drawing.Font("Century Gothic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnPrevious.Image = ((System.Drawing.Image)(resources.GetObject("btnPrevious.Image")));
-            this.btnPrevious.Location = new System.Drawing.Point(540, 157);
+            this.btnPrevious.Location = new System.Drawing.Point(617, 157);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(25, 25);
             this.btnPrevious.TabIndex = 8;
@@ -348,12 +349,33 @@
             this.lMonth.TabIndex = 10;
             this.lMonth.Text = "Month";
             // 
+            // btnLock
+            // 
+            this.btnLock.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(99)))), ((int)(((byte)(12)))));
+            this.btnLock.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnLock.FlatAppearance.BorderSize = 0;
+            this.btnLock.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(116)))), ((int)(((byte)(38)))));
+            this.btnLock.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(116)))), ((int)(((byte)(38)))));
+            this.btnLock.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLock.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnLock.ForeColor = System.Drawing.Color.White;
+            this.btnLock.Image = global::emira.Properties.Resources.lock_icon_white_32;
+            this.btnLock.Location = new System.Drawing.Point(158, 142);
+            this.btnLock.Name = "btnLock";
+            this.btnLock.Size = new System.Drawing.Size(120, 50);
+            this.btnLock.TabIndex = 11;
+            this.btnLock.Text = "Lock";
+            this.btnLock.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnLock.UseVisualStyleBackColor = false;
+            this.btnLock.Click += new System.EventHandler(this.btnLock_Click);
+            // 
             // WorkingHoursPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1030, 650);
+            this.Controls.Add(this.btnLock);
             this.Controls.Add(this.lMonth);
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.btnPrevious);
@@ -396,5 +418,6 @@
         private System.Windows.Forms.Button btnMaximize;
         private System.Windows.Forms.DataGridView dgvWorkingHours;
         private System.Windows.Forms.ComboBox cbYearWithMonth;
+        private System.Windows.Forms.Button btnLock;
     }
 }

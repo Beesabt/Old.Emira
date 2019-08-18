@@ -62,13 +62,15 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
         private void UpdateWorkingHoursTable()
         {
-            // Clean all modifications
+            // Clean up all modifications
             dgvWorkingHours.Columns.Clear();
             dgvWorkingHours.Rows.Clear();
             changedCells.Clear();
@@ -477,12 +479,7 @@ namespace emira.GUI
             }
         }
 
-        private void btnAddRemoveTask_Click(object sender, EventArgs e)
-        {
-            AddRemoveTaskPage adtp = new AddRemoveTaskPage();
-            adtp.ShowDialog();
-            UpdateWorkingHoursTable();
-        }
+
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -547,6 +544,19 @@ namespace emira.GUI
                 MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnLock_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAddRemoveTask_Click(object sender, EventArgs e)
+        {
+            AddRemoveTaskPage adtp = new AddRemoveTaskPage();
+            adtp.ShowDialog();
+            UpdateWorkingHoursTable();
+        }
+
 
 
         private void btnExit_Click(object sender, EventArgs e)

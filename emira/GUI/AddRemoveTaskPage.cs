@@ -1,20 +1,22 @@
-﻿using emira.BusinessLogicLayer;
-using emira.HelperFunctions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+
+using emira.BusinessLogicLayer;
+using emira.HelperFunctions;
 
 namespace emira.GUI
 {
     public partial class AddRemoveTaskPage : Form
     {
-        int _togMove;
-        int _mValX;
-        int _mValY;
-        AddRemoveTask _addRemoveTask;
-        DataTable _dataTable;
+        int togMove;
+        int mValX;
+        int mValY;
+        AddRemoveTask addRemoveTask;
+        DataTable dataTable;
 
         List<TreeNode> _SelectedItemsAfterLoad = new List<TreeNode>();
 
@@ -27,8 +29,8 @@ namespace emira.GUI
         {
             try
             {
-                _addRemoveTask = new AddRemoveTask();
-                _dataTable = new DataTable();
+                addRemoveTask = new AddRemoveTask();
+                dataTable = new DataTable();
 
                 string _actualTaskGroupID = string.Empty;
                 string _actualTaskGroup = string.Empty;
@@ -42,9 +44,9 @@ namespace emira.GUI
                 string _previousGroupID = "0";
                 string _previousTaskID = "0";
 
-                _dataTable = _addRemoveTask.GetTask();
+                dataTable = addRemoveTask.GetTask();
 
-                foreach (DataRow group in _dataTable.Rows)
+                foreach (DataRow group in dataTable.Rows)
                 {
                     _actualTaskGroupID = group[Texts.TaskProperties.TaskGroupID].ToString();
                     _actualTaskGroup = group[Texts.TaskProperties.TaskGroupName].ToString();
@@ -57,7 +59,7 @@ namespace emira.GUI
                     }
                 }
 
-                foreach (DataRow task in _dataTable.Rows)
+                foreach (DataRow task in dataTable.Rows)
                 {
                     _actualTaskID = task[Texts.TaskProperties.TaskID].ToString();
                     _actualTaskName = task[Texts.TaskProperties.TaskName].ToString();
@@ -78,7 +80,7 @@ namespace emira.GUI
 
                 }
 
-                foreach (DataRow selected in _dataTable.Rows)
+                foreach (DataRow selected in dataTable.Rows)
                 {
                     _actualTaskID = selected[Texts.TaskProperties.TaskID].ToString();
                     _actualTaskName = selected[Texts.TaskProperties.TaskName].ToString();
@@ -134,7 +136,7 @@ namespace emira.GUI
             {              
                 List<TreeNode> _selectedNodes = new List<TreeNode>();
                 List<TreeNode> _unSelectedNodes = new List<TreeNode>();
-                _addRemoveTask = new AddRemoveTask();
+                addRemoveTask = new AddRemoveTask();
 
                 string _parentName = string.Empty;
                 string _nodeName = string.Empty;
@@ -202,7 +204,7 @@ namespace emira.GUI
                     Dictionary<string, string> data = new Dictionary<string, string>();
                     data.Add(Texts.TaskProperties.Selected, "True");
 
-                    _addRemoveTask.SaveModification(data, _nodeID.Trim());
+                    addRemoveTask.SaveModification(data, _nodeID.Trim());
                 }
 
                 foreach (TreeNode node in _unSelectedNodes)
@@ -223,7 +225,7 @@ namespace emira.GUI
                     Dictionary<string, string> data = new Dictionary<string, string>();
                     data.Add(Texts.TaskProperties.Selected, "False");
 
-                    _addRemoveTask.SaveModification(data, _nodeID.Trim());
+                    addRemoveTask.SaveModification(data, _nodeID.Trim());
 
                     // Get the date
                     Form _workingHoursPage = Application.OpenForms["WorkingHoursPage"];
@@ -236,7 +238,7 @@ namespace emira.GUI
                     }
 
                     // Remove the hours from the Catalog for the task
-                    _addRemoveTask.DeleteHours(date, _nodeID.Trim());
+                    addRemoveTask.DeleteHours(date, _nodeID.Trim());
                 }
                 Cursor.Show();
                 Close();
@@ -288,23 +290,31 @@ namespace emira.GUI
 
         private void pHeader_MouseUp(object sender, MouseEventArgs e)
         {
-            _togMove = 0;
+            togMove = 0;
         }
 
         private void pHeader_MouseDown(object sender, MouseEventArgs e)
         {
-            _togMove = 1;
-            _mValX = e.X;
-            _mValY = e.Y;
+            togMove = 1;
+            mValX = e.X;
+            mValY = e.Y;
         }
 
         private void pHeader_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_togMove == 1)
+            if (togMove == 1)
             {
-                SetDesktopLocation(MousePosition.X - _mValX, MousePosition.Y - _mValY);
+                SetDesktopLocation(MousePosition.X - mValX, MousePosition.Y - mValY);
             }
         }
 
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Rectangle borderRectangle = new Rectangle(0, 0, ClientRectangle.Width - 1, ClientRectangle.Height - 1);
+            Color _Win10BlueBorderColor = new Color();
+            _Win10BlueBorderColor = Color.FromArgb(24, 116, 188);
+            e.Graphics.DrawRectangle(new Pen(_Win10BlueBorderColor), borderRectangle);
+            base.OnPaint(e);
+        }
     }
 }
