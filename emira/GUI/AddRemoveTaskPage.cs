@@ -12,11 +12,13 @@ namespace emira.GUI
 {
     public partial class AddRemoveTaskPage : Form
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         int togMove;
         int mValX;
         int mValY;
         AddRemoveTask addRemoveTask;
         DataTable dataTable;
+        CustomMsgBox customMsgBox;
 
         List<TreeNode> _SelectedItemsAfterLoad = new List<TreeNode>();
 
@@ -29,14 +31,11 @@ namespace emira.GUI
         {
             try
             {
-                addRemoveTask = new AddRemoveTask();
-                dataTable = new DataTable();
-
                 string _actualTaskGroupID = string.Empty;
                 string _actualTaskGroup = string.Empty;
                 string _actualTaskID = string.Empty;
                 string _actualTaskName = string.Empty;
-                string _actualTaskSelected = string.Empty;
+                bool _actualTaskSelected = false;
                 string _actualTaskIDFirstNumber = string.Empty;
                 string _actualTaskIDLastNumber = string.Empty;
                 int _actualTaskIDInteger = 0;
@@ -44,8 +43,13 @@ namespace emira.GUI
                 string _previousGroupID = "0";
                 string _previousTaskID = "0";
 
+                addRemoveTask = new AddRemoveTask();
+                dataTable = new DataTable();
+
+                // Get the tasks from the Task table
                 dataTable = addRemoveTask.GetTask();
 
+                // Set the parent nodes
                 foreach (DataRow group in dataTable.Rows)
                 {
                     _actualTaskGroupID = group[Texts.TaskProperties.TaskGroupID].ToString();
@@ -59,6 +63,8 @@ namespace emira.GUI
                     }
                 }
 
+                // Set the child nodes and
+                // Set the checkbox where the task is selected
                 foreach (DataRow task in dataTable.Rows)
                 {
                     _actualTaskID = task[Texts.TaskProperties.TaskID].ToString();
@@ -66,66 +72,62 @@ namespace emira.GUI
 
                     _index = _actualTaskID.IndexOf('_');
                     _actualTaskIDFirstNumber = _actualTaskID.Remove(_index);
-                    _actualTaskIDInteger = Convert.ToInt32(_actualTaskIDFirstNumber);
+
+                    Int32.TryParse(_actualTaskIDFirstNumber, out _actualTaskIDInteger);
+                    Boolean.TryParse(task[Texts.TaskProperties.Selected].ToString(), out _actualTaskSelected);
 
                     if (_previousTaskID == _actualTaskIDFirstNumber)
                     {
-                        tvAddOrRemoveTask.Nodes[_actualTaskIDInteger - 1].Nodes.Add(_actualTaskID + " " + _actualTaskName);
+                        TreeNode _taskNode = tvAddOrRemoveTask.Nodes[_actualTaskIDInteger - 1].Nodes.Add(_actualTaskID + " " + _actualTaskName);
+                        if (_actualTaskSelected)
+                        {
+                            _taskNode.Checked = true;
+                            _SelectedItemsAfterLoad.Add(_taskNode);
+                            _taskNode.Parent.Checked = true;
+                            _taskNode.Parent.Expand();
+                        }
                     }
                     else
                     {
-                        tvAddOrRemoveTask.Nodes[_actualTaskIDInteger - 1].Nodes.Add(_actualTaskID + " " + _actualTaskName);
+                        TreeNode _taskNode = tvAddOrRemoveTask.Nodes[_actualTaskIDInteger - 1].Nodes.Add(_actualTaskID + " " + _actualTaskName);
+                        if (_actualTaskSelected)
+                        {
+                            _taskNode.Checked = true;
+                            _SelectedItemsAfterLoad.Add(_taskNode);
+                            _taskNode.Parent.Checked = true;
+                            _taskNode.Parent.Expand();
+                        }
                         _previousTaskID = _actualTaskIDFirstNumber;
                     }
-
                 }
-
-                foreach (DataRow selected in dataTable.Rows)
-                {
-                    _actualTaskID = selected[Texts.TaskProperties.TaskID].ToString();
-                    _actualTaskName = selected[Texts.TaskProperties.TaskName].ToString();
-                    _actualTaskSelected = selected[Texts.TaskProperties.Selected].ToString();
-
-                    _index = _actualTaskID.IndexOf('_');
-                    _actualTaskIDFirstNumber = _actualTaskID.Remove(_index);
-                    _actualTaskIDInteger = Convert.ToInt32(_actualTaskIDFirstNumber);
-
-                    if (_actualTaskSelected.ToLower() == "true")
-                    {
-                        foreach (TreeNode item in tvAddOrRemoveTask.Nodes[_actualTaskIDInteger - 1].Nodes)
-                        {
-                            if (item.Text == (_actualTaskID + " " + _actualTaskName))
-                            {
-                                item.Checked = true;
-                                _SelectedItemsAfterLoad.Add(item);
-                                item.Parent.Checked = true;
-                                item.Parent.Expand();
-                                break;
-                            }
-                        }
-                    }
-                }
-
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
+
+
         private static bool ListCheck<T>(IEnumerable<T> l1, IEnumerable<T> l2)
         {
-            if (l1 == null || l2 == null)
+            try
             {
-                return false;
+                // If a selected task became unselected then we return true othewise false
+                if (l1.Intersect(l2).Any())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-
-            if (l1.Intersect(l2).Any())
-            {            
-                return true;
-            }
-            else
+            catch (Exception error)
             {
+                Logger.Error(error);
                 return false;
             }
         }
@@ -133,7 +135,7 @@ namespace emira.GUI
         private void btnSave_Click(object sender, EventArgs e)
         {
             try
-            {              
+            {
                 List<TreeNode> _selectedNodes = new List<TreeNode>();
                 List<TreeNode> _unSelectedNodes = new List<TreeNode>();
                 addRemoveTask = new AddRemoveTask();
@@ -145,6 +147,7 @@ namespace emira.GUI
 
                 int _index = 0;
 
+                // Fill up the _selectedNodes and _unSelectedNodes with tasks according to the actual state
                 foreach (TreeNode parent in tvAddOrRemoveTask.Nodes)
                 {
                     if (parent.Checked)
@@ -160,18 +163,18 @@ namespace emira.GUI
                                 _unSelectedNodes.Add(node);
                             }
                         }
-
                     }
                     else
                     {
                         foreach (TreeNode node in parent.Nodes)
                         {
                             _unSelectedNodes.Add(node);
-
                         }
                     }
                 }
 
+                // If the task was checked then it will be removed from the Catalog
+                // if the user says 'Yes'
                 if (ListCheck(_SelectedItemsAfterLoad, _unSelectedNodes))
                 {
                     var _result = MessageBox.Show(Texts.WarningMessages.DeleteTask,
@@ -188,15 +191,9 @@ namespace emira.GUI
 
                 foreach (TreeNode node in _selectedNodes)
                 {
-
-                    _parentName = node.Parent.Text;
                     _nodeName = node.Text;
 
-                    // Parent name and node name contain the ID and the name therefore need to split them
-                    _index = _parentName.IndexOf(' ');
-                    _parentID = _parentName.Remove(_index + 1);
-                    _parentName = _parentName.Remove(0, (_index));
-
+                    // Task name and node name contain the ID and the name therefore need to split them
                     _index = _nodeName.IndexOf(' ');
                     _nodeID = _nodeName.Remove(_index + 1);
                     _nodeName = _nodeName.Remove(0, (_index));
@@ -204,20 +201,15 @@ namespace emira.GUI
                     Dictionary<string, string> data = new Dictionary<string, string>();
                     data.Add(Texts.TaskProperties.Selected, "True");
 
+                    // Save the task as selected
                     addRemoveTask.SaveModification(data, _nodeID.Trim());
                 }
 
                 foreach (TreeNode node in _unSelectedNodes)
                 {
-
-                    _parentName = node.Parent.Text;
                     _nodeName = node.Text;
 
-                    // Parent name and node name contain the ID and the name therefore need to split them
-                    _index = _parentName.IndexOf(' ');
-                    _parentID = _parentName.Remove(_index + 1);
-                    _parentName = _parentName.Remove(0, (_index));
-
+                    // Task name and node name contain the ID and the name therefore need to split them
                     _index = _nodeName.IndexOf(' ');
                     _nodeID = _nodeName.Remove(_index + 1);
                     _nodeName = _nodeName.Remove(0, (_index));
@@ -225,9 +217,10 @@ namespace emira.GUI
                     Dictionary<string, string> data = new Dictionary<string, string>();
                     data.Add(Texts.TaskProperties.Selected, "False");
 
+                    // Save the task as unselected
                     addRemoveTask.SaveModification(data, _nodeID.Trim());
 
-                    // Get the date
+                    // Get the selected date from the WorkingHours form
                     Form _workingHoursPage = Application.OpenForms["WorkingHoursPage"];
                     Control[] _cbYearWithMonth = _workingHoursPage.Controls.Find("cbYearWithMonth", true);
                     string date = string.Empty;
@@ -245,7 +238,9 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
 
         }
@@ -255,9 +250,16 @@ namespace emira.GUI
             try
             {
                 bool _isChecked = false;
+                bool _isCheckedChildren = false;
                 TreeNode _node = new TreeNode();
+
+                // Set the task's or parent node's state
                 _node = e.Node;
                 _isChecked = _node.Checked;
+
+                // If it is a parent then we check or uncheck all chid nodes
+                // Or if it is a child node then we check the parent node according to the
+                // other nodes' state under the parent
                 if (_node.Nodes.Count > 0)
                 {
                     foreach (TreeNode item in _node.Nodes)
@@ -269,14 +271,31 @@ namespace emira.GUI
                 {
                     TreeNode _parentNode = new TreeNode();
                     _parentNode = _node.Parent;
-                    _parentNode.Checked = true;
+
+                    foreach (TreeNode item in _parentNode.Nodes)
+                    {
+                        _isCheckedChildren |= item.Checked;
+                    }
+
+                    if (_isCheckedChildren)
+                    {
+                        _parentNode.Checked = true;
+                    }
+                    else
+                    {
+                        _parentNode.Checked = false;
+                    }
                 }
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
+
+
 
         private void btnExit_Click(object sender, EventArgs e)
         {
@@ -287,6 +306,8 @@ namespace emira.GUI
         {
             Close();
         }
+
+
 
         private void pHeader_MouseUp(object sender, MouseEventArgs e)
         {
