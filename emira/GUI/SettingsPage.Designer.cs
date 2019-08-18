@@ -288,8 +288,9 @@
             this.Controls.Add(this.pMenuBar);
             this.Controls.Add(this.pHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SettingsPage";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Load += new System.EventHandler(this.SettingsPage_Load);
             this.pMenuBar.ResumeLayout(false);
             this.pHeader.ResumeLayout(false);

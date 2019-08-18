@@ -619,7 +619,7 @@
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "HolidaysPage";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Load += new System.EventHandler(this.HolidaysPage_Load);
             this.pHeader.ResumeLayout(false);
             this.pHeader.PerformLayout();
