@@ -177,7 +177,7 @@
             this.btnSave.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.Image = global::emira.Properties.Resources.save_icon_white_32;
-            this.btnSave.Location = new System.Drawing.Point(32, 142);
+            this.btnSave.Location = new System.Drawing.Point(30, 142);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(120, 50);
             this.btnSave.TabIndex = 2;
@@ -197,13 +197,14 @@
             this.btnPrint.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnPrint.ForeColor = System.Drawing.Color.White;
             this.btnPrint.Image = global::emira.Properties.Resources.print_icon_white_32;
-            this.btnPrint.Location = new System.Drawing.Point(284, 142);
+            this.btnPrint.Location = new System.Drawing.Point(282, 142);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(120, 50);
             this.btnPrint.TabIndex = 3;
             this.btnPrint.Text = "Print";
             this.btnPrint.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnPrint.UseVisualStyleBackColor = false;
+            this.btnPrint.Visible = false;
             // 
             // btnExport
             // 
@@ -216,13 +217,14 @@
             this.btnExport.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnExport.ForeColor = System.Drawing.Color.White;
             this.btnExport.Image = global::emira.Properties.Resources.export_icon_white_32;
-            this.btnExport.Location = new System.Drawing.Point(410, 142);
+            this.btnExport.Location = new System.Drawing.Point(408, 142);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(120, 50);
             this.btnExport.TabIndex = 4;
             this.btnExport.Text = "Export";
             this.btnExport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnExport.UseVisualStyleBackColor = false;
+            this.btnExport.Visible = false;
             // 
             // btnAddRemoveTask
             // 
@@ -236,7 +238,7 @@
             this.btnAddRemoveTask.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnAddRemoveTask.ForeColor = System.Drawing.Color.White;
             this.btnAddRemoveTask.Image = global::emira.Properties.Resources.task_icon_white_32;
-            this.btnAddRemoveTask.Location = new System.Drawing.Point(879, 142);
+            this.btnAddRemoveTask.Location = new System.Drawing.Point(880, 142);
             this.btnAddRemoveTask.Name = "btnAddRemoveTask";
             this.btnAddRemoveTask.Size = new System.Drawing.Size(120, 50);
             this.btnAddRemoveTask.TabIndex = 5;
@@ -249,10 +251,10 @@
             // 
             this.cbYearWithMonth.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.cbYearWithMonth.FormattingEnabled = true;
-            this.cbYearWithMonth.Location = new System.Drawing.Point(648, 154);
+            this.cbYearWithMonth.Location = new System.Drawing.Point(646, 154);
             this.cbYearWithMonth.MaxDropDownItems = 12;
             this.cbYearWithMonth.Name = "cbYearWithMonth";
-            this.cbYearWithMonth.Size = new System.Drawing.Size(96, 32);
+            this.cbYearWithMonth.Size = new System.Drawing.Size(100, 32);
             this.cbYearWithMonth.TabIndex = 6;
             this.cbYearWithMonth.Text = "Month";
             this.cbYearWithMonth.DropDownClosed += new System.EventHandler(this.cbYearWithMonth_DropDownClosed);
@@ -286,7 +288,7 @@
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvWorkingHours.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dgvWorkingHours.Location = new System.Drawing.Point(32, 261);
+            this.dgvWorkingHours.Location = new System.Drawing.Point(30, 261);
             this.dgvWorkingHours.Name = "dgvWorkingHours";
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
@@ -297,7 +299,7 @@
             this.dgvWorkingHours.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvWorkingHours.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dgvWorkingHours.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvWorkingHours.Size = new System.Drawing.Size(967, 368);
+            this.dgvWorkingHours.Size = new System.Drawing.Size(970, 368);
             this.dgvWorkingHours.TabIndex = 7;
             this.dgvWorkingHours.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvWorkingHours_CellEndEdit);
             this.dgvWorkingHours.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvWorkingHours_CellValidating);
@@ -343,7 +345,7 @@
             // 
             this.lMonth.AutoSize = true;
             this.lMonth.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lMonth.Location = new System.Drawing.Point(452, 219);
+            this.lMonth.Location = new System.Drawing.Point(459, 219);
             this.lMonth.Name = "lMonth";
             this.lMonth.Size = new System.Drawing.Size(113, 39);
             this.lMonth.TabIndex = 10;
@@ -360,7 +362,7 @@
             this.btnLock.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnLock.ForeColor = System.Drawing.Color.White;
             this.btnLock.Image = global::emira.Properties.Resources.lock_icon_white_32;
-            this.btnLock.Location = new System.Drawing.Point(158, 142);
+            this.btnLock.Location = new System.Drawing.Point(156, 142);
             this.btnLock.Name = "btnLock";
             this.btnLock.Size = new System.Drawing.Size(120, 50);
             this.btnLock.TabIndex = 11;
