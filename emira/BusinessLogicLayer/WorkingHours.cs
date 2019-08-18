@@ -1,25 +1,47 @@
-﻿using emira.DataAccessLayer;
-using emira.HelperFunctions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+
+using emira.GUI;
+using emira.DataAccessLayer;
+using emira.HelperFunctions;
+
+using NLog;
+
 
 namespace emira.BusinessLogicLayer
 {
     class WorkingHours
     {
-
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         DatabaseHandler DBHandler;
         DataTable dataTable;
         DateTime today = DateTime.UtcNow;
+        CustomMsgBox customMsgBox;
 
+
+        /// <summary>
+        /// Get the task according to the selected month
+        /// </summary>
+        /// <param name="date">selected month</param>
+        /// <returns>Task(s) of the selected month</returns>
         public DataTable GetTasksByMonth(string date)
         {
-            DBHandler = new DatabaseHandler();
             dataTable = new DataTable();
-            dataTable = DBHandler.GetTasksByMonth(date);
-            return dataTable;
+            try
+            {
+                DBHandler = new DatabaseHandler();
+                dataTable = DBHandler.GetTasksByMonth(date);
+                return dataTable;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return dataTable;
+            }
         }
 
         /// <summary>
@@ -28,10 +50,20 @@ namespace emira.BusinessLogicLayer
         /// <returns>data table with the task(s)</returns>
         public DataTable GetSelectedTask()
         {
-            DBHandler = new DatabaseHandler();
             dataTable = new DataTable();
-            dataTable = DBHandler.GetSelectedTaskFromDB();
-            return dataTable;
+            try
+            {
+                DBHandler = new DatabaseHandler();
+                dataTable = DBHandler.GetSelectedTaskFromDB();
+                return dataTable;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return dataTable;
+            }
         }
 
         /// <summary>
@@ -51,7 +83,7 @@ namespace emira.BusinessLogicLayer
             _index = taskID.IndexOf(' ');
             _taskID = taskID.Remove(_index);
 
-            result = DBHandler.GetHoursFromCathalogue(_taskID, date);
+            result = DBHandler.GetHoursFromCatalog(_taskID, date);
             return result;
         }
 
@@ -78,12 +110,12 @@ namespace emira.BusinessLogicLayer
                 Dictionary<string, string> data = new Dictionary<string, string>();
                 data.Add(Texts.CatalogProperties.NumberOfHours, numberOfHours.ToString());
 
-                _isSuccess = DBHandler.ModifyHourInCathalog(data, _rowid.ToString(), updatedRow);
+                _isSuccess = DBHandler.ModifyHourInCatalog(data, _rowid.ToString(), updatedRow);
 
                 return _isSuccess;
             }
 
-            _result = DBHandler.SaveHourToCathalog(_taskID, date, numberOfHours);
+            _result = DBHandler.SaveHourToCatalog(_taskID, date, numberOfHours);
 
             if (_result > 0) { _isSuccess = true; }
 
@@ -111,68 +143,115 @@ namespace emira.BusinessLogicLayer
             return _isSuccess;
         }
 
+        /// <summary>
+        /// Get the yers and months (back - 6 months, forward - 5 months)
+        /// </summary>
+        /// <returns>List of the years and months</returns>
         public List<string> GetYearsAndMonths()
         {
-            DateTime _start = today.AddMonths(-7);
-            List<string> Dates = new List<string>();
-            StringBuilder sb = new StringBuilder();
-            string _actualMonth = string.Empty;
-            string _actualYear = string.Empty;
-
-            for (int i = 0; i < 12; i++)
+            List<string> _dates = new List<string>();
+            try
             {
-                _start = _start.AddMonths(1);
-                _actualYear = _start.Year.ToString();
-                if (_start.Month < 10)
+                DateTime _start = today.AddMonths(-7);
+                StringBuilder _sb = new StringBuilder();
+
+                string _actualMonth = string.Empty;
+                string _actualYear = string.Empty;
+
+                for (int i = 0; i < 12; i++)
                 {
-                    _actualMonth = "0" + _start.Month.ToString();
+                    _start = _start.AddMonths(1);
+                    _actualYear = _start.Year.ToString();
+
+                    // Add '0' for the months of 1 - 9
+                    if (_start.Month < 10)
+                    {
+                        _actualMonth = "0" + _start.Month.ToString();
+                    }
+                    else
+                    {
+                        _actualMonth = _start.Month.ToString();
+                    }
+
+                    // Add to list the 'year-month'
+                    _sb.Append(_actualYear+ "-" + _actualMonth);
+                    _dates.Add(_sb.ToString());
+
+                    // Clean up the string builder for the new 'year-month'
+                    _sb = _sb.Clear();
+                }
+
+                return _dates;
+            }
+            catch(Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _dates;
+            }          
+        }
+
+        /// <summary>
+        /// Get the acutal year and month
+        /// </summary>
+        /// <returns>Actual 'year-month'</returns>
+        public string GetActualMonth()
+        {
+            StringBuilder _sb = new StringBuilder();
+            try
+            {
+                string _actualMonth = string.Empty;
+                string _actualYear = string.Empty;
+                
+                // Get the actual year
+                _actualYear = today.Year.ToString();
+
+                // Get actual month and add '0' for the months of 1 - 9
+                if (today.Month < 10)
+                {
+                    _actualMonth = "0" + today.Month.ToString();
                 }
                 else
                 {
-                    _actualMonth = _start.Month.ToString();
+                    _actualMonth = today.Month.ToString();
                 }
 
-                sb.Append(_actualYear);
-                sb.Append("-" + _actualMonth);
+                _sb.Append(_actualYear + "-" + _actualMonth);
 
-                Dates.Add(sb.ToString());
-
-                sb = sb.Clear();
-
+                return _sb.ToString();
             }
-
-            return Dates;
+            catch(Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _sb.ToString();
+            }         
         }
 
-        public string GetActualMonth()
-        {
-            string _actualMonth = string.Empty;
-            string _actualYear = string.Empty;
-            StringBuilder sb = new StringBuilder();
-
-            _actualYear = today.Year.ToString();
-            if (today.Month < 10)
-            {
-                _actualMonth = "0" + today.Month.ToString();
-            }
-            else
-            {
-                _actualMonth = today.Month.ToString();
-            }
-
-            sb.Append(_actualYear);
-            sb.Append("-" + _actualMonth);
-
-            return sb.ToString();
-        }
-
+        /// <summary>
+        /// Get the days of the actual selected month
+        /// </summary>
+        /// <param name="year">year of the selected date</param>
+        /// <param name="month">month of the selected date</param>
+        /// <returns>Days of the selected month</returns>
         public int GetDaysOfMonth(int year, int month)
         {
-            int _DayOfMonth = 0;
+            int _dayOfMonth = 0;
+            try
+            {
+                _dayOfMonth = DateTime.DaysInMonth(year, month);
 
-            _DayOfMonth = DateTime.DaysInMonth(year, month);
-
-            return _DayOfMonth;
+                return _dayOfMonth;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _dayOfMonth;
+            }
         }
 
 

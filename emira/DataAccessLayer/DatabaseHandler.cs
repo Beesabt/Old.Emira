@@ -469,7 +469,7 @@ namespace emira.DataAccessLayer
             return dataTable;
         }
 
-        public string GetHoursFromCathalogue(string taskID, string date)
+        public string GetHoursFromCatalog(string taskID, string date)
         {
             string _result = string.Empty;
             string cmd = string.Format("SELECT {0} FROM {1} WHERE {2}='{3}' AND {4}='{5}' AND {6}='{7}'", Texts.CatalogProperties.NumberOfHours, Texts.DataTableNames.Catalog,
@@ -500,7 +500,7 @@ namespace emira.DataAccessLayer
 
             return _rowid;
         }
-        public int SaveHourToCathalog(string taskID, string date, double numberOfHours)
+        public int SaveHourToCatalog(string taskID, string date, double numberOfHours)
         {
             int _result = 0;
             string cmd = string.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}) VALUES({5}, '{6}', '{7}', '{8}')",
@@ -517,7 +517,7 @@ namespace emira.DataAccessLayer
             return _result;
         }
 
-        public bool ModifyHourInCathalog(Dictionary<string, string> data, string Value, int updatedRow)
+        public bool ModifyHourInCatalog(Dictionary<string, string> data, string Value, int updatedRow)
         {
             bool isSuccess = false;
             isSuccess = Update(Texts.DataTableNames.Catalog, data, string.Format("{0}='{1}'", "rowid", Value), ref updatedRow);
