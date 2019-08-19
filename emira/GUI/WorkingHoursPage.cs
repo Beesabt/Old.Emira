@@ -384,11 +384,9 @@ namespace emira.GUI
 
                     if (_governmentHoliday.Month == month)
                     {
-                        dgvWorkingHours.Columns[_governmentHoliday.Day - 1].ReadOnly = true;
                         dgvWorkingHours.Columns[_governmentHoliday.Day - 1].DefaultCellStyle.BackColor = Color.Plum;
                     }
                 }
-
             }
             catch (Exception error)
             {
