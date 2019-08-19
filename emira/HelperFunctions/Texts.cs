@@ -9,6 +9,8 @@ namespace emira.HelperFunctions
 
             public const string Task = "Task";
 
+            public const string TaskGroup = "TaskGroup";
+
             public const string Holiday = "Holiday";
 
             public const string Catalog = "Catalog";
@@ -66,6 +68,13 @@ namespace emira.HelperFunctions
             public static string TaskName = "TaskName";
 
             public static string Selected = "Selected";
+        }
+
+        public static class TaskGropuProperties
+        {
+            public static string GroupID = "GroupID";
+
+            public static string GroupName = "GroupName";
         }
 
         public static class HolidayProperties
@@ -281,6 +290,13 @@ namespace emira.HelperFunctions
             public static string ErrorSave = "An error during save";
 
             public static string LossOfData = "Loss of datas";
+        }
+
+        public static class Button
+        {
+            public static string Add = "Hozzáad";
+
+            public static string Update = "Módosít";
         }
     }
 }

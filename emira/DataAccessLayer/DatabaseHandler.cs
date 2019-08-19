@@ -278,11 +278,33 @@ namespace emira.DataAccessLayer
 
         #region TaskModification.cs 
 
+        public DataTable GetGroups()
+        {
+            string command = string.Format("SELECT * FROM {0} GROUP BY {1}",
+                Texts.DataTableNames.TaskGroup,
+                Texts.TaskGropuProperties.GroupID);
+            dataTable = new DataTable();
+            dataTable = GetDataTable(command);
+            return dataTable;
+        }
+
         public DataTable GetTask(string command)
         {
             dataTable = new DataTable();
             dataTable = GetDataTable(command);
             return dataTable;
+        }
+
+        public int InsertNewGroup(int groupID, string groupName)
+        {
+            string command = string.Format("INSERT INTO {0} ({1}, {2}) VALUES ('{3}', '{4}')",
+                Texts.DataTableNames.TaskGroup,
+                Texts.TaskGropuProperties.GroupID,
+                Texts.TaskGropuProperties.GroupName,
+                groupID,
+                groupName);
+            iResult = ExecuteNonQuery(command);
+            return iResult;
         }
 
         public int InsertNewTask(string taskGroupID, string taskGroup, string taskID, string taskName)
@@ -300,6 +322,12 @@ namespace emira.DataAccessLayer
                 taskName);
             iResult = ExecuteNonQuery(command);
             return iResult;
+        }
+
+        public bool ModifyGroup(Dictionary<string, string> data, string key, string value, int updatedRow)
+        {
+            bResult = Update(Texts.DataTableNames.TaskGroup, data, string.Format("{0}='{1}'", key, value), ref updatedRow);
+            return bResult;
         }
 
         public bool ModifyTask(Dictionary<string, string> data, string key, string value, int updatedRow)
@@ -324,10 +352,10 @@ namespace emira.DataAccessLayer
             return iResult;
         }
 
-        public bool DoesExist(string columName, string value)
+        public bool DoesExist(string tableName, string columName, string value)
         {
             string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE {1}='{2}'", 
-                Texts.DataTableNames.Task,
+                tableName,
                 columName,
                 value);
             if (ExecuteScalar(command) != 0) bResult = true;

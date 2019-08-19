@@ -7,12 +7,13 @@ using System.Windows.Forms;
 
 using emira.BusinessLogicLayer;
 using emira.HelperFunctions;
+using NLog;
 
 namespace emira.GUI
 {
     public partial class AddRemoveTaskPage : Form
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         int togMove;
         int mValX;
         int mValY;
@@ -223,15 +224,15 @@ namespace emira.GUI
                     // Get the selected date from the WorkingHours form
                     Form _workingHoursPage = Application.OpenForms["WorkingHoursPage"];
                     Control[] _cbYearWithMonth = _workingHoursPage.Controls.Find("cbYearWithMonth", true);
-                    string date = string.Empty;
+                    string _date = string.Empty;
 
                     foreach (var item in _cbYearWithMonth)
                     {
-                        date = item.Text;
+                        _date = item.Text;
                     }
 
                     // Remove the hours from the Catalog for the task
-                    addRemoveTask.DeleteHours(date, _nodeID.Trim());
+                    addRemoveTask.DeleteHours(_date, _nodeID.Trim());
                 }
                 Cursor.Show();
                 Close();

@@ -23,6 +23,8 @@ namespace emira.GUI
         List<DataGridViewCell> changedCells = new List<DataGridViewCell>();
         CustomMsgBox customMsgBox;
 
+        public static string cbYearWithMonthValue = string.Empty;
+
         public WorkingHoursPage()
         {
             InitializeComponent();
@@ -44,9 +46,9 @@ namespace emira.GUI
             WorkingHours _workingHours = new WorkingHours();
 
             // Fill the combox with months from DB
-            List<string> Dates = _workingHours.GetYearsAndMonths();
+            List<string> _dates = _workingHours.GetYearsAndMonths();
 
-            foreach (var item in Dates)
+            foreach (var item in _dates)
             {
                 cbYearWithMonth.Items.Add(item);
             }
@@ -754,8 +756,10 @@ namespace emira.GUI
 
         private void btnAddRemoveTask_Click(object sender, EventArgs e)
         {
-            AddRemoveTaskPage adtp = new AddRemoveTaskPage();
-            adtp.ShowDialog();
+            cbYearWithMonthValue = cbYearWithMonth.SelectedItem.ToString();
+
+            AddRemoveTaskPage _addRemoveTaskPage = new AddRemoveTaskPage();
+            _addRemoveTaskPage.ShowDialog();
             UpdateWorkingHoursTable();
         }
 
