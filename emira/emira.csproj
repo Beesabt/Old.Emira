@@ -255,6 +255,7 @@
     <Content Include="Resources\clock_icon_white_100.png" />
     <Content Include="Resources\close_icon_gray_26.png" />
     <Content Include="Resources\close_icon_white_26.png" />
+    <None Include="Resources\email_icon_white_32.png" />
     <Content Include="Resources\email_icon_white_50.png" />
     <Content Include="Resources\error_icon_color_48.png" />
     <Content Include="Resources\export_icon_white_26.png" />

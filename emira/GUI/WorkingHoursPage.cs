@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 using emira.BusinessLogicLayer;
 using emira.HelperFunctions;
+using Nager.Date;
 
 namespace emira.GUI
 {
@@ -229,7 +230,7 @@ namespace emira.GUI
                 // Set the colors in the table
                 UpdateColorsInWorkingHoursTable();
 
-                // Add holidays to the table
+                // Add holidays, public holidays and government holidays to the table
                 AddHolidays(_resultYear, _resultMonth);
 
                 // Add 'Summary' row in the end of the rows
@@ -301,6 +302,8 @@ namespace emira.GUI
                 // Get the holidays for the selected month
                 dataTable = workingHours.GetHolidaysForSelectedMonth(_date);
 
+
+                //// ADD NORMAL HOLIDAYS
                 if (dataTable.Rows.Count != 0)
                 {
                     // Get working hours of the user
@@ -363,7 +366,24 @@ namespace emira.GUI
                             dgvWorkingHours.Columns[i].DefaultCellStyle.BackColor = Color.Plum;
                         }
                     }
-                }    
+                }
+
+                //// ADD PUBLIC HOLIDAYS
+                var _publicHolidays = DateSystem.GetPublicHoliday(year, "HU");
+
+                foreach (var publicHoliday in _publicHolidays)
+                {
+                    if (publicHoliday.Date.Month == month)
+                    {
+                        dgvWorkingHours.Rows[_indexOfNormalHoliday].Cells[publicHoliday.Date.Day - 1].Value = _workingHours;
+                        dgvWorkingHours.Columns[publicHoliday.Date.Day - 1].ReadOnly = true;
+                        dgvWorkingHours.Columns[publicHoliday.Date.Day - 1].DefaultCellStyle.BackColor = Color.Plum;
+                    }                 
+                }
+
+                //// ADD GOVERNMENT HOLIDAYS
+
+
             }
             catch (Exception error)
             {
