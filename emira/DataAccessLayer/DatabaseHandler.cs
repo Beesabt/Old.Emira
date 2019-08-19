@@ -461,9 +461,37 @@ namespace emira.DataAccessLayer
             return dataTable;
         }
 
+        public DataTable GetHolidaysByMonth(string date)
+        {
+            string cmd = string.Format("SELECT {0}.{1}, {0}.{2} FROM {0} WHERE {0}.{3} = 1 AND {0}.{2} LIKE '{4}%' OR {0}.{1} LIKE '{4}%'",
+                Texts.DataTableNames.Holiday,
+                Texts.HolidayProperties.StartDate,
+                Texts.HolidayProperties.EndDate,
+                Texts.HolidayProperties.Status,
+                date);
+            dataTable = new DataTable();
+            dataTable = GetDataTable(cmd);
+            return dataTable;
+        }
+
+        public int GetWorkingHours()
+        {
+            int _workingHours = 0;
+
+            string _command = string.Format("SELECT {0} FROM {1}",
+                Texts.PersonProperties.WorkingHours,
+                Texts.DataTableNames.Person);
+
+            _workingHours = ExecuteScalar(_command);
+
+            return _workingHours;
+        }
+
         public DataTable GetSelectedTaskFromDB()
         {
-            string cmd = string.Format("SELECT * FROM {0} WHERE {1}='{2}'", Texts.DataTableNames.Task, Texts.TaskProperties.Selected, "True");
+            string cmd = string.Format("SELECT * FROM {0} WHERE {1} = 1",
+                Texts.DataTableNames.Task,
+                Texts.TaskProperties.Selected);
             dataTable = new DataTable();
             dataTable = GetDataTable(cmd);
             return dataTable;

@@ -226,6 +226,12 @@ namespace emira.GUI
                 dgvWorkingHours.RowHeadersWidth = _maxTaskLength + 125;
                 dgvWorkingHours.RowHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
+                // Set the colors in the table
+                UpdateColorsInWorkingHoursTable();
+
+                // Add holidays to the table
+                AddHolidays(_resultYear, _resultMonth);
+
                 // Add 'Summary' row in the end of the rows
                 DataGridViewRow sumRow = new DataGridViewRow();
                 sumRow.CreateCells(dgvWorkingHours);
@@ -262,9 +268,102 @@ namespace emira.GUI
 
                 // Update the hours for totals
                 UpdateTotalHours();
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+        }
 
-                // Set the colors in the table
-                UpdateColorsInWorkingHoursTable();
+        private void AddHolidays(int year, int month)
+        {
+            try
+            {
+                string _date = string.Empty;
+                int _daysInMonth = 0;
+                int _workingHours = 0;
+                int _indexOfNormalHoliday = 0;
+                DateTime _startDate = new DateTime();
+                DateTime _endDate = new DateTime();
+                dataTable = new DataTable();
+                workingHours = new WorkingHours();
+
+                // Get the first and last day of the selected month
+                DateTime _fistDay = new DateTime(year, month, 1);
+                _daysInMonth = DateTime.DaysInMonth(year, month);
+                DateTime _lastDay = new DateTime(year, month, _daysInMonth);
+
+                // Get the selected date
+                _date = cbYearWithMonth.SelectedItem.ToString();
+
+                // Get the holidays for the selected month
+                dataTable = workingHours.GetHolidaysForSelectedMonth(_date);
+
+                if (dataTable.Rows.Count != 0)
+                {
+                    // Get working hours of the user
+                    _workingHours = workingHours.GetWorkingHoursOfTheUser();
+
+                    // User has holiday for the selected month so it adds the '0_0 task' into the table
+                    DataGridViewRow _normalHolidayRow = new DataGridViewRow();
+                    _normalHolidayRow.CreateCells(dgvWorkingHours);
+                    _normalHolidayRow.HeaderCell.Value = "0_0 Normál szabadság";
+                    dgvWorkingHours.Rows.Add(_normalHolidayRow);
+
+                    // Get the last row of the table 
+                    _indexOfNormalHoliday = dgvWorkingHours.Rows.IndexOf(_normalHolidayRow);
+
+                    foreach (DataRow item in dataTable.Rows)
+                    {
+                        DateTime.TryParse(item[Texts.HolidayProperties.StartDate].ToString(), out _startDate);
+                        DateTime.TryParse(item[Texts.HolidayProperties.EndDate].ToString(), out _endDate);
+
+                        // 1. If the Start Date is smaller than the first date of the selected month then
+                        // every day is normal holiday until the End Date
+                        if (_startDate < _fistDay)
+                        {
+                            for (int i = 0; i < _endDate.Day; i++)
+                            {
+                                dgvWorkingHours.Rows[_indexOfNormalHoliday].Cells[i].Value = _workingHours;
+                                dgvWorkingHours.Columns[i].ReadOnly = true;
+                                dgvWorkingHours.Columns[i].DefaultCellStyle.BackColor = Color.Plum;
+                            }
+                            continue;
+                        }
+
+                        // 2. If the End Date is bigger than the last day of the selected month then
+                        // every day is normal holiday until the end of the month
+                        if (_endDate > _lastDay)
+                        {
+                            for (int i = _startDate.Day-1; i < _daysInMonth; i++)
+                            {
+                                dgvWorkingHours.Rows[_indexOfNormalHoliday].Cells[i].Value = _workingHours;
+                                dgvWorkingHours.Columns[i].ReadOnly = true;
+                                dgvWorkingHours.Columns[i].DefaultCellStyle.BackColor = Color.Plum;
+                            }
+                            continue;
+                        }
+
+                        // 3. If the Star Date is equal with the End Date then the actual day is the normal holiday
+                        if (_startDate == _endDate)
+                        {
+                            dgvWorkingHours.Rows[_indexOfNormalHoliday].Cells[_startDate.Day-1].Value = _workingHours;
+                            dgvWorkingHours.Columns[_startDate.Day-1].ReadOnly = true;
+                            dgvWorkingHours.Columns[_startDate.Day-1].DefaultCellStyle.BackColor = Color.Plum;
+                            continue;
+                        }
+
+                        // 4. Every day is normal holiday from Start Date to End Date
+                        for (int i = _startDate.Day-1; i < _endDate.Day; i++)
+                        {
+                            dgvWorkingHours.Rows[_indexOfNormalHoliday].Cells[i].Value = _workingHours;
+                            dgvWorkingHours.Columns[i].ReadOnly = true;
+                            dgvWorkingHours.Columns[i].DefaultCellStyle.BackColor = Color.Plum;
+                        }
+                    }
+                }    
             }
             catch (Exception error)
             {

@@ -35,13 +35,13 @@ namespace emira.GUI
                 string _actualTaskGroup = string.Empty;
                 string _actualTaskID = string.Empty;
                 string _actualTaskName = string.Empty;
-                bool _actualTaskSelected = false;
                 string _actualTaskIDFirstNumber = string.Empty;
                 string _actualTaskIDLastNumber = string.Empty;
+                string _previousGroupID = string.Empty;
+                string _previousTaskID = string.Empty;
+                bool _actualTaskSelected = false;
                 int _actualTaskIDInteger = 0;
                 int _index = 0;
-                string _previousGroupID = "0";
-                string _previousTaskID = "0";
 
                 addRemoveTask = new AddRemoveTask();
                 dataTable = new DataTable();
@@ -78,7 +78,7 @@ namespace emira.GUI
 
                     if (_previousTaskID == _actualTaskIDFirstNumber)
                     {
-                        TreeNode _taskNode = tvAddOrRemoveTask.Nodes[_actualTaskIDInteger - 1].Nodes.Add(_actualTaskID + " " + _actualTaskName);
+                        TreeNode _taskNode = tvAddOrRemoveTask.Nodes[_actualTaskIDInteger].Nodes.Add(_actualTaskID + " " + _actualTaskName);
                         if (_actualTaskSelected)
                         {
                             _taskNode.Checked = true;
@@ -89,7 +89,7 @@ namespace emira.GUI
                     }
                     else
                     {
-                        TreeNode _taskNode = tvAddOrRemoveTask.Nodes[_actualTaskIDInteger - 1].Nodes.Add(_actualTaskID + " " + _actualTaskName);
+                        TreeNode _taskNode = tvAddOrRemoveTask.Nodes[_actualTaskIDInteger].Nodes.Add(_actualTaskID + " " + _actualTaskName);
                         if (_actualTaskSelected)
                         {
                             _taskNode.Checked = true;

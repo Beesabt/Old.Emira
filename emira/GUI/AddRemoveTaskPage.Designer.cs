@@ -42,6 +42,7 @@
             // 
             this.tvAddOrRemoveTask.CheckBoxes = true;
             this.tvAddOrRemoveTask.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.tvAddOrRemoveTask.ItemHeight = 24;
             this.tvAddOrRemoveTask.Location = new System.Drawing.Point(10, 48);
             this.tvAddOrRemoveTask.Name = "tvAddOrRemoveTask";
             this.tvAddOrRemoveTask.Size = new System.Drawing.Size(610, 480);

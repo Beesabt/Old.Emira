@@ -254,6 +254,49 @@ namespace emira.BusinessLogicLayer
             }
         }
 
+        /// <summary>
+        /// Get the holiday(s) of the user for the selected month
+        /// </summary>
+        /// <param name="date">Selected month ('year-month')</param>
+        /// <returns>Holiday(s) for the selected month</returns>
+        public DataTable GetHolidaysForSelectedMonth(string date)
+        {
+            dataTable = new DataTable();
+            try
+            {
+                DBHandler = new DatabaseHandler();
+                dataTable = DBHandler.GetHolidaysByMonth(date);
+                return dataTable;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return dataTable;
+            }
+        }
 
+        /// <summary>
+        /// Get the working hours of the user
+        /// </summary>
+        /// <returns>Working hours</returns>
+        public int GetWorkingHoursOfTheUser()
+        {
+            int _workingHours = 8;
+            try
+            {
+                DBHandler = new DatabaseHandler();
+                _workingHours = DBHandler.GetWorkingHours();
+                return _workingHours;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _workingHours;
+            }
+        }
     }
 }
