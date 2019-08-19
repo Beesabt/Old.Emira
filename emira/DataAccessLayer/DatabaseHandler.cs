@@ -207,7 +207,7 @@ namespace emira.DataAccessLayer
         public int GetUserID(string email, string password)
         {
             string command = string.Format("SELECT {0} FROM {1} WHERE {2}='{3}' AND {4}='{5}'",
-                 Texts.PersonProperties.ID,
+                 Texts.PersonProperties.RowID,
                  Texts.DataTableNames.Person,
                  Texts.PersonProperties.Email,
                  email,
@@ -254,15 +254,13 @@ namespace emira.DataAccessLayer
 
         public DataTable GetSomePersonalInforamtionFromDB()
         {
-            string command = string.Format("SELECT {0},{1},{2},{3},{4} FROM {5} WHERE {6}='{7}'",
+            string command = string.Format("SELECT {0},{1},{2},{3},{4} FROM {5}",
                 Texts.PersonProperties.Name,
                 Texts.PersonProperties.RegisterNumber,
                 Texts.PersonProperties.Company,
                 Texts.PersonProperties.CostCenter,
                 Texts.PersonProperties.Position,
-                Texts.DataTableNames.Person,
-                Texts.PersonProperties.ID,
-                GeneralInfo.UserID);
+                Texts.DataTableNames.Person);
             dataTable = new DataTable();
             dataTable = GetDataTable(command);
             return dataTable;
@@ -270,10 +268,7 @@ namespace emira.DataAccessLayer
 
         public DataTable GetPersonalInformationDB()
         {
-            string command = string.Format("SELECT * FROM {0} WHERE {1}='{2}'",
-                Texts.DataTableNames.Person,
-                Texts.PersonProperties.ID,
-                GeneralInfo.UserID);
+            string command = string.Format("SELECT * FROM {0}", Texts.DataTableNames.Person);
             dataTable = new DataTable();
             dataTable = GetDataTable(command);
             return dataTable;
@@ -357,7 +352,7 @@ namespace emira.DataAccessLayer
 
         public DataTable GetPersonalInformationDBForHoliday()
         {
-            string command = string.Format("SELECT {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7} FROM {8} WHERE {9}='{10}'",
+            string command = string.Format("SELECT {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7} FROM {8}",
                 Texts.PersonProperties.DateOfBirth,
                 Texts.PersonProperties.DateOfStart,
                 Texts.PersonProperties.NumberOfChildren,
@@ -366,9 +361,7 @@ namespace emira.DataAccessLayer
                 Texts.PersonProperties.HealthDamage,
                 Texts.PersonProperties.HolidaysLeftFromPreviousYear,
                 Texts.PersonProperties.ExtraHoliday,
-                Texts.DataTableNames.Person,
-                Texts.PersonProperties.ID,
-                GeneralInfo.UserID);
+                Texts.DataTableNames.Person);
             dataTable = new DataTable();
             dataTable = GetDataTable(command);
             return dataTable;
@@ -376,11 +369,9 @@ namespace emira.DataAccessLayer
 
         public string GetTheSmallestYear()
         {
-            string command = string.Format("SELECT MIN({0}) FROM {1} WHERE {2}='{3}'",
+            string command = string.Format("SELECT MIN({0}) FROM {1}",
                 Texts.HolidayProperties.StartDate,
-                Texts.DataTableNames.Holiday,
-                Texts.HolidayProperties.PersonID,
-                GeneralInfo.UserID);
+                Texts.DataTableNames.Holiday);
             sResult = GetString(command);
             return sResult;
         }
@@ -389,26 +380,22 @@ namespace emira.DataAccessLayer
         {
             if (selectedStatus)
             {
-                command = string.Format("SELECT {0}, {1}, {2}, {3} FROM {4} WHERE {5}='{6}' AND {3} = 1 AND {1} LIKE '{7}%' ORDER BY {1}",
+                command = string.Format("SELECT {0}, {1}, {2}, {3} FROM {4} WHERE {3} = 1 AND {1} LIKE '{5}%' ORDER BY {1}",
                     Texts.HolidayProperties.RowID,
                     Texts.HolidayProperties.StartDate,
                     Texts.HolidayProperties.EndDate,
                     Texts.HolidayProperties.Status,
                     Texts.DataTableNames.Holiday,
-                    Texts.HolidayProperties.PersonID,
-                    GeneralInfo.UserID,
                     selectedYear);
             }
             else
             {
-                command = string.Format("SELECT {0}, {1}, {2}, {3} FROM {4} WHERE {5}='{6}' AND {1} LIKE '{7}%' ORDER BY {1}",
+                command = string.Format("SELECT {0}, {1}, {2}, {3} FROM {4} WHERE {1} LIKE '{5}%' ORDER BY {1}",
                     Texts.HolidayProperties.RowID,
                     Texts.HolidayProperties.StartDate,
                     Texts.HolidayProperties.EndDate,
                     Texts.HolidayProperties.Status,
                     Texts.DataTableNames.Holiday,
-                    Texts.HolidayProperties.PersonID,
-                    GeneralInfo.UserID,
                     selectedYear);
             }
             dataTable = new DataTable();
@@ -418,13 +405,11 @@ namespace emira.DataAccessLayer
 
         public DataTable GetUsedHolidays(int actualYear)
         {
-            string command = string.Format("SELECT {0}, {1} FROM {2} WHERE {3} = 1 AND {4} = '{5}' AND {6} LIKE '{7}%'",
+            string command = string.Format("SELECT {0}, {1} FROM {2} WHERE {3} = 1 AND {4} LIKE '{5}%'",
                 Texts.HolidayProperties.StartDate,
                 Texts.HolidayProperties.EndDate,
                 Texts.DataTableNames.Holiday,
                 Texts.HolidayProperties.Status,
-                Texts.HolidayProperties.PersonID,
-                GeneralInfo.UserID,
                 Texts.HolidayProperties.StartDate,
                 actualYear);
             dataTable = new DataTable();
@@ -434,30 +419,26 @@ namespace emira.DataAccessLayer
 
         public DataTable GetConflictedDateIDs(string startDate, string endDate)
         {
-            string command = string.Format("SELECT {0} FROM {1} WHERE {2} = 1 AND {3} BETWEEN '{4}' AND '{5}' AND {6} BETWEEN '{4}' AND '{5}' AND {7}='{8}'",
+            string command = string.Format("SELECT {0} FROM {1} WHERE {2} = 1 AND {3} BETWEEN '{4}' AND '{5}' AND {6} BETWEEN '{4}' AND '{5}'",
                 Texts.HolidayProperties.RowID,
                 Texts.DataTableNames.Holiday,
                 Texts.HolidayProperties.Status,
                 Texts.HolidayProperties.StartDate,
                 startDate,
                 endDate,
-                Texts.HolidayProperties.EndDate,
-                Texts.HolidayProperties.PersonID,
-                GeneralInfo.UserID);
+                Texts.HolidayProperties.EndDate);
             dataTable = new DataTable();
             dataTable = GetDataTable(command);
             return dataTable;
         }
 
-        public int AddNewHolidayToDB(int personID, string startDate, string endDate)
+        public int AddNewHolidayToDB(string startDate, string endDate)
         {
-            string command = string.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}) VALUES ({5}, '{6}', '{7}', 1)",
+            string command = string.Format("INSERT INTO {0} ({1}, {2}, {3}) VALUES ('{4}', '{5}', 1)",
                 Texts.DataTableNames.Holiday,
-                Texts.HolidayProperties.PersonID,
                 Texts.HolidayProperties.StartDate,
                 Texts.HolidayProperties.EndDate,
                 Texts.HolidayProperties.Status,
-                personID,
                 startDate,
                 endDate);
             iResult = ExecuteNonQuery(command);
@@ -570,13 +551,11 @@ namespace emira.DataAccessLayer
 
         public int SaveHourToCatalog(string taskID, string date, double numberOfHours)
         {
-            command = string.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}) VALUES({5}, '{6}', '{7}', '{8}')",
+            command = string.Format("INSERT INTO {0} ({1}, {2}, {3}) VALUES('{4}', '{5}', '{6}')",
                 Texts.DataTableNames.Catalog,
-                Texts.CatalogProperties.PersonID,
                 Texts.CatalogProperties.TaskID,
                 Texts.CatalogProperties.Date,
                 Texts.CatalogProperties.NumberOfHours,
-                GeneralInfo.UserID,
                 taskID,
                 date,
                 numberOfHours);

@@ -490,7 +490,7 @@ namespace emira.BusinessLogicLayer
                 int _result = 0;
                 DBHandler = new DatabaseHandler();
                 dataTable = new DataTable();
-                _result = DBHandler.AddNewHolidayToDB(GeneralInfo.UserID, startDate, endDate);
+                _result = DBHandler.AddNewHolidayToDB(startDate, endDate);
                 if (_result > 0)
                     _isSuccess = true;
                 return _isSuccess;

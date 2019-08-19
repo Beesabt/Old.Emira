@@ -374,17 +374,17 @@ namespace emira.BusinessLogicLayer
         /// <summary>
         /// Set the new values for the user
         /// </summary>
-        /// <param name="ID">User ID from DB</param>
-        /// <param name="UserID">User ID from the program</param>
+        /// <param name="email">User ID from DB</param>
+        /// <param name="userEmail">User ID from the program</param>
         /// <param name="data">Informations</param>
         /// <returns></returns>
-        public bool SetNewValues(string ID, string UserID, Dictionary<string, string> data)
+        public bool SetNewValues(string email, string userEmail, Dictionary<string, string> data)
         {
             int _updatedRow = 0;
             try
             {
                 DBHandler = new DatabaseHandler();
-                bIsSuccess = DBHandler.SetNewValueDB(data, ID, UserID, _updatedRow);
+                bIsSuccess = DBHandler.SetNewValueDB(data, email, userEmail, _updatedRow);
                 return bIsSuccess;
             }
             catch (Exception error)

@@ -632,7 +632,7 @@ namespace emira.GUI
                 _data.Add(Texts.PersonProperties.ExtraHoliday, nupExtraHoliday.Value.ToString());
 
                 // Set new values
-                _isSuccess = settings.SetNewValues(Texts.PersonProperties.ID, GeneralInfo.UserID.ToString(), _data);
+                _isSuccess = settings.SetNewValues(Texts.PersonProperties.Email, GeneralInfo.Email, _data);
 
                 if (_isSuccess)
                 {

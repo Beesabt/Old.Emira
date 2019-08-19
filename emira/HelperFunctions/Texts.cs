@@ -18,7 +18,7 @@ namespace emira.HelperFunctions
 
         public static class PersonProperties
         {
-            public const string ID = "ID";
+            public const string RowID = "rowid";
 
             public const string Password = "Password";
 
@@ -74,8 +74,6 @@ namespace emira.HelperFunctions
 
             public static string ID = "ID";
 
-            public static string PersonID = "PersonID";
-
             public static string StartDate = "StartDate";
 
             public static string StartDateHeaderText = "Start date";
@@ -89,8 +87,6 @@ namespace emira.HelperFunctions
 
         public static class CatalogProperties
         {
-            public static string PersonID = "PersonID";
-
             public static string TaskID = "TaskID";
 
             public static string Date = "Date";
