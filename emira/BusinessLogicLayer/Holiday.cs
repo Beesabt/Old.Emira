@@ -533,9 +533,7 @@ namespace emira.BusinessLogicLayer
                 // Remove the holiday from Actual
                 Dictionary<string, string> data = new Dictionary<string, string>();
                 data.Add(Texts.HolidayProperties.Status, "False");
-                updatedRow =DBHandler.UpdateHoliday(data, Texts.HolidayProperties.RowID, _ID, updatedRow);
-                if (updatedRow > 0)
-                    _isSuccess = true;
+                _isSuccess = DBHandler.UpdateHoliday(data, Texts.HolidayProperties.RowID, _ID, updatedRow);
                 return _isSuccess;
             }
             catch (Exception error)

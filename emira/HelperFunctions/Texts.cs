@@ -12,6 +12,8 @@ namespace emira.HelperFunctions
             public const string Holiday = "Holiday";
 
             public const string Catalog = "Catalog";
+
+            public const string GovernmentHolidays = "GovernmentHolidays";
         }
 
         public static class PersonProperties
@@ -94,6 +96,11 @@ namespace emira.HelperFunctions
             public static string Date = "Date";
 
             public static string NumberOfHours = "NumberOfHours";
+        }
+
+        public static class GovernmentHolidaysProperties
+        {
+            public static string Date = "Date";
         }
 
         public static class ErrorMessages

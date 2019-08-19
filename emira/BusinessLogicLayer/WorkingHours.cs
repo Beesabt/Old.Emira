@@ -20,6 +20,54 @@ namespace emira.BusinessLogicLayer
         DateTime today = DateTime.UtcNow;
         CustomMsgBox customMsgBox;
 
+        /// <summary>
+        /// Get the yers and months (back - 6 months, forward - 5 months)
+        /// </summary>
+        /// <returns>List of the years and months</returns>
+        public List<string> GetYearsAndMonths()
+        {
+            List<string> _dates = new List<string>();
+            try
+            {
+                DateTime _start = today.AddMonths(-7);
+                StringBuilder _sb = new StringBuilder();
+
+                string _actualMonth = string.Empty;
+                string _actualYear = string.Empty;
+
+                for (int i = 0; i < 12; i++)
+                {
+                    _start = _start.AddMonths(1);
+                    _actualYear = _start.Year.ToString();
+
+                    // Add '0' for the months of 1 - 9
+                    if (_start.Month < 10)
+                    {
+                        _actualMonth = "0" + _start.Month.ToString();
+                    }
+                    else
+                    {
+                        _actualMonth = _start.Month.ToString();
+                    }
+
+                    // Add to list the 'year-month'
+                    _sb.Append(_actualYear + "-" + _actualMonth);
+                    _dates.Add(_sb.ToString());
+
+                    // Clean up the string builder for the new 'year-month'
+                    _sb = _sb.Clear();
+                }
+
+                return _dates;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _dates;
+            }
+        }
 
         /// <summary>
         /// Get the task according to the selected month
@@ -69,22 +117,34 @@ namespace emira.BusinessLogicLayer
         /// <summary>
         /// Get the saved hours for days from the DB
         /// </summary>
-        /// <param name="taskID">task ID</param>
+        /// <param name="task">task</param>
         /// <param name="date">selected date</param>
         /// <returns>Hour for the task in the selected date</returns>
-        public string GetHours(string taskID, string date)
+        public string GetHours(string task, string date)
         {
-            string result = string.Empty;
-            DBHandler = new DatabaseHandler();
-            int _index = 0;
-            string _taskID = string.Empty;
-            string _date = string.Empty;
+            string _result = string.Empty;
+            try
+            {
+                DBHandler = new DatabaseHandler();
+                int _index = 0;
+                string _taskID = string.Empty;
+                string _date = string.Empty;
 
-            _index = taskID.IndexOf(' ');
-            _taskID = taskID.Remove(_index);
+                // Get the task ID from the task
+                _index = task.IndexOf(' ');
+                _taskID = task.Remove(_index);
 
-            result = DBHandler.GetHoursFromCatalog(_taskID, date);
-            return result;
+                _result = DBHandler.GetHoursFromCatalog(_taskID, date);
+
+                return _result;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _result;   
+            }          
         }
 
         public bool SaveHour(string task, string date, double numberOfHours)
@@ -101,7 +161,7 @@ namespace emira.BusinessLogicLayer
 
             _index = task.IndexOf(' ');
             _taskID = task.Remove(_index);
-            
+
             // If it is update
             _rowid = DBHandler.IsRecordExist(_taskID, date);
 
@@ -136,60 +196,11 @@ namespace emira.BusinessLogicLayer
             _taskID = task.Remove(_index);
 
             // Remove the record from the DB
-           _result = DBHandler.DeleteHourFromCatalog(_taskID, date);
+            _result = DBHandler.DeleteHourFromCatalog(_taskID, date);
 
             if (_result > 0) { _isSuccess = true; }
 
             return _isSuccess;
-        }
-
-        /// <summary>
-        /// Get the yers and months (back - 6 months, forward - 5 months)
-        /// </summary>
-        /// <returns>List of the years and months</returns>
-        public List<string> GetYearsAndMonths()
-        {
-            List<string> _dates = new List<string>();
-            try
-            {
-                DateTime _start = today.AddMonths(-7);
-                StringBuilder _sb = new StringBuilder();
-
-                string _actualMonth = string.Empty;
-                string _actualYear = string.Empty;
-
-                for (int i = 0; i < 12; i++)
-                {
-                    _start = _start.AddMonths(1);
-                    _actualYear = _start.Year.ToString();
-
-                    // Add '0' for the months of 1 - 9
-                    if (_start.Month < 10)
-                    {
-                        _actualMonth = "0" + _start.Month.ToString();
-                    }
-                    else
-                    {
-                        _actualMonth = _start.Month.ToString();
-                    }
-
-                    // Add to list the 'year-month'
-                    _sb.Append(_actualYear+ "-" + _actualMonth);
-                    _dates.Add(_sb.ToString());
-
-                    // Clean up the string builder for the new 'year-month'
-                    _sb = _sb.Clear();
-                }
-
-                return _dates;
-            }
-            catch(Exception error)
-            {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-                return _dates;
-            }          
         }
 
         /// <summary>
@@ -203,7 +214,7 @@ namespace emira.BusinessLogicLayer
             {
                 string _actualMonth = string.Empty;
                 string _actualYear = string.Empty;
-                
+
                 // Get the actual year
                 _actualYear = today.Year.ToString();
 
@@ -221,13 +232,13 @@ namespace emira.BusinessLogicLayer
 
                 return _sb.ToString();
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 Logger.Error(error);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                 return _sb.ToString();
-            }         
+            }
         }
 
         /// <summary>
@@ -296,6 +307,28 @@ namespace emira.BusinessLogicLayer
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                 return _workingHours;
+            }
+        }
+
+        /// <summary>
+        /// Get the government holidays which are set by the user
+        /// </summary>
+        /// <returns>Government holiday(s)</returns>
+        public DataTable GetGovernmentHolidays()
+        {
+            dataTable = new DataTable();
+            try
+            {
+                DBHandler = new DatabaseHandler();
+                dataTable = DBHandler.GetGovernmentHolidaysFromDB();
+                return dataTable;
+            }
+            catch(Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return dataTable;
             }
         }
     }

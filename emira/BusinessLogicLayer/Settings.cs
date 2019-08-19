@@ -359,9 +359,7 @@ namespace emira.BusinessLogicLayer
                 DBHandler = new DatabaseHandler();
                 Dictionary<string, string> _data = new Dictionary<string, string>();
                 _data.Add(ID, NewValue);
-                _updatedRow = DBHandler.SetNewValueDB(_data, ID, UserID, _updatedRow);
-                if (_updatedRow > 0)
-                    bIsSuccess = true;
+                bIsSuccess = DBHandler.SetNewValueDB(_data, ID, UserID, _updatedRow);
                 return bIsSuccess;
             }
             catch (Exception error)
@@ -386,9 +384,7 @@ namespace emira.BusinessLogicLayer
             try
             {
                 DBHandler = new DatabaseHandler();
-                _updatedRow = DBHandler.SetNewValueDB(data, ID, UserID, _updatedRow);
-                if (_updatedRow > 0)
-                    bIsSuccess = true;
+                bIsSuccess = DBHandler.SetNewValueDB(data, ID, UserID, _updatedRow);
                 return bIsSuccess;
             }
             catch (Exception error)

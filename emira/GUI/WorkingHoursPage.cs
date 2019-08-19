@@ -17,7 +17,7 @@ namespace emira.GUI
         int togMove;
         int mValX;
         int mValY;
-        string day = string.Empty;
+
         WorkingHours workingHours;
         DataTable dataTable;
         List<DataGridViewCell> changedCells = new List<DataGridViewCell>();
@@ -85,9 +85,8 @@ namespace emira.GUI
                 int _taskLength = 0;
                 int _columns = 0;
                 int _rows = 0;
-                int _resultMonth = 0;
-                int _resultYear = 0;
-                int _monthLength = 0;
+
+
                 string _actualTaskID = string.Empty;
                 string _acutalTaskName = string.Empty;
                 string _actualCellColumnHeaderValue = string.Empty;
@@ -103,47 +102,52 @@ namespace emira.GUI
                 string _selectedYear = cbYearWithMonth.SelectedItem.ToString().Remove(4);
                 string _selectedMonth = cbYearWithMonth.SelectedItem.ToString().Substring(5);
 
-                Int32.TryParse(_selectedYear, out _resultYear);
+                // Get the year and month as int
+                int _year = 0;
+                int _month = 0;
+                Int32.TryParse(_selectedYear, out _year);
 
-                if (Int32.TryParse(_selectedMonth, out _resultMonth))
+                if (Int32.TryParse(_selectedMonth, out _month))
                 {
                     CultureInfo ci = new CultureInfo("hu-HU");
-                    lMonth.Text = ci.DateTimeFormat.GetMonthName(_resultMonth);
+                    lMonth.Text = ci.DateTimeFormat.GetMonthName(_month);
                 }
 
-                // Lenght of the actual month + 1
-                _monthLength = workingHours.GetDaysOfMonth(_resultYear, _resultMonth) + 1;
+                // Lenght of the actual month
+                int _monthLength = 0;
+                _monthLength = workingHours.GetDaysOfMonth(_year, _month);
 
                 // Add the days of the actual month to the table
-                for (int i = 1; i < _monthLength; i++)
+                string _day = string.Empty;
+                for (int i = 1; i <= _monthLength; i++)
                 {
                     if (i < 10)
                     {
-                        day = "0" + i.ToString();
+                        _day = "0" + i.ToString();
                     }
                     else
                     {
-                        day = i.ToString();
+                        _day = i.ToString();
                     }
 
-                    DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn()
+                    DataGridViewTextBoxColumn _column = new DataGridViewTextBoxColumn()
                     {
-                        Name = day,
-                        HeaderText = day
+                        Name = _day,
+                        HeaderText = _day
                     };
-                    dgvWorkingHours.Columns.Add(col);
+                    dgvWorkingHours.Columns.Add(_column);
                 }
 
                 // Add 'Summary' column in the end of the columns
-                DataGridViewTextBoxColumn sumCol = new DataGridViewTextBoxColumn()
+                DataGridViewTextBoxColumn _totalColumn = new DataGridViewTextBoxColumn()
                 {
                     Name = "TotalHoursHeader",
                     HeaderText = "Total"
                 };
-                dgvWorkingHours.Columns.Add(sumCol);
+                dgvWorkingHours.Columns.Add(_totalColumn);
 
                 // Get selected tasks and fill the header row with it/them
-                if (_today.Month != _resultMonth)
+                if (_today.Month != _month)
                 {
 
                     dataTable = workingHours.GetTasksByMonth(cbYearWithMonth.SelectedItem.ToString());
@@ -153,17 +157,10 @@ namespace emira.GUI
                         _actualTaskID = item[Texts.TaskProperties.TaskID].ToString();
                         _acutalTaskName = item[Texts.TaskProperties.TaskName].ToString();
 
-                        _taskLength = _actualTaskID.Length + _acutalTaskName.Length;
-
-                        if (_maxTaskLength < _taskLength)
-                        {
-                            _maxTaskLength = _taskLength;
-                        }
-
-                        DataGridViewRow row = new DataGridViewRow();
-                        row.CreateCells(dgvWorkingHours);
-                        row.HeaderCell.Value = _actualTaskID + " " + _acutalTaskName;
-                        dgvWorkingHours.Rows.Add(row);
+                        DataGridViewRow _row = new DataGridViewRow();
+                        _row.CreateCells(dgvWorkingHours);
+                        _row.HeaderCell.Value = _actualTaskID + " " + _acutalTaskName;
+                        dgvWorkingHours.Rows.Add(_row);
                     }
 
                     if (btnLock.Text == "Unlock")
@@ -195,10 +192,10 @@ namespace emira.GUI
                             _maxTaskLength = _taskLength;
                         }
 
-                        DataGridViewRow row = new DataGridViewRow();
-                        row.CreateCells(dgvWorkingHours);
-                        row.HeaderCell.Value = _actualTaskID + " " + _acutalTaskName;
-                        dgvWorkingHours.Rows.Add(row);
+                        DataGridViewRow _row = new DataGridViewRow();
+                        _row.CreateCells(dgvWorkingHours);
+                        _row.HeaderCell.Value = _actualTaskID + " " + _acutalTaskName;
+                        dgvWorkingHours.Rows.Add(_row);
                     }
 
                     // Sorting is disabled and columns are editable if it is not locked
@@ -217,27 +214,23 @@ namespace emira.GUI
                         }
                         column.SortMode = DataGridViewColumnSortMode.NotSortable;
                     }
-
-                    //// Highlight the today in the table with color
-                    //int _todayColumn = _today.Day;
-                    //dgvWorkingHours.Columns[_todayColumn - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                 }
 
-                // Set the 'Task' column's width
-                dgvWorkingHours.RowHeadersWidth = _maxTaskLength + 125;
+                // Set the 'Task' column's width and alignment
+                dgvWorkingHours.RowHeadersWidth = 150;
                 dgvWorkingHours.RowHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
                 // Set the colors in the table
                 UpdateColorsInWorkingHoursTable();
 
                 // Add holidays, public holidays and government holidays to the table
-                AddHolidays(_resultYear, _resultMonth);
+                AddHolidays(_year, _month);
 
                 // Add 'Summary' row in the end of the rows
-                DataGridViewRow sumRow = new DataGridViewRow();
-                sumRow.CreateCells(dgvWorkingHours);
-                sumRow.HeaderCell.Value = "Total hours:";
-                dgvWorkingHours.Rows.Add(sumRow);
+                DataGridViewRow _totalHoursRow = new DataGridViewRow();
+                _totalHoursRow.CreateCells(dgvWorkingHours);
+                _totalHoursRow.HeaderCell.Value = "Total hours:";
+                dgvWorkingHours.Rows.Add(_totalHoursRow);
 
                 // Add hours from Catalog
                 _columns = dgvWorkingHours.ColumnCount - 1;
@@ -247,8 +240,8 @@ namespace emira.GUI
                 {
                     for (int j = 0; j < _columns; j++)
                     {
-                        DataGridViewCell cell = dgvWorkingHours.Rows[i].Cells[j];
-                        DataGridViewRow row = dgvWorkingHours.Rows[i];
+                        DataGridViewCell _cell = dgvWorkingHours.Rows[i].Cells[j];
+                        DataGridViewRow _row = dgvWorkingHours.Rows[i];
 
                         _actualCellColumnHeaderValue = dgvWorkingHours.Columns[j].HeaderText;
 
@@ -256,13 +249,13 @@ namespace emira.GUI
 
                         _date = _date + "-" + _actualCellColumnHeaderValue;
 
-                        _actualCellRowHeaderValue = row.HeaderCell.FormattedValue.ToString();
+                        _actualCellRowHeaderValue = _row.HeaderCell.FormattedValue.ToString();
 
                         _actualCellValue = workingHours.GetHours(_actualCellRowHeaderValue, _date);
 
                         if (!string.IsNullOrEmpty(_actualCellValue))
                         {
-                            cell.Value = _actualCellValue;
+                            _cell.Value = _actualCellValue;
                         }
                     }
                 }
@@ -340,7 +333,7 @@ namespace emira.GUI
                         // every day is normal holiday until the end of the month
                         if (_endDate > _lastDay)
                         {
-                            for (int i = _startDate.Day-1; i < _daysInMonth; i++)
+                            for (int i = _startDate.Day - 1; i < _daysInMonth; i++)
                             {
                                 dgvWorkingHours.Rows[_indexOfNormalHoliday].Cells[i].Value = _workingHours;
                                 dgvWorkingHours.Columns[i].ReadOnly = true;
@@ -352,14 +345,14 @@ namespace emira.GUI
                         // 3. If the Star Date is equal with the End Date then the actual day is the normal holiday
                         if (_startDate == _endDate)
                         {
-                            dgvWorkingHours.Rows[_indexOfNormalHoliday].Cells[_startDate.Day-1].Value = _workingHours;
-                            dgvWorkingHours.Columns[_startDate.Day-1].ReadOnly = true;
-                            dgvWorkingHours.Columns[_startDate.Day-1].DefaultCellStyle.BackColor = Color.Plum;
+                            dgvWorkingHours.Rows[_indexOfNormalHoliday].Cells[_startDate.Day - 1].Value = _workingHours;
+                            dgvWorkingHours.Columns[_startDate.Day - 1].ReadOnly = true;
+                            dgvWorkingHours.Columns[_startDate.Day - 1].DefaultCellStyle.BackColor = Color.Plum;
                             continue;
                         }
 
                         // 4. Every day is normal holiday from Start Date to End Date
-                        for (int i = _startDate.Day-1; i < _endDate.Day; i++)
+                        for (int i = _startDate.Day - 1; i < _endDate.Day; i++)
                         {
                             dgvWorkingHours.Rows[_indexOfNormalHoliday].Cells[i].Value = _workingHours;
                             dgvWorkingHours.Columns[i].ReadOnly = true;
@@ -378,11 +371,23 @@ namespace emira.GUI
                         dgvWorkingHours.Rows[_indexOfNormalHoliday].Cells[publicHoliday.Date.Day - 1].Value = _workingHours;
                         dgvWorkingHours.Columns[publicHoliday.Date.Day - 1].ReadOnly = true;
                         dgvWorkingHours.Columns[publicHoliday.Date.Day - 1].DefaultCellStyle.BackColor = Color.Plum;
-                    }                 
+                    }
                 }
 
                 //// ADD GOVERNMENT HOLIDAYS
+                var _governmentHolidays = workingHours.GetGovernmentHolidays();
+                DateTime _governmentHoliday = new DateTime();
 
+                foreach (DataRow item in _governmentHolidays.Rows)
+                {
+                    DateTime.TryParse(item[Texts.GovernmentHolidaysProperties.Date].ToString(), out _governmentHoliday);
+
+                    if (_governmentHoliday.Month == month)
+                    {
+                        dgvWorkingHours.Columns[_governmentHoliday.Day - 1].ReadOnly = true;
+                        dgvWorkingHours.Columns[_governmentHoliday.Day - 1].DefaultCellStyle.BackColor = Color.Plum;
+                    }
+                }
 
             }
             catch (Exception error)
