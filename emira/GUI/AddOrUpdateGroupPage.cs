@@ -17,6 +17,7 @@ namespace emira.GUI
         string groupID = string.Empty;
         string groupName = string.Empty;
         CustomMsgBox customMsgBox;
+        TaskModification taskModification;
 
         public AddOrUpdateGroupPage()
         {
@@ -38,6 +39,16 @@ namespace emira.GUI
                         lAddOrUpdateGroup.Text = "Csoport hozááadása";
                         btnAdd.Text = Texts.Button.Add;
 
+                        // Get the next group ID and set it for the number up down control
+                        taskModification = new TaskModification();
+                        int _nextGroupID = 0;
+                        _nextGroupID = taskModification.GetNextGroupID();
+
+                        if (_nextGroupID > 0)
+                        {
+                            nupGroupID.Value = _nextGroupID;
+                        }
+
                         break;
                     }
 
@@ -49,13 +60,15 @@ namespace emira.GUI
                         string _groupIDandName = string.Empty;
 
                         _groupIDandName = TaskManager.cbGroupValue;
+                        if (string.IsNullOrEmpty(_groupIDandName))
+                        {
+                            return;
+                        }
+
 
                         // The text of the combobox contains the group ID and Name
                         string[] _group = new string[2];
-                        if (!string.IsNullOrEmpty(_groupIDandName))
-                        {
-                            _group = _groupIDandName.Split(' ');
-                        }
+                        _group = _groupIDandName.Split(' ');
 
                         // Set the global variables for Update button
                         groupID = _group[0];
@@ -95,27 +108,27 @@ namespace emira.GUI
         {
             try
             {
-                TaskModification _taskModification = new TaskModification();
-
-                // Cehck the text field is empty or not
-                if (!_taskModification.TextBoxValueValidation(tbGroupName.Text))
+                // Check the text field is empty or not
+                if (!taskModification.TextBoxValueValidation(tbGroupName.Text))
                 {
                     customMsgBox = new CustomMsgBox();
                     customMsgBox.Show(Texts.ErrorMessages.RequiredFieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                     return;
                 }
 
+                taskModification = new TaskModification();
+
                 bool _isSuccess = false;
 
                 if (btnAdd.Text == Texts.Button.Add)
                 {                    
                     // Add new group
-                    _isSuccess = _taskModification.AddNewGroup(nupGroupID.Value.ToString(), tbGroupName.Text);
+                    _isSuccess = taskModification.AddNewGroup(nupGroupID.Value.ToString(), tbGroupName.Text);
 
                     if (!_isSuccess)
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFields, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                         return;
                     }
 
@@ -124,12 +137,12 @@ namespace emira.GUI
                 else
                 {
                     // Update the group
-                    _isSuccess = _taskModification.UpdateGroup(groupID, nupGroupID.Value.ToString(), groupName, tbGroupName.Text);
+                    _isSuccess = taskModification.UpdateGroup(groupID, nupGroupID.Value.ToString(), groupName, tbGroupName.Text);
 
                     if (!_isSuccess)
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFields, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                         return;
                     }
 

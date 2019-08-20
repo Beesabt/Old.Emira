@@ -59,7 +59,7 @@ namespace emira.HelperFunctions
 
         public static class TaskProperties
         {
-            public static string TaskGroupID = "TaskGroupID";
+            public static string GroupID = "GroupID";
 
             public static string TaskGroupName = "TaskGroupName";
 
@@ -96,11 +96,17 @@ namespace emira.HelperFunctions
 
         public static class CatalogProperties
         {
+            public static string GroupID = "GroupID";
+
             public static string TaskID = "TaskID";
+
+            public static string TaskName = "TaskName";
 
             public static string Date = "Date";
 
             public static string NumberOfHours = "NumberOfHours";
+
+            public static string Locked = "Locked";
         }
 
         public static class GovernmentHolidaysProperties
@@ -190,12 +196,21 @@ namespace emira.HelperFunctions
 
             #region TaskModification
 
-            public static string CheckValuesOfFields =
+            public static string ComboboxIsEmptyForAdd = "The group name combox is empty, please choose a group before add!";
+
+            public static string ComboboxIsEmptyForModify = "The group name combox is empty, please choose a group before update!";
+
+            public static string ComboboxIsEmptyForDelete = "The group name combox is empty, please choose a group before delete!";
+
+            public static string CheckValuesOfFieldsForGroup =
                          "The value of the field is not proper.\r\n\r\nPossible reasons:\r\n" +
-                         "* The Group name already exists with another Group ID\r\n" +
-                         "* The Group ID already exists with another Group name\r\n" +
-                         "* The Task ID already exists\r\n" +
-                         "* The Task name alraedy exists with another Task ID";
+                         "* The Group ID already exists with another Group name\r\n" +                      
+                         "* The Group name already exists with another Group ID or with the same";
+
+            public static string CheckValuesOfFieldsForTask =
+                        "The value of the field is not proper.\r\n\r\nPossible reasons:\r\n" +
+                        "* The Task ID already exists with another Task name\r\n" +
+                        "* The Task name alraedy exists with another Task ID or with the same";
 
             #endregion
 

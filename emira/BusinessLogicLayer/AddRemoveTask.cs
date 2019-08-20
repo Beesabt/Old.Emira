@@ -1,35 +1,48 @@
-﻿using emira.DataAccessLayer;
-using emira.HelperFunctions;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
+
+using emira.DataAccessLayer;
+using emira.HelperFunctions;
+using emira.GUI;
+using NLog;
 
 namespace emira.BusinessLogicLayer
 {
     class AddRemoveTask
     {
-        DatabaseHandler _DBHandler;
-        DataTable _dataTable;
-
-        public DataTable GetTask()
-        {
-            _DBHandler = new DatabaseHandler();
-            _dataTable = new DataTable();
-
-            _dataTable = _DBHandler.GetTask();
-        
-            return _dataTable;
-        }
-
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        CustomMsgBox customMsgBox;
+        DatabaseHandler DBHandler;
+       
         public void SaveModification(Dictionary<string, string> data, string _taskGroupID)
         {
-            _DBHandler = new DatabaseHandler();
-            _DBHandler.ModifyTask(data, Texts.TaskProperties.TaskID, _taskGroupID, updatedRow: 0);           
+            try
+            {
+                DBHandler = new DatabaseHandler();
+                DBHandler.ModifyTask(data, Texts.TaskProperties.TaskID, _taskGroupID, updatedRow: 0);
+            }
+            catch(Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }      
         }
 
         public void DeleteHours(string date, string taskID)
         {
-            _DBHandler = new DatabaseHandler();
-            _DBHandler.DeleteHours(date, taskID);
+            try
+            {
+                DBHandler = new DatabaseHandler();
+                DBHandler.DeleteHours(date, taskID);
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
         }
+
     }
 }

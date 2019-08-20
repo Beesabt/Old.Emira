@@ -5,12 +5,13 @@ using System.Data.SQLite;
 
 using emira.HelperFunctions;
 using emira.GUI;
+using NLog;
 
 namespace emira.DataAccessLayer
 {
     class DatabaseHandler
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         string command = string.Empty;
         string sResult = string.Empty;
         int iResult = 0;
@@ -278,11 +279,28 @@ namespace emira.DataAccessLayer
 
         #region TaskModification.cs 
 
-        public DataTable GetGroups()
+        public int GetMaxGroupID()
         {
-            string command = string.Format("SELECT * FROM {0} GROUP BY {1}",
-                Texts.DataTableNames.TaskGroup,
-                Texts.TaskGropuProperties.GroupID);
+            string command = string.Format("SELECT MAX({0}) FROM {1}",
+                Texts.TaskGropuProperties.GroupID,
+                Texts.DataTableNames.TaskGroup);
+            iResult = ExecuteScalar(command);
+            return iResult;
+        }
+
+        public DataTable GetAllTasksByGroup(string groupID)
+        {
+            string command = string.Format("SELECT {0} FROM {1} WHERE {2} = {3}",
+                Texts.TaskProperties.TaskID,
+                Texts.DataTableNames.Task,
+                Texts.TaskProperties.GroupID,
+                groupID);
+            dataTable = GetDataTable(command);
+            return dataTable;
+        }
+
+        public DataTable GetGroups(string command)
+        {           
             dataTable = new DataTable();
             dataTable = GetDataTable(command);
             return dataTable;
@@ -294,6 +312,7 @@ namespace emira.DataAccessLayer
             dataTable = GetDataTable(command);
             return dataTable;
         }
+
 
         public int InsertNewGroup(int groupID, string groupName)
         {
@@ -307,22 +326,21 @@ namespace emira.DataAccessLayer
             return iResult;
         }
 
-        public int InsertNewTask(string taskGroupID, string taskGroup, string taskID, string taskName)
+        public int InsertNewTask(string groupID, string taskID, string taskName)
         {
-            string command = string.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}, {5}) VALUES ('{6}', '{7}', '{8}', '{9}', 0)",
+            string command = string.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}) VALUES ('{5}', '{6}', '{7}', 0)",
                 Texts.DataTableNames.Task,
-                Texts.TaskProperties.TaskGroupID,
-                Texts.TaskProperties.TaskGroupName,
+                Texts.TaskProperties.GroupID,
                 Texts.TaskProperties.TaskID,
                 Texts.TaskProperties.TaskName,
                 Texts.TaskProperties.Selected,
-                taskGroupID,
-                taskGroup,
+                groupID,
                 taskID,
                 taskName);
             iResult = ExecuteNonQuery(command);
             return iResult;
         }
+
 
         public bool ModifyGroup(Dictionary<string, string> data, string key, string value, int updatedRow)
         {
@@ -336,11 +354,33 @@ namespace emira.DataAccessLayer
             return bResult;
         }
 
+
+        public int DeleteGroupAndTasks(string dataTableName, string groupID)
+        {
+            string command = string.Format("DELETE FROM {0} WHERE {1}='{2}'",
+                          dataTableName,
+                          Texts.TaskProperties.GroupID,
+                          groupID);
+            iResult = ExecuteNonQuery(command);
+            return iResult;
+        }
+
+        public int DeleteUsedTasksFromCatalog(string groupID)
+        {
+            string command = string.Format("DELETE FROM {0} WHERE {1}='{2}' AND {3} = 0",
+                          Texts.DataTableNames.Catalog,
+                          Texts.CatalogProperties.GroupID,
+                          groupID,
+                          Texts.CatalogProperties.Locked);
+            iResult = ExecuteNonQuery(command);
+            return iResult;
+        }
+
         public int DeleteRow(string taskGroupID, string taskGroup, string taskID, string taskName)
         {
             string command = string.Format("DELETE FROM {0} WHERE {1}='{2}' AND {3}='{4}' AND {5}='{6}' AND {7}='{8}'",
                 Texts.DataTableNames.Task,
-                Texts.TaskProperties.TaskGroupID,
+                Texts.TaskProperties.GroupID,
                 taskGroupID,
                 Texts.TaskProperties.TaskGroupName,
                 taskGroup,
@@ -351,6 +391,7 @@ namespace emira.DataAccessLayer
             iResult = ExecuteNonQuery(command);
             return iResult;
         }
+
 
         public bool DoesExist(string tableName, string columName, string value)
         {
@@ -498,9 +539,12 @@ namespace emira.DataAccessLayer
 
         public DataTable GetTask()
         {
-            command = string.Format("SELECT * FROM {0} ORDER BY {1}",
+            command = string.Format("SELECT {0}.{1}, {0}.{2}, {0}.{3}, {0}.{4} FROM {0} ORDER BY {0}.{1}",
                 Texts.DataTableNames.Task,
-                Texts.TaskProperties.TaskGroupID);
+                Texts.TaskProperties.GroupID,
+                Texts.TaskProperties.TaskID,
+                Texts.TaskProperties.TaskName,
+                Texts.TaskProperties.Selected);
             dataTable = new DataTable();
             dataTable = GetDataTable(command);
             return dataTable;
@@ -546,6 +590,18 @@ namespace emira.DataAccessLayer
         {
             command = string.Format("SELECT * FROM {0} WHERE {1} = 1",
                 Texts.DataTableNames.Task,
+                Texts.TaskProperties.Selected);
+            dataTable = new DataTable();
+            dataTable = GetDataTable(command);
+            return dataTable;
+        }
+
+        public DataTable GetSelectedTaskByGroup(string groupID)
+        {
+            command = string.Format("SELECT * FROM {0} WHERE {1} = {2} AND {3} = 1",
+                Texts.DataTableNames.Task,
+                Texts.TaskProperties.GroupID,
+                groupID,
                 Texts.TaskProperties.Selected);
             dataTable = new DataTable();
             dataTable = GetDataTable(command);

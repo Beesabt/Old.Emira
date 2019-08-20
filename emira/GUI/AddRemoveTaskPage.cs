@@ -18,6 +18,7 @@ namespace emira.GUI
         int mValX;
         int mValY;
         AddRemoveTask addRemoveTask;
+        TaskModification taskModification;
         DataTable dataTable;
         CustomMsgBox customMsgBox;
 
@@ -45,16 +46,17 @@ namespace emira.GUI
                 int _index = 0;
 
                 addRemoveTask = new AddRemoveTask();
+                taskModification = new TaskModification();
                 dataTable = new DataTable();
 
                 // Get the tasks from the Task table
-                dataTable = addRemoveTask.GetTask();
+                dataTable = taskModification.GetTask();
 
                 // Set the parent nodes
                 foreach (DataRow group in dataTable.Rows)
                 {
-                    _actualTaskGroupID = group[Texts.TaskProperties.TaskGroupID].ToString();
-                    _actualTaskGroup = group[Texts.TaskProperties.TaskGroupName].ToString();
+                    _actualTaskGroupID = group[Texts.TaskGropuProperties.GroupID].ToString();
+                    _actualTaskGroup = group[Texts.TaskGropuProperties.GroupName].ToString();
 
 
                     if (_previousGroupID != _actualTaskGroupID)

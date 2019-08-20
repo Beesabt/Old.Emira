@@ -297,17 +297,17 @@ namespace emira.GUI
                 // Get the holidays for the selected month
                 dataTable = workingHours.GetHolidaysForSelectedMonth(_date);
 
+                DataGridViewRow _normalHolidayRow = new DataGridViewRow();
+                _normalHolidayRow.CreateCells(dgvWorkingHours);
+                _normalHolidayRow.HeaderCell.Value = "0_0 Normál szabadság";
+
+                // Get working hours of the user
+                _workingHours = workingHours.GetWorkingHoursOfTheUser();
 
                 //// ADD NORMAL HOLIDAYS
                 if (dataTable.Rows.Count != 0)
                 {
-                    // Get working hours of the user
-                    _workingHours = workingHours.GetWorkingHoursOfTheUser();
-
                     // User has holiday for the selected month so it adds the '0_0 task' into the table
-                    DataGridViewRow _normalHolidayRow = new DataGridViewRow();
-                    _normalHolidayRow.CreateCells(dgvWorkingHours);
-                    _normalHolidayRow.HeaderCell.Value = "0_0 Normál szabadság";
                     dgvWorkingHours.Rows.Add(_normalHolidayRow);
 
                     // Get the last row of the table 
@@ -370,6 +370,11 @@ namespace emira.GUI
                 {
                     if (publicHoliday.Date.Month == month)
                     {
+                        if (!dgvWorkingHours.Rows.Contains(_normalHolidayRow))
+                        {
+                            dgvWorkingHours.Rows.Add(_normalHolidayRow);
+                            _indexOfNormalHoliday = dgvWorkingHours.Rows.IndexOf(_normalHolidayRow);
+                        }
                         dgvWorkingHours.Rows[_indexOfNormalHoliday].Cells[publicHoliday.Date.Day - 1].Value = _workingHours;
                         dgvWorkingHours.Columns[publicHoliday.Date.Day - 1].ReadOnly = true;
                         dgvWorkingHours.Columns[publicHoliday.Date.Day - 1].DefaultCellStyle.BackColor = Color.Plum;
@@ -386,6 +391,8 @@ namespace emira.GUI
 
                     if (_governmentHoliday.Month == month)
                     {
+                        if (!dgvWorkingHours.Rows.Contains(_normalHolidayRow))
+                            dgvWorkingHours.Rows.Add(_normalHolidayRow);
                         dgvWorkingHours.Columns[_governmentHoliday.Day - 1].DefaultCellStyle.BackColor = Color.Plum;
                     }
                 }

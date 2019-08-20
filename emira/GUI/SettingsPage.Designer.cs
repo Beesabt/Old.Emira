@@ -40,10 +40,10 @@
             this.btnMinimize = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.pSettings = new System.Windows.Forms.FlowLayoutPanel();
-            this.UCtaskManager = new emira.GUI.TaskManager();
             this.UCpersonalInformation = new emira.GUI.PersonalInformation();
             this.UCusernameChange = new emira.GUI.EmailChange();
             this.UCpasswordChange = new emira.GUI.PasswordChange();
+            this.UCtaskManager = new emira.GUI.TaskManager();
             this.pMenuBar.SuspendLayout();
             this.pHeader.SuspendLayout();
             this.pSettings.SuspendLayout();
@@ -80,7 +80,7 @@
             this.btnPersonalInformation.Name = "btnPersonalInformation";
             this.btnPersonalInformation.Size = new System.Drawing.Size(180, 85);
             this.btnPersonalInformation.TabIndex = 6;
-            this.btnPersonalInformation.Text = "Personal\r\ninformation";
+            this.btnPersonalInformation.Text = "Személyes információ";
             this.btnPersonalInformation.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnPersonalInformation.UseVisualStyleBackColor = false;
             this.btnPersonalInformation.Click += new System.EventHandler(this.btnPersonalInformation_Click);
@@ -102,7 +102,7 @@
             this.btnTaskManager.Name = "btnTaskManager";
             this.btnTaskManager.Size = new System.Drawing.Size(180, 85);
             this.btnTaskManager.TabIndex = 5;
-            this.btnTaskManager.Text = "Task\r\nmanager";
+            this.btnTaskManager.Text = "Taszk\r\nmenedzser";
             this.btnTaskManager.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnTaskManager.UseVisualStyleBackColor = false;
             this.btnTaskManager.Click += new System.EventHandler(this.btnTaskManager_Click);
@@ -143,7 +143,7 @@
             this.btnPassword.Name = "btnPassword";
             this.btnPassword.Size = new System.Drawing.Size(180, 85);
             this.btnPassword.TabIndex = 3;
-            this.btnPassword.Text = "Password\r\nchange";
+            this.btnPassword.Text = "Jelszó változtatás";
             this.btnPassword.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnPassword.UseVisualStyleBackColor = false;
             this.btnPassword.Click += new System.EventHandler(this.btnPassword_Click);
@@ -165,7 +165,7 @@
             this.btnEmail.Name = "btnEmail";
             this.btnEmail.Size = new System.Drawing.Size(180, 85);
             this.btnEmail.TabIndex = 4;
-            this.btnEmail.Text = "E-mail\r\nchange";
+            this.btnEmail.Text = "E-mail\r\n változtatás";
             this.btnEmail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnEmail.UseVisualStyleBackColor = false;
             this.btnEmail.Click += new System.EventHandler(this.btnEmail_Click);
@@ -231,29 +231,20 @@
             // 
             // pSettings
             // 
-            this.pSettings.Controls.Add(this.UCtaskManager);
             this.pSettings.Controls.Add(this.UCpersonalInformation);
             this.pSettings.Controls.Add(this.UCusernameChange);
             this.pSettings.Controls.Add(this.UCpasswordChange);
+            this.pSettings.Controls.Add(this.UCtaskManager);
             this.pSettings.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pSettings.Location = new System.Drawing.Point(0, 115);
             this.pSettings.Name = "pSettings";
             this.pSettings.Size = new System.Drawing.Size(1030, 535);
             this.pSettings.TabIndex = 2;
             // 
-            // UCtaskManager
-            // 
-            this.UCtaskManager.BackColor = System.Drawing.Color.Snow;
-            this.UCtaskManager.Location = new System.Drawing.Point(0, 0);
-            this.UCtaskManager.Margin = new System.Windows.Forms.Padding(0);
-            this.UCtaskManager.Name = "UCtaskManager";
-            this.UCtaskManager.Size = new System.Drawing.Size(1030, 535);
-            this.UCtaskManager.TabIndex = 3;
-            // 
             // UCpersonalInformation
             // 
             this.UCpersonalInformation.BackColor = System.Drawing.Color.White;
-            this.UCpersonalInformation.Location = new System.Drawing.Point(0, 535);
+            this.UCpersonalInformation.Location = new System.Drawing.Point(0, 0);
             this.UCpersonalInformation.Margin = new System.Windows.Forms.Padding(0);
             this.UCpersonalInformation.Name = "UCpersonalInformation";
             this.UCpersonalInformation.Size = new System.Drawing.Size(1030, 535);
@@ -262,7 +253,7 @@
             // UCusernameChange
             // 
             this.UCusernameChange.BackColor = System.Drawing.Color.White;
-            this.UCusernameChange.Location = new System.Drawing.Point(0, 1070);
+            this.UCusernameChange.Location = new System.Drawing.Point(0, 535);
             this.UCusernameChange.Margin = new System.Windows.Forms.Padding(0);
             this.UCusernameChange.Name = "UCusernameChange";
             this.UCusernameChange.Size = new System.Drawing.Size(1030, 535);
@@ -271,11 +262,20 @@
             // UCpasswordChange
             // 
             this.UCpasswordChange.BackColor = System.Drawing.Color.White;
-            this.UCpasswordChange.Location = new System.Drawing.Point(0, 1605);
+            this.UCpasswordChange.Location = new System.Drawing.Point(0, 1070);
             this.UCpasswordChange.Margin = new System.Windows.Forms.Padding(0);
             this.UCpasswordChange.Name = "UCpasswordChange";
             this.UCpasswordChange.Size = new System.Drawing.Size(1030, 535);
             this.UCpasswordChange.TabIndex = 0;
+            // 
+            // UCtaskManager
+            // 
+            this.UCtaskManager.BackColor = System.Drawing.Color.White;
+            this.UCtaskManager.Location = new System.Drawing.Point(0, 1605);
+            this.UCtaskManager.Margin = new System.Windows.Forms.Padding(0);
+            this.UCtaskManager.Name = "UCtaskManager";
+            this.UCtaskManager.Size = new System.Drawing.Size(1030, 535);
+            this.UCtaskManager.TabIndex = 3;
             // 
             // SettingsPage
             // 

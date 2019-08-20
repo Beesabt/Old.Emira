@@ -22,8 +22,6 @@ namespace emira.GUI
         public TaskManager()
         {
             InitializeComponent();
-
-            UpdateGroups();
         }
 
         private void UpdateGroups()
@@ -36,7 +34,9 @@ namespace emira.GUI
                 taskModification = new TaskModification();
 
                 // Fill the combox with groups from DB
-                List<string> _groups = taskModification.GetGroups();
+                List<string> _groups = taskModification.GetGroups(true);
+
+                if (_groups.Count == 0) return;
 
                 foreach (var item in _groups)
                 {
@@ -44,6 +44,41 @@ namespace emira.GUI
                 }
 
                 cbGroupName.SelectedItem = _groups[0];
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+        }
+
+        private void TaskManager_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                UpdateGroups();
+
+                UpdateTreeView();
+
+                UpdateTaskID();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void nupTaskID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void cbGroupName_DropDownClosed(object sender, EventArgs e)
+        {
+            try
+            {
+                UpdateTaskID();
             }
             catch(Exception error)
             {
@@ -53,26 +88,57 @@ namespace emira.GUI
             }
         }
 
-        private void cbGroupName_DropDownClosed(object sender, EventArgs e)
-        {
-            cbGroupName.Text = cbGroupName.SelectedItem.ToString();
-        }
-
-        private void cbGroupName_TextChanged(object sender, EventArgs e)
-        {
-            cbGroupName.Text = cbGroupName.SelectedItem.ToString();
-        }
-
-        private void TaskManager_Load(object sender, EventArgs e)
+        private void tvGroupsAndTasks_AfterSelect(object sender, TreeViewEventArgs e)
         {
             try
             {
+                string _group = string.Empty;
+                string _taskID = string.Empty;
+                string _taskName = string.Empty;
+                int _ID = 1;
 
-                //UpdateTable();
+                // If the user chose the parent node then it returns
+                if (e.Node.Parent == null) return;
+
+                // If the user chose the reserved task then it returns
+                if (e.Node.Text.Contains("0_")) return;
+
+                // Get the group name
+                _group = e.Node.Parent.Text;
+
+                // Set the group name for the combobox if it is not empty
+                if (!string.IsNullOrEmpty(_group))
+                   cbGroupName.SelectedItem = _group;
+                
+                // Get the task ID and name
+                _taskName = e.Node.Text.Remove(0, e.Node.Text.IndexOf(' ') + 1);
+                _taskID = e.Node.Text.Remove(e.Node.Text.IndexOf(' ') + 1);
+
+                // Set the task ID and task Name if they are not empty
+                if (!string.IsNullOrEmpty(_taskID) && !string.IsNullOrEmpty(_taskName))
+                {
+                    tbTaskName.Text = _taskName;
+
+                    // Get the task ID
+                    _taskID = _taskID.Substring(_taskID.IndexOf('_') + 1);
+
+                    // Get the task ID as int
+                    Int32.TryParse(_taskID, out _ID);
+
+                    nupTaskID.Value = _ID;
+                }
+                else
+                {
+                    // If something was wrong clean up the controls
+                    tbTaskName.Text = string.Empty;
+                    UpdateTaskID();
+                }              
             }
-            catch (Exception error)
+            catch(Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -90,15 +156,33 @@ namespace emira.GUI
 
         private void btnAddGroup_Click(object sender, EventArgs e)
         {
+            // User can not modify the combobox
             cbGroupName.Enabled = false;
+
             AddOrUpdateGroupPage _addOrUpdateGroupPage = new AddOrUpdateGroupPage();
             _addOrUpdateGroupPage.ShowDialog();
+
+            // Combobox enabled again
             cbGroupName.Enabled = true;
+
+            // Update the content of the combobox
             UpdateGroups();
+
+            // Update the content of the tree view
+            UpdateTreeView();
         }
 
         private void btnUpdateGroup_Click(object sender, EventArgs e)
         {
+            // Check the combobox is empty or not
+            if (string.IsNullOrEmpty(cbGroupName.Text))
+            {
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.ComboboxIsEmptyForModify, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return;
+            }
+
+            // User can not modify the combobox
             cbGroupName.Enabled = false;
 
             cbGroupValue = cbGroupName.SelectedItem.ToString();
@@ -106,23 +190,203 @@ namespace emira.GUI
             AddOrUpdateGroupPage _addOrUpdateGroupPage = new AddOrUpdateGroupPage();
             _addOrUpdateGroupPage.ShowDialog();
 
+            // Combobox enabled again
             cbGroupName.Enabled = true;
+
+            // Update the content of the combobox
             UpdateGroups();
+
+            // Update the content of the tree view
+            UpdateTreeView();
         }
 
         private void btnDeleteGroup_Click(object sender, EventArgs e)
         {
+            try
+            {
+                // Check the combobox is empty or not
+                if (string.IsNullOrEmpty(cbGroupName.Text))
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.ComboboxIsEmptyForDelete, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    return;
+                }
 
+                taskModification = new TaskModification();
+                dataTable = new DataTable();
+                string[] _groupIDName = new string[2];
+
+                _groupIDName = cbGroupName.Text.Split(' ');
+
+                // Get the selected task(s) and warn the user because of data loss
+                dataTable = taskModification.GetSelectedTaskBySelectedGroup(_groupIDName[0]);
+
+                if (dataTable.Rows.Count > 0)
+                {
+                    var _result = MessageBox.Show(Texts.WarningMessages.DeleteTask,
+                                            Texts.Captions.LossOfData,
+                                            MessageBoxButtons.YesNo,
+                                            MessageBoxIcon.Question);
+                    if (_result == DialogResult.No)
+                    {
+                        return;
+                    }
+                }
+
+                bool _isSuccess = false;
+
+                cbGroupName.Enabled = false;
+
+                // Delete the group, task(s) and hours from Catalog if the period is not locked
+                _isSuccess = taskModification.DeleteGroup(_groupIDName[0]);
+
+                if (!_isSuccess)
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    cbGroupName.Enabled = true;
+                    return;
+                }
+
+                // Enable the combobox
+                cbGroupName.Enabled = true;
+
+
+                // Update the content of the combobox
+                UpdateGroups();
+
+
+                // Update the content of the tree view
+                UpdateTreeView();
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
         }
+
+
 
         private void btnAddTask_Click(object sender, EventArgs e)
         {
+            try
+            {
+                // Check the combobox is empty or not
+                if (string.IsNullOrEmpty(cbGroupName.Text))
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.ComboboxIsEmptyForAdd, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    return;
+                }
 
+                // Check the text field is empty or not
+                if (!taskModification.TextBoxValueValidation(tbTaskName.Text))
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.RequiredFieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    return;
+                }
+
+                // Freez the controls
+                cbGroupName.Enabled = false;
+                nupTaskID.Enabled = false;
+                tbTaskName.Enabled = false;
+
+                taskModification = new TaskModification();
+
+                bool _isSuccess = false;
+
+                // The text of the combobox contains the task ID and Name
+                string[] _group = new string[2];
+                _group = cbGroupName.Text.Split(' ');
+
+                // Add new task
+                _isSuccess = taskModification.AddNewTask(_group[0], nupTaskID.Value.ToString(), tbTaskName.Text);
+
+                if (!_isSuccess)
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForTask, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    cbGroupName.Enabled = true;
+                    nupTaskID.Enabled = true;
+                    tbTaskName.Enabled = true;
+                    return;
+                }
+
+                // Set the next ID and clean up the TaskName
+                nupTaskID.Value = nupTaskID.Value + 1;
+                tbTaskName.Text = string.Empty;
+                cbGroupName.Enabled = true;
+                nupTaskID.Enabled = true;
+                tbTaskName.Enabled = true;
+
+                // Update the content of the tree view
+                UpdateTreeView();
+            }
+            catch(Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }          
         }
 
         private void btnUpdateTask_Click(object sender, EventArgs e)
         {
+            try
+            {
+                // Check the text field is empty or not
+                if (!taskModification.TextBoxValueValidation(tbTaskName.Text))
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.RequiredFieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    return;
+                }
 
+                // Freez the controls
+                cbGroupName.Enabled = false;
+                nupTaskID.Enabled = false;
+                tbTaskName.Enabled = false;
+
+                taskModification = new TaskModification();
+
+                bool _isSuccess = false;
+
+                // The text of the combobox contains the task ID and Name
+                string[] _group = new string[2];
+                _group = cbGroupName.Text.Split(' ');
+
+                // Add new task
+                //_isSuccess = taskModification.UpdateTask(_group[0], nupTaskID.Value.ToString(), tbTaskName.Text);
+
+                if (!_isSuccess)
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForTask, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    cbGroupName.Enabled = true;
+                    nupTaskID.Enabled = true;
+                    tbTaskName.Enabled = true;
+                    return;
+                }
+
+                // Set the next ID and clean up the TaskName
+                nupTaskID.Value = nupTaskID.Value + 1;
+                tbTaskName.Text = string.Empty;
+                cbGroupName.Enabled = true;
+                nupTaskID.Enabled = true;
+                tbTaskName.Enabled = true;
+
+                // Update the content of the tree view
+                UpdateTreeView();
+            }
+            catch(Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
         }
 
         private void btnDeleteTask_Click(object sender, EventArgs e)
@@ -130,21 +394,93 @@ namespace emira.GUI
 
         }
 
-        //private void UpdateTable()
-        //{
-        //    _taskModification = new TaskModification();
-        //    _dataTable = new DataTable();
+        private void UpdateTreeView()
+        {
+            try
+            {
+                // Clean up the tree view
+                tvGroupsAndTasks.Nodes.Clear();
 
-        //    _dataTable = _taskModification.GetTasks();
+                taskModification = new TaskModification();
+                dataTable = new DataTable();
 
-        //    if (_dataTable != null)
-        //    {
-        //        BindingSource bSource = new BindingSource();
-        //        bSource.Clear();
-        //        bSource.DataSource = _dataTable;
-        //        dgvTaskModification.DataSource = bSource;
-        //    }         
-        //}
+                // Get the group(s) from the TaskGroup table
+                List<string> _groups = taskModification.GetGroups();
+                string[] _group = new string[2];
+                string _previousGroupID = string.Empty;
+
+                foreach (string item in _groups)
+                {
+                    _group = item.Split(' ');
+                    if (_previousGroupID != _group[0])
+                    {
+                        tvGroupsAndTasks.Nodes.Add(item);
+                        _previousGroupID = _group[0];
+                    }
+                }
+
+                // Get the task(s) from the Task table
+                dataTable = taskModification.GetTask();
+
+                string _actualTaskGroupID = string.Empty;
+                string _actualTaskID = string.Empty;
+                string _actualTaskName = string.Empty;
+                string _previousTaskID = string.Empty;
+                int _groupID = 0;
+
+                // Set the child nodes and
+                // Set the checkbox where the task is selected
+                foreach (DataRow task in dataTable.Rows)
+                {
+                    _actualTaskGroupID = task[Texts.TaskProperties.GroupID].ToString();
+                    _actualTaskID = task[Texts.TaskProperties.TaskID].ToString();
+                    _actualTaskName = task[Texts.TaskProperties.TaskName].ToString();
+
+                    Int32.TryParse(_actualTaskGroupID, out _groupID);
+
+                    if (_previousTaskID == _actualTaskGroupID)
+                    {
+                        tvGroupsAndTasks.Nodes[_groupID].Nodes.Add(_actualTaskID + " " + _actualTaskName);
+                    }
+                    else
+                    {
+                        tvGroupsAndTasks.Nodes[_groupID].Nodes.Add(_actualTaskID + " " + _actualTaskName);
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+        }
+
+        private void UpdateTaskID()
+        {
+            try
+            {
+                // Check the combobox is empty or not
+                if (string.IsNullOrEmpty(cbGroupName.Text)) return;
+                
+                // The text of the combobox contains the task ID and Name
+                string[] _group = new string[2];
+                _group = cbGroupName.SelectedItem.ToString().Split(' ');
+
+                taskModification = new TaskModification();
+
+                int _nextTaskID = 1;
+                _nextTaskID = taskModification.GetNextTaskID(_group[0]);
+
+                nupTaskID.Value = _nextTaskID;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+        }
 
         //private void dgvTaskModification_MouseDoubleClick(object sender, MouseEventArgs e)
         //{

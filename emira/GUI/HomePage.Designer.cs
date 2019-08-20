@@ -117,9 +117,9 @@
             this.lFooter.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lFooter.Location = new System.Drawing.Point(422, 2);
             this.lFooter.Name = "lFooter";
-            this.lFooter.Size = new System.Drawing.Size(185, 16);
+            this.lFooter.Size = new System.Drawing.Size(200, 16);
             this.lFooter.TabIndex = 0;
-            this.lFooter.Text = "Contact: beesabt@gmail.com";
+            this.lFooter.Text = "Kapcsolat: beesabt@gmail.com";
             // 
             // btnStatistics
             // 
@@ -137,7 +137,7 @@
             this.btnStatistics.Name = "btnStatistics";
             this.btnStatistics.Size = new System.Drawing.Size(440, 240);
             this.btnStatistics.TabIndex = 5;
-            this.btnStatistics.Text = "Statistics";
+            this.btnStatistics.Text = "Statisztika";
             this.btnStatistics.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.btnStatistics.UseVisualStyleBackColor = false;
             this.btnStatistics.Click += new System.EventHandler(this.btnStatistics_Click);
@@ -158,7 +158,7 @@
             this.btnHolidays.Name = "btnHolidays";
             this.btnHolidays.Size = new System.Drawing.Size(440, 240);
             this.btnHolidays.TabIndex = 4;
-            this.btnHolidays.Text = "Holidays";
+            this.btnHolidays.Text = "Szabadság";
             this.btnHolidays.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.btnHolidays.UseVisualStyleBackColor = false;
             this.btnHolidays.Click += new System.EventHandler(this.btnHolidays_Click);
@@ -179,7 +179,7 @@
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(440, 240);
             this.btnSettings.TabIndex = 3;
-            this.btnSettings.Text = "Settings";
+            this.btnSettings.Text = "Beállítások";
             this.btnSettings.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.btnSettings.UseVisualStyleBackColor = false;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
@@ -200,7 +200,7 @@
             this.btnWorkingHours.Name = "btnWorkingHours";
             this.btnWorkingHours.Size = new System.Drawing.Size(440, 240);
             this.btnWorkingHours.TabIndex = 2;
-            this.btnWorkingHours.Text = "Working Hours";
+            this.btnWorkingHours.Text = "Munkaidő";
             this.btnWorkingHours.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.btnWorkingHours.UseVisualStyleBackColor = false;
             this.btnWorkingHours.Click += new System.EventHandler(this.btnWorkingHours_Click);
@@ -209,7 +209,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Snow;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1030, 650);
             this.Controls.Add(this.pFooter);
             this.Controls.Add(this.btnStatistics);

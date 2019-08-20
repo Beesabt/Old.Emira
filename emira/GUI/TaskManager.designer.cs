@@ -45,7 +45,7 @@
             this.btnUpdateGroup = new System.Windows.Forms.Button();
             this.gbTaskSection = new System.Windows.Forms.GroupBox();
             this.nupTaskID = new System.Windows.Forms.NumericUpDown();
-            this.twGroupsAndTasks = new System.Windows.Forms.TreeView();
+            this.tvGroupsAndTasks = new System.Windows.Forms.TreeView();
             this.gbGroupSection.SuspendLayout();
             this.gbTaskSection.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nupTaskID)).BeginInit();
@@ -62,7 +62,7 @@
             this.btnImport.Font = new System.Drawing.Font("Segoe UI", 14.25F);
             this.btnImport.ForeColor = System.Drawing.Color.White;
             this.btnImport.Image = global::emira.Properties.Resources.import_icon_white_26;
-            this.btnImport.Location = new System.Drawing.Point(40, 30);
+            this.btnImport.Location = new System.Drawing.Point(40, 20);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(130, 40);
             this.btnImport.TabIndex = 26;
@@ -82,7 +82,7 @@
             this.btnExport.Font = new System.Drawing.Font("Segoe UI", 14.25F);
             this.btnExport.ForeColor = System.Drawing.Color.White;
             this.btnExport.Image = global::emira.Properties.Resources.export_icon_white_26;
-            this.btnExport.Location = new System.Drawing.Point(196, 30);
+            this.btnExport.Location = new System.Drawing.Point(196, 20);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(130, 40);
             this.btnExport.TabIndex = 25;
@@ -132,7 +132,7 @@
             // btnDeleteTask
             // 
             this.btnDeleteTask.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(52)))), ((int)(((byte)(56)))));
-            this.btnDeleteTask.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(106)))));
+            this.btnDeleteTask.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnDeleteTask.FlatAppearance.BorderSize = 0;
             this.btnDeleteTask.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(67)))), ((int)(((byte)(67)))));
             this.btnDeleteTask.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(67)))), ((int)(((byte)(67)))));
@@ -152,7 +152,7 @@
             // btnUpdateTask
             // 
             this.btnUpdateTask.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(137)))), ((int)(((byte)(62)))));
-            this.btnUpdateTask.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(106)))));
+            this.btnUpdateTask.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnUpdateTask.FlatAppearance.BorderSize = 0;
             this.btnUpdateTask.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(106)))));
             this.btnUpdateTask.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(106)))));
@@ -172,7 +172,7 @@
             // btnAddTask
             // 
             this.btnAddTask.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(131)))), ((int)(((byte)(135)))));
-            this.btnAddTask.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(183)))), ((int)(((byte)(195)))));
+            this.btnAddTask.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnAddTask.FlatAppearance.BorderSize = 0;
             this.btnAddTask.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(183)))), ((int)(((byte)(195)))));
             this.btnAddTask.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(183)))), ((int)(((byte)(195)))));
@@ -207,7 +207,7 @@
             // btnDeleteGroup
             // 
             this.btnDeleteGroup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(52)))), ((int)(((byte)(56)))));
-            this.btnDeleteGroup.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(106)))));
+            this.btnDeleteGroup.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnDeleteGroup.FlatAppearance.BorderSize = 0;
             this.btnDeleteGroup.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(67)))), ((int)(((byte)(67)))));
             this.btnDeleteGroup.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(67)))), ((int)(((byte)(67)))));
@@ -227,7 +227,7 @@
             // btnAddGroup
             // 
             this.btnAddGroup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(131)))), ((int)(((byte)(135)))));
-            this.btnAddGroup.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(183)))), ((int)(((byte)(195)))));
+            this.btnAddGroup.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnAddGroup.FlatAppearance.BorderSize = 0;
             this.btnAddGroup.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(183)))), ((int)(((byte)(195)))));
             this.btnAddGroup.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(183)))), ((int)(((byte)(195)))));
@@ -252,12 +252,11 @@
             this.cbGroupName.Size = new System.Drawing.Size(336, 26);
             this.cbGroupName.TabIndex = 28;
             this.cbGroupName.DropDownClosed += new System.EventHandler(this.cbGroupName_DropDownClosed);
-            this.cbGroupName.TextChanged += new System.EventHandler(this.cbGroupName_TextChanged);
             // 
             // btnUpdateGroup
             // 
             this.btnUpdateGroup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(137)))), ((int)(((byte)(62)))));
-            this.btnUpdateGroup.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(106)))));
+            this.btnUpdateGroup.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnUpdateGroup.FlatAppearance.BorderSize = 0;
             this.btnUpdateGroup.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(106)))));
             this.btnUpdateGroup.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(106)))));
@@ -313,20 +312,25 @@
             0,
             0,
             0});
+            this.nupTaskID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nupTaskID_KeyPress);
             // 
-            // twGroupsAndTasks
+            // tvGroupsAndTasks
             // 
-            this.twGroupsAndTasks.Location = new System.Drawing.Point(530, 30);
-            this.twGroupsAndTasks.Name = "twGroupsAndTasks";
-            this.twGroupsAndTasks.Size = new System.Drawing.Size(480, 486);
-            this.twGroupsAndTasks.TabIndex = 28;
+            this.tvGroupsAndTasks.BackColor = System.Drawing.SystemColors.Window;
+            this.tvGroupsAndTasks.CheckBoxes = true;
+            this.tvGroupsAndTasks.Font = new System.Drawing.Font("Century Gothic", 12F);
+            this.tvGroupsAndTasks.Location = new System.Drawing.Point(520, 20);
+            this.tvGroupsAndTasks.Name = "tvGroupsAndTasks";
+            this.tvGroupsAndTasks.Size = new System.Drawing.Size(490, 496);
+            this.tvGroupsAndTasks.TabIndex = 28;
+            this.tvGroupsAndTasks.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvGroupsAndTasks_AfterSelect);
             // 
             // TaskManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.twGroupsAndTasks);
+            this.Controls.Add(this.tvGroupsAndTasks);
             this.Controls.Add(this.gbTaskSection);
             this.Controls.Add(this.btnImport);
             this.Controls.Add(this.btnExport);
@@ -360,6 +364,6 @@
         private System.Windows.Forms.ComboBox cbGroupName;
         private System.Windows.Forms.Button btnUpdateGroup;
         private System.Windows.Forms.NumericUpDown nupTaskID;
-        private System.Windows.Forms.TreeView twGroupsAndTasks;
+        private System.Windows.Forms.TreeView tvGroupsAndTasks;
     }
 }
