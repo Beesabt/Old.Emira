@@ -259,12 +259,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationFiles\Icon\Emira.ico" />
+    <None Include="Resources\add_icon_white_26.png" />
+    <None Include="Resources\add_task_icon_white_26.png" />
     <Content Include="Resources\back_icon_white_50.png" />
     <Content Include="Resources\beach_icon_white_50.png" />
     <Content Include="Resources\clock_icon_white_100.png" />
     <Content Include="Resources\close_icon_gray_26.png" />
     <Content Include="Resources\close_icon_white_26.png" />
     <None Include="Resources\email_icon_white_32.png" />
+    <None Include="Resources\delete_icon_white_26.png" />
     <Content Include="Resources\email_icon_white_50.png" />
     <Content Include="Resources\error_icon_color_48.png" />
     <Content Include="Resources\export_icon_white_26.png" />
@@ -286,6 +289,7 @@
     <None Include="Resources\task_icon_white_32.png" />
     <Content Include="Resources\task_icon_white_50.png" />
     <None Include="Resources\unlock_icon_white_32.png" />
+    <None Include="Resources\update_icon_white_26.png" />
     <Content Include="Resources\warning_icon_color_48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TaskManager));
             this.btnImport = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.lTaskGroup = new System.Windows.Forms.Label();
@@ -139,7 +138,7 @@
             this.btnDeleteTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeleteTask.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnDeleteTask.ForeColor = System.Drawing.Color.White;
-            this.btnDeleteTask.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteTask.Image")));
+            this.btnDeleteTask.Image = global::emira.Properties.Resources.delete_icon_white_26;
             this.btnDeleteTask.Location = new System.Drawing.Point(330, 135);
             this.btnDeleteTask.Name = "btnDeleteTask";
             this.btnDeleteTask.Size = new System.Drawing.Size(130, 40);
@@ -159,7 +158,7 @@
             this.btnUpdateTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpdateTask.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnUpdateTask.ForeColor = System.Drawing.Color.White;
-            this.btnUpdateTask.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateTask.Image")));
+            this.btnUpdateTask.Image = global::emira.Properties.Resources.update_icon_white_26;
             this.btnUpdateTask.Location = new System.Drawing.Point(175, 135);
             this.btnUpdateTask.Name = "btnUpdateTask";
             this.btnUpdateTask.Size = new System.Drawing.Size(130, 40);
@@ -179,7 +178,7 @@
             this.btnAddTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddTask.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnAddTask.ForeColor = System.Drawing.Color.White;
-            this.btnAddTask.Image = ((System.Drawing.Image)(resources.GetObject("btnAddTask.Image")));
+            this.btnAddTask.Image = global::emira.Properties.Resources.add_task_icon_white_26;
             this.btnAddTask.Location = new System.Drawing.Point(20, 135);
             this.btnAddTask.Name = "btnAddTask";
             this.btnAddTask.Size = new System.Drawing.Size(130, 40);
@@ -214,7 +213,7 @@
             this.btnDeleteGroup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeleteGroup.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnDeleteGroup.ForeColor = System.Drawing.Color.White;
-            this.btnDeleteGroup.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteGroup.Image")));
+            this.btnDeleteGroup.Image = global::emira.Properties.Resources.delete_icon_white_26;
             this.btnDeleteGroup.Location = new System.Drawing.Point(331, 124);
             this.btnDeleteGroup.Name = "btnDeleteGroup";
             this.btnDeleteGroup.Size = new System.Drawing.Size(130, 40);
@@ -234,7 +233,7 @@
             this.btnAddGroup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddGroup.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnAddGroup.ForeColor = System.Drawing.Color.White;
-            this.btnAddGroup.Image = ((System.Drawing.Image)(resources.GetObject("btnAddGroup.Image")));
+            this.btnAddGroup.Image = global::emira.Properties.Resources.add_task_icon_white_26;
             this.btnAddGroup.Location = new System.Drawing.Point(19, 124);
             this.btnAddGroup.Name = "btnAddGroup";
             this.btnAddGroup.Size = new System.Drawing.Size(130, 40);
@@ -263,7 +262,7 @@
             this.btnUpdateGroup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpdateGroup.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnUpdateGroup.ForeColor = System.Drawing.Color.White;
-            this.btnUpdateGroup.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateGroup.Image")));
+            this.btnUpdateGroup.Image = global::emira.Properties.Resources.update_icon_white_26;
             this.btnUpdateGroup.Location = new System.Drawing.Point(175, 124);
             this.btnUpdateGroup.Name = "btnUpdateGroup";
             this.btnUpdateGroup.Size = new System.Drawing.Size(130, 40);

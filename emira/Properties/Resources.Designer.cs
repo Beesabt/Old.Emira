@@ -59,7 +59,31 @@ namespace emira.Properties {
                 resourceCulture = value;
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap add_icon_white_26
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("add_icon_white_26", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap add_task_icon_white_26
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("add_task_icon_white_26", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -106,6 +130,18 @@ namespace emira.Properties {
         public static System.Drawing.Bitmap close_icon_white_26 {
             get {
                 object obj = ResourceManager.GetObject("close_icon_white_26", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap delete_icon_white_26
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("delete_icon_white_26", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -352,6 +388,18 @@ namespace emira.Properties {
             get
             {
                 object obj = ResourceManager.GetObject("unlock_icon_white_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap update_icon_white_26
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("update_icon_white_26", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -57,6 +57,9 @@
             this.dtpFrom = new System.Windows.Forms.DateTimePicker();
             this.lSelectedDays = new System.Windows.Forms.Label();
             this.gbHoliday = new System.Windows.Forms.GroupBox();
+            this.nupAnnualHoliday = new System.Windows.Forms.NumericUpDown();
+            this.rbHolidaysByUser = new System.Windows.Forms.RadioButton();
+            this.rbCalculated = new System.Windows.Forms.RadioButton();
             this.tlpHoliday = new System.Windows.Forms.TableLayoutPanel();
             this.lPredictableDays = new System.Windows.Forms.Label();
             this.lPredictable = new System.Windows.Forms.Label();
@@ -65,6 +68,7 @@
             this.lAnnualOpeningFrameDays = new System.Windows.Forms.Label();
             this.lAnnualOpeningFrame = new System.Windows.Forms.Label();
             this.gbHolidaysSoFar = new System.Windows.Forms.GroupBox();
+            this.btnAddGovernmentHoliday = new System.Windows.Forms.Button();
             this.lState = new System.Windows.Forms.Label();
             this.lYear = new System.Windows.Forms.Label();
             this.cbState = new System.Windows.Forms.ComboBox();
@@ -77,6 +81,7 @@
             this.flowLayoutPanel1.SuspendLayout();
             this.tlpAddHoliday.SuspendLayout();
             this.gbHoliday.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupAnnualHoliday)).BeginInit();
             this.tlpHoliday.SuspendLayout();
             this.gbHolidaysSoFar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHolidays)).BeginInit();
@@ -115,7 +120,7 @@
             this.btnMinimalized.BackColor = System.Drawing.Color.Transparent;
             this.btnMinimalized.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMinimalized.BackgroundImage")));
             this.btnMinimalized.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnMinimalized.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.btnMinimalized.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.btnMinimalized.FlatAppearance.BorderSize = 0;
             this.btnMinimalized.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.btnMinimalized.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
@@ -131,7 +136,7 @@
             // 
             this.btnExit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnExit.BackgroundImage")));
             this.btnExit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnExit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
+            this.btnExit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
@@ -186,7 +191,7 @@
             this.gbAddHoliday.Size = new System.Drawing.Size(339, 320);
             this.gbAddHoliday.TabIndex = 2;
             this.gbAddHoliday.TabStop = false;
-            this.gbAddHoliday.Text = "Add holiday";
+            this.gbAddHoliday.Text = "Szabadság hozzáadás";
             // 
             // flowLayoutPanel1
             // 
@@ -209,7 +214,7 @@
             // btnCancel
             // 
             this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(172)))), ((int)(((byte)(172)))));
+            this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnCancel.FlatAppearance.BorderSize = 0;
             this.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(172)))), ((int)(((byte)(172)))));
             this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(172)))), ((int)(((byte)(172)))));
@@ -227,7 +232,7 @@
             // btnAdd
             // 
             this.btnAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(133)))), ((int)(((byte)(193)))));
-            this.btnAdd.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
+            this.btnAdd.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnAdd.FlatAppearance.BorderSize = 0;
             this.btnAdd.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
             this.btnAdd.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
@@ -246,7 +251,7 @@
             // btnCheck
             // 
             this.btnCheck.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(133)))), ((int)(((byte)(193)))));
-            this.btnCheck.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
+            this.btnCheck.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnCheck.FlatAppearance.BorderSize = 0;
             this.btnCheck.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
             this.btnCheck.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
@@ -389,6 +394,9 @@
             // gbHoliday
             // 
             this.gbHoliday.BackColor = System.Drawing.Color.White;
+            this.gbHoliday.Controls.Add(this.nupAnnualHoliday);
+            this.gbHoliday.Controls.Add(this.rbHolidaysByUser);
+            this.gbHoliday.Controls.Add(this.rbCalculated);
             this.gbHoliday.Controls.Add(this.tlpHoliday);
             this.gbHoliday.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.gbHoliday.Location = new System.Drawing.Point(23, 466);
@@ -396,7 +404,51 @@
             this.gbHoliday.Size = new System.Drawing.Size(339, 173);
             this.gbHoliday.TabIndex = 3;
             this.gbHoliday.TabStop = false;
-            this.gbHoliday.Text = "Holiday";
+            this.gbHoliday.Text = "Szabadság";
+            // 
+            // nupAnnualHoliday
+            // 
+            this.nupAnnualHoliday.Location = new System.Drawing.Point(254, 22);
+            this.nupAnnualHoliday.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.nupAnnualHoliday.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nupAnnualHoliday.Name = "nupAnnualHoliday";
+            this.nupAnnualHoliday.Size = new System.Drawing.Size(52, 23);
+            this.nupAnnualHoliday.TabIndex = 3;
+            this.nupAnnualHoliday.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // rbHolidaysByUser
+            // 
+            this.rbHolidaysByUser.AutoSize = true;
+            this.rbHolidaysByUser.Location = new System.Drawing.Point(171, 22);
+            this.rbHolidaysByUser.Name = "rbHolidaysByUser";
+            this.rbHolidaysByUser.Size = new System.Drawing.Size(67, 21);
+            this.rbHolidaysByUser.TabIndex = 2;
+            this.rbHolidaysByUser.Text = "Egyéni";
+            this.rbHolidaysByUser.UseVisualStyleBackColor = true;
+            // 
+            // rbCalculated
+            // 
+            this.rbCalculated.AutoSize = true;
+            this.rbCalculated.Checked = true;
+            this.rbCalculated.Location = new System.Drawing.Point(30, 22);
+            this.rbCalculated.Name = "rbCalculated";
+            this.rbCalculated.Size = new System.Drawing.Size(77, 21);
+            this.rbCalculated.TabIndex = 1;
+            this.rbCalculated.TabStop = true;
+            this.rbCalculated.Text = "Számolt";
+            this.rbCalculated.UseVisualStyleBackColor = true;
             // 
             // tlpHoliday
             // 
@@ -409,20 +461,20 @@
             this.tlpHoliday.Controls.Add(this.lApplied, 0, 1);
             this.tlpHoliday.Controls.Add(this.lAnnualOpeningFrameDays, 1, 0);
             this.tlpHoliday.Controls.Add(this.lAnnualOpeningFrame, 0, 0);
-            this.tlpHoliday.Location = new System.Drawing.Point(23, 34);
+            this.tlpHoliday.Location = new System.Drawing.Point(23, 66);
             this.tlpHoliday.Name = "tlpHoliday";
             this.tlpHoliday.RowCount = 3;
-            this.tlpHoliday.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.tlpHoliday.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.tlpHoliday.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.tlpHoliday.Size = new System.Drawing.Size(283, 116);
+            this.tlpHoliday.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.62376F));
+            this.tlpHoliday.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.69307F));
+            this.tlpHoliday.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 32.67327F));
+            this.tlpHoliday.Size = new System.Drawing.Size(283, 101);
             this.tlpHoliday.TabIndex = 0;
             // 
             // lPredictableDays
             // 
             this.lPredictableDays.AutoSize = true;
             this.lPredictableDays.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lPredictableDays.Location = new System.Drawing.Point(144, 76);
+            this.lPredictableDays.Location = new System.Drawing.Point(144, 67);
             this.lPredictableDays.Name = "lPredictableDays";
             this.lPredictableDays.Size = new System.Drawing.Size(79, 20);
             this.lPredictableDays.TabIndex = 5;
@@ -432,7 +484,7 @@
             // 
             this.lPredictable.AutoSize = true;
             this.lPredictable.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lPredictable.Location = new System.Drawing.Point(3, 76);
+            this.lPredictable.Location = new System.Drawing.Point(3, 67);
             this.lPredictable.Name = "lPredictable";
             this.lPredictable.Size = new System.Drawing.Size(94, 20);
             this.lPredictable.TabIndex = 4;
@@ -442,7 +494,7 @@
             // 
             this.lAppliedDays.AutoSize = true;
             this.lAppliedDays.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lAppliedDays.Location = new System.Drawing.Point(144, 38);
+            this.lAppliedDays.Location = new System.Drawing.Point(144, 37);
             this.lAppliedDays.Name = "lAppliedDays";
             this.lAppliedDays.Size = new System.Drawing.Size(79, 20);
             this.lAppliedDays.TabIndex = 3;
@@ -452,7 +504,7 @@
             // 
             this.lApplied.AutoSize = true;
             this.lApplied.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lApplied.Location = new System.Drawing.Point(3, 38);
+            this.lApplied.Location = new System.Drawing.Point(3, 37);
             this.lApplied.Name = "lApplied";
             this.lApplied.Size = new System.Drawing.Size(66, 20);
             this.lApplied.TabIndex = 2;
@@ -474,13 +526,14 @@
             this.lAnnualOpeningFrame.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lAnnualOpeningFrame.Location = new System.Drawing.Point(3, 0);
             this.lAnnualOpeningFrame.Name = "lAnnualOpeningFrame";
-            this.lAnnualOpeningFrame.Size = new System.Drawing.Size(129, 38);
+            this.lAnnualOpeningFrame.Size = new System.Drawing.Size(129, 37);
             this.lAnnualOpeningFrame.TabIndex = 0;
             this.lAnnualOpeningFrame.Text = "Annual opening frame";
             // 
             // gbHolidaysSoFar
             // 
             this.gbHolidaysSoFar.BackColor = System.Drawing.Color.White;
+            this.gbHolidaysSoFar.Controls.Add(this.btnAddGovernmentHoliday);
             this.gbHolidaysSoFar.Controls.Add(this.lState);
             this.gbHolidaysSoFar.Controls.Add(this.lYear);
             this.gbHolidaysSoFar.Controls.Add(this.cbState);
@@ -493,25 +546,47 @@
             this.gbHolidaysSoFar.Size = new System.Drawing.Size(636, 499);
             this.gbHolidaysSoFar.TabIndex = 3;
             this.gbHolidaysSoFar.TabStop = false;
-            this.gbHolidaysSoFar.Text = "Holidays so far";
+            this.gbHolidaysSoFar.Text = "Szabadságok eddig";
+            // 
+            // btnAddGovernmentHoliday
+            // 
+            this.btnAddGovernmentHoliday.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(186)))), ((int)(((byte)(62)))));
+            this.btnAddGovernmentHoliday.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnAddGovernmentHoliday.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnAddGovernmentHoliday.FlatAppearance.BorderSize = 0;
+            this.btnAddGovernmentHoliday.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(167)))), ((int)(((byte)(55)))));
+            this.btnAddGovernmentHoliday.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(167)))), ((int)(((byte)(55)))));
+            this.btnAddGovernmentHoliday.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddGovernmentHoliday.Font = new System.Drawing.Font("Segoe UI", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnAddGovernmentHoliday.ForeColor = System.Drawing.Color.White;
+            this.btnAddGovernmentHoliday.Image = global::emira.Properties.Resources.add_icon_white_26;
+            this.btnAddGovernmentHoliday.Location = new System.Drawing.Point(361, 39);
+            this.btnAddGovernmentHoliday.Name = "btnAddGovernmentHoliday";
+            this.btnAddGovernmentHoliday.Size = new System.Drawing.Size(130, 40);
+            this.btnAddGovernmentHoliday.TabIndex = 6;
+            this.btnAddGovernmentHoliday.Text = "Pihenőnap";
+            this.btnAddGovernmentHoliday.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnAddGovernmentHoliday.UseVisualStyleBackColor = false;
             // 
             // lState
             // 
             this.lState.AutoSize = true;
-            this.lState.Location = new System.Drawing.Point(230, 48);
+            this.lState.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lState.Location = new System.Drawing.Point(153, 51);
             this.lState.Name = "lState";
-            this.lState.Size = new System.Drawing.Size(45, 17);
+            this.lState.Size = new System.Drawing.Size(65, 20);
             this.lState.TabIndex = 5;
-            this.lState.Text = "State:";
+            this.lState.Text = "Állapot:";
             // 
             // lYear
             // 
             this.lYear.AutoSize = true;
-            this.lYear.Location = new System.Drawing.Point(21, 48);
+            this.lYear.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lYear.Location = new System.Drawing.Point(20, 51);
             this.lYear.Name = "lYear";
-            this.lYear.Size = new System.Drawing.Size(40, 17);
+            this.lYear.Size = new System.Drawing.Size(31, 20);
             this.lYear.TabIndex = 4;
-            this.lYear.Text = "Year:";
+            this.lYear.Text = "Év:";
             // 
             // cbState
             // 
@@ -524,10 +599,10 @@
             this.cbState.Items.AddRange(new object[] {
             "Actual",
             "All"});
-            this.cbState.Location = new System.Drawing.Point(283, 41);
+            this.cbState.Location = new System.Drawing.Point(224, 46);
             this.cbState.MaxDropDownItems = 5;
             this.cbState.Name = "cbState";
-            this.cbState.Size = new System.Drawing.Size(121, 29);
+            this.cbState.Size = new System.Drawing.Size(90, 29);
             this.cbState.TabIndex = 3;
             this.cbState.Text = "Actual";
             this.cbState.SelectedIndexChanged += new System.EventHandler(this.cbState_SelectedIndexChanged);
@@ -574,17 +649,20 @@
             // btnCancellation
             // 
             this.btnCancellation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(52)))), ((int)(((byte)(56)))));
-            this.btnCancellation.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(71)))), ((int)(((byte)(75)))));
+            this.btnCancellation.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnCancellation.FlatAppearance.BorderSize = 0;
             this.btnCancellation.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(71)))), ((int)(((byte)(75)))));
             this.btnCancellation.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(71)))), ((int)(((byte)(75)))));
             this.btnCancellation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancellation.Font = new System.Drawing.Font("Segoe UI", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnCancellation.Location = new System.Drawing.Point(472, 40);
+            this.btnCancellation.ForeColor = System.Drawing.Color.White;
+            this.btnCancellation.Image = global::emira.Properties.Resources.delete_icon_white_26;
+            this.btnCancellation.Location = new System.Drawing.Point(509, 39);
             this.btnCancellation.Name = "btnCancellation";
-            this.btnCancellation.Size = new System.Drawing.Size(140, 29);
+            this.btnCancellation.Size = new System.Drawing.Size(100, 40);
             this.btnCancellation.TabIndex = 1;
-            this.btnCancellation.Text = "Cancellation";
+            this.btnCancellation.Text = "Stornó";
+            this.btnCancellation.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCancellation.UseVisualStyleBackColor = false;
             this.btnCancellation.Click += new System.EventHandler(this.btnCancellation_Click);
             // 
@@ -596,10 +674,10 @@
             this.cbYears.FormattingEnabled = true;
             this.cbYears.IntegralHeight = false;
             this.cbYears.ItemHeight = 21;
-            this.cbYears.Location = new System.Drawing.Point(74, 40);
+            this.cbYears.Location = new System.Drawing.Point(57, 46);
             this.cbYears.MaxDropDownItems = 5;
             this.cbYears.Name = "cbYears";
-            this.cbYears.Size = new System.Drawing.Size(121, 29);
+            this.cbYears.Size = new System.Drawing.Size(90, 29);
             this.cbYears.TabIndex = 0;
             this.cbYears.SelectedIndexChanged += new System.EventHandler(this.cbYears_SelectedIndexChanged);
             this.cbYears.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbYears_KeyPress);
@@ -630,6 +708,8 @@
             this.tlpAddHoliday.ResumeLayout(false);
             this.tlpAddHoliday.PerformLayout();
             this.gbHoliday.ResumeLayout(false);
+            this.gbHoliday.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupAnnualHoliday)).EndInit();
             this.tlpHoliday.ResumeLayout(false);
             this.tlpHoliday.PerformLayout();
             this.gbHolidaysSoFar.ResumeLayout(false);
@@ -679,5 +759,9 @@
         private System.Windows.Forms.Label lState;
         private System.Windows.Forms.Label lYear;
         private System.Windows.Forms.ComboBox cbState;
+        private System.Windows.Forms.NumericUpDown nupAnnualHoliday;
+        private System.Windows.Forms.RadioButton rbHolidaysByUser;
+        private System.Windows.Forms.RadioButton rbCalculated;
+        private System.Windows.Forms.Button btnAddGovernmentHoliday;
     }
 }
