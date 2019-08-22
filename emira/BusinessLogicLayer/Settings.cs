@@ -353,13 +353,12 @@ namespace emira.BusinessLogicLayer
         /// <returns></returns>
         public bool SetNewValue(string ID, string UserID, string NewValue)
         {
-            int _updatedRow = 0;
             try
             {
                 DBHandler = new DatabaseHandler();
                 Dictionary<string, string> _data = new Dictionary<string, string>();
                 _data.Add(ID, NewValue);
-                bIsSuccess = DBHandler.SetNewValueDB(_data, ID, UserID, _updatedRow);
+                bIsSuccess = DBHandler.SetNewValueDB(_data, ID, UserID);
                 return bIsSuccess;
             }
             catch (Exception error)
@@ -380,11 +379,10 @@ namespace emira.BusinessLogicLayer
         /// <returns></returns>
         public bool SetNewValues(string email, string userEmail, Dictionary<string, string> data)
         {
-            int _updatedRow = 0;
             try
             {
                 DBHandler = new DatabaseHandler();
-                bIsSuccess = DBHandler.SetNewValueDB(data, email, userEmail, _updatedRow);
+                bIsSuccess = DBHandler.SetNewValueDB(data, email, userEmail);
                 return bIsSuccess;
             }
             catch (Exception error)

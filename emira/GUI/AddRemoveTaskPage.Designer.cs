@@ -142,6 +142,7 @@
             this.Controls.Add(this.tvAddOrRemoveTask);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "AddRemoveTaskPage";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.AddRemoveTaskPage_Load);
             this.pHeader.ResumeLayout(false);
             this.pHeader.PerformLayout();

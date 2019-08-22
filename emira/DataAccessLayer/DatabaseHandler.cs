@@ -125,7 +125,7 @@ namespace emira.DataAccessLayer
             return iResult;
         }
 
-        private bool Update(string tableName, Dictionary<string, string> data, string where, ref int updatedRows)
+        private bool Update(string tableName, Dictionary<string, string> data, string where)
         {
             string _vals = string.Empty;
 
@@ -146,9 +146,9 @@ namespace emira.DataAccessLayer
                 SQLiteCommand.CommandText = command;
                 sqlite.Open();
 
-                updatedRows = SQLiteCommand.ExecuteNonQuery();
+                iResult = SQLiteCommand.ExecuteNonQuery();
 
-                if (updatedRows > 0) bResult = true;
+                if (iResult > 0) bResult = true;
             }
             catch (SQLiteException error)
             {
@@ -247,9 +247,9 @@ namespace emira.DataAccessLayer
             return bResult;
         }
 
-        public bool SetNewValueDB(Dictionary<string, string> data, string key, string value, int updatedRow)
+        public bool SetNewValueDB(Dictionary<string, string> data, string key, string value)
         {
-            bResult = Update(Texts.DataTableNames.Person, data, string.Format("{0}='{1}'", key, value), ref updatedRow);
+            bResult = Update(Texts.DataTableNames.Person, data, string.Format("{0}='{1}'", key, value));
             return bResult;
         }
 
@@ -288,15 +288,15 @@ namespace emira.DataAccessLayer
             return iResult;
         }
 
-        public DataTable GetAllTasksByGroup(string groupID)
+        public int GetMaxTaskID(string groupID)
         {
-            string command = string.Format("SELECT {0} FROM {1} WHERE {2} = {3}",
+            string command = string.Format("SELECT MAX({0}) FROM {1} WHERE {2} = {3}",
                 Texts.TaskProperties.TaskID,
                 Texts.DataTableNames.Task,
                 Texts.TaskProperties.GroupID,
                 groupID);
-            dataTable = GetDataTable(command);
-            return dataTable;
+            iResult = ExecuteScalar(command);
+            return iResult;
         }
 
         public DataTable GetGroups(string command)
@@ -314,7 +314,7 @@ namespace emira.DataAccessLayer
         }
 
 
-        public int InsertNewGroup(int groupID, string groupName)
+        public int InsertNewGroup(string groupID, string groupName)
         {
             string command = string.Format("INSERT INTO {0} ({1}, {2}) VALUES ('{3}', '{4}')",
                 Texts.DataTableNames.TaskGroup,
@@ -342,30 +342,31 @@ namespace emira.DataAccessLayer
         }
 
 
-        public bool ModifyGroup(Dictionary<string, string> data, string key, string value, int updatedRow)
+        public bool ModifyGroup(string tableName, Dictionary<string, string> data, string key, string value)
         {
-            bResult = Update(Texts.DataTableNames.TaskGroup, data, string.Format("{0}='{1}'", key, value), ref updatedRow);
+            bResult = Update(tableName, data, string.Format("{0}='{1}'", key, value));
             return bResult;
         }
 
-        public bool ModifyTask(Dictionary<string, string> data, string key, string value, int updatedRow)
+        public bool ModifyTask(string command)
         {
-            bResult = Update(Texts.DataTableNames.Task, data, string.Format("{0}='{1}'", key, value), ref updatedRow);
+            iResult = ExecuteNonQuery(command);
+            if (iResult > 0) bResult = true;
             return bResult;
         }
 
-
-        public int DeleteGroupAndTasks(string dataTableName, string groupID)
+        public bool DeleteGroupAndTasks(string dataTableName, string groupID)
         {
             string command = string.Format("DELETE FROM {0} WHERE {1}='{2}'",
                           dataTableName,
                           Texts.TaskProperties.GroupID,
                           groupID);
             iResult = ExecuteNonQuery(command);
-            return iResult;
+            if (iResult > 0) bResult = true;
+            return bResult;
         }
 
-        public int DeleteUsedTasksFromCatalog(string groupID)
+        public bool DeleteUsedGroupFromCatalog(string groupID)
         {
             string command = string.Format("DELETE FROM {0} WHERE {1}='{2}' AND {3} = 0",
                           Texts.DataTableNames.Catalog,
@@ -373,23 +374,49 @@ namespace emira.DataAccessLayer
                           groupID,
                           Texts.CatalogProperties.Locked);
             iResult = ExecuteNonQuery(command);
-            return iResult;
+            if (iResult > 0) bResult = true;
+            return bResult;
         }
 
-        public int DeleteRow(string taskGroupID, string taskGroup, string taskID, string taskName)
+        public string isTaskSelected(string groupID, string taskID)
         {
-            string command = string.Format("DELETE FROM {0} WHERE {1}='{2}' AND {3}='{4}' AND {5}='{6}' AND {7}='{8}'",
+            command = string.Format("SELECT {0} FROM {1} WHERE {2}='{3}' AND {4}='{5}'",
+                Texts.TaskProperties.Selected,
                 Texts.DataTableNames.Task,
                 Texts.TaskProperties.GroupID,
-                taskGroupID,
-                Texts.TaskProperties.TaskGroupName,
-                taskGroup,
+                groupID,
                 Texts.TaskProperties.TaskID,
-                taskID,
-                Texts.TaskProperties.TaskName,
-                taskName);
+                taskID);
+            dataTable = new DataTable();
+            sResult = GetString(command);
+            return sResult;
+        }
+
+        public bool DeleteTask(string groupID, string taskID)
+        {
+            string command = string.Format("DELETE FROM {0} WHERE {1}='{2}' AND {3}='{4}'",
+                Texts.DataTableNames.Task,
+                Texts.TaskProperties.GroupID,
+                groupID,
+                Texts.TaskProperties.TaskID,
+                taskID);
             iResult = ExecuteNonQuery(command);
-            return iResult;
+            if (iResult > 0) bResult = true;
+            return bResult;
+        }
+
+        public bool DeleteUsedTaskFromCatalog(string groupID, string taskID)
+        {
+            string command = string.Format("DELETE FROM {0} WHERE {1}='{2}' AND {3}='{4}' AND {5} = 0",
+                          Texts.DataTableNames.Catalog,
+                          Texts.CatalogProperties.GroupID,
+                          groupID,
+                          Texts.CatalogProperties.TaskID,
+                          taskID,
+                          Texts.CatalogProperties.Locked);
+            iResult = ExecuteNonQuery(command);
+            if (iResult > 0) bResult = true;
+            return bResult;
         }
 
 
@@ -403,14 +430,14 @@ namespace emira.DataAccessLayer
             return bResult;
         }
 
-        public bool DoesItHave(string GroupIDColumn, string GroupID, string GroupNameColumn, string GroupName)
+        public bool DoesItHave(string groupID, string key, string value)
         {
-            string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE {1}='{2}' AND {3}='{4}'", 
+            string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE {2}='{3}' AND {1} = '{4}'", 
                 Texts.DataTableNames.Task,
-                GroupIDColumn, 
-                GroupID, 
-                GroupNameColumn, 
-                GroupName);
+                Texts.TaskProperties.GroupID, 
+                key,
+                value,
+                groupID);
             if (ExecuteScalar(command) != 0) bResult = true;
             return bResult;
         }
@@ -514,9 +541,9 @@ namespace emira.DataAccessLayer
             return iResult;
         }
 
-        public bool UpdateHoliday(Dictionary<string, string> data, string Key, string Value, int updatedRow)
+        public bool UpdateHoliday(Dictionary<string, string> data, string key, string value)
         {
-            bResult = Update(Texts.DataTableNames.Holiday, data, string.Format("{0}='{1}'", Key, Value), ref updatedRow);
+            bResult = Update(Texts.DataTableNames.Holiday, data, string.Format("{0}='{1}'", key, value));
             return bResult;
         }
 
@@ -539,7 +566,7 @@ namespace emira.DataAccessLayer
 
         public DataTable GetTask()
         {
-            command = string.Format("SELECT {0}.{1}, {0}.{2}, {0}.{3}, {0}.{4} FROM {0} ORDER BY {0}.{1}",
+            command = string.Format("SELECT {1}, {2}, {3}, {4} FROM {0} ORDER BY {1}, {2}",
                 Texts.DataTableNames.Task,
                 Texts.TaskProperties.GroupID,
                 Texts.TaskProperties.TaskID,
@@ -588,7 +615,7 @@ namespace emira.DataAccessLayer
 
         public DataTable GetSelectedTaskFromDB()
         {
-            command = string.Format("SELECT * FROM {0} WHERE {1} = 1",
+            command = string.Format("SELECT * FROM {0} WHERE {1}='1'",
                 Texts.DataTableNames.Task,
                 Texts.TaskProperties.Selected);
             dataTable = new DataTable();
@@ -608,11 +635,13 @@ namespace emira.DataAccessLayer
             return dataTable;
         }
 
-        public string GetHoursFromCatalog(string taskID, string date)
+        public string GetHoursFromCatalog(string groupID, string taskID, string date)
         {
-            command = string.Format("SELECT {0} FROM {1} WHERE {2}='{3}' AND {4}='{5}'",
+            command = string.Format("SELECT {0} FROM {1} WHERE {2}='{3}' AND {4}='{5}' AND {6}='{7}'",
                 Texts.CatalogProperties.NumberOfHours,
                 Texts.DataTableNames.Catalog,
+                Texts.CatalogProperties.GroupID,
+                groupID,
                 Texts.CatalogProperties.TaskID,
                 taskID,
                 Texts.CatalogProperties.Date,
@@ -621,10 +650,12 @@ namespace emira.DataAccessLayer
             return sResult;
         }
 
-        public int IsRecordExist(string taskID, string date)
+        public int IsRecordExist(string groupID, string taskID, string date)
         {
-            command = string.Format("SELECT rowid FROM {0} WHERE {1}='{2}' AND {3}='{4}'",
+            command = string.Format("SELECT rowid FROM {0} WHERE {1}='{2}' AND {3}='{4}' AND {5}='{6}'",
                 Texts.DataTableNames.Catalog,
+                Texts.CatalogProperties.GroupID,
+                groupID,
                 Texts.CatalogProperties.TaskID,
                 taskID,
                 Texts.CatalogProperties.Date,
@@ -633,30 +664,37 @@ namespace emira.DataAccessLayer
             return iResult;
         }
 
-        public int SaveHourToCatalog(string taskID, string date, double numberOfHours)
+        public int SaveHourToCatalog(string groupID, string taskID, string taskName, string date, double numberOfHours)
         {
-            command = string.Format("INSERT INTO {0} ({1}, {2}, {3}) VALUES('{4}', '{5}', '{6}')",
+            command = string.Format("INSERT INTO {0} ({1}, {2}, {3}, {4}, {5}, {6}) VALUES('{7}', '{8}', '{9}', '{10}', '{11}', 0)",
                 Texts.DataTableNames.Catalog,
+                Texts.CatalogProperties.GroupID,
                 Texts.CatalogProperties.TaskID,
+                Texts.CatalogProperties.TaskName,
                 Texts.CatalogProperties.Date,
                 Texts.CatalogProperties.NumberOfHours,
+                Texts.CatalogProperties.Locked,
+                groupID,
                 taskID,
+                taskName,
                 date,
                 numberOfHours);
             iResult = ExecuteNonQuery(command);
             return iResult;
         }
 
-        public bool ModifyHourInCatalog(Dictionary<string, string> data, string value, int updatedRow)
+        public bool ModifyHourInCatalog(Dictionary<string, string> data, string value)
         {
-            bResult = Update(Texts.DataTableNames.Catalog, data, string.Format("{0}='{1}'", "rowid", value), ref updatedRow);
+            bResult = Update(Texts.DataTableNames.Catalog, data, string.Format("{0}='{1}'", "rowid", value));
             return bResult;
         }
 
-        public int DeleteHourFromCatalog(string taskID, string date)
+        public int DeleteHourFromCatalog(string groupID, string taskID, string date)
         {
-            command = string.Format("DELETE FROM {0} WHERE {1}='{2}' AND {3}='{4}'",
+            command = string.Format("DELETE FROM {0} WHERE {1}='{2}' AND {3}='{4}' AND {5}='{6}'",
                 Texts.DataTableNames.Catalog,
+                Texts.CatalogProperties.GroupID,
+                groupID,
                 Texts.CatalogProperties.TaskID,
                 taskID,
                 Texts.CatalogProperties.Date,
@@ -665,12 +703,14 @@ namespace emira.DataAccessLayer
             return iResult;
         }
 
-        public int DeleteHours(string date, string taskID)
+        public int DeleteHours(string date, string groupID, string taskID)
         {
-            command = string.Format("DELETE FROM {0} WHERE {1} LIKE '{2}%' AND {3}='{4}'",
+            command = string.Format("DELETE FROM {0} WHERE {1} LIKE '{2}%' AND {3}='{4}' AND {5}='{6}'",
                 Texts.DataTableNames.Catalog,
                 Texts.CatalogProperties.Date,
                 date,
+                Texts.CatalogProperties.GroupID,
+                groupID,
                 Texts.CatalogProperties.TaskID,
                 taskID);
             iResult = ExecuteNonQuery(command);

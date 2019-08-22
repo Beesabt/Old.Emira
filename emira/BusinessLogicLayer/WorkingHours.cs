@@ -126,15 +126,18 @@ namespace emira.BusinessLogicLayer
             try
             {
                 DBHandler = new DatabaseHandler();
-                int _index = 0;
+                string _groupID = string.Empty;
                 string _taskID = string.Empty;
                 string _date = string.Empty;
 
-                // Get the task ID from the task
-                _index = task.IndexOf(' ');
-                _taskID = task.Remove(_index);
+                // Remove the task Name
+                _taskID = task.Remove(task.IndexOf(' '));
 
-                _result = DBHandler.GetHoursFromCatalog(_taskID, date);
+                // Get the group ID and task ID
+                _groupID = _taskID.Remove(_taskID.IndexOf('_'));
+                _taskID = _taskID.Substring(_taskID.IndexOf('_') + 1);
+
+                _result = DBHandler.GetHoursFromCatalog(_groupID, _taskID, date);
 
                 return _result;
             }
@@ -147,56 +150,74 @@ namespace emira.BusinessLogicLayer
             }          
         }
 
+        /// <summary>
+        /// Save the hours into the Catalog
+        /// </summary>
+        /// <param name="task">Task name wiht ID and Name</param>
+        /// <param name="date">The date</param>
+        /// <param name="numberOfHours">The hours</param>
+        /// <returns>True if it was success</returns>
         public bool SaveHour(string task, string date, double numberOfHours)
         {
+            string _groupID = string.Empty;
+            string _taskID = string.Empty;
+            string _taskName = string.Empty;
             bool _isSuccess = false;
             int _result = 0;
             int _rowid = 0;
-            int updatedRow = 0;
             DBHandler = new DatabaseHandler();
 
-            // Get taskID
-            int _index = 0;
-            string _taskID = string.Empty;
+            // Remove the task Name
+            _taskID = task.Remove(task.IndexOf(' '));
+            _taskName = task.Substring(task.IndexOf(' ') + 1);
 
-            _index = task.IndexOf(' ');
-            _taskID = task.Remove(_index);
+            // Get the group ID and task ID
+            _groupID = _taskID.Remove(_taskID.IndexOf('_'));
+            _taskID = _taskID.Substring(_taskID.IndexOf('_') + 1);
 
             // If it is update
-            _rowid = DBHandler.IsRecordExist(_taskID, date);
+            _rowid = DBHandler.IsRecordExist(_groupID, _taskID, date);
 
             if (_rowid > 0)
             {
                 Dictionary<string, string> data = new Dictionary<string, string>();
                 data.Add(Texts.CatalogProperties.NumberOfHours, numberOfHours.ToString());
 
-                _isSuccess = DBHandler.ModifyHourInCatalog(data, _rowid.ToString(), updatedRow);
+                _isSuccess = DBHandler.ModifyHourInCatalog(data, _rowid.ToString());
 
                 return _isSuccess;
             }
 
-            _result = DBHandler.SaveHourToCatalog(_taskID, date, numberOfHours);
+            _result = DBHandler.SaveHourToCatalog(_groupID, _taskID, _taskName, date, numberOfHours);
 
             if (_result > 0) { _isSuccess = true; }
 
             return _isSuccess;
         }
 
+        /// <summary>
+        /// Delete the hours from the Catalog
+        /// </summary>
+        /// <param name="task">Task name wiht ID and Name</param>
+        /// <param name="date">The date</param>
+        /// <returns>True if it was success</returns>
         public bool RemoveHour(string task, string date)
         {
+            string _groupID = string.Empty;
+            string _taskID = string.Empty;
             bool _isSuccess = false;
             int _result = 0;
             DBHandler = new DatabaseHandler();
 
-            // Get taskID
-            int _index = 0;
-            string _taskID = string.Empty;
+            // Remove the task Name
+            _taskID = task.Remove(task.IndexOf(' '));
 
-            _index = task.IndexOf(' ');
-            _taskID = task.Remove(_index);
+            // Get the group ID and task ID
+            _groupID = _taskID.Remove(_taskID.IndexOf('_'));
+            _taskID = _taskID.Substring(_taskID.IndexOf('_') + 1);
 
             // Remove the record from the DB
-            _result = DBHandler.DeleteHourFromCatalog(_taskID, date);
+            _result = DBHandler.DeleteHourFromCatalog(_groupID, _taskID, date);
 
             if (_result > 0) { _isSuccess = true; }
 

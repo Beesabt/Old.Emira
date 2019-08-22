@@ -517,7 +517,6 @@ namespace emira.BusinessLogicLayer
             {
                 DBHandler = new DatabaseHandler();
                 string _ID = string.Empty;
-                int updatedRow = 0;
 
                 // Get the rowID of the holiday
                 // Cut the time
@@ -533,7 +532,7 @@ namespace emira.BusinessLogicLayer
                 // Remove the holiday from Actual
                 Dictionary<string, string> data = new Dictionary<string, string>();
                 data.Add(Texts.HolidayProperties.Status, "False");
-                _isSuccess = DBHandler.UpdateHoliday(data, Texts.HolidayProperties.RowID, _ID, updatedRow);
+                _isSuccess = DBHandler.UpdateHoliday(data, Texts.HolidayProperties.RowID, _ID);
                 return _isSuccess;
             }
             catch (Exception error)

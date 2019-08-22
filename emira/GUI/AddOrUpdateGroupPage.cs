@@ -14,8 +14,8 @@ namespace emira.GUI
         int togMove;
         int mValX;
         int mValY;
-        string groupID = string.Empty;
-        string groupName = string.Empty;
+        string oldGroupID = string.Empty;
+        string oldGroupName = string.Empty;
         CustomMsgBox customMsgBox;
         TaskModification taskModification;
 
@@ -28,16 +28,17 @@ namespace emira.GUI
         {
             try
             {
-                var l_CurrentStack = new StackTrace(true);
+                var _currentStack = new StackTrace(true);
 
-                for (int i = 0; i <= l_CurrentStack.FrameCount; i++)
+                for (int i = 0; i <= _currentStack.FrameCount; i++)
                 {
-                    StackFrame _click = l_CurrentStack.GetFrame(i);
+                    StackFrame _click = _currentStack.GetFrame(i);
 
                     if (_click.GetMethod().ToString().Contains("btnAddGroup_Click"))
                     {
-                        lAddOrUpdateGroup.Text = "Csoport hozááadása";
-                        btnAdd.Text = Texts.Button.Add;
+                        // Modify the text of the label and button
+                        lAddOrUpdateGroup.Text = Texts.Label.Add;
+                        btnAction.Text = Texts.Button.Add;
 
                         // Get the next group ID and set it for the number up down control
                         taskModification = new TaskModification();
@@ -45,49 +46,43 @@ namespace emira.GUI
                         _nextGroupID = taskModification.GetNextGroupID();
 
                         if (_nextGroupID > 0)
-                        {
                             nupGroupID.Value = _nextGroupID;
-                        }
 
-                        break;
+                        return;
                     }
 
                     if (_click.GetMethod().ToString().Contains("btnUpdateGroup_Click"))
                     {
+                        // Modify the text of the label and button
+                        lAddOrUpdateGroup.Text = Texts.Label.Update;
+                        btnAction.Text = Texts.Button.Update;
 
                         // Get the actual value of the group combobox
                         TaskManager _taskManager = new TaskManager();
                         string _groupIDandName = string.Empty;
 
                         _groupIDandName = TaskManager.cbGroupValue;
-                        if (string.IsNullOrEmpty(_groupIDandName))
-                        {
-                            return;
-                        }
 
+                        // If somehow the combox was empty close the update dialog
+                        if (string.IsNullOrEmpty(_groupIDandName)) Close();
 
                         // The text of the combobox contains the group ID and Name
                         string[] _group = new string[2];
                         _group = _groupIDandName.Split(' ');
 
                         // Set the global variables for Update button
-                        groupID = _group[0];
-                        groupName = _group[1];
+                        oldGroupID = _group[0];
+                        oldGroupName = _group[1];
 
                         // Set the group ID
                         int _groupID;
                         if (Int32.TryParse(_group[0], out _groupID))
-                        {
                             nupGroupID.Value = _groupID;
-                        }
 
                         // Set the group Name
                         tbGroupName.Text = _group[1];
 
-                        // Modify the text of the label and button
-                        lAddOrUpdateGroup.Text = "Csoport módosítása";
-                        btnAdd.Text = Texts.Button.Update;
-                        break;
+                        return;
                     }
                 }
             }
@@ -96,7 +91,7 @@ namespace emira.GUI
                 Logger.Error(error);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-            }       
+            }
         }
 
         private void nupGroupID_KeyPress(object sender, KeyPressEventArgs e)
@@ -104,24 +99,16 @@ namespace emira.GUI
             e.Handled = true;
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void btnAction_Click(object sender, EventArgs e)
         {
             try
             {
-                // Check the text field is empty or not
-                if (!taskModification.TextBoxValueValidation(tbGroupName.Text))
-                {
-                    customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.RequiredFieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-                    return;
-                }
-
                 taskModification = new TaskModification();
 
                 bool _isSuccess = false;
 
-                if (btnAdd.Text == Texts.Button.Add)
-                {                    
+                if (btnAction.Text == Texts.Button.Add)
+                {
                     // Add new group
                     _isSuccess = taskModification.AddNewGroup(nupGroupID.Value.ToString(), tbGroupName.Text);
 
@@ -136,15 +123,34 @@ namespace emira.GUI
                 }
                 else
                 {
+                    // If the values are the same then it returns with warning message
+                    if (oldGroupID == nupGroupID.Value.ToString() && oldGroupName == tbGroupName.Text)
+                    {
+                        customMsgBox = new CustomMsgBox();
+                        customMsgBox.Show(Texts.ErrorMessages.NothingChangedForUpdate, Texts.Captions.Warning, CustomMsgBox.MsgBoxIcon.Warning, CustomMsgBox.Button.OK);
+                        return;
+                    }
+
+                    // Freez controls
+                    nupGroupID.Enabled = false;
+                    tbGroupName.Enabled = false;
+
                     // Update the group
-                    _isSuccess = taskModification.UpdateGroup(groupID, nupGroupID.Value.ToString(), groupName, tbGroupName.Text);
+                    _isSuccess = taskModification.UpdateGroup(oldGroupID, nupGroupID.Value.ToString(), oldGroupName, tbGroupName.Text);
 
                     if (!_isSuccess)
                     {
                         customMsgBox = new CustomMsgBox();
                         customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        // Freez controls
+                        nupGroupID.Enabled = true;
+                        tbGroupName.Enabled = true;
                         return;
                     }
+
+                    // Enable controls
+                    nupGroupID.Enabled = true;
+                    tbGroupName.Enabled = true;
 
                     Close();
                 }

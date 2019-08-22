@@ -14,12 +14,23 @@ namespace emira.BusinessLogicLayer
         CustomMsgBox customMsgBox;
         DatabaseHandler DBHandler;
        
-        public void SaveModification(Dictionary<string, string> data, string _taskGroupID)
+        public void SaveModification(string value, string groupID, string taskID)
         {
             try
             {
                 DBHandler = new DatabaseHandler();
-                DBHandler.ModifyTask(data, Texts.TaskProperties.TaskID, _taskGroupID, updatedRow: 0);
+                string _command = string.Empty;
+
+                _command = string.Format("UPDATE {0} SET {1}='{2}' WHERE {3}='{4}' AND {5}='{6}'",
+                    Texts.DataTableNames.Task,
+                    Texts.TaskProperties.Selected,
+                    value,
+                    Texts.TaskProperties.GroupID,
+                    groupID,
+                    Texts.TaskProperties.TaskID,
+                    taskID);
+
+                DBHandler.ModifyTask(_command);
             }
             catch(Exception error)
             {
@@ -29,12 +40,12 @@ namespace emira.BusinessLogicLayer
             }      
         }
 
-        public void DeleteHours(string date, string taskID)
+        public void DeleteHours(string date, string groupID, string taskID)
         {
             try
             {
                 DBHandler = new DatabaseHandler();
-                DBHandler.DeleteHours(date, taskID);
+                DBHandler.DeleteHours(date, groupID, taskID);
             }
             catch (Exception error)
             {

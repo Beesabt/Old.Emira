@@ -202,6 +202,8 @@ namespace emira.HelperFunctions
 
             public static string ComboboxIsEmptyForDelete = "The group name combox is empty, please choose a group before delete!";
 
+            public static string NothingChangedForUpdate = "Nothing changed for update!";
+
             public static string CheckValuesOfFieldsForGroup =
                          "The value of the field is not proper.\r\n\r\nPossible reasons:\r\n" +
                          "* The Group ID already exists with another Group name\r\n" +                      
@@ -312,6 +314,13 @@ namespace emira.HelperFunctions
             public static string Add = "Hozzáad";
 
             public static string Update = "Módosít";
+        }
+
+        public static class Label
+        {
+            public static string Add = "Csoport hozááadása";
+
+            public static string Update = "Csoport módosítása";
         }
     }
 }

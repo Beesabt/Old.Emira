@@ -37,51 +37,51 @@ namespace emira.GUI
                 string _actualTaskGroup = string.Empty;
                 string _actualTaskID = string.Empty;
                 string _actualTaskName = string.Empty;
-                string _actualTaskIDFirstNumber = string.Empty;
                 string _actualTaskIDLastNumber = string.Empty;
                 string _previousGroupID = string.Empty;
                 string _previousTaskID = string.Empty;
                 bool _actualTaskSelected = false;
-                int _actualTaskIDInteger = 0;
-                int _index = 0;
+                int _actualGroupID = 0;
 
                 addRemoveTask = new AddRemoveTask();
                 taskModification = new TaskModification();
                 dataTable = new DataTable();
+                List<string> _groups = new List<string>();
 
-                // Get the tasks from the Task table
-                dataTable = taskModification.GetTask();
+                // Get the groups from the TaskGroup table
+                _groups = taskModification.GetGroups();
 
                 // Set the parent nodes
-                foreach (DataRow group in dataTable.Rows)
+                foreach (string group in _groups)
                 {
-                    _actualTaskGroupID = group[Texts.TaskGropuProperties.GroupID].ToString();
-                    _actualTaskGroup = group[Texts.TaskGropuProperties.GroupName].ToString();
+                    _actualTaskGroupID = group.Remove(group.IndexOf(' '));
+                    _actualTaskGroup = group.Remove(group.IndexOf(' ') + 1);
 
 
                     if (_previousGroupID != _actualTaskGroupID)
                     {
-                        tvAddOrRemoveTask.Nodes.Add(_actualTaskGroupID + " " + _actualTaskGroup);
+                        tvAddOrRemoveTask.Nodes.Add(group);
                         _previousGroupID = _actualTaskGroupID;
                     }
                 }
+
+                // Get the tasks from the Task table
+                dataTable = taskModification.GetTasks();
 
                 // Set the child nodes and
                 // Set the checkbox where the task is selected
                 foreach (DataRow task in dataTable.Rows)
                 {
+                    _actualTaskGroupID = task[Texts.TaskProperties.GroupID].ToString();
                     _actualTaskID = task[Texts.TaskProperties.TaskID].ToString();
                     _actualTaskName = task[Texts.TaskProperties.TaskName].ToString();
 
-                    _index = _actualTaskID.IndexOf('_');
-                    _actualTaskIDFirstNumber = _actualTaskID.Remove(_index);
-
-                    Int32.TryParse(_actualTaskIDFirstNumber, out _actualTaskIDInteger);
+                    Int32.TryParse(_actualTaskGroupID, out _actualGroupID);
                     Boolean.TryParse(task[Texts.TaskProperties.Selected].ToString(), out _actualTaskSelected);
 
-                    if (_previousTaskID == _actualTaskIDFirstNumber)
+                    if (_previousTaskID == _actualTaskID)
                     {
-                        TreeNode _taskNode = tvAddOrRemoveTask.Nodes[_actualTaskIDInteger].Nodes.Add(_actualTaskID + " " + _actualTaskName);
+                        TreeNode _taskNode = tvAddOrRemoveTask.Nodes[_actualGroupID].Nodes.Add(_actualTaskGroupID + "_" + _actualTaskID + " " + _actualTaskName);
                         if (_actualTaskSelected)
                         {
                             _taskNode.Checked = true;
@@ -92,7 +92,7 @@ namespace emira.GUI
                     }
                     else
                     {
-                        TreeNode _taskNode = tvAddOrRemoveTask.Nodes[_actualTaskIDInteger].Nodes.Add(_actualTaskID + " " + _actualTaskName);
+                        TreeNode _taskNode = tvAddOrRemoveTask.Nodes[_actualGroupID].Nodes.Add(_actualTaskGroupID + "_" + _actualTaskID + " " + _actualTaskName);
                         if (_actualTaskSelected)
                         {
                             _taskNode.Checked = true;
@@ -100,7 +100,7 @@ namespace emira.GUI
                             _taskNode.Parent.Checked = true;
                             _taskNode.Parent.Expand();
                         }
-                        _previousTaskID = _actualTaskIDFirstNumber;
+                        _previousTaskID = _actualTaskID;
                     }
                 }
             }
@@ -143,12 +143,10 @@ namespace emira.GUI
                 List<TreeNode> _unSelectedNodes = new List<TreeNode>();
                 addRemoveTask = new AddRemoveTask();
 
-                string _parentName = string.Empty;
                 string _nodeName = string.Empty;
-                string _parentID = string.Empty;
                 string _nodeID = string.Empty;
-
-                int _index = 0;
+                string _groupID = string.Empty;
+                string _taskID = string.Empty;
 
                 // Fill up the _selectedNodes and _unSelectedNodes with tasks according to the actual state
                 foreach (TreeNode parent in tvAddOrRemoveTask.Nodes)
@@ -197,15 +195,14 @@ namespace emira.GUI
                     _nodeName = node.Text;
 
                     // Task name and node name contain the ID and the name therefore need to split them
-                    _index = _nodeName.IndexOf(' ');
-                    _nodeID = _nodeName.Remove(_index + 1);
-                    _nodeName = _nodeName.Remove(0, (_index));
+                    _nodeID = _nodeName.Remove(_nodeName.IndexOf(' '));
+                    _taskID = _nodeID.Substring(_nodeID.IndexOf('_') + 1);
 
-                    Dictionary<string, string> data = new Dictionary<string, string>();
-                    data.Add(Texts.TaskProperties.Selected, "True");
+                    // Get group ID
+                    _groupID = node.Parent.Text.Remove(node.Parent.Text.IndexOf(' '));
 
                     // Save the task as selected
-                    addRemoveTask.SaveModification(data, _nodeID.Trim());
+                    addRemoveTask.SaveModification("True", _groupID, _taskID);
                 }
 
                 foreach (TreeNode node in _unSelectedNodes)
@@ -213,15 +210,14 @@ namespace emira.GUI
                     _nodeName = node.Text;
 
                     // Task name and node name contain the ID and the name therefore need to split them
-                    _index = _nodeName.IndexOf(' ');
-                    _nodeID = _nodeName.Remove(_index + 1);
-                    _nodeName = _nodeName.Remove(0, (_index));
+                    _nodeID = _nodeName.Remove(_nodeName.IndexOf(' '));
+                    _taskID = _nodeID.Substring(_nodeID.IndexOf('_') + 1);
 
-                    Dictionary<string, string> data = new Dictionary<string, string>();
-                    data.Add(Texts.TaskProperties.Selected, "False");
+                    // Get group ID
+                    _groupID = node.Parent.Text.Remove(node.Parent.Text.IndexOf(' '));
 
                     // Save the task as unselected
-                    addRemoveTask.SaveModification(data, _nodeID.Trim());
+                    addRemoveTask.SaveModification("False", _groupID, _taskID);
 
                     // Get the selected date from the WorkingHours form
                     Form _workingHoursPage = Application.OpenForms["WorkingHoursPage"];
@@ -234,7 +230,7 @@ namespace emira.GUI
                     }
 
                     // Remove the hours from the Catalog for the task
-                    addRemoveTask.DeleteHours(_date, _nodeID.Trim());
+                    addRemoveTask.DeleteHours(_date, _groupID, _taskID);
                 }
                 Cursor.Show();
                 Close();

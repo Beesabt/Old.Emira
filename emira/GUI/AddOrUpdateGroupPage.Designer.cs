@@ -32,7 +32,7 @@
             this.lGroupID = new System.Windows.Forms.Label();
             this.lGroupName = new System.Windows.Forms.Label();
             this.nupGroupID = new System.Windows.Forms.NumericUpDown();
-            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnAction = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.tbGroupName = new System.Windows.Forms.TextBox();
             this.pHeader = new System.Windows.Forms.Panel();
@@ -86,23 +86,23 @@
             0});
             this.nupGroupID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nupGroupID_KeyPress);
             // 
-            // btnAdd
+            // btnAction
             // 
-            this.btnAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(133)))), ((int)(((byte)(193)))));
-            this.btnAdd.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnAdd.FlatAppearance.BorderSize = 0;
-            this.btnAdd.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
-            this.btnAdd.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
-            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAdd.Font = new System.Drawing.Font("Century Gothic", 11F);
-            this.btnAdd.ForeColor = System.Drawing.Color.White;
-            this.btnAdd.Location = new System.Drawing.Point(100, 148);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(110, 30);
-            this.btnAdd.TabIndex = 2;
-            this.btnAdd.Text = "Hozzáad";
-            this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAction.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(133)))), ((int)(((byte)(193)))));
+            this.btnAction.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnAction.FlatAppearance.BorderSize = 0;
+            this.btnAction.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
+            this.btnAction.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(144)))), ((int)(((byte)(195)))));
+            this.btnAction.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAction.Font = new System.Drawing.Font("Century Gothic", 11F);
+            this.btnAction.ForeColor = System.Drawing.Color.White;
+            this.btnAction.Location = new System.Drawing.Point(100, 148);
+            this.btnAction.Name = "btnAction";
+            this.btnAction.Size = new System.Drawing.Size(110, 30);
+            this.btnAction.TabIndex = 2;
+            this.btnAction.Text = "Hozzáad";
+            this.btnAction.UseVisualStyleBackColor = false;
+            this.btnAction.Click += new System.EventHandler(this.btnAction_Click);
             // 
             // btnCancel
             // 
@@ -181,7 +181,7 @@
             this.Controls.Add(this.pHeader);
             this.Controls.Add(this.tbGroupName);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnAdd);
+            this.Controls.Add(this.btnAction);
             this.Controls.Add(this.nupGroupID);
             this.Controls.Add(this.lGroupName);
             this.Controls.Add(this.lGroupID);
@@ -203,7 +203,7 @@
         private System.Windows.Forms.Label lGroupID;
         private System.Windows.Forms.Label lGroupName;
         private System.Windows.Forms.NumericUpDown nupGroupID;
-        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnAction;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.TextBox tbGroupName;
         private System.Windows.Forms.Panel pHeader;

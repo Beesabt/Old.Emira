@@ -7,13 +7,14 @@ using System.Windows.Forms;
 
 using emira.BusinessLogicLayer;
 using emira.HelperFunctions;
+using NLog;
 using Nager.Date;
 
 namespace emira.GUI
 {
     public partial class WorkingHoursPage : Form
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         int togMove;
         int mValX;
         int mValY;
@@ -83,23 +84,6 @@ namespace emira.GUI
                 dgvWorkingHours.Rows.Clear();
                 changedCells.Clear();
 
-                int _maxTaskLength = 0;
-                int _taskLength = 0;
-                int _columns = 0;
-                int _rows = 0;
-
-
-                string _actualTaskID = string.Empty;
-                string _acutalTaskName = string.Empty;
-                string _actualCellColumnHeaderValue = string.Empty;
-                string _actualCellRowHeaderValue = string.Empty;
-                string _actualCellValue = string.Empty;
-                string _date = string.Empty;
-
-                DateTime _today = DateTime.UtcNow;
-                dataTable = new DataTable();
-                workingHours = new WorkingHours();
-
                 // Give the name of the month to the table
                 string _selectedYear = cbYearWithMonth.SelectedItem.ToString().Remove(4);
                 string _selectedMonth = cbYearWithMonth.SelectedItem.ToString().Substring(5);
@@ -117,6 +101,8 @@ namespace emira.GUI
 
                 // Lenght of the actual month
                 int _monthLength = 0;
+                workingHours = new WorkingHours();
+
                 _monthLength = workingHours.GetDaysOfMonth(_year, _month);
 
                 // Add the days of the actual month to the table
@@ -149,6 +135,13 @@ namespace emira.GUI
                 dgvWorkingHours.Columns.Add(_totalColumn);
 
                 // Get selected tasks and fill the header row with it/them
+                string _actualGroupID = string.Empty;
+                string _actualTaskID = string.Empty;
+                string _acutalTaskName = string.Empty;
+                
+                DateTime _today = DateTime.UtcNow;
+                dataTable = new DataTable();
+
                 if (_today.Month != _month)
                 {
 
@@ -156,12 +149,13 @@ namespace emira.GUI
 
                     foreach (DataRow item in dataTable.Rows)
                     {
+                        _actualGroupID = item[Texts.TaskProperties.GroupID].ToString();
                         _actualTaskID = item[Texts.TaskProperties.TaskID].ToString();
                         _acutalTaskName = item[Texts.TaskProperties.TaskName].ToString();
 
                         DataGridViewRow _row = new DataGridViewRow();
                         _row.CreateCells(dgvWorkingHours);
-                        _row.HeaderCell.Value = _actualTaskID + " " + _acutalTaskName;
+                        _row.HeaderCell.Value = _actualGroupID + "_" + _actualTaskID + " " + _acutalTaskName;
                         dgvWorkingHours.Rows.Add(_row);
                     }
 
@@ -184,19 +178,13 @@ namespace emira.GUI
 
                     foreach (DataRow item in dataTable.Rows)
                     {
+                        _actualGroupID = item[Texts.TaskProperties.GroupID].ToString();
                         _actualTaskID = item[Texts.TaskProperties.TaskID].ToString();
                         _acutalTaskName = item[Texts.TaskProperties.TaskName].ToString();
 
-                        _taskLength = _actualTaskID.Length + _acutalTaskName.Length;
-
-                        if (_maxTaskLength < _taskLength)
-                        {
-                            _maxTaskLength = _taskLength;
-                        }
-
                         DataGridViewRow _row = new DataGridViewRow();
                         _row.CreateCells(dgvWorkingHours);
-                        _row.HeaderCell.Value = _actualTaskID + " " + _acutalTaskName;
+                        _row.HeaderCell.Value = _actualGroupID + "_" + _actualTaskID + " " + _acutalTaskName;
                         dgvWorkingHours.Rows.Add(_row);
                     }
 
@@ -235,6 +223,13 @@ namespace emira.GUI
                 dgvWorkingHours.Rows.Add(_totalHoursRow);
 
                 // Add hours from Catalog
+                string _actualCellColumnHeaderValue = string.Empty;
+                string _actualCellRowHeaderValue = string.Empty;
+                string _actualCellValue = string.Empty;
+                string _date = string.Empty;
+                int _columns = 0;
+                int _rows = 0;
+
                 _columns = dgvWorkingHours.ColumnCount - 1;
                 _rows = dgvWorkingHours.RowCount - 1;
 
@@ -684,7 +679,7 @@ namespace emira.GUI
                     string _actualCellRowHeaderValue = string.Empty;
                     string _date = string.Empty;
                     double _actualCellValue = 0;
-                    double _resultOfParse = 0;
+                    double _actualWorkingHours = 0;
                     bool _result = false;
                     bool _isSuccess = true;
 
@@ -706,9 +701,9 @@ namespace emira.GUI
                         }
                         else
                         {
-                            if (Double.TryParse(cell.Value.ToString(), out _resultOfParse))
+                            if (Double.TryParse(cell.Value.ToString(), out _actualWorkingHours))
                             {
-                                _actualCellValue = Convert.ToDouble(cell.Value);
+                                _actualCellValue = _actualWorkingHours;
                             }
                         }
 
