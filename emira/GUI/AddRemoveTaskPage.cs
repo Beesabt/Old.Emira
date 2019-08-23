@@ -202,7 +202,7 @@ namespace emira.GUI
                     _groupID = node.Parent.Text.Remove(node.Parent.Text.IndexOf(' '));
 
                     // Save the task as selected
-                    addRemoveTask.SaveModification("True", _groupID, _taskID);
+                    addRemoveTask.SaveModification("1", _groupID, _taskID);
                 }
 
                 foreach (TreeNode node in _unSelectedNodes)
@@ -217,7 +217,7 @@ namespace emira.GUI
                     _groupID = node.Parent.Text.Remove(node.Parent.Text.IndexOf(' '));
 
                     // Save the task as unselected
-                    addRemoveTask.SaveModification("False", _groupID, _taskID);
+                    addRemoveTask.SaveModification("0", _groupID, _taskID);
 
                     // Get the selected date from the WorkingHours form
                     Form _workingHoursPage = Application.OpenForms["WorkingHoursPage"];

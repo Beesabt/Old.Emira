@@ -43,8 +43,17 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Nager.Date, Version=1.25.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nager.Date.1.25.4\lib\net45\Nager.Date.dll</HintPath>
+    <Reference Include="itextsharp, Version=5.5.13.1, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.1\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nager.Date, Version=1.25.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nager.Date.1.25.5\lib\net45\Nager.Date.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
@@ -184,6 +193,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ValueObjects\Person.cs" />
+    <None Include="Resources\word_icon_white_32.png" />
     <EmbeddedResource Include="GUI\AddOrUpdateGroupPage.resx">
       <DependentUpon>AddOrUpdateGroupPage.cs</DependentUpon>
     </EmbeddedResource>
@@ -266,7 +276,6 @@
     <Content Include="Resources\clock_icon_white_100.png" />
     <Content Include="Resources\close_icon_gray_26.png" />
     <Content Include="Resources\close_icon_white_26.png" />
-    <None Include="Resources\email_icon_white_32.png" />
     <None Include="Resources\delete_icon_white_26.png" />
     <Content Include="Resources\email_icon_white_50.png" />
     <Content Include="Resources\error_icon_color_48.png" />
@@ -278,9 +287,8 @@
     <Content Include="Resources\info_icon_white_50.png" />
     <None Include="Resources\lock_icon_white_32.png" />
     <Content Include="Resources\lock_icon_white_50.png" />
+    <None Include="Resources\pdf_icon_white_32.png" />
     <Content Include="Resources\piechart_icon_white_100.png" />
-    <Content Include="Resources\print_icon_white_26.png" />
-    <None Include="Resources\print_icon_white_32.png" />
     <Content Include="Resources\restore_icon_white_26.png" />
     <Content Include="Resources\maximize_icon_white_26.png" />
     <None Include="Resources\save_icon_white_32.png" />

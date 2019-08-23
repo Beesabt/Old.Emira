@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Drawing;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 
@@ -9,6 +9,10 @@ using emira.BusinessLogicLayer;
 using emira.HelperFunctions;
 using NLog;
 using Nager.Date;
+using iTextSharp.text;
+using System.IO;
+using iTextSharp.text.pdf;
+using Microsoft.Office.Interop.Word;
 
 namespace emira.GUI
 {
@@ -20,9 +24,9 @@ namespace emira.GUI
         int mValY;
 
         WorkingHours workingHours;
-        DataTable dataTable;
         List<DataGridViewCell> changedCells = new List<DataGridViewCell>();
         CustomMsgBox customMsgBox;
+        System.Data.DataTable dataTable;
 
         public static string cbYearWithMonthValue = string.Empty;
 
@@ -32,7 +36,7 @@ namespace emira.GUI
 
             // Set the location of the form according to the parent form's location
             // If it is zero then it set to the center of the screen
-            Point _zeroLocation = new Point(0, 0);
+            System.Drawing.Point _zeroLocation = new System.Drawing.Point(0, 0);
 
             if (LocationInfo._location == _zeroLocation)
             {
@@ -138,9 +142,9 @@ namespace emira.GUI
                 string _actualGroupID = string.Empty;
                 string _actualTaskID = string.Empty;
                 string _acutalTaskName = string.Empty;
-                
+
                 DateTime _today = DateTime.UtcNow;
-                dataTable = new DataTable();
+                dataTable = new System.Data.DataTable();
 
                 if (_today.Month != _month)
                 {
@@ -278,7 +282,7 @@ namespace emira.GUI
                 int _indexOfNormalHoliday = 0;
                 DateTime _startDate = new DateTime();
                 DateTime _endDate = new DateTime();
-                dataTable = new DataTable();
+                dataTable = new System.Data.DataTable();
                 workingHours = new WorkingHours();
 
                 // Get the first and last day of the selected month
@@ -419,13 +423,13 @@ namespace emira.GUI
                 {
                     for (int i = 0; i < _rows; i++)
                     {
-                        DataGridViewCell cell = dgvWorkingHours.Rows[i].Cells[j];
+                        DataGridViewCell _cell = dgvWorkingHours.Rows[i].Cells[j];
                         DataGridViewCell _TotalHoursCell = dgvWorkingHours.Rows[_rows].Cells[j];
                         DataGridViewCell _sumCell = dgvWorkingHours.Rows[_rows].Cells[j];
 
-                        if (cell.Value != null)
+                        if (_cell.Value != null)
                         {
-                            if (Double.TryParse(cell.Value.ToString(), out _result))
+                            if (Double.TryParse(_cell.Value.ToString(), out _result))
                             {
                                 _sumForDay += _result;
                                 _TotalHoursCell.Value = _sumForDay;
@@ -767,9 +771,251 @@ namespace emira.GUI
 
 
 
+        private void btnPDF_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string _period = string.Empty;
+                _period = cbYearWithMonth.SelectedItem.ToString().Replace('-', '_');
+                ExportToPDF(dgvWorkingHours, _period + "_Munkaidonaplo");
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+        }
+
+        private void ExportToPDF(DataGridView dgv, string filename)
+        {
+
+            try
+            {
+                BaseFont _basefont = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1250, BaseFont.EMBEDDED);
+
+                PdfPTable _pdfTable = new PdfPTable(dgv.Columns.Count + 1);
+                _pdfTable.HorizontalAlignment = Element.ALIGN_CENTER;
+                _pdfTable.WidthPercentage = 100;
+
+                PdfPCell _pdfCell = new PdfPCell();
+                iTextSharp.text.Font _text = new iTextSharp.text.Font(_basefont, 8, 0, BaseColor.BLACK);
+
+                float[] _widths = new float[dgv.ColumnCount + 1];
+                _widths[0] = 6;
+                for (int i = 1; i < dgv.ColumnCount; i++)
+                {
+                    _widths[i] = 1;
+                }
+                _widths[dgv.ColumnCount] = 2;
+                _pdfTable.SetWidths(_widths);
+
+                // Add header
+                _pdfCell = new PdfPCell(new Phrase("Task", _text));
+                _pdfTable.AddCell(_pdfCell);
+
+                foreach (DataGridViewColumn column in dgv.Columns)
+                {
+                    _pdfCell = new PdfPCell(new Phrase(column.HeaderText, _text));
+                    _pdfCell.BackgroundColor = new BaseColor(Color.AliceBlue);
+                    _pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    _pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    _pdfTable.AddCell(_pdfCell);
+                }
+
+                // Add rows
+                foreach (DataGridViewRow row in dgv.Rows)
+                {
+                    _pdfCell = new PdfPCell(new Phrase(row.HeaderCell.Value.ToString(), _text));
+                    _pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    _pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    _pdfTable.AddCell(_pdfCell);
+                    foreach (DataGridViewCell cell in row.Cells)
+                    {
+                        if (cell.Value == null)
+                        {
+                            cell.Value = string.Empty;
+                        }
+                        _pdfCell = new PdfPCell(new Phrase(cell.Value.ToString(), _text));
+                        _pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        _pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        _pdfTable.AddCell(_pdfCell);
+                    }
+                }
+
+
+
+                var _saveFileDialog = new SaveFileDialog();
+                _saveFileDialog.FileName = filename;
+                _saveFileDialog.DefaultExt = ".pdf";
+                if (_saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    using (FileStream _stream = new FileStream(_saveFileDialog.FileName, FileMode.Create))
+                    {
+                        iTextSharp.text.Document _pdfDoc = new iTextSharp.text.Document(PageSize.A4.Rotate(), 10f, 10f, 10f, 0f);
+                        PdfWriter.GetInstance(_pdfDoc, _stream);
+                        _pdfDoc.Open();
+                        _pdfDoc.Add(_pdfTable);
+                        _pdfDoc.Close();
+                        _stream.Close();
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+        }
+
+        private void btnMSWord_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string _period = string.Empty;
+                string _filename = string.Empty;
+                string _path = string.Empty;
+                _period = cbYearWithMonth.SelectedItem.ToString().Replace('-', '_');
+                _path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                ExportToMSWord(dgvWorkingHours, _path + "\\" + _period + "_Munkaidonaplo");
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+        }
+
+        private void ExportToMSWord(DataGridView dgv, object filename)
+        {
+            int _cellRow = 0;
+            int _cellColumn = 0;
+            try
+            {
+                //Create an instance for word app  
+                Microsoft.Office.Interop.Word.Application winword = new Microsoft.Office.Interop.Word.Application();
+
+                //Set animation status for word application  
+                winword.ShowAnimation = false;
+
+                //Set status for word application is to be visible or not.  
+                winword.Visible = false;
+
+                //Create a missing variable for missing value  
+                object missing = System.Reflection.Missing.Value;
+
+                //Create a new document  
+                Microsoft.Office.Interop.Word.Document _document = winword.Documents.Add(ref missing, ref missing, ref missing, ref missing);
+
+
+                //adding text to document
+                _document.PageSetup.LeftMargin = 20f;
+                _document.PageSetup.RightMargin = 20f;
+                _document.PageSetup.BottomMargin = 20f;
+                _document.PageSetup.TopMargin = 20f;
+                _document.PageSetup.Orientation = WdOrientation.wdOrientLandscape;
+                _document.Content.SetRange(0, 0);
+                _document.Content.Text = "This is test document " + Environment.NewLine;
+
+                //Add paragraph with Heading 1 style  
+                Microsoft.Office.Interop.Word.Paragraph para1 = _document.Content.Paragraphs.Add(ref missing);
+                object styleHeading1 = "Normál";
+                para1.Range.set_Style(ref styleHeading1);
+                para1.Range.Text = "Para 1 text";
+                para1.Range.InsertParagraphAfter();
+                para1.LineSpacingRule = WdLineSpacing.wdLineSpaceSingle;
+                para1.Format.SpaceBefore = 0;
+                para1.Format.SpaceAfter = 0;
+
+                //Create a 5X5 table and insert some dummy record  
+                Table _wordTable = _document.Tables.Add(para1.Range, dgv.RowCount + 1, dgv.ColumnCount + 1, ref missing, ref missing);
+             
+                // Border
+                _wordTable.Borders.InsideLineStyle = WdLineStyle.wdLineStyleSingle;
+                _wordTable.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleSingle;
+
+                // Headers
+                string[] _columnsText = new string[dgv.ColumnCount + 1];
+                _columnsText[0] = "Task";
+                foreach (DataGridViewColumn column in dgv.Columns)
+                {
+                    _columnsText[column.Index + 1] = column.HeaderText;
+                }
+
+                int _numberOfCells = dgv.Rows[0].Cells.Count;
+                string[,] _rowsText = new string[dgv.RowCount, _numberOfCells + 1];
+
+
+                for (int i = 0; i < dgv.RowCount; i++)
+                {
+                    _rowsText[i, 0] = dgv.Rows[i].HeaderCell.Value.ToString();
+                    for (int j = 0; j < _numberOfCells; j++)
+                    {
+                        if (dgv.Rows[i].Cells[j].Value == null)
+                        {
+                            dgv.Rows[i].Cells[j].Value = string.Empty;
+                        }
+                        _rowsText[i, j + 1] = dgv.Rows[i].Cells[j].Value.ToString();
+                    }
+                }
+
+                foreach (Row row in _wordTable.Rows)
+                {
+                    foreach (Cell cell in row.Cells)
+                    {
+                        //other format properties goes here  
+                        cell.Range.Font.Name = "verdana";
+                        cell.Range.Font.Size = 8;
+                        cell.Shading.BackgroundPatternColor = WdColor.wdColorGray25;
+                        //Center alignment for the Header cells  
+                        cell.VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+                        cell.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+                        
+                        //Header row  
+                        if (cell.RowIndex == 1)
+                        {
+                            cell.Range.Text = _columnsText[cell.ColumnIndex - 1];
+                        }
+                        //Data row  
+                        else
+                        {
+                            _cellRow = cell.RowIndex;
+                            _cellColumn = cell.ColumnIndex;
+                            cell.Range.Text = _rowsText[cell.RowIndex - 2, cell.ColumnIndex - 1];
+                            cell.Shading.BackgroundPatternColor = WdColor.wdColorWhite;
+                        }
+                    }
+                }
+
+                _wordTable.Rows.Alignment = WdRowAlignment.wdAlignRowCenter;
+
+
+                // Width               
+                _document.Tables[1].AllowAutoFit = true;
+                _document.Tables[1].AutoFitBehavior(WdAutoFitBehavior.wdAutoFitContent);
+
+
+                //Save the document
+                _document.SaveAs2(ref filename);
+                _document.Close(ref missing, ref missing, ref missing);
+                _document = null;
+                winword.Quit(ref missing, ref missing, ref missing);
+                winword = null;
+                MessageBox.Show("Document created successfully !");
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error, "The cell row: " + _cellRow + " column: " + _cellColumn);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+        }
+
         private void btnExit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            System.Windows.Forms.Application.Exit();
         }
 
         private void btnMinimalize_Click(object sender, EventArgs e)
@@ -781,9 +1027,16 @@ namespace emira.GUI
         {
             if (WindowState == FormWindowState.Normal)
             {
+                this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
                 WindowState = FormWindowState.Maximized;
                 btnMaximize.BackgroundImage = Properties.Resources.restore_icon_white_26;
                 dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+                // Set location of the label
+                int _formXCoordinate = 0;
+                _formXCoordinate = lMonth.Parent.Width;
+                lMonth.Location = new System.Drawing.Point(((_formXCoordinate / 2) - (lMonth.Width / 2)), lMonth.Location.Y);
+
                 Invalidate();
             }
             else
@@ -791,6 +1044,12 @@ namespace emira.GUI
                 WindowState = FormWindowState.Normal;
                 btnMaximize.BackgroundImage = Properties.Resources.maximize_icon_white_26;
                 dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+
+                // Set location of the label
+                int _formXCoordinate = 0;
+                _formXCoordinate = lMonth.Parent.Width;
+                lMonth.Location = new System.Drawing.Point(((_formXCoordinate / 2) - (lMonth.Width / 2)), lMonth.Location.Y);
+
                 Invalidate();
             }
         }
@@ -848,7 +1107,7 @@ namespace emira.GUI
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Rectangle borderRectangle = new Rectangle(0, 0, ClientRectangle.Width - 1, ClientRectangle.Height - 1);
+            System.Drawing.Rectangle borderRectangle = new System.Drawing.Rectangle(0, 0, ClientRectangle.Width - 1, ClientRectangle.Height - 1);
             e.Graphics.DrawRectangle(Pens.Black, borderRectangle);
             base.OnPaint(e);
         }

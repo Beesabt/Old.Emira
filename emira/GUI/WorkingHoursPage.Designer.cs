@@ -40,8 +40,8 @@
             this.pMenuBar = new System.Windows.Forms.Panel();
             this.btnHome = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.btnPrint = new System.Windows.Forms.Button();
-            this.btnEmail = new System.Windows.Forms.Button();
+            this.btnPDF = new System.Windows.Forms.Button();
+            this.btnMSWord = new System.Windows.Forms.Button();
             this.btnAddRemoveTask = new System.Windows.Forms.Button();
             this.cbYearWithMonth = new System.Windows.Forms.ComboBox();
             this.dgvWorkingHours = new System.Windows.Forms.DataGridView();
@@ -186,45 +186,45 @@
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // btnPrint
+            // btnPDF
             // 
-            this.btnPrint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
-            this.btnPrint.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnPrint.FlatAppearance.BorderSize = 0;
-            this.btnPrint.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(133)))), ((int)(((byte)(218)))));
-            this.btnPrint.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(133)))), ((int)(((byte)(218)))));
-            this.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPrint.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnPrint.ForeColor = System.Drawing.Color.White;
-            this.btnPrint.Image = global::emira.Properties.Resources.print_icon_white_32;
-            this.btnPrint.Location = new System.Drawing.Point(282, 142);
-            this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(120, 50);
-            this.btnPrint.TabIndex = 3;
-            this.btnPrint.Text = "Print";
-            this.btnPrint.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnPrint.UseVisualStyleBackColor = false;
-            this.btnPrint.Visible = false;
+            this.btnPDF.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.btnPDF.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnPDF.FlatAppearance.BorderSize = 0;
+            this.btnPDF.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(133)))), ((int)(((byte)(218)))));
+            this.btnPDF.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(133)))), ((int)(((byte)(218)))));
+            this.btnPDF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPDF.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnPDF.ForeColor = System.Drawing.Color.White;
+            this.btnPDF.Image = global::emira.Properties.Resources.pdf_icon_white_32;
+            this.btnPDF.Location = new System.Drawing.Point(282, 142);
+            this.btnPDF.Name = "btnPDF";
+            this.btnPDF.Size = new System.Drawing.Size(120, 50);
+            this.btnPDF.TabIndex = 3;
+            this.btnPDF.Text = "PDF";
+            this.btnPDF.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnPDF.UseVisualStyleBackColor = false;
+            this.btnPDF.Click += new System.EventHandler(this.btnPDF_Click);
             // 
-            // btnEmail
+            // btnMSWord
             // 
-            this.btnEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(185)))), ((int)(((byte)(0)))));
-            this.btnEmail.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnEmail.FlatAppearance.BorderSize = 0;
-            this.btnEmail.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(166)))), ((int)(((byte)(0)))));
-            this.btnEmail.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(166)))), ((int)(((byte)(0)))));
-            this.btnEmail.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEmail.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnEmail.ForeColor = System.Drawing.Color.White;
-            this.btnEmail.Image = global::emira.Properties.Resources.email_icon_white_32;
-            this.btnEmail.Location = new System.Drawing.Point(408, 142);
-            this.btnEmail.Name = "btnEmail";
-            this.btnEmail.Size = new System.Drawing.Size(120, 50);
-            this.btnEmail.TabIndex = 4;
-            this.btnEmail.Text = "Email";
-            this.btnEmail.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnEmail.UseVisualStyleBackColor = false;
-            this.btnEmail.Visible = false;
+            this.btnMSWord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(185)))), ((int)(((byte)(0)))));
+            this.btnMSWord.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnMSWord.FlatAppearance.BorderSize = 0;
+            this.btnMSWord.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(166)))), ((int)(((byte)(0)))));
+            this.btnMSWord.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(166)))), ((int)(((byte)(0)))));
+            this.btnMSWord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMSWord.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnMSWord.ForeColor = System.Drawing.Color.White;
+            this.btnMSWord.Image = global::emira.Properties.Resources.word_icon_white_32;
+            this.btnMSWord.Location = new System.Drawing.Point(408, 142);
+            this.btnMSWord.Name = "btnMSWord";
+            this.btnMSWord.Size = new System.Drawing.Size(140, 50);
+            this.btnMSWord.TabIndex = 4;
+            this.btnMSWord.Text = "MS Word";
+            this.btnMSWord.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnMSWord.UseVisualStyleBackColor = false;
+            this.btnMSWord.Click += new System.EventHandler(this.btnMSWord_Click);
             // 
             // btnAddRemoveTask
             // 
@@ -251,7 +251,7 @@
             // 
             this.cbYearWithMonth.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.cbYearWithMonth.FormattingEnabled = true;
-            this.cbYearWithMonth.Location = new System.Drawing.Point(646, 154);
+            this.cbYearWithMonth.Location = new System.Drawing.Point(668, 154);
             this.cbYearWithMonth.MaxDropDownItems = 12;
             this.cbYearWithMonth.Name = "cbYearWithMonth";
             this.cbYearWithMonth.Size = new System.Drawing.Size(100, 32);
@@ -316,7 +316,7 @@
             this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNext.Font = new System.Drawing.Font("Century Gothic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnNext.Image = ((System.Drawing.Image)(resources.GetObject("btnNext.Image")));
-            this.btnNext.Location = new System.Drawing.Point(750, 157);
+            this.btnNext.Location = new System.Drawing.Point(772, 157);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(25, 25);
             this.btnNext.TabIndex = 9;
@@ -334,7 +334,7 @@
             this.btnPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPrevious.Font = new System.Drawing.Font("Century Gothic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnPrevious.Image = ((System.Drawing.Image)(resources.GetObject("btnPrevious.Image")));
-            this.btnPrevious.Location = new System.Drawing.Point(617, 157);
+            this.btnPrevious.Location = new System.Drawing.Point(639, 157);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(25, 25);
             this.btnPrevious.TabIndex = 8;
@@ -343,6 +343,9 @@
             // 
             // lMonth
             // 
+            this.lMonth.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lMonth.AutoSize = true;
             this.lMonth.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lMonth.Location = new System.Drawing.Point(459, 219);
@@ -384,8 +387,8 @@
             this.Controls.Add(this.dgvWorkingHours);
             this.Controls.Add(this.cbYearWithMonth);
             this.Controls.Add(this.btnAddRemoveTask);
-            this.Controls.Add(this.btnEmail);
-            this.Controls.Add(this.btnPrint);
+            this.Controls.Add(this.btnMSWord);
+            this.Controls.Add(this.btnPDF);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.pMenuBar);
             this.Controls.Add(this.pHeader);
@@ -411,8 +414,8 @@
         private System.Windows.Forms.Label lTitle;
         private System.Windows.Forms.Button btnHome;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnPrint;
-        private System.Windows.Forms.Button btnEmail;
+        private System.Windows.Forms.Button btnPDF;
+        private System.Windows.Forms.Button btnMSWord;
         private System.Windows.Forms.Button btnAddRemoveTask;
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnPrevious;
