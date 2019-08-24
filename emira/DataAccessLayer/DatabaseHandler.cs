@@ -306,8 +306,16 @@ namespace emira.DataAccessLayer
             return dataTable;
         }
 
-        public DataTable GetTask(string command)
+        public DataTable GetTaskForExport()
         {
+            command = string.Format("SELECT {0}.{2}, TaskGroup.{3}, {0}.{4}, {0}.{5}, {0}.{6} FROM {0} JOIN {1} USING ({2}) WHERE {0}.{2} != '0' ORDER BY {0}.{2}, {0}.{4}",
+                Texts.DataTableNames.Task,
+                Texts.DataTableNames.TaskGroup,
+                Texts.TaskProperties.GroupID,
+                Texts.TaskGropuProperties.GroupName,
+                Texts.TaskProperties.TaskID,
+                Texts.TaskProperties.TaskName,
+                Texts.TaskProperties.Selected);
             dataTable = new DataTable();
             dataTable = GetDataTable(command);
             return dataTable;

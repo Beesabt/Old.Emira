@@ -667,28 +667,22 @@ namespace emira.BusinessLogicLayer
         /// </summary>
         /// <param name="withSelected">Only just the selected tasks</param>
         /// <returns>DataTable with the informations</returns>
-        public DataTable GetTasksForExport(bool withSelected = true)
+        public DataTable GetTasksForExport()
         {
-            string command = string.Empty;
-            if (!withSelected)
-            {
-                command = string.Format("SELECT {1},{2},{3},{4} FROM {0} ORDER BY {1}",
-                    Texts.DataTableNames.Task,
-                    Texts.TaskProperties.GroupID,
-                    Texts.TaskProperties.TaskGroupName,
-                    Texts.TaskProperties.TaskID,
-                    Texts.TaskProperties.TaskName);
-            }
-            else
-            {
-                command = string.Format("SELECT * FROM {0} ORDER BY {1}", Texts.DataTableNames.Task, Texts.TaskProperties.GroupID);
-            }
-
-            DBHandler = new DatabaseHandler();
             dataTable = new DataTable();
-
-            dataTable = DBHandler.GetTask(command);
-            return dataTable;
+            try
+            {
+                DBHandler = new DatabaseHandler();
+                dataTable = DBHandler.GetTaskForExport();
+                return dataTable;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return dataTable;
+            }
         }
     }
 }
