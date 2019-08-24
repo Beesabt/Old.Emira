@@ -61,7 +61,7 @@
             this.btnImport.Font = new System.Drawing.Font("Segoe UI", 14.25F);
             this.btnImport.ForeColor = System.Drawing.Color.White;
             this.btnImport.Image = global::emira.Properties.Resources.import_icon_white_26;
-            this.btnImport.Location = new System.Drawing.Point(40, 20);
+            this.btnImport.Location = new System.Drawing.Point(195, 20);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(130, 40);
             this.btnImport.TabIndex = 26;
@@ -81,7 +81,7 @@
             this.btnExport.Font = new System.Drawing.Font("Segoe UI", 14.25F);
             this.btnExport.ForeColor = System.Drawing.Color.White;
             this.btnExport.Image = global::emira.Properties.Resources.export_icon_white_26;
-            this.btnExport.Location = new System.Drawing.Point(196, 20);
+            this.btnExport.Location = new System.Drawing.Point(40, 20);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(130, 40);
             this.btnExport.TabIndex = 25;
@@ -316,7 +316,6 @@
             // tvGroupsAndTasks
             // 
             this.tvGroupsAndTasks.BackColor = System.Drawing.SystemColors.Window;
-            this.tvGroupsAndTasks.CheckBoxes = true;
             this.tvGroupsAndTasks.Font = new System.Drawing.Font("Century Gothic", 12F);
             this.tvGroupsAndTasks.Location = new System.Drawing.Point(520, 20);
             this.tvGroupsAndTasks.Name = "tvGroupsAndTasks";

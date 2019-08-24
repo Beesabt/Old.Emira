@@ -264,6 +264,8 @@ namespace emira.HelperFunctions
 
         public static class Captions
         {
+            public const string Information = "Information";
+
             public const string Error = "Error";
 
             public const string Warning = "Warning";
