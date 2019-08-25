@@ -450,6 +450,33 @@ namespace emira.DataAccessLayer
             return bResult;
         }
 
+
+
+        public void DeleteNotLockedItemsFromCatalog()
+        {
+            string command = string.Format("DELETE FROM {0} WHERE {1} = 0 AND {2} != 0",
+               Texts.DataTableNames.Catalog,
+               Texts.CatalogProperties.Locked,
+               Texts.CatalogProperties.GroupID);
+            ExecuteNonQuery(command);
+        }
+
+        public void DeleteAllFromTask()
+        {
+            string command = string.Format("DELETE FROM {0} WHERE {1} != 0",
+                Texts.DataTableNames.Task,
+                Texts.TaskProperties.GroupID);
+            ExecuteNonQuery(command);
+        }
+
+        public void DeleteAllFromTaskGroup()
+        {
+            string command = string.Format("DELETE FROM {0} WHERE {1} != 0",
+                Texts.DataTableNames.TaskGroup,
+                Texts.TaskProperties.GroupID);
+            ExecuteNonQuery(command);
+        }
+
         #endregion
 
         #region Holiday.cs

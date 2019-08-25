@@ -7,6 +7,7 @@ using emira.HelperFunctions;
 using emira.GUI;
 using NLog;
 using System.Text;
+using System.Linq;
 
 namespace emira.BusinessLogicLayer
 {
@@ -661,7 +662,7 @@ namespace emira.BusinessLogicLayer
 
 
 
-
+        //// EXPORT
         /// <summary>
         /// Get tasks for export
         /// </summary>
@@ -682,6 +683,165 @@ namespace emira.BusinessLogicLayer
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                 return dataTable;
+            }
+        }
+
+
+        //// IMPORT
+        /// <summary>
+        /// Warning message does not come up if there are not any additional goups, except "0"
+        /// </summary>
+        /// <returns>True, if it has additional tasks</returns>
+        public bool IsHaveGroups()
+        {
+            bool _isSuccess = false;
+            try
+            {
+                int _iResult = 1;
+                DBHandler = new DatabaseHandler();
+
+                _iResult = DBHandler.GetMaxGroupID();
+
+                if (_iResult > 0) _isSuccess = true;
+
+                return _isSuccess;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _isSuccess;
+            }
+        }
+
+        /// <summary>
+        /// Import the new tasks
+        /// </summary>
+        /// <param name="dataTable">Data table with the data from xml</param>
+        /// <returns>True if the import was success</returns>
+        public bool ImportTasks(DataTable dataTable)
+        {
+            bool _isSuccess = false;
+            try
+            {
+                int _iResult = 1;
+                DBHandler = new DatabaseHandler();
+                DataTable _forTask = new DataTable();
+                _forTask = dataTable.Copy();
+
+                // 1., 2. 3. Delete the old tasks
+                if (!DeleteOldTasks()) return _isSuccess;
+
+                // 4. Import the tasks
+                _iResult = ImportGroups(dataTable);
+
+                if (_iResult == 0) return _isSuccess;
+
+                // 5. Import the tasks
+                _forTask.Columns.Remove(Texts.TaskGropuProperties.GroupName);
+
+                string _actualGroupID = string.Empty;
+                string _actualTaskID = string.Empty;
+                string _actualTaskName = string.Empty;
+
+                foreach (DataRow item in _forTask.Rows)
+                {
+                    _actualGroupID = item[Texts.TaskProperties.GroupID].ToString();
+                    _actualTaskID = item[Texts.TaskProperties.TaskID].ToString();
+                    _actualTaskName = item[Texts.TaskProperties.TaskName].ToString();
+                    _iResult = DBHandler.InsertNewTask(_actualGroupID, _actualTaskID, _actualTaskName);
+                    _iResult *= _iResult;
+                }
+
+                if (_iResult > 0) _isSuccess = true;
+
+                return _isSuccess;
+            }
+            catch(Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _isSuccess;
+            }
+        }
+
+        /// <summary>
+        /// Import of the new groups
+        /// </summary>
+        /// <param name="dataTable">Data table with the data from xml</param>
+        /// <returns>1 if the import was success</returns>
+        public int ImportGroups(DataTable dataTable)
+        {
+            int _iResult = 1;
+            try
+            {
+                DBHandler = new DatabaseHandler();
+                DataTable _forTaskGroup = new DataTable();
+
+                // 4. Import the groups
+                _forTaskGroup = dataTable;
+
+                // Remove the unnecessary columns
+                _forTaskGroup.Columns.Remove(Texts.TaskProperties.TaskID);
+                _forTaskGroup.Columns.Remove(Texts.TaskProperties.TaskName);
+                _forTaskGroup.Columns.Remove(Texts.TaskProperties.Selected);
+
+                // Get unique rows
+                DataTable _uniqueRowsForTaskGroup = new DataTable();
+                var UniqueRows = _forTaskGroup.AsEnumerable().Distinct(DataRowComparer.Default);
+                _uniqueRowsForTaskGroup = UniqueRows.CopyToDataTable();
+
+                // Insert the new groups to GroupTask
+                string _actualGroupID = string.Empty;
+                string _actualGroupName = string.Empty;
+
+                foreach (DataRow item in _uniqueRowsForTaskGroup.Rows)
+                {
+                    _actualGroupID = item[Texts.TaskGropuProperties.GroupID].ToString();
+                    _actualGroupName = item[Texts.TaskGropuProperties.GroupName].ToString();
+                    _iResult = DBHandler.InsertNewGroup(_actualGroupID, _actualGroupName);
+                    _iResult *= _iResult;
+                }
+
+                return _iResult;
+            }
+            catch(Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _iResult = 0;
+            }
+        }
+
+        /// <summary>
+        /// Delete all old tasks and uses of them if not locked
+        /// </summary>
+        public bool DeleteOldTasks()
+        {
+            try
+            {
+                DBHandler = new DatabaseHandler();
+
+                // 1. Delete all hours from Catalog which is not locked
+                DBHandler.DeleteNotLockedItemsFromCatalog();
+
+                // 2. Delete all tasks from Task except the "0", it is reserved
+                DBHandler.DeleteAllFromTask();
+
+                // 3. Delte all groups except the "0"
+                DBHandler.DeleteAllFromTaskGroup();
+
+                return true;
+            }
+            catch(Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return false;
             }
         }
     }

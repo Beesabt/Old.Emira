@@ -1,17 +1,16 @@
-﻿using emira.BusinessLogicLayer;
-using emira.HelperFunctions;
-using NLog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
+
+using emira.BusinessLogicLayer;
+using emira.HelperFunctions;
+using NLog;
 
 namespace emira.GUI
 {
@@ -163,122 +162,150 @@ namespace emira.GUI
         {
             try
             {
+                taskModification = new TaskModification();
+                if (taskModification.IsHaveGroups())
+                {
+                    var _result = MessageBox.Show(Texts.WarningMessages.ImportTasks,
+                                           Texts.Captions.LossOfData,
+                                           MessageBoxButtons.YesNo,
+                                           MessageBoxIcon.Question);
+                    if (_result == DialogResult.No)
+                    {
+                        return;
+                    }
+                }          
+
                 OpenFileDialog _openFileDialog = new OpenFileDialog();
                 _openFileDialog.Filter = "XML|*.xml";
-                if (_openFileDialog.ShowDialog() == DialogResult.OK)
+                if (_openFileDialog.ShowDialog() != DialogResult.OK)
                 {
-                    var _xmlFilename = _openFileDialog.FileName;
-
-
-                    var _pathOfDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                    var _xmlFilePath = Path.Combine(_pathOfDesktop, _xmlFilename);
-
-                    XmlSchemaSet _schema = new XmlSchemaSet();
-
-                    string _executableLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
-                    string _pathOfDebug = (Path.GetDirectoryName(_executableLocation));
-
-                    string _xsdFilePath = string.Empty;
-                    _xsdFilePath = Path.Combine(_pathOfDebug, @"ApplicationFiles\XSDFiles\" + "TaskManager.xsd");
-                    _schema.Add(string.Empty, _xsdFilePath);
-
-                    XDocument _xmlFile = XDocument.Load(_xmlFilePath);
-
-                    bool _validationError = false;
-
-                    _xmlFile.Validate(_schema, (s, ev) =>
-                    {
-                        _validationError = true;
-                    });
-
-                    if (_validationError)
-                    {
-                        customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show("Az elem(ek) nem felelnek meg a típusnak!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-                        return;
-                    }
-
-                    IEnumerable<int> _groupIDs = from item in _xmlFile.Descendants("Table1")
-                                                 select (int)item.Element("GroupID");
-
-                    IEnumerable<string> _groupNames = from item in _xmlFile.Descendants("Table1")
-                                                      select (string)item.Element("GroupName");
-
-                    // Check the group ID, it has not to be 0
-                    if (_groupIDs.Contains(0))
-                    {
-                        customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show("The group ID can not be 0, it is reserved!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-                        return;
-                    }
-
-                    // Check the group ID and group Name
-                    int _previousGroupID = -1;
-                    string _previousGroupName = string.Empty;
-                    for (int i = 0; i < _groupIDs.Count(); i++)
-                    {
-                        if (_previousGroupID != _groupIDs.ElementAt(i))
-                        {
-                            _previousGroupID = _groupIDs.ElementAt(i);
-
-                            if (_previousGroupName == _groupNames.ElementAt(i))
-                            {
-                                customMsgBox = new CustomMsgBox();
-                                customMsgBox.Show("The group name has to be unique!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-                                return;
-                            }
-
-                            _previousGroupName = _groupNames.ElementAt(i);
-                        }
-
-                        if (_previousGroupName != _groupNames.ElementAt(i))
-                        {
-                            customMsgBox = new CustomMsgBox();
-                            customMsgBox.Show("The group ID has to be unique!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-                            return;
-                        }
-                    }
-
-                    // Get the GroupIDs and GroupNames
-                    IEnumerable<int> _groupIDsWithoutDuplicates = _groupIDs.Distinct();
-                    IEnumerable<string> _groupNamesWithoutDuplicates = _groupNames.Distinct();
-
-                    // Check the task ID
-                    for (int i = 0; i < _groupIDsWithoutDuplicates.Count(); i++)
-                    {
-                        IEnumerable<int> _taskIDs = from item in _xmlFile.Descendants("Table1")
-                                                    where (int)item.Element("GroupID") == _groupIDsWithoutDuplicates.ElementAt(i)
-                                                    select (int)item.Element("TaskID");
-
-
-                        IEnumerable<int> _taskIDsWithoutDuplicates = _taskIDs.Distinct();
-
-                        if (_taskIDsWithoutDuplicates.Count() < _taskIDs.Count())
-                        {
-                            customMsgBox = new CustomMsgBox();
-                            customMsgBox.Show("The task ID has to be unique under the group!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-                            return;
-                        }
-
-                        // Check the task Name
-                        IEnumerable<string> _taskNames = from item in _xmlFile.Descendants("Table1")
-                                                         where (string)item.Element("GroupName") == _groupNamesWithoutDuplicates.ElementAt(i)
-                                                         select (string)item.Element("TaskName");
-
-                        IEnumerable<string> _taskNamesWithoutDuplicates = _taskNames.Distinct();
-
-                        if (_taskNamesWithoutDuplicates.Count() < _taskNames.Count())
-                        {
-                            customMsgBox = new CustomMsgBox();
-                            customMsgBox.Show("The task Name has to be unique under the group!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-                            return;
-                        }
-                    }
-
-                    customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show("Import OK!", Texts.Captions.Information, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
+                    return;
                 }
+
+                var _xmlFilename = _openFileDialog.FileName;
+
+
+                var _pathOfDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                var _xmlFilePath = Path.Combine(_pathOfDesktop, _xmlFilename);
+
+                XmlSchemaSet _schema = new XmlSchemaSet();
+
+                string _executableLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                string _pathOfDebug = (Path.GetDirectoryName(_executableLocation));
+
+                string _xsdFilePath = string.Empty;
+                _xsdFilePath = Path.Combine(_pathOfDebug, @"ApplicationFiles\XSDFiles\" + "TaskManager.xsd");
+                _schema.Add(string.Empty, _xsdFilePath);
+
+                XDocument _xmlFile = XDocument.Load(_xmlFilePath);
+
+                bool _validationError = false;
+
+                _xmlFile.Validate(_schema, (s, ev) =>
+                {
+                    _validationError = true;
+                });
+
+                if (_validationError)
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show("Az elem(ek) nem felelnek meg a típusnak!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    return;
+                }
+
+                IEnumerable<int> _groupIDs = from item in _xmlFile.Descendants("Table1")
+                                             select (int)item.Element("GroupID");
+
+                IEnumerable<string> _groupNames = from item in _xmlFile.Descendants("Table1")
+                                                  select (string)item.Element("GroupName");
+
+                // Check the group ID, it has not to be 0
+                if (_groupIDs.Contains(0))
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show("The group ID can not be 0, it is reserved!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    return;
+                }
+
+                // Check the group ID and group Name
+                int _previousGroupID = -1;
+                string _previousGroupName = string.Empty;
+                for (int i = 0; i < _groupIDs.Count(); i++)
+                {
+                    if (_previousGroupID != _groupIDs.ElementAt(i))
+                    {
+                        _previousGroupID = _groupIDs.ElementAt(i);
+
+                        if (_previousGroupName == _groupNames.ElementAt(i))
+                        {
+                            customMsgBox = new CustomMsgBox();
+                            customMsgBox.Show("The group name has to be unique!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                            return;
+                        }
+
+                        _previousGroupName = _groupNames.ElementAt(i);
+                    }
+
+                    if (_previousGroupName != _groupNames.ElementAt(i))
+                    {
+                        customMsgBox = new CustomMsgBox();
+                        customMsgBox.Show("The group ID has to be unique!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        return;
+                    }
+                }
+
+                // Get the GroupIDs and GroupNames
+                IEnumerable<int> _groupIDsWithoutDuplicates = _groupIDs.Distinct();
+                IEnumerable<string> _groupNamesWithoutDuplicates = _groupNames.Distinct();
+
+                // Check the task ID
+                for (int i = 0; i < _groupIDsWithoutDuplicates.Count(); i++)
+                {
+                    IEnumerable<int> _taskIDs = from item in _xmlFile.Descendants("Table1")
+                                                where (int)item.Element("GroupID") == _groupIDsWithoutDuplicates.ElementAt(i)
+                                                select (int)item.Element("TaskID");
+
+
+                    IEnumerable<int> _taskIDsWithoutDuplicates = _taskIDs.Distinct();
+
+                    if (_taskIDsWithoutDuplicates.Count() < _taskIDs.Count())
+                    {
+                        customMsgBox = new CustomMsgBox();
+                        customMsgBox.Show("The task ID has to be unique under the group!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        return;
+                    }
+
+                    // Check the task Name
+                    IEnumerable<string> _taskNames = from item in _xmlFile.Descendants("Table1")
+                                                     where (string)item.Element("GroupName") == _groupNamesWithoutDuplicates.ElementAt(i)
+                                                     select (string)item.Element("TaskName");
+
+                    IEnumerable<string> _taskNamesWithoutDuplicates = _taskNames.Distinct();
+
+                    if (_taskNamesWithoutDuplicates.Count() < _taskNames.Count())
+                    {
+                        customMsgBox = new CustomMsgBox();
+                        customMsgBox.Show("The task Name has to be unique under the group!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        return;
+                    }
+                }
+
+                DataSet _dataSet = new DataSet();
+                _dataSet.ReadXml(_xmlFilename);
+
+                dataTable = new DataTable();
+                dataTable = _dataSet.Tables[0];
+
+                taskModification.ImportTasks(dataTable);
+
+                UpdateTreeView();
+
+                UpdateGroups();
+
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show("Import OK!", Texts.Captions.Information, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
             }
+
             catch (Exception error)
             {
                 Logger.Error(error);
@@ -294,16 +321,16 @@ namespace emira.GUI
                 taskModification = new TaskModification();
                 dataTable = new DataTable();
                 dataTable = taskModification.GetTasksForExport();
-                DataSet ds = new DataSet();
-                ds.Tables.Add(dataTable);
-                ds.DataSetName = "TaskModification";
+                DataSet _dataSet = new DataSet();
+                _dataSet.Tables.Add(dataTable);
+                _dataSet.DataSetName = "TaskModification";
                 SaveFileDialog _saveFileDialog = new SaveFileDialog();
                 _saveFileDialog.Filter = "XML|*.xml";
                 if (_saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
-                        ds.WriteXml(_saveFileDialog.FileName);
+                        _dataSet.WriteXml(_saveFileDialog.FileName);
                     }
                     catch (Exception error)
                     {

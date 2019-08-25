@@ -260,6 +260,9 @@ namespace emira.HelperFunctions
             public static string PersonInformationMissing = "For holiday calculation please fill out the 'Personal Information'.\n"
                                                             +"You can find it under 'Settings'.";
 
+            public static string ImportTasks = "Warning\r\n\r\nIf you import the new tasks them the old ones will be deleted\r\n\r\n" + 
+                                               "and the already used task which ara not locked in the Workitime sheet will be deleted.\r\n\r\n" +
+                                               "Do you continue the action?";
         }
 
         public static class Captions
