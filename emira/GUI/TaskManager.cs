@@ -23,6 +23,7 @@ namespace emira.GUI
         string oldGroupID = string.Empty;
         string oldTaskID = string.Empty;
         string oldTaskName = string.Empty;
+        List<string> expandedNodes = new List<string>();
 
         public static string cbGroupValue = string.Empty;
 
@@ -173,7 +174,7 @@ namespace emira.GUI
                     {
                         return;
                     }
-                }          
+                }
 
                 OpenFileDialog _openFileDialog = new OpenFileDialog();
                 _openFileDialog.Filter = "XML|*.xml";
@@ -351,54 +352,81 @@ namespace emira.GUI
 
         private void btnAddGroup_Click(object sender, EventArgs e)
         {
-            // User can not modify the combobox
-            cbGroupName.Enabled = false;
+            try
+            {
+                // Collect all expanded nodes
+                CollectOpenedGroups();
 
-            AddOrUpdateGroupPage _addOrUpdateGroupPage = new AddOrUpdateGroupPage();
-            _addOrUpdateGroupPage.ShowDialog();
+                // User can not modify the combobox
+                cbGroupName.Enabled = false;
 
-            // Combobox enabled again
-            cbGroupName.Enabled = true;
+                AddOrUpdateGroupPage _addOrUpdateGroupPage = new AddOrUpdateGroupPage();
+                _addOrUpdateGroupPage.ShowDialog();
 
-            // Update the content of the combobox
-            UpdateGroups();
+                // Combobox enabled again
+                cbGroupName.Enabled = true;
 
-            // Update the content of the tree view
-            UpdateTreeView();
+                // Update the content of the combobox
+                UpdateGroups();
+
+                // Update the content of the tree view
+                UpdateTreeView();
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
         }
 
         private void btnUpdateGroup_Click(object sender, EventArgs e)
         {
-            // Check the combobox is empty or not
-            if (string.IsNullOrEmpty(cbGroupName.Text))
+            try
             {
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.ComboboxIsEmptyForModify, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-                return;
+                // Collect all expanded nodes
+                CollectOpenedGroups();
+
+                // Check the combobox is empty or not
+                if (string.IsNullOrEmpty(cbGroupName.Text))
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.ComboboxIsEmptyForModify, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    return;
+                }
+
+                // User can not modify the combobox
+                cbGroupName.Enabled = false;
+
+                cbGroupValue = cbGroupName.SelectedItem.ToString();
+
+                AddOrUpdateGroupPage _addOrUpdateGroupPage = new AddOrUpdateGroupPage();
+                _addOrUpdateGroupPage.ShowDialog();
+
+                // Combobox enabled again
+                cbGroupName.Enabled = true;
+
+                // Update the content of the combobox
+                UpdateGroups();
+
+                // Update the content of the tree view
+                UpdateTreeView();
             }
-
-            // User can not modify the combobox
-            cbGroupName.Enabled = false;
-
-            cbGroupValue = cbGroupName.SelectedItem.ToString();
-
-            AddOrUpdateGroupPage _addOrUpdateGroupPage = new AddOrUpdateGroupPage();
-            _addOrUpdateGroupPage.ShowDialog();
-
-            // Combobox enabled again
-            cbGroupName.Enabled = true;
-
-            // Update the content of the combobox
-            UpdateGroups();
-
-            // Update the content of the tree view
-            UpdateTreeView();
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
         }
 
         private void btnDeleteGroup_Click(object sender, EventArgs e)
         {
             try
             {
+                // Collect all expanded nodes
+                CollectOpenedGroups();
+
                 // Check the combobox is empty or not
                 if (string.IsNullOrEmpty(cbGroupName.Text))
                 {
@@ -468,6 +496,9 @@ namespace emira.GUI
         {
             try
             {
+                // Collect all expanded nodes
+                CollectOpenedGroups();
+
                 // Check the combobox is empty or not
                 if (string.IsNullOrEmpty(cbGroupName.Text))
                 {
@@ -532,6 +563,9 @@ namespace emira.GUI
         {
             try
             {
+                // Collect all expanded nodes
+                CollectOpenedGroups();
+
                 // Check the text field is empty or not
                 if (!taskModification.TextBoxValueValidation(tbTaskName.Text))
                 {
@@ -599,6 +633,9 @@ namespace emira.GUI
         {
             try
             {
+                // Collect all expanded nodes
+                CollectOpenedGroups();
+
                 taskModification = new TaskModification();
                 bool _selected = false;
                 string[] _groupIDName = new string[2];
@@ -675,12 +712,14 @@ namespace emira.GUI
                 string[] _group = new string[2];
                 string _previousGroupID = string.Empty;
 
+                TreeNode _addedNewNode = new TreeNode();
+
                 foreach (string item in _groups)
                 {
                     _group = item.Split(' ');
                     if (_previousGroupID != _group[0])
                     {
-                        tvGroupsAndTasks.Nodes.Add(item);
+                        _addedNewNode = tvGroupsAndTasks.Nodes.Add(item);
                         _previousGroupID = _group[0];
                     }
                 }
@@ -694,8 +733,7 @@ namespace emira.GUI
                 string _previousTaskID = string.Empty;
                 int _groupID = 0;
 
-                // Set the child nodes and
-                // Set the checkbox where the task is selected
+                // Set the child nodes
                 foreach (DataRow task in dataTable.Rows)
                 {
                     _actualTaskGroupID = task[Texts.TaskProperties.GroupID].ToString();
@@ -713,6 +751,14 @@ namespace emira.GUI
                         tvGroupsAndTasks.Nodes[_groupID].Nodes.Add(_actualTaskGroupID + "_" + _actualTaskID + " " + _actualTaskName);
                     }
                 }
+
+                // Expand the nodes which were expanded
+                foreach (TreeNode node in tvGroupsAndTasks.Nodes)
+                {
+                    if (expandedNodes.Capacity > 0 && expandedNodes.Contains(node.Text))
+                        node.Expand();
+                }
+
             }
             catch (Exception error)
             {
@@ -739,6 +785,24 @@ namespace emira.GUI
                 _nextTaskID = taskModification.GetNextTaskID(_group[0]);
 
                 nupTaskID.Value = _nextTaskID;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+            }
+        }
+
+        private void CollectOpenedGroups()
+        {
+            try
+            {
+                foreach (TreeNode checknode in tvGroupsAndTasks.Nodes)
+                {
+                    if (checknode.IsExpanded)
+                        expandedNodes.Add(checknode.Text);
+                }
             }
             catch (Exception error)
             {

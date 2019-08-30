@@ -843,8 +843,6 @@ namespace emira.GUI
                     }
                 }
 
-
-
                 var _saveFileDialog = new SaveFileDialog();
                 _saveFileDialog.FileName = filename;
                 _saveFileDialog.DefaultExt = ".pdf";
@@ -878,7 +876,8 @@ namespace emira.GUI
                 string _path = string.Empty;
                 _period = cbYearWithMonth.SelectedItem.ToString().Replace('-', '_');
                 _path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                ExportToMSWord(dgvWorkingHours, _path + "\\" + _period + "_Munkaidonaplo");
+                workingHours = new WorkingHours();
+                workingHours.ExportToMSWord(dgvWorkingHours, _path + "\\" + _period + "_Munkaidonaplo");
             }
             catch (Exception error)
             {
@@ -888,130 +887,7 @@ namespace emira.GUI
             }
         }
 
-        private void ExportToMSWord(DataGridView dgv, object filename)
-        {
-            int _cellRow = 0;
-            int _cellColumn = 0;
-            try
-            {
-                //Create an instance for word app  
-                Microsoft.Office.Interop.Word.Application winword = new Microsoft.Office.Interop.Word.Application();
-
-                //Set animation status for word application  
-                winword.ShowAnimation = false;
-
-                //Set status for word application is to be visible or not.  
-                winword.Visible = false;
-
-                //Create a missing variable for missing value  
-                object missing = System.Reflection.Missing.Value;
-
-                //Create a new document  
-                Microsoft.Office.Interop.Word.Document _document = winword.Documents.Add(ref missing, ref missing, ref missing, ref missing);
-
-
-                //adding text to document
-                _document.PageSetup.LeftMargin = 20f;
-                _document.PageSetup.RightMargin = 20f;
-                _document.PageSetup.BottomMargin = 20f;
-                _document.PageSetup.TopMargin = 20f;
-                _document.PageSetup.Orientation = WdOrientation.wdOrientLandscape;
-                _document.Content.SetRange(0, 0);
-                _document.Content.Text = "This is test document " + Environment.NewLine;
-
-                //Add paragraph with Heading 1 style  
-                Microsoft.Office.Interop.Word.Paragraph para1 = _document.Content.Paragraphs.Add(ref missing);
-                object styleHeading1 = "Normál";
-                para1.Range.set_Style(ref styleHeading1);
-                para1.Range.Text = "Para 1 text";
-                para1.Range.InsertParagraphAfter();
-                para1.LineSpacingRule = WdLineSpacing.wdLineSpaceSingle;
-                para1.Format.SpaceBefore = 0;
-                para1.Format.SpaceAfter = 0;
-
-                //Create a 5X5 table and insert some dummy record  
-                Table _wordTable = _document.Tables.Add(para1.Range, dgv.RowCount + 1, dgv.ColumnCount + 1, ref missing, ref missing);
-             
-                // Border
-                _wordTable.Borders.InsideLineStyle = WdLineStyle.wdLineStyleSingle;
-                _wordTable.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleSingle;
-
-                // Headers
-                string[] _columnsText = new string[dgv.ColumnCount + 1];
-                _columnsText[0] = "Task";
-                foreach (DataGridViewColumn column in dgv.Columns)
-                {
-                    _columnsText[column.Index + 1] = column.HeaderText;
-                }
-
-                int _numberOfCells = dgv.Rows[0].Cells.Count;
-                string[,] _rowsText = new string[dgv.RowCount, _numberOfCells + 1];
-
-
-                for (int i = 0; i < dgv.RowCount; i++)
-                {
-                    _rowsText[i, 0] = dgv.Rows[i].HeaderCell.Value.ToString();
-                    for (int j = 0; j < _numberOfCells; j++)
-                    {
-                        if (dgv.Rows[i].Cells[j].Value == null)
-                        {
-                            dgv.Rows[i].Cells[j].Value = string.Empty;
-                        }
-                        _rowsText[i, j + 1] = dgv.Rows[i].Cells[j].Value.ToString();
-                    }
-                }
-
-                foreach (Row row in _wordTable.Rows)
-                {
-                    foreach (Cell cell in row.Cells)
-                    {
-                        //other format properties goes here  
-                        cell.Range.Font.Name = "verdana";
-                        cell.Range.Font.Size = 8;
-                        cell.Shading.BackgroundPatternColor = WdColor.wdColorGray25;
-                        //Center alignment for the Header cells  
-                        cell.VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                        cell.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-                        
-                        //Header row  
-                        if (cell.RowIndex == 1)
-                        {
-                            cell.Range.Text = _columnsText[cell.ColumnIndex - 1];
-                        }
-                        //Data row  
-                        else
-                        {
-                            _cellRow = cell.RowIndex;
-                            _cellColumn = cell.ColumnIndex;
-                            cell.Range.Text = _rowsText[cell.RowIndex - 2, cell.ColumnIndex - 1];
-                            cell.Shading.BackgroundPatternColor = WdColor.wdColorWhite;
-                        }
-                    }
-                }
-
-                _wordTable.Rows.Alignment = WdRowAlignment.wdAlignRowCenter;
-
-
-                // Width               
-                _document.Tables[1].AllowAutoFit = true;
-                _document.Tables[1].AutoFitBehavior(WdAutoFitBehavior.wdAutoFitContent);
-
-
-                //Save the document
-                _document.SaveAs2(ref filename);
-                _document.Close(ref missing, ref missing, ref missing);
-                _document = null;
-                winword.Quit(ref missing, ref missing, ref missing);
-                winword = null;
-                MessageBox.Show("Document created successfully !");
-            }
-            catch (Exception error)
-            {
-                Logger.Error(error, "The cell row: " + _cellRow + " column: " + _cellColumn);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-            }
-        }
+        
 
         private void btnExit_Click(object sender, EventArgs e)
         {

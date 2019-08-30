@@ -8,7 +8,8 @@ using emira.DataAccessLayer;
 using emira.HelperFunctions;
 
 using NLog;
-
+using System.Windows.Forms;
+using Microsoft.Office.Interop.Word;
 
 namespace emira.BusinessLogicLayer
 {
@@ -16,7 +17,7 @@ namespace emira.BusinessLogicLayer
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         DatabaseHandler DBHandler;
-        DataTable dataTable;
+        System.Data.DataTable dataTable;
         DateTime today = DateTime.UtcNow;
         CustomMsgBox customMsgBox;
 
@@ -74,9 +75,9 @@ namespace emira.BusinessLogicLayer
         /// </summary>
         /// <param name="date">selected month</param>
         /// <returns>Task(s) of the selected month</returns>
-        public DataTable GetTasksByMonth(string date)
+        public System.Data.DataTable GetTasksByMonth(string date)
         {
-            dataTable = new DataTable();
+            dataTable = new System.Data.DataTable();
             try
             {
                 DBHandler = new DatabaseHandler();
@@ -96,9 +97,9 @@ namespace emira.BusinessLogicLayer
         /// Get the selected task(s) from the DB
         /// </summary>
         /// <returns>data table with the task(s)</returns>
-        public DataTable GetSelectedTask()
+        public System.Data.DataTable GetSelectedTask()
         {
-            dataTable = new DataTable();
+            dataTable = new System.Data.DataTable();
             try
             {
                 DBHandler = new DatabaseHandler();
@@ -291,9 +292,9 @@ namespace emira.BusinessLogicLayer
         /// </summary>
         /// <param name="date">Selected month ('year-month')</param>
         /// <returns>Holiday(s) for the selected month</returns>
-        public DataTable GetHolidaysForSelectedMonth(string date)
+        public System.Data.DataTable GetHolidaysForSelectedMonth(string date)
         {
-            dataTable = new DataTable();
+            dataTable = new System.Data.DataTable();
             try
             {
                 DBHandler = new DatabaseHandler();
@@ -335,9 +336,9 @@ namespace emira.BusinessLogicLayer
         /// Get the government holidays which are set by the user
         /// </summary>
         /// <returns>Government holiday(s)</returns>
-        public DataTable GetGovernmentHolidays()
+        public System.Data.DataTable GetGovernmentHolidays()
         {
-            dataTable = new DataTable();
+            dataTable = new System.Data.DataTable();
             try
             {
                 DBHandler = new DatabaseHandler();
@@ -350,6 +351,132 @@ namespace emira.BusinessLogicLayer
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                 return dataTable;
+            }
+        }
+
+        public void ExportToMSWord(DataGridView dgv, object filename)
+        {
+            int _cellRow = 0;
+            int _cellColumn = 0;
+
+            //Create a missing variable for missing value  
+            object missing = System.Reflection.Missing.Value;
+
+            //Create an instance for word app  
+            Microsoft.Office.Interop.Word.Application _winword = new Microsoft.Office.Interop.Word.Application();
+
+            try
+            {
+                //Set animation status for word application  
+                _winword.ShowAnimation = false;
+
+                //Set status for word application is to be visible or not.  
+                _winword.Visible = false;
+
+                //Create a new document  
+                Document _document = _winword.Documents.Add(ref missing, ref missing, ref missing, ref missing);
+
+                //adding text to document
+                _document.PageSetup.LeftMargin = 20f;
+                _document.PageSetup.RightMargin = 20f;
+                _document.PageSetup.BottomMargin = 20f;
+                _document.PageSetup.TopMargin = 20f;
+                _document.PageSetup.Orientation = WdOrientation.wdOrientLandscape;
+                _document.Content.SetRange(0, 0);
+                _document.Content.Text = "This is test document " + Environment.NewLine;
+
+                //Add paragraph with Normal style  
+                Paragraph para1 = _document.Content.Paragraphs.Add(ref missing);               
+                object styleHeading1 = _document.Styles[WdBuiltinStyle.wdStyleNormal].NameLocal;
+                para1.Range.set_Style(ref styleHeading1);
+                para1.Range.Text = "Para 1 text";
+                para1.Range.InsertParagraphAfter();
+                para1.LineSpacingRule = WdLineSpacing.wdLineSpaceSingle;
+                para1.Format.SpaceBefore = 0;
+                para1.Format.SpaceAfter = 0;
+
+                //Create the table 
+                Table _wordTable = _document.Tables.Add(para1.Range, dgv.RowCount + 1, dgv.ColumnCount + 1, ref missing, ref missing);
+
+                // Border of the table
+                _wordTable.Borders.InsideLineStyle = WdLineStyle.wdLineStyleSingle;
+                _wordTable.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleSingle;
+
+                // Headers
+                string[] _columnsText = new string[dgv.ColumnCount + 1];
+                _columnsText[0] = "Task";
+                foreach (DataGridViewColumn column in dgv.Columns)
+                {
+                    _columnsText[column.Index + 1] = column.HeaderText;
+                }
+
+                int _numberOfCells = dgv.Rows[0].Cells.Count;
+                string[,] _rowsText = new string[dgv.RowCount, _numberOfCells + 1];
+
+
+                for (int i = 0; i < dgv.RowCount; i++)
+                {
+                    _rowsText[i, 0] = dgv.Rows[i].HeaderCell.Value.ToString();
+                    for (int j = 0; j < _numberOfCells; j++)
+                    {
+                        if (dgv.Rows[i].Cells[j].Value == null)
+                        {
+                            dgv.Rows[i].Cells[j].Value = string.Empty;
+                        }
+                        _rowsText[i, j + 1] = dgv.Rows[i].Cells[j].Value.ToString();
+                    }
+                }
+
+                foreach (Row row in _wordTable.Rows)
+                {
+                    foreach (Cell cell in row.Cells)
+                    {
+                        //other format properties goes here  
+                        cell.Range.Font.Name = "verdana";
+                        cell.Range.Font.Size = 8;
+                        cell.Shading.BackgroundPatternColor = WdColor.wdColorGray25;
+                        //Center alignment for the Header cells  
+                        cell.VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+                        cell.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+
+                        //Header row  
+                        if (cell.RowIndex == 1)
+                        {
+                            cell.Range.Text = _columnsText[cell.ColumnIndex - 1];
+                        }
+                        //Data row  
+                        else
+                        {
+                            _cellRow = cell.RowIndex;
+                            _cellColumn = cell.ColumnIndex;
+                            cell.Range.Text = _rowsText[cell.RowIndex - 2, cell.ColumnIndex - 1];
+                            cell.Shading.BackgroundPatternColor = WdColor.wdColorWhite;
+                        }
+                    }
+                }
+
+                _wordTable.Rows.Alignment = WdRowAlignment.wdAlignRowCenter;
+
+
+                // Width               
+                _document.Tables[1].AllowAutoFit = true;
+                _document.Tables[1].AutoFitBehavior(WdAutoFitBehavior.wdAutoFitContent);
+
+
+                //Save the document
+                _document.SaveAs2(ref filename);
+                _document.Close(ref missing, ref missing, ref missing);
+                _document = null;
+                _winword.Quit(ref missing, ref missing, ref missing);
+                _winword = null;
+                MessageBox.Show("Document created successfully !");
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error, "The cell row: " + _cellRow + " column: " + _cellColumn);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                _winword.Quit(ref missing, ref missing, ref missing);
             }
         }
     }
