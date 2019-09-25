@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
+
+using NLog;
 using Nager.Date;
 
 namespace emira.GUI
@@ -14,7 +16,7 @@ namespace emira.GUI
     public partial class HolidaysPage : Form
     {
 
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         int togMove;
         int mValX;
         int mValY;
@@ -392,6 +394,12 @@ namespace emira.GUI
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
+        }
+
+        private void btnAddGovernmentHoliday_Click(object sender, EventArgs e)
+        {
+            AddGovernmentHolidaysPage _addGovernmentHolidaysPage = new AddGovernmentHolidaysPage();
+            _addGovernmentHolidaysPage.ShowDialog();
         }
 
         private void btnCancellation_Click(object sender, EventArgs e)

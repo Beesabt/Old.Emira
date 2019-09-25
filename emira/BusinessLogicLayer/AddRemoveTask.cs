@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 using emira.DataAccessLayer;
 using emira.HelperFunctions;
@@ -10,7 +9,7 @@ namespace emira.BusinessLogicLayer
 {
     class AddRemoveTask
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         CustomMsgBox customMsgBox;
         DatabaseHandler DBHandler;
        

@@ -97,11 +97,18 @@
       <DependentUpon>TaskManager.xsd</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="BusinessLogicLayer\AddRemoveGovernmentHoliday.cs" />
     <Compile Include="BusinessLogicLayer\AddRemoveTask.cs" />
     <Compile Include="BusinessLogicLayer\Holiday.cs" />
     <Compile Include="BusinessLogicLayer\Login.cs" />
     <Compile Include="BusinessLogicLayer\TaskModification.cs" />
     <Compile Include="BusinessLogicLayer\WorkingHours.cs" />
+    <Compile Include="GUI\AddGovernmentHolidaysPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\AddGovernmentHolidaysPage.Designer.cs">
+      <DependentUpon>AddGovernmentHolidaysPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\AddOrUpdateGroupPage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -214,6 +221,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\word_icon_white_32.png" />
+    <EmbeddedResource Include="GUI\AddGovernmentHolidaysPage.resx">
+      <DependentUpon>AddGovernmentHolidaysPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\AddOrUpdateGroupPage.resx">
       <DependentUpon>AddOrUpdateGroupPage.cs</DependentUpon>
     </EmbeddedResource>

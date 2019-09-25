@@ -597,6 +597,19 @@ namespace emira.DataAccessLayer
 
         #endregion
 
+        #region AddGovernmentHoliday
+
+        public string GetTheSmallestYear()
+        {
+            string command = string.Format("SELECT MIN({0}) FROM {1}",
+                Texts.HolidayProperties.StartDate,
+                Texts.DataTableNames.Holiday);
+            sResult = GetString(command);
+            return sResult;
+        }
+
+        #endregion
+
         #region WorkingHours.cs
 
         public DataTable GetTask()

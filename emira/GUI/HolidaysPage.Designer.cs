@@ -567,6 +567,7 @@
             this.btnAddGovernmentHoliday.Text = "Pihenőnap";
             this.btnAddGovernmentHoliday.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAddGovernmentHoliday.UseVisualStyleBackColor = false;
+            this.btnAddGovernmentHoliday.Click += new System.EventHandler(this.btnAddGovernmentHoliday_Click);
             // 
             // lState
             // 
