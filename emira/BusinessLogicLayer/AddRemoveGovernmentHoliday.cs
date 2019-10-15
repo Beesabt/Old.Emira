@@ -28,7 +28,7 @@ namespace emira.BusinessLogicLayer
                 int _year = 0;
                 int _smallestYear = 0;
                 int _actualYear = DateTime.Today.Year;
-                string _smallestUsedYear = DBHandler.GetTheSmallestYear();
+                string _smallestUsedYear = "";// DBHandler.GetTheSmallestYear();
 
                 Int32.TryParse(_smallestUsedYear, out _smallestYear);
 

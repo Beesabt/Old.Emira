@@ -599,7 +599,7 @@ namespace emira.DataAccessLayer
 
         #region AddGovernmentHoliday
 
-        public string GetTheSmallestYear()
+        public string GetTheSmallestYearFrom()
         {
             string command = string.Format("SELECT MIN({0}) FROM {1}",
                 Texts.HolidayProperties.StartDate,

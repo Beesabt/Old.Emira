@@ -57,9 +57,6 @@
             this.dtpFrom = new System.Windows.Forms.DateTimePicker();
             this.lSelectedDays = new System.Windows.Forms.Label();
             this.gbHoliday = new System.Windows.Forms.GroupBox();
-            this.nupAnnualHoliday = new System.Windows.Forms.NumericUpDown();
-            this.rbHolidaysByUser = new System.Windows.Forms.RadioButton();
-            this.rbCalculated = new System.Windows.Forms.RadioButton();
             this.tlpHoliday = new System.Windows.Forms.TableLayoutPanel();
             this.lPredictableDays = new System.Windows.Forms.Label();
             this.lPredictable = new System.Windows.Forms.Label();
@@ -81,7 +78,6 @@
             this.flowLayoutPanel1.SuspendLayout();
             this.tlpAddHoliday.SuspendLayout();
             this.gbHoliday.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nupAnnualHoliday)).BeginInit();
             this.tlpHoliday.SuspendLayout();
             this.gbHolidaysSoFar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHolidays)).BeginInit();
@@ -301,6 +297,7 @@
             this.lFrameDays.Size = new System.Drawing.Size(68, 17);
             this.lFrameDays.TabIndex = 9;
             this.lFrameDays.Text = "Unknown";
+            this.lFrameDays.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // dtpTo
             // 
@@ -390,13 +387,11 @@
             this.lSelectedDays.Size = new System.Drawing.Size(68, 17);
             this.lSelectedDays.TabIndex = 8;
             this.lSelectedDays.Text = "Unknown";
+            this.lSelectedDays.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // gbHoliday
             // 
             this.gbHoliday.BackColor = System.Drawing.Color.White;
-            this.gbHoliday.Controls.Add(this.nupAnnualHoliday);
-            this.gbHoliday.Controls.Add(this.rbHolidaysByUser);
-            this.gbHoliday.Controls.Add(this.rbCalculated);
             this.gbHoliday.Controls.Add(this.tlpHoliday);
             this.gbHoliday.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.gbHoliday.Location = new System.Drawing.Point(23, 466);
@@ -405,50 +400,6 @@
             this.gbHoliday.TabIndex = 3;
             this.gbHoliday.TabStop = false;
             this.gbHoliday.Text = "Szabadság";
-            // 
-            // nupAnnualHoliday
-            // 
-            this.nupAnnualHoliday.Location = new System.Drawing.Point(254, 22);
-            this.nupAnnualHoliday.Maximum = new decimal(new int[] {
-            200,
-            0,
-            0,
-            0});
-            this.nupAnnualHoliday.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nupAnnualHoliday.Name = "nupAnnualHoliday";
-            this.nupAnnualHoliday.Size = new System.Drawing.Size(52, 23);
-            this.nupAnnualHoliday.TabIndex = 3;
-            this.nupAnnualHoliday.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // rbHolidaysByUser
-            // 
-            this.rbHolidaysByUser.AutoSize = true;
-            this.rbHolidaysByUser.Location = new System.Drawing.Point(171, 22);
-            this.rbHolidaysByUser.Name = "rbHolidaysByUser";
-            this.rbHolidaysByUser.Size = new System.Drawing.Size(67, 21);
-            this.rbHolidaysByUser.TabIndex = 2;
-            this.rbHolidaysByUser.Text = "Egyéni";
-            this.rbHolidaysByUser.UseVisualStyleBackColor = true;
-            // 
-            // rbCalculated
-            // 
-            this.rbCalculated.AutoSize = true;
-            this.rbCalculated.Checked = true;
-            this.rbCalculated.Location = new System.Drawing.Point(30, 22);
-            this.rbCalculated.Name = "rbCalculated";
-            this.rbCalculated.Size = new System.Drawing.Size(77, 21);
-            this.rbCalculated.TabIndex = 1;
-            this.rbCalculated.TabStop = true;
-            this.rbCalculated.Text = "Számolt";
-            this.rbCalculated.UseVisualStyleBackColor = true;
             // 
             // tlpHoliday
             // 
@@ -461,54 +412,58 @@
             this.tlpHoliday.Controls.Add(this.lApplied, 0, 1);
             this.tlpHoliday.Controls.Add(this.lAnnualOpeningFrameDays, 1, 0);
             this.tlpHoliday.Controls.Add(this.lAnnualOpeningFrame, 0, 0);
-            this.tlpHoliday.Location = new System.Drawing.Point(23, 66);
+            this.tlpHoliday.Location = new System.Drawing.Point(23, 34);
             this.tlpHoliday.Name = "tlpHoliday";
             this.tlpHoliday.RowCount = 3;
             this.tlpHoliday.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.62376F));
             this.tlpHoliday.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.69307F));
             this.tlpHoliday.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 32.67327F));
-            this.tlpHoliday.Size = new System.Drawing.Size(283, 101);
+            this.tlpHoliday.Size = new System.Drawing.Size(283, 133);
             this.tlpHoliday.TabIndex = 0;
             // 
             // lPredictableDays
             // 
             this.lPredictableDays.AutoSize = true;
             this.lPredictableDays.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lPredictableDays.Location = new System.Drawing.Point(144, 67);
+            this.lPredictableDays.Location = new System.Drawing.Point(144, 89);
             this.lPredictableDays.Name = "lPredictableDays";
             this.lPredictableDays.Size = new System.Drawing.Size(79, 20);
             this.lPredictableDays.TabIndex = 5;
             this.lPredictableDays.Text = "Unknown";
+            this.lPredictableDays.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lPredictable
             // 
             this.lPredictable.AutoSize = true;
             this.lPredictable.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lPredictable.Location = new System.Drawing.Point(3, 67);
+            this.lPredictable.Location = new System.Drawing.Point(3, 89);
             this.lPredictable.Name = "lPredictable";
             this.lPredictable.Size = new System.Drawing.Size(94, 20);
             this.lPredictable.TabIndex = 4;
             this.lPredictable.Text = "Predictable";
+            this.lPredictable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lAppliedDays
             // 
             this.lAppliedDays.AutoSize = true;
             this.lAppliedDays.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lAppliedDays.Location = new System.Drawing.Point(144, 37);
+            this.lAppliedDays.Location = new System.Drawing.Point(144, 49);
             this.lAppliedDays.Name = "lAppliedDays";
             this.lAppliedDays.Size = new System.Drawing.Size(79, 20);
             this.lAppliedDays.TabIndex = 3;
             this.lAppliedDays.Text = "Unknown";
+            this.lAppliedDays.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lApplied
             // 
             this.lApplied.AutoSize = true;
             this.lApplied.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lApplied.Location = new System.Drawing.Point(3, 37);
+            this.lApplied.Location = new System.Drawing.Point(3, 49);
             this.lApplied.Name = "lApplied";
             this.lApplied.Size = new System.Drawing.Size(66, 20);
             this.lApplied.TabIndex = 2;
             this.lApplied.Text = "Applied";
+            this.lApplied.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lAnnualOpeningFrameDays
             // 
@@ -519,6 +474,7 @@
             this.lAnnualOpeningFrameDays.Size = new System.Drawing.Size(79, 20);
             this.lAnnualOpeningFrameDays.TabIndex = 1;
             this.lAnnualOpeningFrameDays.Text = "Unknown";
+            this.lAnnualOpeningFrameDays.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lAnnualOpeningFrame
             // 
@@ -526,9 +482,10 @@
             this.lAnnualOpeningFrame.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lAnnualOpeningFrame.Location = new System.Drawing.Point(3, 0);
             this.lAnnualOpeningFrame.Name = "lAnnualOpeningFrame";
-            this.lAnnualOpeningFrame.Size = new System.Drawing.Size(129, 37);
+            this.lAnnualOpeningFrame.Size = new System.Drawing.Size(129, 40);
             this.lAnnualOpeningFrame.TabIndex = 0;
             this.lAnnualOpeningFrame.Text = "Annual opening frame";
+            this.lAnnualOpeningFrame.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // gbHolidaysSoFar
             // 
@@ -709,8 +666,6 @@
             this.tlpAddHoliday.ResumeLayout(false);
             this.tlpAddHoliday.PerformLayout();
             this.gbHoliday.ResumeLayout(false);
-            this.gbHoliday.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nupAnnualHoliday)).EndInit();
             this.tlpHoliday.ResumeLayout(false);
             this.tlpHoliday.PerformLayout();
             this.gbHolidaysSoFar.ResumeLayout(false);
@@ -760,9 +715,6 @@
         private System.Windows.Forms.Label lState;
         private System.Windows.Forms.Label lYear;
         private System.Windows.Forms.ComboBox cbState;
-        private System.Windows.Forms.NumericUpDown nupAnnualHoliday;
-        private System.Windows.Forms.RadioButton rbHolidaysByUser;
-        private System.Windows.Forms.RadioButton rbCalculated;
         private System.Windows.Forms.Button btnAddGovernmentHoliday;
     }
 }
