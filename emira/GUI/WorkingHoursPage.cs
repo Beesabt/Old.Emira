@@ -50,7 +50,7 @@ namespace emira.GUI
 
             WorkingHours _workingHours = new WorkingHours();
 
-            // Fill the combox with months from DB
+            // Fill the combox with years and months
             List<string> _dates = _workingHours.GetYearsAndMonths();
 
             foreach (var item in _dates)
@@ -298,7 +298,7 @@ namespace emira.GUI
 
                 DataGridViewRow _normalHolidayRow = new DataGridViewRow();
                 _normalHolidayRow.CreateCells(dgvWorkingHours);
-                _normalHolidayRow.HeaderCell.Value = "0_0 Normál szabadság";
+                _normalHolidayRow.HeaderCell.Value = Texts.Text.NormalHoliday;
 
                 // Get working hours of the user
                 _workingHours = workingHours.GetWorkingHoursOfTheUser();
@@ -369,11 +369,35 @@ namespace emira.GUI
                 {
                     if (publicHoliday.Date.Month == month)
                     {
-                        if (!dgvWorkingHours.Rows.Contains(_normalHolidayRow))
+
+                        if (dgvWorkingHours.Rows.Count > 0)
                         {
+                            // Check whether the normal holiday row exists or not
+                            // and if not then add to the table
+                            bool _found = false;
+
+                            foreach (DataGridViewRow row in dgvWorkingHours.Rows)
+                            {
+                                if (row.HeaderCell.EditedFormattedValue.ToString() == Texts.Text.NormalHoliday)
+                                {
+                                    // row exists
+                                    _found = true;
+                                }
+                            }
+
+                            if (!_found)
+                            {
+                                dgvWorkingHours.Rows.Add(_normalHolidayRow);
+                                _indexOfNormalHoliday = dgvWorkingHours.Rows.IndexOf(_normalHolidayRow);
+                            }
+                        }
+                        else
+                        {
+                            // If the Catalog is empty
                             dgvWorkingHours.Rows.Add(_normalHolidayRow);
                             _indexOfNormalHoliday = dgvWorkingHours.Rows.IndexOf(_normalHolidayRow);
                         }
+
                         dgvWorkingHours.Rows[_indexOfNormalHoliday].Cells[publicHoliday.Date.Day - 1].Value = _workingHours;
                         dgvWorkingHours.Columns[publicHoliday.Date.Day - 1].ReadOnly = true;
                         dgvWorkingHours.Columns[publicHoliday.Date.Day - 1].DefaultCellStyle.BackColor = Color.Plum;
@@ -390,8 +414,37 @@ namespace emira.GUI
 
                     if (_governmentHoliday.Month == month)
                     {
-                        if (!dgvWorkingHours.Rows.Contains(_normalHolidayRow))
+
+                        if (dgvWorkingHours.Rows.Count > 0)
+                        {
+                            // Check whether the normal holiday row exists or not
+                            // and if not then add to the table
+                            bool _found = false;
+
+                            foreach (DataGridViewRow row in dgvWorkingHours.Rows)
+                            {
+                                if (row.HeaderCell.EditedFormattedValue.ToString() == Texts.Text.NormalHoliday)
+                                {
+                                    // row exists
+                                    _found = true;
+                                }
+                            }
+
+                            if (!_found)
+                            {
+                                dgvWorkingHours.Rows.Add(_normalHolidayRow);
+                                _indexOfNormalHoliday = dgvWorkingHours.Rows.IndexOf(_normalHolidayRow);
+                            }
+                        }
+                        else
+                        {
+                            // If the Catalog is empty
                             dgvWorkingHours.Rows.Add(_normalHolidayRow);
+                            _indexOfNormalHoliday = dgvWorkingHours.Rows.IndexOf(_normalHolidayRow);
+                        }
+
+                        dgvWorkingHours.Rows[_indexOfNormalHoliday].Cells[_governmentHoliday.Day - 1].Value = _workingHours;
+                        dgvWorkingHours.Columns[_governmentHoliday.Day - 1].ReadOnly = true;
                         dgvWorkingHours.Columns[_governmentHoliday.Day - 1].DefaultCellStyle.BackColor = Color.Plum;
                     }
                 }
@@ -738,25 +791,57 @@ namespace emira.GUI
 
         private void btnLock_Click(object sender, EventArgs e)
         {
-            if (btnLock.Text == "Unlock")
+            bool _isSuccess = false;
+            string _date = string.Empty;
+            workingHours = new WorkingHours();
+
+            // Get the date from the dropdown list and the column header text
+            _date = cbYearWithMonth.SelectedItem.ToString();
+
+            if (btnLock.Text == "Lock")
             {
-                btnLock.Text = "Lock";
-                btnLock.Image = Properties.Resources.lock_icon_white_32;
-                foreach (DataGridViewColumn column in dgvWorkingHours.Columns)
+                // Check whether any records exists for the month before lock
+                if (workingHours.CheckBeforeLock(_date))
                 {
-                    column.ReadOnly = false;
-                    btnAddRemoveTask.Enabled = true;
+                    _isSuccess = workingHours.LockMonth(_date, "1");
+                    if (!_isSuccess)
+                    {
+                        MessageBox.Show(Texts.ErrorMessages.ErrorDuringLock, Texts.Captions.ErrorLock, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
-            }
-            else
-            {
+
                 btnLock.Text = "Unlock";
                 btnLock.Image = Properties.Resources.unlock_icon_white_32;
                 foreach (DataGridViewColumn column in dgvWorkingHours.Columns)
                 {
                     column.ReadOnly = true;
-                    btnAddRemoveTask.Enabled = false;
                 }
+                btnAddRemoveTask.Enabled = false;
+                MessageBox.Show(Texts.InformationMessages.SuccessfulLocked, Texts.Captions.SuccessLocked, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                // Check whether any records exists for the month before unlock
+                if (workingHours.CheckBeforeLock(_date))
+                {
+                    _isSuccess = workingHours.LockMonth(_date, "1");
+                    if (!_isSuccess)
+                    {
+                        MessageBox.Show(Texts.ErrorMessages.ErrorDuringUnlock, Texts.Captions.ErrorUnlock, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                btnLock.Text = "Lock";
+                btnLock.Image = Properties.Resources.lock_icon_white_32;
+                foreach (DataGridViewColumn column in dgvWorkingHours.Columns)
+                {
+                    column.ReadOnly = false;
+                }
+                btnAddRemoveTask.Enabled = true;
+                UpdateWorkingHoursTable();
+                MessageBox.Show(Texts.InformationMessages.SuccessfulUnlocked, Texts.Captions.SuccessfulUnlocked, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -887,7 +972,7 @@ namespace emira.GUI
             }
         }
 
-        
+
 
         private void btnExit_Click(object sender, EventArgs e)
         {

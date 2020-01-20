@@ -10,19 +10,20 @@ using emira.HelperFunctions;
 using NLog;
 using System.Windows.Forms;
 using Microsoft.Office.Interop.Word;
+using Nager.Date;
 
 namespace emira.BusinessLogicLayer
 {
     class WorkingHours
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         DatabaseHandler DBHandler;
         System.Data.DataTable dataTable;
         DateTime today = DateTime.UtcNow;
         CustomMsgBox customMsgBox;
 
         /// <summary>
-        /// Get the yers and months (back - 6 months, forward - 5 months)
+        /// Get the years and months (back - 6 months, forward - 5 months)
         /// </summary>
         /// <returns>List of the years and months</returns>
         public List<string> GetYearsAndMonths()
@@ -147,8 +148,8 @@ namespace emira.BusinessLogicLayer
                 Logger.Error(error);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-                return _result;   
-            }          
+                return _result;
+            }
         }
 
         /// <summary>
@@ -160,40 +161,51 @@ namespace emira.BusinessLogicLayer
         /// <returns>True if it was success</returns>
         public bool SaveHour(string task, string date, double numberOfHours)
         {
-            string _groupID = string.Empty;
-            string _taskID = string.Empty;
-            string _taskName = string.Empty;
             bool _isSuccess = false;
-            int _result = 0;
-            int _rowid = 0;
-            DBHandler = new DatabaseHandler();
 
-            // Remove the task Name
-            _taskID = task.Remove(task.IndexOf(' '));
-            _taskName = task.Substring(task.IndexOf(' ') + 1);
-
-            // Get the group ID and task ID
-            _groupID = _taskID.Remove(_taskID.IndexOf('_'));
-            _taskID = _taskID.Substring(_taskID.IndexOf('_') + 1);
-
-            // If it is update
-            _rowid = DBHandler.IsRecordExist(_groupID, _taskID, date);
-
-            if (_rowid > 0)
+            try
             {
-                Dictionary<string, string> data = new Dictionary<string, string>();
-                data.Add(Texts.CatalogProperties.NumberOfHours, numberOfHours.ToString());
+                string _groupID = string.Empty;
+                string _taskID = string.Empty;
+                string _taskName = string.Empty;
+                int _result = 0;
+                int _rowid = 0;
+                DBHandler = new DatabaseHandler();
 
-                _isSuccess = DBHandler.ModifyHourInCatalog(data, _rowid.ToString());
+                // Remove the task Name
+                _taskID = task.Remove(task.IndexOf(' '));
+                _taskName = task.Substring(task.IndexOf(' ') + 1);
+
+                // Get the group ID and task ID
+                _groupID = _taskID.Remove(_taskID.IndexOf('_'));
+                _taskID = _taskID.Substring(_taskID.IndexOf('_') + 1);
+
+                // If it is update
+                _rowid = DBHandler.IsRecordExist(_groupID, _taskID, date);
+
+                if (_rowid > 0)
+                {
+                    Dictionary<string, string> _data = new Dictionary<string, string>();
+                    _data.Add(Texts.CatalogProperties.NumberOfHours, numberOfHours.ToString());
+
+                    _isSuccess = DBHandler.ModifyHourInCatalog(_data, _rowid.ToString());
+
+                    return _isSuccess;
+                }
+
+                _result = DBHandler.SaveHourToCatalog(_groupID, _taskID, _taskName, date, numberOfHours);
+
+                if (_result > 0) { _isSuccess = true; }
 
                 return _isSuccess;
             }
-
-            _result = DBHandler.SaveHourToCatalog(_groupID, _taskID, _taskName, date, numberOfHours);
-
-            if (_result > 0) { _isSuccess = true; }
-
-            return _isSuccess;
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _isSuccess;
+            }
         }
 
         /// <summary>
@@ -223,6 +235,64 @@ namespace emira.BusinessLogicLayer
             if (_result > 0) { _isSuccess = true; }
 
             return _isSuccess;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public bool CheckBeforeLock(string date)
+        {
+            bool _lockIsPossible = false;
+
+            try
+            {
+                DBHandler = new DatabaseHandler();
+                int _numberOfRecords = 0;
+
+                _numberOfRecords = DBHandler.GetNumberOfRecords(date);
+
+                return _lockIsPossible;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _lockIsPossible;
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool LockMonth(string date, string value)
+        {
+            bool _isSuccess = false;
+
+            try
+            {
+                DBHandler = new DatabaseHandler();
+
+                Dictionary<string, string> _lock = new Dictionary<string, string>();
+                _lock.Add(Texts.CatalogProperties.Locked, value);
+
+                _isSuccess = DBHandler.LockMonthInDB(_lock, date);
+
+                return _isSuccess;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _isSuccess;
+            }
         }
 
         /// <summary>
@@ -345,7 +415,7 @@ namespace emira.BusinessLogicLayer
                 dataTable = DBHandler.GetGovernmentHolidaysFromDB();
                 return dataTable;
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 Logger.Error(error);
                 customMsgBox = new CustomMsgBox();
@@ -354,6 +424,11 @@ namespace emira.BusinessLogicLayer
             }
         }
 
+        /// <summary>
+        /// Export the working days into a word document
+        /// </summary>
+        /// <param name="dgv">The selected month</param>
+        /// <param name="filename">file name</param>
         public void ExportToMSWord(DataGridView dgv, object filename)
         {
             int _cellRow = 0;
@@ -386,7 +461,7 @@ namespace emira.BusinessLogicLayer
                 _document.Content.Text = "This is test document " + Environment.NewLine;
 
                 //Add paragraph with Normal style  
-                Paragraph para1 = _document.Content.Paragraphs.Add(ref missing);               
+                Paragraph para1 = _document.Content.Paragraphs.Add(ref missing);
                 object styleHeading1 = _document.Styles[WdBuiltinStyle.wdStyleNormal].NameLocal;
                 para1.Range.set_Style(ref styleHeading1);
                 para1.Range.Text = "Para 1 text";

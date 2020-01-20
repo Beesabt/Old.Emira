@@ -31,12 +31,12 @@ namespace emira.DataAccessLayer
                 AppDomain.CurrentDomain.SetData("DataDirectory", path);
                 sqlite = new SQLiteConnection(@"Data Source = |DataDirectory|\ApplicationFiles\DataBase\Emira_Database.db; Version = 3;");
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 Logger.Error(error);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-            }          
+            }
         }
 
 
@@ -239,9 +239,9 @@ namespace emira.DataAccessLayer
 
         public bool OldValueValidationDB(string key, string value)
         {
-            string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE {1}='{2}'", 
-                Texts.DataTableNames.Person, 
-                key, 
+            string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE {1}='{2}'",
+                Texts.DataTableNames.Person,
+                key,
                 value);
             if (ExecuteScalar(command) != 0) bResult = true;
             return bResult;
@@ -300,7 +300,7 @@ namespace emira.DataAccessLayer
         }
 
         public DataTable GetGroups(string command)
-        {           
+        {
             dataTable = new DataTable();
             dataTable = GetDataTable(command);
             return dataTable;
@@ -430,7 +430,7 @@ namespace emira.DataAccessLayer
 
         public bool DoesExist(string tableName, string columName, string value)
         {
-            string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE {1}='{2}'", 
+            string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE {1}='{2}'",
                 tableName,
                 columName,
                 value);
@@ -440,9 +440,9 @@ namespace emira.DataAccessLayer
 
         public bool DoesItHave(string groupID, string key, string value)
         {
-            string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE {2}='{3}' AND {1} = '{4}'", 
+            string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE {2}='{3}' AND {1} = '{4}'",
                 Texts.DataTableNames.Task,
-                Texts.TaskProperties.GroupID, 
+                Texts.TaskProperties.GroupID,
                 key,
                 value,
                 groupID);
@@ -599,13 +599,49 @@ namespace emira.DataAccessLayer
 
         #region AddGovernmentHoliday
 
-        public string GetTheSmallestYearFrom()
+        public DataTable GetGovernmentHolidaysFromDB(string selectedYear)
         {
-            string command = string.Format("SELECT MIN({0}) FROM {1}",
-                Texts.HolidayProperties.StartDate,
-                Texts.DataTableNames.Holiday);
-            sResult = GetString(command);
-            return sResult;
+            command = string.Format("SELECT {0} FROM {2} WHERE {0} LIKE '{1}%' ORDER BY {0}",
+                Texts.GovernmentHolidaysProperties.Date,
+                selectedYear,
+                Texts.DataTableNames.GovernmentHolidays);
+
+            dataTable = new DataTable();
+            dataTable = GetDataTable(command);
+            return dataTable;
+        }
+
+        public int AddNewGovernmentHoliday(string date)
+        {
+            string command = string.Format("INSERT INTO {0} ({1}) VALUES ('{2}')",
+                           Texts.DataTableNames.GovernmentHolidays,
+                           Texts.GovernmentHolidaysProperties.Date,
+                           date);
+            iResult = ExecuteNonQuery(command);
+            return iResult;
+        }
+
+        public bool isHoliday(string date)
+        {
+            string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE '{2}' BETWEEN {3} AND {4}",
+               Texts.DataTableNames.Holiday,
+               Texts.HolidayProperties.RowID,
+               date,
+               Texts.HolidayProperties.StartDate,
+               Texts.HolidayProperties.EndDate);
+            if (ExecuteScalar(command) != 0) bResult = true;
+            return bResult;
+        }
+
+        public bool IsClosed(string date)
+        {
+            string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE {1}='{2}' AND {3}=1",
+                Texts.DataTableNames.Catalog,
+                Texts.CatalogProperties.Date,
+                date,
+                Texts.CatalogProperties.Locked);
+            if (ExecuteScalar(command) != 0) bResult = true;
+            return bResult;
         }
 
         #endregion
@@ -627,8 +663,9 @@ namespace emira.DataAccessLayer
 
         public DataTable GetTasksByMonth(string date)
         {
-            command = string.Format("SELECT {0}.{1}, {0}.{2} FROM {0} JOIN {3} USING ({1}) WHERE {3}.{4} LIKE '{5}%'",
+            command = string.Format("SELECT DISTINCT {0}.{1}, {0}.{2}, {0}.{3}  FROM {0} JOIN {4} USING ({2}) WHERE {4}.{5} LIKE '{6}%'",
                 Texts.DataTableNames.Task,
+                Texts.TaskProperties.GroupID,
                 Texts.TaskProperties.TaskID,
                 Texts.TaskProperties.TaskName,
                 Texts.DataTableNames.Catalog,
@@ -765,10 +802,26 @@ namespace emira.DataAccessLayer
             return iResult;
         }
 
+        public int GetNumberOfRecords(string date)
+        {
+            command = string.Format("SELECT COUNT(*) FROM {0} WHERE {1} LIKE '{2}%'",
+                Texts.DataTableNames.Catalog,
+                Texts.CatalogProperties.Date,
+                date);
+            iResult = ExecuteScalar(command);
+            return iResult;
+        }
+
+        public bool LockMonthInDB(Dictionary<string, string> data, string value)
+        {
+            bResult = Update(Texts.DataTableNames.Catalog, data, string.Format("{0} LIKE '{1}%'", Texts.CatalogProperties.Date, value));
+            return bResult;
+        }
+
         public DataTable GetGovernmentHolidaysFromDB()
         {
             command = string.Format("SELECT * FROM {0} ORDER BY {1}",
-                Texts.DataTableNames.GovernmentHolidays, 
+                Texts.DataTableNames.GovernmentHolidays,
                 Texts.GovernmentHolidaysProperties.Date);
             dataTable = new DataTable();
             dataTable = GetDataTable(command);

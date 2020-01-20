@@ -1,17 +1,17 @@
-﻿using emira.HelperFunctions;
-using emira.DataAccessLayer;
-using emira.ValueObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
+
 using emira.GUI;
-using System.Globalization;
+using emira.HelperFunctions;
+using emira.DataAccessLayer;
+using emira.ValueObjects;
+
 
 namespace emira.BusinessLogicLayer
 {
     class Holiday
     {
-
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         DatabaseHandler DBHandler;
         DataTable dataTable;
@@ -86,8 +86,6 @@ namespace emira.BusinessLogicLayer
                 }
 
                 dataTable = DBHandler.GetHolidaysFromDB(selectedYear, _selectedStatusDB);
-
-
 
                 // Add checkbox column to the beginning table
                 dataTable.Columns.Add("Select", typeof(Boolean)).SetOrdinal(0);

@@ -216,6 +216,14 @@ namespace emira.HelperFunctions
 
             #endregion
 
+            #region WorkingHours
+
+            public static string ErrorDuringLock = "There was an error during lock, try again.";
+
+            public static string ErrorDuringUnlock = "There was an error during unlock, try again.";
+
+            #endregion
+
             #region Holiday
 
             public static string PublicHoliday = "There is no need to request holiday for this period.";
@@ -231,6 +239,16 @@ namespace emira.HelperFunctions
             public static string TooFewRemainingDays = "Not enough days left to take vacation days!";
 
             public static string ErrorDuringCancellation = "There was an error during cancellation, try again.";
+
+            #endregion
+
+            #region GovernmentHoliday
+
+            public static string PublicHolidaySelected = "The selected date is public holiday";
+
+            public static string ErrorDateExist = "The selected date is already exist.";
+
+            public static string ErrorExistHoliday = "The selected date is holiday already.";
 
             #endregion
         }
@@ -250,6 +268,10 @@ namespace emira.HelperFunctions
             public const string PersonalInformationChanged = "Personal information changed successfully.";
 
             public static string SuccessfulSave = "Data has been saved.";
+
+            public static string SuccessfulLocked = "Data has been locked.";
+
+            public static string SuccessfulUnlocked = "Data has been unlocked.";
         }
 
         public static class WarningMessages
@@ -309,7 +331,15 @@ namespace emira.HelperFunctions
 
             public static string SuccessfulSave = "Successful save";
 
+            public static string SuccessfulUnlocked = "Successful unlocked";
+
+            public static string SuccessLocked = "Successful locked";
+
             public static string ErrorSave = "An error during save";
+
+            public static string ErrorLock = "An error during lock";
+
+            public static string ErrorUnlock = "An error during unlock";
 
             public static string LossOfData = "Loss of datas";
         }
@@ -326,6 +356,11 @@ namespace emira.HelperFunctions
             public static string Add = "Csoport hozááadása";
 
             public static string Update = "Csoport módosítása";
+        }
+
+        public static class Text
+        {
+            public static string NormalHoliday = "0_0 Normál szabadság";
         }
     }
 }
