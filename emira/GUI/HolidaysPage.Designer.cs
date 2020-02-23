@@ -602,6 +602,7 @@
             this.dgvHolidays.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvHolidays.Size = new System.Drawing.Size(588, 380);
             this.dgvHolidays.TabIndex = 2;
+            this.dgvHolidays.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHolidays_CellClick);
             this.dgvHolidays.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvHolidays_KeyDown);
             // 
             // btnCancellation

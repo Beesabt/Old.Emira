@@ -321,7 +321,6 @@ namespace emira.DataAccessLayer
             return dataTable;
         }
 
-
         public int InsertNewGroup(string groupID, string groupName)
         {
             string command = string.Format("INSERT INTO {0} ({1}, {2}) VALUES ('{3}', '{4}')",
@@ -348,7 +347,6 @@ namespace emira.DataAccessLayer
             iResult = ExecuteNonQuery(command);
             return iResult;
         }
-
 
         public bool ModifyGroup(string tableName, Dictionary<string, string> data, string key, string value)
         {
@@ -449,8 +447,6 @@ namespace emira.DataAccessLayer
             if (ExecuteScalar(command) != 0) bResult = true;
             return bResult;
         }
-
-
 
         public void DeleteNotLockedItemsFromCatalog()
         {
@@ -595,6 +591,27 @@ namespace emira.DataAccessLayer
             return sResult;
         }
 
+        public bool DoesExistHoliday(string tableName, string columName, string value)
+        {
+            string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE {1} LIKE'{2}%'",
+                tableName,
+                columName,
+                value);
+            if (ExecuteScalar(command) != 0) bResult = true;
+            return bResult;
+        }
+
+        public bool IsClosed(string date)
+        {
+            string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE {1} LIKE '{2}%' AND {3}=1",
+                Texts.DataTableNames.Catalog,
+                Texts.CatalogProperties.Date,
+                date,
+                Texts.CatalogProperties.Locked);
+            if (ExecuteScalar(command) != 0) bResult = true;
+            return bResult;
+        }
+
         #endregion
 
         #region AddGovernmentHoliday
@@ -621,6 +638,16 @@ namespace emira.DataAccessLayer
             return iResult;
         }
 
+        public int DeleteNewGovernmentHoliday(string date)
+        {
+            command = string.Format("DELETE FROM {0} WHERE {1}='{2}'",
+                Texts.DataTableNames.GovernmentHolidays,
+                Texts.GovernmentHolidaysProperties.Date,
+                date);
+            iResult = ExecuteNonQuery(command);
+            return iResult;
+        }
+
         public bool isHoliday(string date)
         {
             string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE '{2}' BETWEEN {3} AND {4}",
@@ -629,17 +656,6 @@ namespace emira.DataAccessLayer
                date,
                Texts.HolidayProperties.StartDate,
                Texts.HolidayProperties.EndDate);
-            if (ExecuteScalar(command) != 0) bResult = true;
-            return bResult;
-        }
-
-        public bool IsClosed(string date)
-        {
-            string command = string.Format("SELECT COUNT({1}) FROM {0} WHERE {1}='{2}' AND {3}=1",
-                Texts.DataTableNames.Catalog,
-                Texts.CatalogProperties.Date,
-                date,
-                Texts.CatalogProperties.Locked);
             if (ExecuteScalar(command) != 0) bResult = true;
             return bResult;
         }

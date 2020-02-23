@@ -8,7 +8,6 @@ using emira.GUI;
 using emira.DataAccessLayer;
 using emira.HelperFunctions;
 
-
 namespace emira.BusinessLogicLayer
 {
     class AddRemoveGovernmentHoliday
@@ -94,35 +93,7 @@ namespace emira.BusinessLogicLayer
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                 return dataTable;
             }
-        }
-
-        /// <summary>
-        /// It gives back the date exists or not
-        /// </summary>
-        /// <param name="tableName">table name</param>
-        /// <param name="columnName">column name in the table</param>
-        /// <param name="date">the selected date</param>
-        /// <returns>True, if it exists and false if not</returns>
-        public bool isExist(string tableName, string columnName, string date)
-        {
-            bool _isExist = true;
-            try
-            {
-                DBHandler = new DatabaseHandler();
-
-                _isExist = DBHandler.DoesExist(tableName, columnName, date);
-
-                return _isExist;
-            }
-            catch (Exception error)
-            {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-
-                return _isExist;
-            }
-        }
+        }     
 
         /// <summary>
         /// It gives back the date is holiday or not
@@ -148,42 +119,61 @@ namespace emira.BusinessLogicLayer
 
                 return _isExist;
             }
-        }
+        }     
 
-        public bool isClosed(string date)
+        /// <summary>
+        /// Add holdiay to the Government holidays
+        /// </summary>
+        /// <param name="date">the selected day</param>
+        public bool AddHoliday(string date)
         {
-            bool _isClosed = true;
+            bool _isSuccess = false;
             try
             {
+                int _effectedRow = 0;
                 DBHandler = new DatabaseHandler();
 
-                _isClosed = DBHandler.IsClosed(date);
+               _effectedRow = DBHandler.AddNewGovernmentHoliday(date);
 
-                return _isClosed;
+                if (_effectedRow > 0)
+                    _isSuccess = true;
+
+                return _isSuccess;
             }
             catch (Exception error)
             {
                 Logger.Error(error);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-
-                return _isClosed;
+                return _isSuccess;
             }
         }
 
-        public void AddHoliday(string date)
+        /// <summary>
+        /// Delete the date form the Government holidays
+        /// </summary>
+        /// <param name="date">the selected date</param>
+        public bool DeleteHoliday(string date)
         {
+            bool _isSuccess = false;
             try
             {
+                int _effectedRow = 0;
                 DBHandler = new DatabaseHandler();
 
-                DBHandler.AddNewGovernmentHoliday(date);
+                _effectedRow = DBHandler.DeleteNewGovernmentHoliday(date);
+
+                if (_effectedRow > 0)
+                    _isSuccess = true;
+
+                return _isSuccess;
             }
             catch (Exception error)
             {
                 Logger.Error(error);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                return _isSuccess;
             }
         }
     }

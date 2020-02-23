@@ -292,6 +292,10 @@ namespace emira.GUI
                     lNumberOfNewBornBabies.Hide();
                     nupNumberOfNewBornBabies.Hide();
                 }
+                else
+                {
+                    cbYesChild.Checked = true;
+                }
 
                 // Save button is enabled
                 btnSave.Enabled = true;
@@ -343,6 +347,10 @@ namespace emira.GUI
                         nupNumberOfNewBornBabies.Show();
                     }
                 }
+                else
+                {
+                    cbNoChild.Checked = true;
+                }
 
                 btnSave.Enabled = true;
             }
@@ -373,6 +381,10 @@ namespace emira.GUI
                     lNumberOfDisabledChildren.Hide();
                     nupNumberOfDisabledChildren.Hide();
                 }
+                else
+                {
+                    cbYesDisabledChild.Checked = true;
+                }
 
                 btnSave.Enabled = true;
             }
@@ -396,6 +408,10 @@ namespace emira.GUI
                     // Show controls
                     lNumberOfDisabledChildren.Show();
                     nupNumberOfDisabledChildren.Show();
+                }
+                else
+                {
+                    cbNoDisabledChild.Checked = true;
                 }
 
                 btnSave.Enabled = true;
@@ -426,6 +442,10 @@ namespace emira.GUI
                 {
                     cbYesHealthDamage.Checked = false;
                 }
+                else
+                {
+                    cbYesHealthDamage.Checked = true;
+                }
 
                 btnSave.Enabled = true;
             }
@@ -444,6 +464,10 @@ namespace emira.GUI
                 if (cbYesHealthDamage.Checked)
                 {
                     cbNoHealthDamage.Checked = false;
+                }
+                else
+                {
+                    cbNoHealthDamage.Checked = true;
                 }
 
                 btnSave.Enabled = true;

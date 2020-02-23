@@ -475,6 +475,60 @@ namespace emira.BusinessLogicLayer
         }
 
         /// <summary>
+        /// It gives back the date exists or not
+        /// </summary>
+        /// <param name="tableName">table name</param>
+        /// <param name="columnName">column name in the table</param>
+        /// <param name="date">the selected date</param>
+        /// <returns>True, if it exists and false if not</returns>
+        public bool isExist(string tableName, string columnName, string date)
+        {
+            bool _isExist = true;
+            try
+            {
+                DBHandler = new DatabaseHandler();
+
+                _isExist = DBHandler.DoesExistHoliday(tableName, columnName, date);
+
+                return _isExist;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+
+                return _isExist;
+            }
+        }
+
+        /// <summary>
+        /// It gives back the date is locked in the WorkingHours or not
+        /// </summary>
+        /// <param name="date">the selected date</param>
+        /// <returns>True, if it is locked and false if not</returns>
+        public bool isClosed(string date)
+        {
+            bool _isClosed = true;
+            try
+            {
+                DBHandler = new DatabaseHandler();
+
+                _isClosed = DBHandler.IsClosed(date);
+
+                return _isClosed;
+            }
+            catch (Exception error)
+            {
+                Logger.Error(error);
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+
+                return _isClosed;
+            }
+        }
+
+        /// <summary>
         /// Add holiday
         /// </summary>
         /// <param name="startDate">start date of the selected holiday period</param>
@@ -508,7 +562,7 @@ namespace emira.BusinessLogicLayer
         /// <param name="startDate">start date of the selected holiday period</param>
         /// <param name="endDate">end date of the selected holiday period</param>
         /// <returns>True if the holiday is removed from Actual holidays</returns>
-        public bool DeleteHoliday(string startDate, string endDate)
+        public bool DeleteHoliday(DateTime startDate, DateTime endDate)
         {
             bool _isSuccess = false;
             try
@@ -517,15 +571,7 @@ namespace emira.BusinessLogicLayer
                 string _ID = string.Empty;
 
                 // Get the rowID of the holiday
-                // Cut the time
-                startDate = startDate.Remove(12);
-                endDate = endDate.Remove(12);
-
-                // Replace the delimiter to '-'
-                startDate = startDate.Replace(". ", "-");
-                endDate = endDate.Replace(". ", "-");
-
-                _ID = DBHandler.GetRowID(startDate, endDate);
+                _ID = DBHandler.GetRowID(startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"));
      
                 // Remove the holiday from Actual
                 Dictionary<string, string> data = new Dictionary<string, string>();

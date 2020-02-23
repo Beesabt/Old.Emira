@@ -166,6 +166,7 @@
             this.dgvGovernmentHoliday.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvGovernmentHoliday.Size = new System.Drawing.Size(600, 299);
             this.dgvGovernmentHoliday.TabIndex = 8;
+            this.dgvGovernmentHoliday.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGovernmentHoliday_CellClick);
             // 
             // cbYears
             // 

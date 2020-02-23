@@ -1,5 +1,6 @@
 ﻿using emira.HelperFunctions;
 using emira.BusinessLogicLayer;
+
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,7 +16,6 @@ namespace emira.GUI
 {
     public partial class HolidaysPage : Form
     {
-
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         int togMove;
         int mValX;
@@ -303,6 +303,24 @@ namespace emira.GUI
                     return;
                 }
 
+                // Error if the month is locked in the Working Hours
+                // Start date check
+                bool _isClosed = true;
+                DateTime _selectedStartDate;
+                DateTime.TryParse(dtpFrom.Text, out _selectedStartDate);
+                _isClosed = holiday.isClosed(_selectedStartDate.ToString("yyyy-MM"));
+
+                // End date check
+                DateTime _selectedEndDate;
+                DateTime.TryParse(dtpTo.Text, out _selectedEndDate);
+                _isClosed &= holiday.isClosed(_selectedStartDate.ToString("yyyy-MM"));
+
+                if (_isClosed)
+                {
+                    lErrorMessage.Text = Texts.ErrorMessages.ErrorLockedHoliday;
+                    return;
+                }
+
                 lSelectedDays.Text = _numberOfSelectedDays.ToString();
 
                 // Hide check button
@@ -328,7 +346,7 @@ namespace emira.GUI
         {
             try
             {
-                bool _isSuccess = true;
+                bool _isSuccess = true;           
 
                 // Add the selected holiday period
                 string _from = dtpFrom.Text;
@@ -408,15 +426,38 @@ namespace emira.GUI
             {
                 bool _isSuccess = true;
 
-                // Delete the selected holiday(s)
-                foreach (DataGridViewRow actualRow in dgvHolidays.SelectedRows)
+                // Check the status of the selected date in the WorkingHours:
+                // if the month is locked then warn the user and do not delete the date
+
+                holiday = new Holiday();
+                bool _cellValue;
+                DateTime _startDate = DateTime.Today;
+                DateTime _endDate = DateTime.Today;
+
+                for (int i = 0; i < dgvHolidays.Rows.Count; i++)
                 {
-                    string _startDate = actualRow.Cells[2].Value.ToString();
-                    string _endDate = actualRow.Cells[3].Value.ToString();
-                    holiday = new Holiday();
-                    _isSuccess = holiday.DeleteHoliday(_startDate, _endDate);
-                    _isSuccess &= _isSuccess;
+                    Boolean.TryParse(dgvHolidays.Rows[i].Cells[0].Value.ToString(), out _cellValue);
+                    if (_cellValue)
+                    {
+                        _startDate = (DateTime)dgvHolidays.Rows[i].Cells[2].Value;
+                        _endDate = (DateTime)dgvHolidays.Rows[i].Cells[3].Value;
+                        break;
+                    }
                 }
+
+                // Check whether the day does closed in the WorkingHours               
+                bool _isClosed = true;
+                _isClosed = holiday.isClosed(_startDate.ToString("yyyy-MM"));
+
+                if (_isClosed)
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorLockedHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    return;
+                }
+
+                // Delete date
+                _isSuccess = holiday.DeleteHoliday(_startDate, _endDate);
 
                 if (!_isSuccess)
                 {
@@ -426,7 +467,7 @@ namespace emira.GUI
                     return;
                 }
 
-                // Update the holiday table
+                // Update government holiday table
                 UpdateHolidayTable();
             }
             catch (Exception error)
@@ -451,6 +492,25 @@ namespace emira.GUI
             }
         }
 
+        private void dgvHolidays_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Check the checkbox colum is clicked
+            if (e.RowIndex >= 0 && e.ColumnIndex == 0)
+            {
+                // Uncheck other checkboxes
+                foreach (DataGridViewRow row in dgvHolidays.Rows)
+                {
+                    if (row.Index == e.RowIndex)
+                    {
+                        row.Cells[0].Value = !Convert.ToBoolean(row.Cells[0].EditedFormattedValue);
+                    }
+                    else
+                    {
+                        row.Cells[0].Value = false;
+                    }
+                }
+            }
+        }
 
         private void btnExit_Click(object sender, EventArgs e)
         {
@@ -492,7 +552,6 @@ namespace emira.GUI
                 SetDesktopLocation(MousePosition.X - mValX, MousePosition.Y - mValY);
             }
         }
-
 
         protected override void OnPaint(PaintEventArgs e)
         {

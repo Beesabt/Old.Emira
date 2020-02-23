@@ -74,7 +74,6 @@
             // 
             this.tbNewPasswordAgain.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.tbNewPasswordAgain.Location = new System.Drawing.Point(384, 326);
-            this.tbNewPasswordAgain.MaxLength = 10;
             this.tbNewPasswordAgain.Name = "tbNewPasswordAgain";
             this.tbNewPasswordAgain.Size = new System.Drawing.Size(400, 26);
             this.tbNewPasswordAgain.TabIndex = 2;
@@ -103,7 +102,6 @@
             // 
             this.tbNewPassword.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.tbNewPassword.Location = new System.Drawing.Point(384, 253);
-            this.tbNewPassword.MaxLength = 10;
             this.tbNewPassword.Name = "tbNewPassword";
             this.tbNewPassword.Size = new System.Drawing.Size(400, 26);
             this.tbNewPassword.TabIndex = 1;

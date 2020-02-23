@@ -240,6 +240,8 @@ namespace emira.HelperFunctions
 
             public static string ErrorDuringCancellation = "There was an error during cancellation, try again.";
 
+            public static string ErrorLockedHoliday = "The period of the holiday is locked in Working Hours.";
+
             #endregion
 
             #region GovernmentHoliday
@@ -285,6 +287,9 @@ namespace emira.HelperFunctions
             public static string ImportTasks = "Warning\r\n\r\nIf you import the new tasks them the old ones will be deleted\r\n\r\n" + 
                                                "and the already used task which ara not locked in the Workitime sheet will be deleted.\r\n\r\n" +
                                                "Do you continue the action?";
+
+            public static string DeleteHoliday = "Warning\r\n\r\nThere are some unchecked holidays which are used in Working Hours already, if you delete them then the already setted values will be lost.\r\n\r\n" +
+                                  "Do you continue the action?";
         }
 
         public static class Captions
@@ -341,7 +346,7 @@ namespace emira.HelperFunctions
 
             public static string ErrorUnlock = "An error during unlock";
 
-            public static string LossOfData = "Loss of datas";
+            public static string LossOfData = "Loss of data";
         }
 
         public static class Button

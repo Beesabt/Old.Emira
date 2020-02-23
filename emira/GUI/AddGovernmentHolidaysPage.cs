@@ -13,13 +13,13 @@ namespace emira.GUI
 {
     public partial class AddGovernmentHolidaysPage : Form
     {
-
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         int togMove;
         int mValX;
         int mValY;
         CustomMsgBox customMsgBox;
         AddRemoveGovernmentHoliday governmentHoliday;
+        Holiday holiday;
         DataTable dataTable;
         BindingSource bindingSource;
 
@@ -55,7 +55,7 @@ namespace emira.GUI
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
-      
+
         private void cbYears_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -80,12 +80,12 @@ namespace emira.GUI
             e.Handled = true;
         }
 
-
         private void btnAdd_Click(object sender, EventArgs e)
         {
             try
             {
                 governmentHoliday = new AddRemoveGovernmentHoliday();
+                holiday = new Holiday();
 
                 // Check whether the day is public holiday
                 var _publicHolidays = DateSystem.GetPublicHoliday(DateTime.Today.Year, "HU");
@@ -101,7 +101,7 @@ namespace emira.GUI
 
                 // Check whether the day does already exist in the DB
                 bool _isExist = true;
-                _isExist = governmentHoliday.isExist(Texts.DataTableNames.GovernmentHolidays, Texts.GovernmentHolidaysProperties.Date, dtpGovernmentHoliday.Text);
+                _isExist = holiday.isExist(Texts.DataTableNames.GovernmentHolidays, Texts.GovernmentHolidaysProperties.Date, dtpGovernmentHoliday.Text);
                 if (_isExist)
                 {
                     customMsgBox = new CustomMsgBox();
@@ -119,39 +119,24 @@ namespace emira.GUI
                     return;
                 }
 
-                // Check whether the day does closed in the WorkingHours otherwise warn the user the hour(s) will be deleted
-                _isExist = governmentHoliday.isExist(Texts.DataTableNames.Catalog, Texts.CatalogProperties.Date, dtpGovernmentHoliday.Text);
-                if (_isExist)
-                {
-                    bool _isClosed = true;
-                    _isClosed = governmentHoliday.isClosed(dtpGovernmentHoliday.Text);
+                // Check whether the day does closed in the WorkingHours
+                bool _isClosed = true;
+                DateTime _selectedDate;
+                DateTime.TryParse(dtpGovernmentHoliday.Text, out _selectedDate);
+                _isClosed = holiday.isClosed(_selectedDate.ToString("yyyy-MM"));
 
-                    if (_isClosed)
-                    {
-                        //TODO: error szöveg átírása
-                        customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show(Texts.ErrorMessages.ErrorDateExist, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-                        return;
-                    }
-                    else
-                    {
-                        //TODO: error szöveg átírása
-                        var _result = MessageBox.Show(Texts.WarningMessages.DeleteTask,
-                                           Texts.Captions.LossOfData,
-                                           MessageBoxButtons.YesNo,
-                                           MessageBoxIcon.Question);
-                        if (_result == DialogResult.No)
-                        {
-                            return;
-                        }
-                    }
+                if (_isClosed)
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorLockedHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    return;
                 }
 
                 // Add date
                 governmentHoliday.AddHoliday(dtpGovernmentHoliday.Text);
 
                 // Update government holiday table
-                UpdateGovernmentHolidayTable();         
+                UpdateGovernmentHolidayTable();
             }
             catch (Exception error)
             {
@@ -165,11 +150,52 @@ namespace emira.GUI
         {
             try
             {
+                bool _isSuccess = false;
+
                 // Check the status of the selected date in the WorkingHours:
-                //  - if the month is locked then warn the user and do not delete the date
-                //  - if the month is unlocked then inform the user and delete the date
+                // if the month is locked then warn the user and do not delete the date
 
+                holiday = new Holiday();
+                bool _cellValue;
+                DateTime _selectedDate = DateTime.Today;
 
+                for (int i = 0; i < dgvGovernmentHoliday.Rows.Count; i++)
+                {
+                    Boolean.TryParse(dgvGovernmentHoliday.Rows[i].Cells[0].Value.ToString(), out _cellValue);
+                    if (_cellValue)
+                    {
+                        _selectedDate = (DateTime)dgvGovernmentHoliday.Rows[i].Cells[1].Value;
+                        break;
+                    }
+                }
+
+                // Check whether the day does closed in the WorkingHours
+                bool _isClosed = true;
+                _isClosed = holiday.isClosed(_selectedDate.ToString("yyyy-MM"));
+
+                if (_isClosed)
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorLockedHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    return;
+                }
+
+                // Delete date
+                _isSuccess = governmentHoliday.DeleteHoliday(_selectedDate.ToString("yyyy-MM-dd"));
+
+                if (_isSuccess)
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.InformationMessages.SuccessfulLocked, Texts.Captions.Information, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.Close);
+                }
+                else
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorDuringCancellation, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                }
+
+                // Update government holiday table
+                UpdateGovernmentHolidayTable();
             }
             catch (Exception error)
             {
@@ -221,6 +247,27 @@ namespace emira.GUI
             }
         }
 
+        private void dgvGovernmentHoliday_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Check the checkbox colum is clicked
+            if (e.RowIndex >= 0 && e.ColumnIndex == 0)
+            {
+                // Uncheck other checkboxes
+                foreach (DataGridViewRow row in dgvGovernmentHoliday.Rows)
+                {
+                    if (row.Index == e.RowIndex)
+                    {
+                        row.Cells[0].Value = !Convert.ToBoolean(row.Cells[0].EditedFormattedValue);
+                    }
+                    else
+                    {
+                        row.Cells[0].Value = false;
+                    }
+                }
+            }
+        }
+
+
         private void pHeader_MouseUp(object sender, MouseEventArgs e)
         {
             togMove = 0;
@@ -249,6 +296,6 @@ namespace emira.GUI
             e.Graphics.DrawRectangle(new Pen(_Win10BlueBorderColor), borderRectangle);
             base.OnPaint(e);
         }
-
+        
     }
 }
