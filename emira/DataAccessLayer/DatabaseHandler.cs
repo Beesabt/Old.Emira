@@ -846,5 +846,22 @@ namespace emira.DataAccessLayer
 
         #endregion
 
+        #region Statistics
+
+        public DataTable GetTasksAndHours(string year, string month)
+        {
+            command = string.Format("SELECT DISTINCT {0}, SUM({1}) AS NumberOfHours FROM {2} WHERE {3} LIKE '{4}-{5}%' GROUP BY {0}",
+                Texts.CatalogProperties.TaskName,
+                Texts.CatalogProperties.NumberOfHours,
+                Texts.DataTableNames.Catalog,
+                Texts.CatalogProperties.Date,
+                year,
+                month);
+            dataTable = new DataTable();
+            dataTable = GetDataTable(command);
+            return dataTable;
+        }
+
+        #endregion
     }
 }

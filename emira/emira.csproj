@@ -61,6 +61,8 @@
       <HintPath>..\packages\NLog.4.6.8\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -81,6 +83,8 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -90,6 +94,8 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationFiles\XSDFiles\TaskManager.Designer.cs">
@@ -102,6 +108,7 @@
     <Compile Include="BusinessLogicLayer\AddRemoveTask.cs" />
     <Compile Include="BusinessLogicLayer\Holiday.cs" />
     <Compile Include="BusinessLogicLayer\Login.cs" />
+    <Compile Include="BusinessLogicLayer\Statistics.cs" />
     <Compile Include="BusinessLogicLayer\TaskModification.cs" />
     <Compile Include="BusinessLogicLayer\WorkingHours.cs" />
     <Compile Include="GUI\AddGovernmentHolidaysPage.cs">
@@ -273,7 +280,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
-      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="ApplicationFiles\DataBase\Emira_Database.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -303,6 +310,7 @@
     <None Include="Resources\add_icon_white_26.png" />
     <None Include="Resources\add_task_icon_white_26.png" />
     <Content Include="Resources\back_icon_white_50.png" />
+    <None Include="Resources\bar_chart_icon_color_26.png" />
     <Content Include="Resources\beach_icon_white_50.png" />
     <Content Include="Resources\clock_icon_white_100.png" />
     <Content Include="Resources\close_icon_gray_26.png" />
@@ -317,12 +325,15 @@
     <Content Include="Resources\info_icon_color_48.png" />
     <Content Include="Resources\info_icon_white_50.png" />
     <None Include="Resources\lock_icon_white_32.png" />
+    <Content Include="Resources\load_icon_white_26.png" />
     <Content Include="Resources\lock_icon_white_50.png" />
     <None Include="Resources\pdf_icon_white_32.png" />
     <Content Include="Resources\piechart_icon_white_100.png" />
+    <None Include="Resources\pie_chart_icon_color_26.png" />
     <Content Include="Resources\restore_icon_white_26.png" />
     <Content Include="Resources\maximize_icon_white_26.png" />
     <None Include="Resources\save_icon_white_32.png" />
+    <None Include="Resources\settings_icon_white_26.png" />
     <Content Include="Resources\settings_icon_white_50.png" />
     <Content Include="Resources\minimize_icon_white_26.png" />
     <None Include="Resources\task_icon_white_32.png" />
