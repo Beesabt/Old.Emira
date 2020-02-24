@@ -9,6 +9,7 @@ using emira.BusinessLogicLayer;
 using emira.HelperFunctions;
 
 using NLog;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace emira.GUI
 {
@@ -81,22 +82,34 @@ namespace emira.GUI
                 string _selectedMonth = cbMonth.Text;
                 string _actualTaskName = string.Empty;
                 string _actualNumberOfHours = string.Empty;
+                Double _actualNumberOfHour = 0;
                 statistics = new Statistics();
                 dataTable = new DataTable();
 
                 // Make the chart visible
-                chart.Series["Tasks"].Enabled = true;
+                chart.Visible = true;
 
                 // Clear the chart area
-                chart.Series["Tasks"].Points.Clear();
+                chart.Series[0].Points.Clear();
 
                 // Set the type of the chart
-                chart.Series["Tasks"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+                chart.Series[0].ChartType = SeriesChartType.Column;
                 if (rbPieChart.Checked)
                 {
-                    chart.Series["Tasks"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+                    chart.Series[0].ChartType = SeriesChartType.Pie;
                 }
-                
+
+                // Set the title of the chart --- TODO: COLUMN-ra megcsinálni
+                chart.ChartAreas[0].AxisX.Title = "Cica";  // Chart X Axis Title
+                chart.ChartAreas[0].AxisX.TitleAlignment = StringAlignment.Center;
+                chart.ChartAreas[0].AxisY.Title = "Kutya";  // Chart X Axis Title
+                chart.ChartAreas[0].AxisY.TitleAlignment = StringAlignment.Center;
+                chart.ChartAreas[0].AxisY.Minimum = 0;
+                chart.ChartAreas[0].AxisY.TextOrientation = TextOrientation.Rotated270;
+
+                // TODO: Mehet a settings-be
+                chart.Series[0].Palette = ChartColorPalette.EarthTones;
+
                 if (cbWhat.SelectedIndex == 0)
                 {
                     dataTable = statistics.GetDataCurrentMonth(_selectedYear, _selectedMonth);
@@ -106,8 +119,20 @@ namespace emira.GUI
                         _actualTaskName = task[Texts.CatalogProperties.TaskName].ToString();
                         _actualNumberOfHours = task[Texts.CatalogProperties.NumberOfHours].ToString();
 
-                        chart.Series["Tasks"].Points.AddXY(_actualTaskName, _actualNumberOfHours);
-
+                        if (chart.Series[0].ChartType == SeriesChartType.Pie)
+                        {
+                            chart.Series[0].IsVisibleInLegend = true;
+                            chart.Series[0].LabelFormat = "{#%}";
+                            Double.TryParse(_actualNumberOfHours, out _actualNumberOfHour);
+                            _actualNumberOfHour = _actualNumberOfHour / 100;
+                            chart.Series[0].Points.AddXY(_actualTaskName, _actualNumberOfHour);
+                        }
+                        else
+                        {
+                            chart.Series[0].LabelFormat = "{#}";
+                            chart.Series[0].IsVisibleInLegend = false;
+                            chart.Series[0].Points.AddXY(_actualTaskName, _actualNumberOfHours);
+                        }
                     }
                 }
                 else
@@ -169,11 +194,11 @@ namespace emira.GUI
         private void btnHome_Click(object sender, EventArgs e)
         {
             LocationInfo._location = this.Location;
-            Cursor.Current = Cursors.WaitCursor;
+            System.Windows.Forms.Cursor.Current = Cursors.WaitCursor;
             HomePage _homePage = new HomePage();
             _homePage.Show();
             Hide();
-            Cursor.Current = Cursors.Default;
+            System.Windows.Forms.Cursor.Current = Cursors.Default;
         }
 
 

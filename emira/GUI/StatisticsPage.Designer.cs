@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatisticsPage));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.pHeader = new System.Windows.Forms.Panel();
             this.lTitle = new System.Windows.Forms.Label();
             this.btnMinimalize = new System.Windows.Forms.Button();
@@ -182,7 +182,7 @@
             this.cbWhat.FormattingEnabled = true;
             this.cbWhat.Location = new System.Drawing.Point(59, 184);
             this.cbWhat.Name = "cbWhat";
-            this.cbWhat.Size = new System.Drawing.Size(315, 26);
+            this.cbWhat.Size = new System.Drawing.Size(324, 26);
             this.cbWhat.TabIndex = 6;
             this.cbWhat.Text = "Select";
             this.cbWhat.SelectedIndexChanged += new System.EventHandler(this.cbWhat_SelectedIndexChanged);
@@ -249,7 +249,7 @@
             this.btnLoad.Font = new System.Drawing.Font("Segoe UI", 14.25F);
             this.btnLoad.ForeColor = System.Drawing.Color.White;
             this.btnLoad.Image = global::emira.Properties.Resources.load_icon_white_26;
-            this.btnLoad.Location = new System.Drawing.Point(244, 502);
+            this.btnLoad.Location = new System.Drawing.Point(253, 502);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(130, 40);
             this.btnLoad.TabIndex = 11;
@@ -260,16 +260,19 @@
             // 
             // chart
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chart.Legends.Add(legend3);
+            chartArea1.Name = "ChartArea1";
+            this.chart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart.Legends.Add(legend1);
             this.chart.Location = new System.Drawing.Point(438, 158);
             this.chart.Name = "chart";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Tasks";
-            this.chart.Series.Add(series3);
+            this.chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
+            series1.ChartArea = "ChartArea1";
+            series1.IsValueShownAsLabel = true;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            series1.SmartLabelStyle.Enabled = false;
+            this.chart.Series.Add(series1);
             this.chart.Size = new System.Drawing.Size(562, 462);
             this.chart.TabIndex = 12;
             this.chart.Text = "chart1";
