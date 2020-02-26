@@ -99,16 +99,7 @@ namespace emira.GUI
                     chart.Series[0].ChartType = SeriesChartType.Pie;
                 }
 
-                // Set the title of the chart --- TODO: COLUMN-ra megcsinálni
-                chart.ChartAreas[0].AxisX.Title = "Cica";  // Chart X Axis Title
-                chart.ChartAreas[0].AxisX.TitleAlignment = StringAlignment.Center;
-                chart.ChartAreas[0].AxisY.Title = "Kutya";  // Chart X Axis Title
-                chart.ChartAreas[0].AxisY.TitleAlignment = StringAlignment.Center;
-                chart.ChartAreas[0].AxisY.Minimum = 0;
-                chart.ChartAreas[0].AxisY.TextOrientation = TextOrientation.Rotated270;
-
-                // TODO: Mehet a settings-be
-                chart.Series[0].Palette = ChartColorPalette.EarthTones;
+                ChartSettings();
 
                 if (cbWhat.SelectedIndex == 0)
                 {
@@ -149,9 +140,33 @@ namespace emira.GUI
             }
         }
 
+        public void ChartSettings()
+        {
+            // Clear
+            chart.Titles.Clear();
+
+            // Title
+            chart.Titles.Add(StatisticsSettingsPersi.Title);
+
+            // Color
+            chart.Series[0].Palette = (ChartColorPalette)StatisticsSettingsPersi.ColorIndex;
+
+            // Axis X
+            chart.ChartAreas[0].AxisX.Title = StatisticsSettingsPersi.AxisXTitle;
+            chart.ChartAreas[0].AxisX.TitleAlignment = (StringAlignment)StatisticsSettingsPersi.XTextAlignment;
+            chart.ChartAreas[0].AxisX.TextOrientation = (TextOrientation)StatisticsSettingsPersi.XTextOrientation;
+
+            // Axis Y
+            chart.ChartAreas[0].AxisY.Title = StatisticsSettingsPersi.AxisYTitle;
+            chart.ChartAreas[0].AxisY.TitleAlignment = (StringAlignment)StatisticsSettingsPersi.YTextAlignment;
+            chart.ChartAreas[0].AxisY.TextOrientation = (TextOrientation)StatisticsSettingsPersi.YTextOrientation;
+        }
+
         private void btnSettings_Click(object sender, EventArgs e)
         {
-
+            StatisticsSettingsPage _statisticsSettingsPage = new StatisticsSettingsPage();
+            _statisticsSettingsPage.ShowDialog();
+            ChartSettings();
         }
 
         private void cbWhat_SelectedIndexChanged(object sender, EventArgs e)

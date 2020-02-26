@@ -7,12 +7,14 @@ using emira.BusinessLogicLayer;
 using emira.ValueObjects;
 using emira.HelperFunctions;
 
+using NLog;
+
 namespace emira.GUI
 {
     public partial class PersonalDataChangePage : Form
     {
 
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         bool bTogMove;
         int iValX;
         int iValY;
