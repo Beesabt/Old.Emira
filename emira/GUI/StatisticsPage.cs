@@ -152,6 +152,7 @@ namespace emira.GUI
             chart.Series[0].Palette = (ChartColorPalette)StatisticsSettingsPersi.ColorIndex;
 
             // Axis X
+            //chart.ChartAreas[0].AxisX.TitleFont.
             chart.ChartAreas[0].AxisX.Title = StatisticsSettingsPersi.AxisXTitle;
             chart.ChartAreas[0].AxisX.TitleAlignment = (StringAlignment)StatisticsSettingsPersi.XTextAlignment;
             chart.ChartAreas[0].AxisX.TextOrientation = (TextOrientation)StatisticsSettingsPersi.XTextOrientation;

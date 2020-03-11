@@ -36,7 +36,13 @@
             this.lAxisTitle = new System.Windows.Forms.Label();
             this.lTextAlignment = new System.Windows.Forms.Label();
             this.lTextOrientation = new System.Windows.Forms.Label();
-            this.gbAxis = new System.Windows.Forms.GroupBox();
+            this.gbAxes = new System.Windows.Forms.GroupBox();
+            this.btnTextColor = new System.Windows.Forms.Button();
+            this.cbAxisUnderline = new System.Windows.Forms.CheckBox();
+            this.cbAxisItalic = new System.Windows.Forms.CheckBox();
+            this.cbAxisBold = new System.Windows.Forms.CheckBox();
+            this.cbAxisFont = new System.Windows.Forms.ComboBox();
+            this.cbAxisSize = new System.Windows.Forms.ComboBox();
             this.cbAxisYTextOrientation = new System.Windows.Forms.ComboBox();
             this.cbAxisXTextOrientation = new System.Windows.Forms.ComboBox();
             this.cbAxisYTextAlignment = new System.Windows.Forms.ComboBox();
@@ -50,8 +56,15 @@
             this.lTitle = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.button1 = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.pHeader.SuspendLayout();
-            this.gbAxis.SuspendLayout();
+            this.gbAxes.SuspendLayout();
             this.gbCommon.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -100,7 +113,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(140, 24);
+            this.label1.Location = new System.Drawing.Point(143, 89);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(49, 18);
             this.label1.TabIndex = 2;
@@ -109,7 +122,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(401, 24);
+            this.label2.Location = new System.Drawing.Point(404, 89);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(48, 18);
             this.label2.TabIndex = 3;
@@ -118,7 +131,7 @@
             // lAxisTitle
             // 
             this.lAxisTitle.AutoSize = true;
-            this.lAxisTitle.Location = new System.Drawing.Point(18, 55);
+            this.lAxisTitle.Location = new System.Drawing.Point(21, 120);
             this.lAxisTitle.Name = "lAxisTitle";
             this.lAxisTitle.Size = new System.Drawing.Size(70, 18);
             this.lAxisTitle.TabIndex = 4;
@@ -127,7 +140,7 @@
             // lTextAlignment
             // 
             this.lTextAlignment.AutoSize = true;
-            this.lTextAlignment.Location = new System.Drawing.Point(18, 103);
+            this.lTextAlignment.Location = new System.Drawing.Point(21, 168);
             this.lTextAlignment.Name = "lTextAlignment";
             this.lTextAlignment.Size = new System.Drawing.Size(108, 18);
             this.lTextAlignment.TabIndex = 5;
@@ -136,37 +149,142 @@
             // lTextOrientation
             // 
             this.lTextOrientation.AutoSize = true;
-            this.lTextOrientation.Location = new System.Drawing.Point(18, 148);
+            this.lTextOrientation.Location = new System.Drawing.Point(21, 213);
             this.lTextOrientation.Name = "lTextOrientation";
             this.lTextOrientation.Size = new System.Drawing.Size(116, 18);
             this.lTextOrientation.TabIndex = 6;
             this.lTextOrientation.Text = "Text Orientation:";
             // 
-            // gbAxis
+            // gbAxes
             // 
-            this.gbAxis.Controls.Add(this.cbAxisYTextOrientation);
-            this.gbAxis.Controls.Add(this.cbAxisXTextOrientation);
-            this.gbAxis.Controls.Add(this.cbAxisYTextAlignment);
-            this.gbAxis.Controls.Add(this.cbAxisXTextAlignment);
-            this.gbAxis.Controls.Add(this.tbAxisYTitle);
-            this.gbAxis.Controls.Add(this.lTextOrientation);
-            this.gbAxis.Controls.Add(this.tbAxisXTitle);
-            this.gbAxis.Controls.Add(this.lTextAlignment);
-            this.gbAxis.Controls.Add(this.label1);
-            this.gbAxis.Controls.Add(this.label2);
-            this.gbAxis.Controls.Add(this.lAxisTitle);
-            this.gbAxis.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.gbAxis.Location = new System.Drawing.Point(12, 174);
-            this.gbAxis.Name = "gbAxis";
-            this.gbAxis.Size = new System.Drawing.Size(646, 193);
-            this.gbAxis.TabIndex = 7;
-            this.gbAxis.TabStop = false;
-            this.gbAxis.Text = "Axis";
+            this.gbAxes.Controls.Add(this.btnTextColor);
+            this.gbAxes.Controls.Add(this.cbAxisUnderline);
+            this.gbAxes.Controls.Add(this.cbAxisItalic);
+            this.gbAxes.Controls.Add(this.cbAxisBold);
+            this.gbAxes.Controls.Add(this.cbAxisFont);
+            this.gbAxes.Controls.Add(this.cbAxisSize);
+            this.gbAxes.Controls.Add(this.cbAxisYTextOrientation);
+            this.gbAxes.Controls.Add(this.cbAxisXTextOrientation);
+            this.gbAxes.Controls.Add(this.cbAxisYTextAlignment);
+            this.gbAxes.Controls.Add(this.cbAxisXTextAlignment);
+            this.gbAxes.Controls.Add(this.tbAxisYTitle);
+            this.gbAxes.Controls.Add(this.lTextOrientation);
+            this.gbAxes.Controls.Add(this.tbAxisXTitle);
+            this.gbAxes.Controls.Add(this.lTextAlignment);
+            this.gbAxes.Controls.Add(this.label1);
+            this.gbAxes.Controls.Add(this.label2);
+            this.gbAxes.Controls.Add(this.lAxisTitle);
+            this.gbAxes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.gbAxes.Location = new System.Drawing.Point(12, 220);
+            this.gbAxes.Name = "gbAxes";
+            this.gbAxes.Size = new System.Drawing.Size(646, 256);
+            this.gbAxes.TabIndex = 7;
+            this.gbAxes.TabStop = false;
+            this.gbAxes.Text = "Axes";
+            // 
+            // btnTextColor
+            // 
+            this.btnTextColor.FlatAppearance.BorderSize = 0;
+            this.btnTextColor.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.btnTextColor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.btnTextColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTextColor.Image = global::emira.Properties.Resources.text_color_icon_color_24;
+            this.btnTextColor.Location = new System.Drawing.Point(407, 37);
+            this.btnTextColor.Name = "btnTextColor";
+            this.btnTextColor.Size = new System.Drawing.Size(30, 30);
+            this.btnTextColor.TabIndex = 19;
+            this.btnTextColor.UseVisualStyleBackColor = true;
+            this.btnTextColor.Click += new System.EventHandler(this.btnTextColor_Click);
+            // 
+            // cbAxisUnderline
+            // 
+            this.cbAxisUnderline.Appearance = System.Windows.Forms.Appearance.Button;
+            this.cbAxisUnderline.AutoSize = true;
+            this.cbAxisUnderline.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(213)))), ((int)(((byte)(242)))));
+            this.cbAxisUnderline.FlatAppearance.BorderSize = 0;
+            this.cbAxisUnderline.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(213)))), ((int)(((byte)(242)))));
+            this.cbAxisUnderline.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.cbAxisUnderline.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.cbAxisUnderline.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbAxisUnderline.Image = global::emira.Properties.Resources.underline_icon_color_24;
+            this.cbAxisUnderline.Location = new System.Drawing.Point(370, 37);
+            this.cbAxisUnderline.Name = "cbAxisUnderline";
+            this.cbAxisUnderline.Size = new System.Drawing.Size(30, 30);
+            this.cbAxisUnderline.TabIndex = 17;
+            this.cbAxisUnderline.UseVisualStyleBackColor = true;
+            this.cbAxisUnderline.Click += new System.EventHandler(this.cbAxisUnderline_Click);
+            this.cbAxisUnderline.MouseHover += new System.EventHandler(this.cbAxisUnderline_MouseHover);
+            // 
+            // cbAxisItalic
+            // 
+            this.cbAxisItalic.Appearance = System.Windows.Forms.Appearance.Button;
+            this.cbAxisItalic.AutoSize = true;
+            this.cbAxisItalic.FlatAppearance.BorderSize = 0;
+            this.cbAxisItalic.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(213)))), ((int)(((byte)(242)))));
+            this.cbAxisItalic.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.cbAxisItalic.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.cbAxisItalic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbAxisItalic.Image = global::emira.Properties.Resources.italic_icon_color_24;
+            this.cbAxisItalic.Location = new System.Drawing.Point(340, 37);
+            this.cbAxisItalic.Name = "cbAxisItalic";
+            this.cbAxisItalic.Size = new System.Drawing.Size(30, 30);
+            this.cbAxisItalic.TabIndex = 16;
+            this.cbAxisItalic.UseVisualStyleBackColor = true;
+            // 
+            // cbAxisBold
+            // 
+            this.cbAxisBold.Appearance = System.Windows.Forms.Appearance.Button;
+            this.cbAxisBold.AutoSize = true;
+            this.cbAxisBold.FlatAppearance.BorderSize = 0;
+            this.cbAxisBold.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(213)))), ((int)(((byte)(242)))));
+            this.cbAxisBold.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.cbAxisBold.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.cbAxisBold.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbAxisBold.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cbAxisBold.Image = global::emira.Properties.Resources.bold_icon_color_24;
+            this.cbAxisBold.Location = new System.Drawing.Point(310, 37);
+            this.cbAxisBold.Name = "cbAxisBold";
+            this.cbAxisBold.Size = new System.Drawing.Size(30, 30);
+            this.cbAxisBold.TabIndex = 15;
+            this.cbAxisBold.UseVisualStyleBackColor = true;
+            // 
+            // cbAxisFont
+            // 
+            this.cbAxisFont.FormattingEnabled = true;
+            this.cbAxisFont.Location = new System.Drawing.Point(24, 39);
+            this.cbAxisFont.Name = "cbAxisFont";
+            this.cbAxisFont.Size = new System.Drawing.Size(220, 26);
+            this.cbAxisFont.TabIndex = 13;
+            // 
+            // cbAxisSize
+            // 
+            this.cbAxisSize.FormattingEnabled = true;
+            this.cbAxisSize.Items.AddRange(new object[] {
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "14",
+            "16",
+            "18",
+            "20",
+            "22",
+            "24",
+            "26",
+            "28",
+            "36",
+            "48",
+            "72"});
+            this.cbAxisSize.Location = new System.Drawing.Point(245, 39);
+            this.cbAxisSize.Name = "cbAxisSize";
+            this.cbAxisSize.Size = new System.Drawing.Size(60, 26);
+            this.cbAxisSize.TabIndex = 12;
             // 
             // cbAxisYTextOrientation
             // 
             this.cbAxisYTextOrientation.FormattingEnabled = true;
-            this.cbAxisYTextOrientation.Location = new System.Drawing.Point(404, 141);
+            this.cbAxisYTextOrientation.Location = new System.Drawing.Point(407, 206);
             this.cbAxisYTextOrientation.Name = "cbAxisYTextOrientation";
             this.cbAxisYTextOrientation.Size = new System.Drawing.Size(220, 26);
             this.cbAxisYTextOrientation.TabIndex = 10;
@@ -176,7 +294,7 @@
             // cbAxisXTextOrientation
             // 
             this.cbAxisXTextOrientation.FormattingEnabled = true;
-            this.cbAxisXTextOrientation.Location = new System.Drawing.Point(143, 141);
+            this.cbAxisXTextOrientation.Location = new System.Drawing.Point(146, 206);
             this.cbAxisXTextOrientation.Name = "cbAxisXTextOrientation";
             this.cbAxisXTextOrientation.Size = new System.Drawing.Size(220, 26);
             this.cbAxisXTextOrientation.TabIndex = 9;
@@ -186,7 +304,7 @@
             // cbAxisYTextAlignment
             // 
             this.cbAxisYTextAlignment.FormattingEnabled = true;
-            this.cbAxisYTextAlignment.Location = new System.Drawing.Point(404, 95);
+            this.cbAxisYTextAlignment.Location = new System.Drawing.Point(407, 160);
             this.cbAxisYTextAlignment.Name = "cbAxisYTextAlignment";
             this.cbAxisYTextAlignment.Size = new System.Drawing.Size(220, 26);
             this.cbAxisYTextAlignment.TabIndex = 8;
@@ -196,7 +314,7 @@
             // cbAxisXTextAlignment
             // 
             this.cbAxisXTextAlignment.FormattingEnabled = true;
-            this.cbAxisXTextAlignment.Location = new System.Drawing.Point(143, 95);
+            this.cbAxisXTextAlignment.Location = new System.Drawing.Point(146, 160);
             this.cbAxisXTextAlignment.Name = "cbAxisXTextAlignment";
             this.cbAxisXTextAlignment.Size = new System.Drawing.Size(220, 26);
             this.cbAxisXTextAlignment.TabIndex = 7;
@@ -205,7 +323,7 @@
             // 
             // tbAxisYTitle
             // 
-            this.tbAxisYTitle.Location = new System.Drawing.Point(404, 54);
+            this.tbAxisYTitle.Location = new System.Drawing.Point(407, 119);
             this.tbAxisYTitle.MaxLength = 100;
             this.tbAxisYTitle.Name = "tbAxisYTitle";
             this.tbAxisYTitle.Size = new System.Drawing.Size(220, 24);
@@ -214,7 +332,7 @@
             // 
             // tbAxisXTitle
             // 
-            this.tbAxisXTitle.Location = new System.Drawing.Point(143, 54);
+            this.tbAxisXTitle.Location = new System.Drawing.Point(146, 119);
             this.tbAxisXTitle.MaxLength = 100;
             this.tbAxisXTitle.Name = "tbAxisXTitle";
             this.tbAxisXTitle.Size = new System.Drawing.Size(220, 24);
@@ -223,14 +341,20 @@
             // 
             // gbCommon
             // 
+            this.gbCommon.Controls.Add(this.button1);
             this.gbCommon.Controls.Add(this.cbColor);
+            this.gbCommon.Controls.Add(this.checkBox1);
             this.gbCommon.Controls.Add(this.lColor);
+            this.gbCommon.Controls.Add(this.checkBox2);
             this.gbCommon.Controls.Add(this.tbTitle);
+            this.gbCommon.Controls.Add(this.checkBox3);
             this.gbCommon.Controls.Add(this.lTitle);
+            this.gbCommon.Controls.Add(this.comboBox1);
+            this.gbCommon.Controls.Add(this.comboBox2);
             this.gbCommon.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.gbCommon.Location = new System.Drawing.Point(12, 53);
             this.gbCommon.Name = "gbCommon";
-            this.gbCommon.Size = new System.Drawing.Size(646, 100);
+            this.gbCommon.Size = new System.Drawing.Size(646, 161);
             this.gbCommon.TabIndex = 11;
             this.gbCommon.TabStop = false;
             this.gbCommon.Text = "Common";
@@ -238,7 +362,7 @@
             // cbColor
             // 
             this.cbColor.FormattingEnabled = true;
-            this.cbColor.Location = new System.Drawing.Point(71, 63);
+            this.cbColor.Location = new System.Drawing.Point(71, 109);
             this.cbColor.Name = "cbColor";
             this.cbColor.Size = new System.Drawing.Size(211, 26);
             this.cbColor.TabIndex = 11;
@@ -248,7 +372,7 @@
             // lColor
             // 
             this.lColor.AutoSize = true;
-            this.lColor.Location = new System.Drawing.Point(21, 71);
+            this.lColor.Location = new System.Drawing.Point(21, 117);
             this.lColor.Name = "lColor";
             this.lColor.Size = new System.Drawing.Size(49, 18);
             this.lColor.TabIndex = 12;
@@ -256,17 +380,17 @@
             // 
             // tbTitle
             // 
-            this.tbTitle.Location = new System.Drawing.Point(71, 29);
+            this.tbTitle.Location = new System.Drawing.Point(71, 75);
             this.tbTitle.MaxLength = 150;
             this.tbTitle.Name = "tbTitle";
-            this.tbTitle.Size = new System.Drawing.Size(526, 24);
+            this.tbTitle.Size = new System.Drawing.Size(556, 24);
             this.tbTitle.TabIndex = 11;
             this.tbTitle.TextChanged += new System.EventHandler(this.tbTitle_TextChanged);
             // 
             // lTitle
             // 
             this.lTitle.AutoSize = true;
-            this.lTitle.Location = new System.Drawing.Point(21, 32);
+            this.lTitle.Location = new System.Drawing.Point(21, 78);
             this.lTitle.Name = "lTitle";
             this.lTitle.Size = new System.Drawing.Size(39, 18);
             this.lTitle.TabIndex = 0;
@@ -309,6 +433,102 @@
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // button1
+            // 
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Image = global::emira.Properties.Resources.text_color_icon_color_24;
+            this.button1.Location = new System.Drawing.Point(407, 31);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(30, 30);
+            this.button1.TabIndex = 25;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(213)))), ((int)(((byte)(242)))));
+            this.checkBox1.FlatAppearance.BorderSize = 0;
+            this.checkBox1.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(213)))), ((int)(((byte)(242)))));
+            this.checkBox1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.checkBox1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox1.Image = global::emira.Properties.Resources.underline_icon_color_24;
+            this.checkBox1.Location = new System.Drawing.Point(370, 31);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(30, 30);
+            this.checkBox1.TabIndex = 24;
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.FlatAppearance.BorderSize = 0;
+            this.checkBox2.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(213)))), ((int)(((byte)(242)))));
+            this.checkBox2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.checkBox2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.checkBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox2.Image = global::emira.Properties.Resources.italic_icon_color_24;
+            this.checkBox2.Location = new System.Drawing.Point(340, 31);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(30, 30);
+            this.checkBox2.TabIndex = 23;
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.FlatAppearance.BorderSize = 0;
+            this.checkBox3.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(213)))), ((int)(((byte)(242)))));
+            this.checkBox3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.checkBox3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.checkBox3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox3.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBox3.Image = global::emira.Properties.Resources.bold_icon_color_24;
+            this.checkBox3.Location = new System.Drawing.Point(310, 31);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(30, 30);
+            this.checkBox3.TabIndex = 22;
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(24, 33);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(220, 26);
+            this.comboBox1.TabIndex = 21;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "14",
+            "16",
+            "18",
+            "20",
+            "22",
+            "24",
+            "26",
+            "28",
+            "36",
+            "48",
+            "72"});
+            this.comboBox2.Location = new System.Drawing.Point(245, 33);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(60, 26);
+            this.comboBox2.TabIndex = 20;
+            // 
             // StatisticsSettingsPage
             // 
             this.AcceptButton = this.btnSave;
@@ -320,7 +540,7 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.gbCommon);
-            this.Controls.Add(this.gbAxis);
+            this.Controls.Add(this.gbAxes);
             this.Controls.Add(this.pHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "StatisticsSettingsPage";
@@ -329,8 +549,8 @@
             this.Load += new System.EventHandler(this.StatisticsSettingsPage_Load);
             this.pHeader.ResumeLayout(false);
             this.pHeader.PerformLayout();
-            this.gbAxis.ResumeLayout(false);
-            this.gbAxis.PerformLayout();
+            this.gbAxes.ResumeLayout(false);
+            this.gbAxes.PerformLayout();
             this.gbCommon.ResumeLayout(false);
             this.gbCommon.PerformLayout();
             this.ResumeLayout(false);
@@ -347,7 +567,7 @@
         private System.Windows.Forms.Label lAxisTitle;
         private System.Windows.Forms.Label lTextAlignment;
         private System.Windows.Forms.Label lTextOrientation;
-        private System.Windows.Forms.GroupBox gbAxis;
+        private System.Windows.Forms.GroupBox gbAxes;
         private System.Windows.Forms.ComboBox cbAxisYTextAlignment;
         private System.Windows.Forms.ComboBox cbAxisXTextAlignment;
         private System.Windows.Forms.TextBox tbAxisYTitle;
@@ -361,5 +581,18 @@
         private System.Windows.Forms.Label lTitle;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.CheckBox cbAxisBold;
+        private System.Windows.Forms.ComboBox cbAxisFont;
+        private System.Windows.Forms.ComboBox cbAxisSize;
+        private System.Windows.Forms.CheckBox cbAxisUnderline;
+        private System.Windows.Forms.CheckBox cbAxisItalic;
+        private System.Windows.Forms.Button btnTextColor;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox2;
     }
 }

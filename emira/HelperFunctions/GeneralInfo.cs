@@ -16,6 +16,8 @@ namespace emira.HelperFunctions
     {
         public static string Title = string.Empty;
         public static int ColorIndex = 0;
+        public static int AxisFont = 0;
+        public static int AxisSize = 0;
         public static string AxisXTitle = string.Empty;
         public static string AxisYTitle = string.Empty;
         public static int XTextAlignment = 0;

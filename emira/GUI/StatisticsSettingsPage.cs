@@ -5,7 +5,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 using emira.HelperFunctions;
 using NLog;
-
+using System.Xml;
 
 namespace emira.GUI
 {
@@ -23,6 +23,12 @@ namespace emira.GUI
             // Set the colors for the combobox
             cbColor.DataSource = Enum.GetValues(typeof(ChartColorPalette));
 
+            // Set the axis text fonts
+            foreach (FontFamily font in FontFamily.Families)
+            {
+                cbAxisFont.Items.Add(font.Name.ToString());
+            }
+
             // Set the text alignments for the comoboboxes
             cbAxisXTextAlignment.DataSource = Enum.GetValues(typeof(StringAlignment));
             cbAxisYTextAlignment.DataSource = Enum.GetValues(typeof(StringAlignment));
@@ -36,6 +42,16 @@ namespace emira.GUI
 
             // Color
             cbColor.SelectedIndex = StatisticsSettingsPersi.ColorIndex;
+
+            // Font
+            cbAxisFont.SelectedIndex = StatisticsSettingsPersi.AxisFont;
+            if (StatisticsSettingsPersi.AxisFont == 0)
+                cbAxisFont.SelectedIndex = 1;
+
+            // Size
+            cbAxisSize.SelectedIndex = StatisticsSettingsPersi.AxisSize;
+            if (StatisticsSettingsPersi.AxisSize == 0)
+                cbAxisSize.SelectedIndex = 2;
 
             // Axis X
             tbAxisXTitle.Text = StatisticsSettingsPersi.AxisXTitle;
@@ -59,6 +75,10 @@ namespace emira.GUI
 
             StatisticsSettingsPersi.ColorIndex = cbColor.SelectedIndex;
 
+            StatisticsSettingsPersi.AxisFont = cbAxisFont.SelectedIndex;
+
+            StatisticsSettingsPersi.AxisSize = cbAxisSize.SelectedIndex;
+
             StatisticsSettingsPersi.AxisXTitle = tbAxisXTitle.Text;
             StatisticsSettingsPersi.XTextAlignment = cbAxisXTextAlignment.SelectedIndex;
             StatisticsSettingsPersi.XTextOrientation = cbAxisXTextOrientation.SelectedIndex;
@@ -66,6 +86,38 @@ namespace emira.GUI
             StatisticsSettingsPersi.AxisYTitle = tbAxisYTitle.Text;
             StatisticsSettingsPersi.YTextAlignment = cbAxisYTextAlignment.SelectedIndex;
             StatisticsSettingsPersi.YTextOrientation = cbAxisYTextOrientation.SelectedIndex;
+
+
+            // Create a new file in C:\\ dir  
+            XmlTextWriter textWriter = new XmlTextWriter("D:\\Temp\\myXmFile.xml", null);
+            // Opens the document  
+            textWriter.WriteStartDocument();
+            // Write comments  
+            textWriter.WriteComment("First Comment XmlTextWriter Sample Example");
+            textWriter.WriteComment("myXmlFile.xml in root dir");
+            // Write first element  
+            textWriter.WriteStartElement("Student");
+            textWriter.WriteStartElement("r", "RECORD", "urn:record");
+            // Write next element  
+            textWriter.WriteStartElement("Name", "");
+            textWriter.WriteString("Student");
+            textWriter.WriteEndElement();
+            // Write one more element  dfw
+            textWriter.WriteStartElement("Address", "");
+            textWriter.WriteString("Colony");
+            textWriter.WriteEndElement();
+            // WriteChars  
+            char[] ch = new char[3];
+            ch[0] = 'a';
+            ch[1] = 'r';
+            ch[2] = 'c';
+            textWriter.WriteStartElement("Char");
+            textWriter.WriteChars(ch, 0, ch.Length);
+            textWriter.WriteEndElement();
+            // Ends the document.  
+            textWriter.WriteEndDocument();
+            // close writer  
+            textWriter.Close();
 
             Close();
         }
@@ -146,6 +198,30 @@ namespace emira.GUI
             e.Handled = true;
         }
 
+        private void cbAxisUnderline_Click(object sender, EventArgs e)
+        {
+            cbAxisUnderline.FlatAppearance.BorderSize = 0;
+        }
+
+        private void btnTextColor_Click(object sender, EventArgs e)
+        {
+            colorDialog1.ShowDialog();
+
+        }
+
+        private void cbAxisUnderline_MouseHover(object sender, EventArgs e)
+        {
+            if (cbAxisUnderline.Checked)
+            {
+                cbAxisUnderline.FlatAppearance.BorderSize = 1;
+            }
+            else
+            {
+                cbAxisUnderline.FlatAppearance.BorderSize = 0;
+            }
+        }
+
+
 
         private void pHeader_MouseUp(object sender, MouseEventArgs e)
         {
@@ -174,6 +250,6 @@ namespace emira.GUI
             _Win10BlueBorderColor = Color.FromArgb(24, 116, 188);
             e.Graphics.DrawRectangle(new Pen(_Win10BlueBorderColor), borderRectangle);
             base.OnPaint(e);
-        }
+        }        
     }
 }
