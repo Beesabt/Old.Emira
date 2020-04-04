@@ -6,6 +6,8 @@ using System.Windows.Forms.DataVisualization.Charting;
 using emira.HelperFunctions;
 using NLog;
 using System.Xml;
+using System.Xml.Linq;
+using System.IO;
 
 namespace emira.GUI
 {
@@ -66,11 +68,15 @@ namespace emira.GUI
 
         private void StatisticsSettingsPage_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            string[] tm = new string[2]
+            {tbTitle.Text,
+             cbColor.SelectedIndex};
+
             StatisticsSettingsPersi.Title = tbTitle.Text;
 
             StatisticsSettingsPersi.ColorIndex = cbColor.SelectedIndex;
@@ -86,6 +92,22 @@ namespace emira.GUI
             StatisticsSettingsPersi.AxisYTitle = tbAxisYTitle.Text;
             StatisticsSettingsPersi.YTextAlignment = cbAxisYTextAlignment.SelectedIndex;
             StatisticsSettingsPersi.YTextOrientation = cbAxisYTextOrientation.SelectedIndex;
+
+            XmlDataDocument xmldoc = new XmlDataDocument();
+            XmlNodeList xmlnode;
+            int i = 0;
+            string str = null;
+            FileStream fs = new FileStream(@"D:\Temp\ChartSettings2.xml", FileMode.Open, FileAccess.Read);
+            xmldoc.Load(fs);
+            xmlnode = xmldoc.GetElementsByTagName("Common");
+
+            for (i = 0; i <= xmlnode.Count - 1; i++)
+            {
+                xmlnode[i].ChildNodes.Item(0).InnerText = tbTitle.Text.Trim();
+                str = xmlnode[i].ChildNodes.Item(0).InnerText.Trim() + "  " + xmlnode[i].ChildNodes.Item(1).InnerText.Trim() + "  " + xmlnode[i].ChildNodes.Item(2).InnerText.Trim();
+                MessageBox.Show(str);
+            }
+
 
 
             // Create a new file in C:\\ dir  
@@ -250,6 +272,6 @@ namespace emira.GUI
             _Win10BlueBorderColor = Color.FromArgb(24, 116, 188);
             e.Graphics.DrawRectangle(new Pen(_Win10BlueBorderColor), borderRectangle);
             base.OnPaint(e);
-        }        
+        }
     }
 }
