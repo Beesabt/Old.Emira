@@ -73,10 +73,6 @@ namespace emira.GUI
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string[] tm = new string[2]
-            {tbTitle.Text,
-             cbColor.SelectedIndex};
-
             StatisticsSettingsPersi.Title = tbTitle.Text;
 
             StatisticsSettingsPersi.ColorIndex = cbColor.SelectedIndex;
@@ -93,53 +89,51 @@ namespace emira.GUI
             StatisticsSettingsPersi.YTextAlignment = cbAxisYTextAlignment.SelectedIndex;
             StatisticsSettingsPersi.YTextOrientation = cbAxisYTextOrientation.SelectedIndex;
 
-            XmlDataDocument xmldoc = new XmlDataDocument();
-            XmlNodeList xmlnode;
-            int i = 0;
-            string str = null;
-            FileStream fs = new FileStream(@"D:\Temp\ChartSettings2.xml", FileMode.Open, FileAccess.Read);
-            xmldoc.Load(fs);
-            xmlnode = xmldoc.GetElementsByTagName("Common");
+            ////XmlDataDocument xmldoc = new XmlDataDocument();
+            ////XmlNodeList xmlnode;
+            ////int i = 0;
+            ////string str = null;
+            ////FileStream fs = new FileStream(@"D:\Temp\ChartSettings2.xml", FileMode.Open, FileAccess.Read);
+            ////xmldoc.Load(fs);
+            ////xmlnode = xmldoc.GetElementsByTagName("Common");
 
-            for (i = 0; i <= xmlnode.Count - 1; i++)
-            {
-                xmlnode[i].ChildNodes.Item(0).InnerText = tbTitle.Text.Trim();
-                str = xmlnode[i].ChildNodes.Item(0).InnerText.Trim() + "  " + xmlnode[i].ChildNodes.Item(1).InnerText.Trim() + "  " + xmlnode[i].ChildNodes.Item(2).InnerText.Trim();
-                MessageBox.Show(str);
-            }
+            ////for (i = 0; i <= xmlnode.Count - 1; i++)
+            ////{
+            ////    xmlnode[i].ChildNodes.Item(0).InnerText = tbTitle.Text.Trim();
+            ////    str = xmlnode[i].ChildNodes.Item(0).InnerText.Trim() + "  " + xmlnode[i].ChildNodes.Item(1).InnerText.Trim() + "  " + xmlnode[i].ChildNodes.Item(2).InnerText.Trim();
+            ////    MessageBox.Show(str);
+            ////}
 
-
-
-            // Create a new file in C:\\ dir  
-            XmlTextWriter textWriter = new XmlTextWriter("D:\\Temp\\myXmFile.xml", null);
-            // Opens the document  
-            textWriter.WriteStartDocument();
-            // Write comments  
-            textWriter.WriteComment("First Comment XmlTextWriter Sample Example");
-            textWriter.WriteComment("myXmlFile.xml in root dir");
-            // Write first element  
-            textWriter.WriteStartElement("Student");
-            textWriter.WriteStartElement("r", "RECORD", "urn:record");
-            // Write next element  
-            textWriter.WriteStartElement("Name", "");
-            textWriter.WriteString("Student");
-            textWriter.WriteEndElement();
-            // Write one more element  dfw
-            textWriter.WriteStartElement("Address", "");
-            textWriter.WriteString("Colony");
-            textWriter.WriteEndElement();
-            // WriteChars  
-            char[] ch = new char[3];
-            ch[0] = 'a';
-            ch[1] = 'r';
-            ch[2] = 'c';
-            textWriter.WriteStartElement("Char");
-            textWriter.WriteChars(ch, 0, ch.Length);
-            textWriter.WriteEndElement();
-            // Ends the document.  
-            textWriter.WriteEndDocument();
-            // close writer  
-            textWriter.Close();
+            ////// Create a new file in C:\\ dir  
+            ////XmlTextWriter textWriter = new XmlTextWriter("D:\\Temp\\myXmFile.xml", null);
+            ////// Opens the document  
+            ////textWriter.WriteStartDocument();
+            ////// Write comments  
+            ////textWriter.WriteComment("First Comment XmlTextWriter Sample Example");
+            ////textWriter.WriteComment("myXmlFile.xml in root dir");
+            ////// Write first element  
+            ////textWriter.WriteStartElement("Student");
+            ////textWriter.WriteStartElement("r", "RECORD", "urn:record");
+            ////// Write next element  
+            ////textWriter.WriteStartElement("Name", "");
+            ////textWriter.WriteString("Student");
+            ////textWriter.WriteEndElement();
+            ////// Write one more element  dfw
+            ////textWriter.WriteStartElement("Address", "");
+            ////textWriter.WriteString("Colony");
+            ////textWriter.WriteEndElement();
+            ////// WriteChars  
+            ////char[] ch = new char[3];
+            ////ch[0] = 'a';
+            ////ch[1] = 'r';
+            ////ch[2] = 'c';
+            ////textWriter.WriteStartElement("Char");
+            ////textWriter.WriteChars(ch, 0, ch.Length);
+            ////textWriter.WriteEndElement();
+            ////// Ends the document.  
+            ////textWriter.WriteEndDocument();
+            ////// close writer  
+            ////textWriter.Close();
 
             Close();
         }
