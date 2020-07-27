@@ -84,7 +84,7 @@
             // btnClose
             // 
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnClose.Location = new System.Drawing.Point(228, 158);
+            this.btnClose.Location = new System.Drawing.Point(227, 192);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(104, 30);
             this.btnClose.TabIndex = 8;
@@ -95,7 +95,7 @@
             // btnYes
             // 
             this.btnYes.DialogResult = System.Windows.Forms.DialogResult.Yes;
-            this.btnYes.Location = new System.Drawing.Point(143, 158);
+            this.btnYes.Location = new System.Drawing.Point(142, 192);
             this.btnYes.Name = "btnYes";
             this.btnYes.Size = new System.Drawing.Size(104, 30);
             this.btnYes.TabIndex = 9;
@@ -106,7 +106,7 @@
             // btnNo
             // 
             this.btnNo.DialogResult = System.Windows.Forms.DialogResult.No;
-            this.btnNo.Location = new System.Drawing.Point(311, 158);
+            this.btnNo.Location = new System.Drawing.Point(310, 192);
             this.btnNo.Name = "btnNo";
             this.btnNo.Size = new System.Drawing.Size(104, 30);
             this.btnNo.TabIndex = 10;
@@ -116,18 +116,18 @@
             // 
             // lblMessage
             // 
-            this.lblMessage.AutoSize = true;
             this.lblMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblMessage.Location = new System.Drawing.Point(102, 75);
+            this.lblMessage.Location = new System.Drawing.Point(112, 75);
             this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(65, 16);
+            this.lblMessage.Size = new System.Drawing.Size(400, 75);
             this.lblMessage.TabIndex = 11;
             this.lblMessage.Text = "Message";
+            this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pbIcon
             // 
             this.pbIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pbIcon.Location = new System.Drawing.Point(12, 47);
+            this.pbIcon.Location = new System.Drawing.Point(12, 75);
             this.pbIcon.Name = "pbIcon";
             this.pbIcon.Size = new System.Drawing.Size(84, 75);
             this.pbIcon.TabIndex = 3;
@@ -138,7 +138,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.ClientSize = new System.Drawing.Size(560, 200);
+            this.ClientSize = new System.Drawing.Size(560, 250);
             this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnNo);
@@ -155,7 +155,6 @@
             this.pHeader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbIcon)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

@@ -15,7 +15,7 @@ namespace emira.BusinessLogicLayer
             if (isSuccess)
             {
                 GeneralInfo.UserID = _DBHandler.GetUserID(Email, Password);
-                GeneralInfo.Email = Email;
+                GeneralInfo.DefaultEmail = Email;
                 if (Email == GeneralInfo.DefaultEmail || Password == GeneralInfo.DefaultPassword)
                 {
                     GeneralInfo.AnnoyingMessage = true;

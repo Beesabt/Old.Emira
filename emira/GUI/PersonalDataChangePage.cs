@@ -18,6 +18,7 @@ namespace emira.GUI
         bool bTogMove;
         int iValX;
         int iValY;
+        string email;
         Settings settings;
         Person person;
         CustomMsgBox customMsgBox;
@@ -38,7 +39,13 @@ namespace emira.GUI
 
                 // If the Person object is null then it returns
                 if (person.Email == null)
+                {
                     return;
+                }
+                else
+                {
+                    email = person.Email;
+                }
 
                 //// Personal Information
 
@@ -535,8 +542,6 @@ namespace emira.GUI
             e.Handled = true;
         }
 
-
-
         // Save and Cancel buttons
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -658,7 +663,7 @@ namespace emira.GUI
                 _data.Add(Texts.PersonProperties.ExtraHoliday, nupExtraHoliday.Value.ToString());
 
                 // Set new values
-                _isSuccess = settings.SetNewValues(Texts.PersonProperties.Email, GeneralInfo.Email, _data);
+                _isSuccess = settings.SetNewValues(Texts.PersonProperties.Email, email, _data);
 
                 if (_isSuccess)
                 {

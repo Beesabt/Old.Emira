@@ -114,28 +114,55 @@ namespace emira.HelperFunctions
             public static string Date = "Date";
         }
 
+        public static class Lang
+        {
+            #region General
+
+            public const string SomethingUnexpectedHappened = "SomethingUnexpectedHappened";
+
+            public const string ErrorDuringSave = "ErrorDuringSave";
+
+            public const string Error = "Error";
+
+            #endregion
+
+            #region Login
+
+            public const string login = "login";
+
+            public const string password = "password";
+
+            public const string FieldIsEmpty = "FieldIsEmpty";
+
+            public const string WrongEmailPassword = "WrongEmailPassword";
+
+            public const string EmptyRequiredField = "EmptyRequiredField";
+
+            public const string LoginFailed = "LoginFailed";
+
+            #endregion
+
+            #region Home
+
+            public const string DefaultEmailOrPassword = "DefaultEmailOrPassword";
+
+            public const string DefaultLoginParameters = "DefaultLoginParameters";
+            #endregion
+        }
+
         public static class ErrorMessages
         {
             #region General
 
             // TODO : kicserélni a path-ot és dinamikussá tenni!
-            public const string SomethingUnexpectedHappened = "Something unexpected happened!\n"+
+            public const string SomethingUnexpectedHappened = "Something unexpected happened!\n" +
                                                               @"Please check the log file here: C:\logs\Example.log";
 
             public static string ErrorDuringSave = "There was an error during save, try again.";
 
             #endregion
 
-            #region Login
-            public const string WrongEmailPassword = "E-mail or password is wrong.";
-
-            public const string FieldIsEmpty = " field is empty.";
-
-            public const string DefaultEmailOrPassword =
-                "You use default e-mail or password, please change it in the Settings.\n" +
-                "This message appears until you change the default login parameters.";
-
-            #endregion
+            public const string FieldIsEmpty = "FieldIsEmpty";
 
             #region PersonalInformation
 
@@ -206,7 +233,7 @@ namespace emira.HelperFunctions
 
             public static string CheckValuesOfFieldsForGroup =
                          "The value of the field is not proper.\r\n\r\nPossible reasons:\r\n" +
-                         "* The Group ID already exists with another Group name\r\n" +                      
+                         "* The Group ID already exists with another Group name\r\n" +
                          "* The Group name already exists with another Group ID or with the same";
 
             public static string CheckValuesOfFieldsForTask =
@@ -282,9 +309,9 @@ namespace emira.HelperFunctions
                                               "Do you continue the action?";
 
             public static string PersonInformationMissing = "For holiday calculation please fill out the 'Personal Information'.\n"
-                                                            +"You can find it under 'Settings'.";
+                                                            + "You can find it under 'Settings'.";
 
-            public static string ImportTasks = "Warning\r\n\r\nIf you import the new tasks them the old ones will be deleted\r\n\r\n" + 
+            public static string ImportTasks = "Warning\r\n\r\nIf you import the new tasks them the old ones will be deleted\r\n\r\n" +
                                                "and the already used task which ara not locked in the Workitime sheet will be deleted.\r\n\r\n" +
                                                "Do you continue the action?";
 
@@ -300,7 +327,7 @@ namespace emira.HelperFunctions
 
             public const string Warning = "Warning";
 
-            public const string LoginFailed = "Login failed";
+
 
             public const string EmptyRequiredField = "Empty reqired field";
 
@@ -366,6 +393,14 @@ namespace emira.HelperFunctions
         public static class Text
         {
             public static string NormalHoliday = "0_0 Normál szabadság";
+        }
+
+        public static class InnerTexts
+        {
+        
+            public const string Pastel = "Pastel";
+
+            public const string Color = "Color";
         }
     }
 }

@@ -98,9 +98,8 @@
             this.lTitle.ForeColor = System.Drawing.Color.White;
             this.lTitle.Location = new System.Drawing.Point(0, 0);
             this.lTitle.Name = "lTitle";
-            this.lTitle.Size = new System.Drawing.Size(337, 31);
+            this.lTitle.Size = new System.Drawing.Size(0, 31);
             this.lTitle.TabIndex = 2;
-            this.lTitle.Text = "Emira - Munkaidő Kezelő";
             // 
             // pFooter
             // 
@@ -117,9 +116,8 @@
             this.lFooter.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lFooter.Location = new System.Drawing.Point(422, 2);
             this.lFooter.Name = "lFooter";
-            this.lFooter.Size = new System.Drawing.Size(200, 16);
+            this.lFooter.Size = new System.Drawing.Size(0, 16);
             this.lFooter.TabIndex = 0;
-            this.lFooter.Text = "Kapcsolat: beesabt@gmail.com";
             // 
             // btnStatistics
             // 
@@ -137,7 +135,6 @@
             this.btnStatistics.Name = "btnStatistics";
             this.btnStatistics.Size = new System.Drawing.Size(440, 240);
             this.btnStatistics.TabIndex = 5;
-            this.btnStatistics.Text = "Statisztika";
             this.btnStatistics.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.btnStatistics.UseVisualStyleBackColor = false;
             this.btnStatistics.Click += new System.EventHandler(this.btnStatistics_Click);
@@ -158,7 +155,6 @@
             this.btnHolidays.Name = "btnHolidays";
             this.btnHolidays.Size = new System.Drawing.Size(440, 240);
             this.btnHolidays.TabIndex = 4;
-            this.btnHolidays.Text = "Szabadság";
             this.btnHolidays.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.btnHolidays.UseVisualStyleBackColor = false;
             this.btnHolidays.Click += new System.EventHandler(this.btnHolidays_Click);
@@ -179,7 +175,6 @@
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(440, 240);
             this.btnSettings.TabIndex = 3;
-            this.btnSettings.Text = "Beállítások";
             this.btnSettings.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.btnSettings.UseVisualStyleBackColor = false;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
@@ -200,7 +195,6 @@
             this.btnWorkingHours.Name = "btnWorkingHours";
             this.btnWorkingHours.Size = new System.Drawing.Size(440, 240);
             this.btnWorkingHours.TabIndex = 2;
-            this.btnWorkingHours.Text = "Munkaidő";
             this.btnWorkingHours.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.btnWorkingHours.UseVisualStyleBackColor = false;
             this.btnWorkingHours.Click += new System.EventHandler(this.btnWorkingHours_Click);

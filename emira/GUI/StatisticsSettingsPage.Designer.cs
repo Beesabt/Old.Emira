@@ -37,7 +37,7 @@
             this.lTextAlignment = new System.Windows.Forms.Label();
             this.lTextOrientation = new System.Windows.Forms.Label();
             this.gbAxes = new System.Windows.Forms.GroupBox();
-            this.btnTextColor = new System.Windows.Forms.Button();
+            this.btnAxisTextColor = new System.Windows.Forms.Button();
             this.cbAxisUnderline = new System.Windows.Forms.CheckBox();
             this.cbAxisItalic = new System.Windows.Forms.CheckBox();
             this.cbAxisBold = new System.Windows.Forms.CheckBox();
@@ -50,19 +50,19 @@
             this.tbAxisYTitle = new System.Windows.Forms.TextBox();
             this.tbAxisXTitle = new System.Windows.Forms.TextBox();
             this.gbCommon = new System.Windows.Forms.GroupBox();
+            this.btnCommonTextColor = new System.Windows.Forms.Button();
             this.cbColor = new System.Windows.Forms.ComboBox();
+            this.cbCommonUnderline = new System.Windows.Forms.CheckBox();
             this.lColor = new System.Windows.Forms.Label();
+            this.cbCommonItalic = new System.Windows.Forms.CheckBox();
             this.tbTitle = new System.Windows.Forms.TextBox();
+            this.cbCommonBold = new System.Windows.Forms.CheckBox();
             this.lTitle = new System.Windows.Forms.Label();
+            this.cbCommonFont = new System.Windows.Forms.ComboBox();
+            this.cbCommonSize = new System.Windows.Forms.ComboBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.button1 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.pHeader.SuspendLayout();
             this.gbAxes.SuspendLayout();
             this.gbCommon.SuspendLayout();
@@ -157,7 +157,7 @@
             // 
             // gbAxes
             // 
-            this.gbAxes.Controls.Add(this.btnTextColor);
+            this.gbAxes.Controls.Add(this.btnAxisTextColor);
             this.gbAxes.Controls.Add(this.cbAxisUnderline);
             this.gbAxes.Controls.Add(this.cbAxisItalic);
             this.gbAxes.Controls.Add(this.cbAxisBold);
@@ -182,19 +182,19 @@
             this.gbAxes.TabStop = false;
             this.gbAxes.Text = "Axes";
             // 
-            // btnTextColor
+            // btnAxisTextColor
             // 
-            this.btnTextColor.FlatAppearance.BorderSize = 0;
-            this.btnTextColor.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
-            this.btnTextColor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
-            this.btnTextColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTextColor.Image = global::emira.Properties.Resources.text_color_icon_color_24;
-            this.btnTextColor.Location = new System.Drawing.Point(407, 37);
-            this.btnTextColor.Name = "btnTextColor";
-            this.btnTextColor.Size = new System.Drawing.Size(30, 30);
-            this.btnTextColor.TabIndex = 19;
-            this.btnTextColor.UseVisualStyleBackColor = true;
-            this.btnTextColor.Click += new System.EventHandler(this.btnTextColor_Click);
+            this.btnAxisTextColor.FlatAppearance.BorderSize = 0;
+            this.btnAxisTextColor.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.btnAxisTextColor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.btnAxisTextColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAxisTextColor.Image = global::emira.Properties.Resources.text_color_icon_color_24;
+            this.btnAxisTextColor.Location = new System.Drawing.Point(407, 37);
+            this.btnAxisTextColor.Name = "btnAxisTextColor";
+            this.btnAxisTextColor.Size = new System.Drawing.Size(30, 30);
+            this.btnAxisTextColor.TabIndex = 19;
+            this.btnAxisTextColor.UseVisualStyleBackColor = true;
+            this.btnAxisTextColor.Click += new System.EventHandler(this.btnTextColor_Click);
             // 
             // cbAxisUnderline
             // 
@@ -341,16 +341,16 @@
             // 
             // gbCommon
             // 
-            this.gbCommon.Controls.Add(this.button1);
+            this.gbCommon.Controls.Add(this.btnCommonTextColor);
             this.gbCommon.Controls.Add(this.cbColor);
-            this.gbCommon.Controls.Add(this.checkBox1);
+            this.gbCommon.Controls.Add(this.cbCommonUnderline);
             this.gbCommon.Controls.Add(this.lColor);
-            this.gbCommon.Controls.Add(this.checkBox2);
+            this.gbCommon.Controls.Add(this.cbCommonItalic);
             this.gbCommon.Controls.Add(this.tbTitle);
-            this.gbCommon.Controls.Add(this.checkBox3);
+            this.gbCommon.Controls.Add(this.cbCommonBold);
             this.gbCommon.Controls.Add(this.lTitle);
-            this.gbCommon.Controls.Add(this.comboBox1);
-            this.gbCommon.Controls.Add(this.comboBox2);
+            this.gbCommon.Controls.Add(this.cbCommonFont);
+            this.gbCommon.Controls.Add(this.cbCommonSize);
             this.gbCommon.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.gbCommon.Location = new System.Drawing.Point(12, 53);
             this.gbCommon.Name = "gbCommon";
@@ -358,6 +358,19 @@
             this.gbCommon.TabIndex = 11;
             this.gbCommon.TabStop = false;
             this.gbCommon.Text = "Common";
+            // 
+            // btnCommonTextColor
+            // 
+            this.btnCommonTextColor.FlatAppearance.BorderSize = 0;
+            this.btnCommonTextColor.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.btnCommonTextColor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.btnCommonTextColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCommonTextColor.Image = global::emira.Properties.Resources.text_color_icon_color_24;
+            this.btnCommonTextColor.Location = new System.Drawing.Point(407, 31);
+            this.btnCommonTextColor.Name = "btnCommonTextColor";
+            this.btnCommonTextColor.Size = new System.Drawing.Size(30, 30);
+            this.btnCommonTextColor.TabIndex = 25;
+            this.btnCommonTextColor.UseVisualStyleBackColor = true;
             // 
             // cbColor
             // 
@@ -369,6 +382,23 @@
             this.cbColor.SelectedIndexChanged += new System.EventHandler(this.cbColor_SelectedIndexChanged);
             this.cbColor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbColor_KeyPress);
             // 
+            // cbCommonUnderline
+            // 
+            this.cbCommonUnderline.Appearance = System.Windows.Forms.Appearance.Button;
+            this.cbCommonUnderline.AutoSize = true;
+            this.cbCommonUnderline.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(213)))), ((int)(((byte)(242)))));
+            this.cbCommonUnderline.FlatAppearance.BorderSize = 0;
+            this.cbCommonUnderline.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(213)))), ((int)(((byte)(242)))));
+            this.cbCommonUnderline.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.cbCommonUnderline.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.cbCommonUnderline.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbCommonUnderline.Image = global::emira.Properties.Resources.underline_icon_color_24;
+            this.cbCommonUnderline.Location = new System.Drawing.Point(370, 31);
+            this.cbCommonUnderline.Name = "cbCommonUnderline";
+            this.cbCommonUnderline.Size = new System.Drawing.Size(30, 30);
+            this.cbCommonUnderline.TabIndex = 24;
+            this.cbCommonUnderline.UseVisualStyleBackColor = true;
+            // 
             // lColor
             // 
             this.lColor.AutoSize = true;
@@ -377,6 +407,22 @@
             this.lColor.Size = new System.Drawing.Size(49, 18);
             this.lColor.TabIndex = 12;
             this.lColor.Text = "Color:";
+            // 
+            // cbCommonItalic
+            // 
+            this.cbCommonItalic.Appearance = System.Windows.Forms.Appearance.Button;
+            this.cbCommonItalic.AutoSize = true;
+            this.cbCommonItalic.FlatAppearance.BorderSize = 0;
+            this.cbCommonItalic.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(213)))), ((int)(((byte)(242)))));
+            this.cbCommonItalic.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.cbCommonItalic.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.cbCommonItalic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbCommonItalic.Image = global::emira.Properties.Resources.italic_icon_color_24;
+            this.cbCommonItalic.Location = new System.Drawing.Point(340, 31);
+            this.cbCommonItalic.Name = "cbCommonItalic";
+            this.cbCommonItalic.Size = new System.Drawing.Size(30, 30);
+            this.cbCommonItalic.TabIndex = 23;
+            this.cbCommonItalic.UseVisualStyleBackColor = true;
             // 
             // tbTitle
             // 
@@ -387,6 +433,23 @@
             this.tbTitle.TabIndex = 11;
             this.tbTitle.TextChanged += new System.EventHandler(this.tbTitle_TextChanged);
             // 
+            // cbCommonBold
+            // 
+            this.cbCommonBold.Appearance = System.Windows.Forms.Appearance.Button;
+            this.cbCommonBold.AutoSize = true;
+            this.cbCommonBold.FlatAppearance.BorderSize = 0;
+            this.cbCommonBold.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(213)))), ((int)(((byte)(242)))));
+            this.cbCommonBold.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.cbCommonBold.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
+            this.cbCommonBold.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbCommonBold.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cbCommonBold.Image = global::emira.Properties.Resources.bold_icon_color_24;
+            this.cbCommonBold.Location = new System.Drawing.Point(310, 31);
+            this.cbCommonBold.Name = "cbCommonBold";
+            this.cbCommonBold.Size = new System.Drawing.Size(30, 30);
+            this.cbCommonBold.TabIndex = 22;
+            this.cbCommonBold.UseVisualStyleBackColor = true;
+            // 
             // lTitle
             // 
             this.lTitle.AutoSize = true;
@@ -395,6 +458,39 @@
             this.lTitle.Size = new System.Drawing.Size(39, 18);
             this.lTitle.TabIndex = 0;
             this.lTitle.Text = "Title:";
+            // 
+            // cbCommonFont
+            // 
+            this.cbCommonFont.FormattingEnabled = true;
+            this.cbCommonFont.Location = new System.Drawing.Point(24, 33);
+            this.cbCommonFont.Name = "cbCommonFont";
+            this.cbCommonFont.Size = new System.Drawing.Size(220, 26);
+            this.cbCommonFont.TabIndex = 21;
+            // 
+            // cbCommonSize
+            // 
+            this.cbCommonSize.FormattingEnabled = true;
+            this.cbCommonSize.Items.AddRange(new object[] {
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "14",
+            "16",
+            "18",
+            "20",
+            "22",
+            "24",
+            "26",
+            "28",
+            "36",
+            "48",
+            "72"});
+            this.cbCommonSize.Location = new System.Drawing.Point(245, 33);
+            this.cbCommonSize.Name = "cbCommonSize";
+            this.cbCommonSize.Size = new System.Drawing.Size(60, 26);
+            this.cbCommonSize.TabIndex = 20;
             // 
             // btnCancel
             // 
@@ -432,102 +528,6 @@
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // button1
-            // 
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Image = global::emira.Properties.Resources.text_color_icon_color_24;
-            this.button1.Location = new System.Drawing.Point(407, 31);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(30, 30);
-            this.button1.TabIndex = 25;
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(213)))), ((int)(((byte)(242)))));
-            this.checkBox1.FlatAppearance.BorderSize = 0;
-            this.checkBox1.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(213)))), ((int)(((byte)(242)))));
-            this.checkBox1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
-            this.checkBox1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
-            this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox1.Image = global::emira.Properties.Resources.underline_icon_color_24;
-            this.checkBox1.Location = new System.Drawing.Point(370, 31);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(30, 30);
-            this.checkBox1.TabIndex = 24;
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.FlatAppearance.BorderSize = 0;
-            this.checkBox2.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(213)))), ((int)(((byte)(242)))));
-            this.checkBox2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
-            this.checkBox2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
-            this.checkBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox2.Image = global::emira.Properties.Resources.italic_icon_color_24;
-            this.checkBox2.Location = new System.Drawing.Point(340, 31);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(30, 30);
-            this.checkBox2.TabIndex = 23;
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.FlatAppearance.BorderSize = 0;
-            this.checkBox3.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(213)))), ((int)(((byte)(242)))));
-            this.checkBox3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
-            this.checkBox3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(225)))), ((int)(((byte)(242)))));
-            this.checkBox3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBox3.Image = global::emira.Properties.Resources.bold_icon_color_24;
-            this.checkBox3.Location = new System.Drawing.Point(310, 31);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(30, 30);
-            this.checkBox3.TabIndex = 22;
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(24, 33);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(220, 26);
-            this.comboBox1.TabIndex = 21;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "14",
-            "16",
-            "18",
-            "20",
-            "22",
-            "24",
-            "26",
-            "28",
-            "36",
-            "48",
-            "72"});
-            this.comboBox2.Location = new System.Drawing.Point(245, 33);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(60, 26);
-            this.comboBox2.TabIndex = 20;
             // 
             // StatisticsSettingsPage
             // 
@@ -586,13 +586,13 @@
         private System.Windows.Forms.ComboBox cbAxisSize;
         private System.Windows.Forms.CheckBox cbAxisUnderline;
         private System.Windows.Forms.CheckBox cbAxisItalic;
-        private System.Windows.Forms.Button btnTextColor;
+        private System.Windows.Forms.Button btnAxisTextColor;
         private System.Windows.Forms.ColorDialog colorDialog1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Button btnCommonTextColor;
+        private System.Windows.Forms.CheckBox cbCommonUnderline;
+        private System.Windows.Forms.CheckBox cbCommonItalic;
+        private System.Windows.Forms.CheckBox cbCommonBold;
+        private System.Windows.Forms.ComboBox cbCommonFont;
+        private System.Windows.Forms.ComboBox cbCommonSize;
     }
 }

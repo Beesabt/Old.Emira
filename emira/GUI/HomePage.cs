@@ -37,7 +37,7 @@ namespace emira.GUI
                 if (GeneralInfo.AnnoyingMessage)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.DefaultEmailOrPassword, Texts.Captions.DefaultLoginParameters, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
+                    //customMsgBox.Show(Texts.ErrorMessages.DefaultEmailOrPassword, Texts.Captions.DefaultLoginParameters, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
                     GeneralInfo.AnnoyingMessage = false;
                     return;
                 }

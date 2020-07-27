@@ -49,14 +49,14 @@ namespace emira.GUI
                 if (!_login.LoginValidation(tbEmail.Text, tbPassword.Text))
                 {
                     _msgBox = new CustomMsgBox();
-                    _msgBox.Show(Texts.ErrorMessages.WrongEmailPassword, Texts.Captions.LoginFailed, CustomMsgBox.MsgBoxIcon.Error);
+                    //_msgBox.Show(Texts.ErrorMessages.WrongEmailPassword, Texts.Captions.LoginFailed, CustomMsgBox.MsgBoxIcon.Error);
                     tbPassword.Text = string.Empty;
                     tbEmail.Text = string.Empty;
                     return;
                 }
 
                 // Save the e-mail address for identification
-                GeneralInfo.Email = tbEmail.Text;
+                GeneralInfo.DefaultEmail = tbEmail.Text;
 
                 // Wait until everything is loaded
                 Cursor.Current = Cursors.WaitCursor;
