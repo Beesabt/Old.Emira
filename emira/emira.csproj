@@ -98,6 +98,11 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationFiles\XSDFiles\TaskManager.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TaskManager.xsd</DependentUpon>
+    </Compile>
     <Compile Include="BusinessLogicLayer\AddRemoveGovernmentHoliday.cs" />
     <Compile Include="BusinessLogicLayer\AddRemoveTask.cs" />
     <Compile Include="BusinessLogicLayer\Holiday.cs" />
@@ -214,6 +219,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ValueObjects\Person.cs" />
+    <None Include="ApplicationFiles\XSDFiles\TaskManager.xsc">
+      <DependentUpon>TaskManager.xsd</DependentUpon>
+    </None>
+    <None Include="ApplicationFiles\XSDFiles\TaskManager.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TaskManager.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ApplicationFiles\XSDFiles\TaskManager.xss">
+      <DependentUpon>TaskManager.xsd</DependentUpon>
+    </None>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -340,9 +356,7 @@
     <None Include="Resources\text_color_icon_color_24.png" />
     <Content Include="Resources\warning_icon_color_48.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ApplicationFiles\XSDFiles\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
