@@ -94,7 +94,6 @@ namespace emira.GUI
                 {
                     customMsgBox = new CustomMsgBox();
                     customMsgBox.Show(Texts.InformationMessages.EmailChanged, Texts.Captions.SuccessfulChange, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
-                    GeneralInfo.Email = tbNewEmail.Text;
                     tbOldEmail.Text = string.Empty;
                     tbNewEmail.Text = string.Empty;
                     tbNewEmailAgain.Text = string.Empty;

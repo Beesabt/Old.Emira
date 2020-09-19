@@ -148,7 +148,6 @@ namespace emira.GUI
 
                 if (_today.Month != _month)
                 {
-
                     dataTable = workingHours.GetTasksByMonth(cbYearWithMonth.SelectedItem.ToString());
 
                     foreach (DataRow item in dataTable.Rows)
@@ -723,8 +722,6 @@ namespace emira.GUI
             }
         }
 
-
-
         private void btnSave_Click(object sender, EventArgs e)
         {
             try
@@ -988,7 +985,6 @@ namespace emira.GUI
         {
             if (WindowState == FormWindowState.Normal)
             {
-                this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
                 WindowState = FormWindowState.Maximized;
                 btnMaximize.BackgroundImage = Properties.Resources.restore_icon_white_26;
                 dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -1025,8 +1021,6 @@ namespace emira.GUI
             Cursor.Current = Cursors.Default;
         }
 
-
-
         private void pHeader_DoubleClick(object sender, EventArgs e)
         {
             if (WindowState == FormWindowState.Normal)
@@ -1034,6 +1028,12 @@ namespace emira.GUI
                 WindowState = FormWindowState.Maximized;
                 btnMaximize.BackgroundImage = Properties.Resources.restore_icon_white_26;
                 dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+                // Set location of the label
+                int _formXCoordinate = 0;
+                _formXCoordinate = lMonth.Parent.Width;
+                lMonth.Location = new System.Drawing.Point(((_formXCoordinate / 2) - (lMonth.Width / 2)), lMonth.Location.Y);
+
                 Invalidate();
             }
             else
@@ -1041,6 +1041,12 @@ namespace emira.GUI
                 WindowState = FormWindowState.Normal;
                 btnMaximize.BackgroundImage = Properties.Resources.maximize_icon_white_26;
                 dgvWorkingHours.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+
+                // Set location of the label
+                int _formXCoordinate = 0;
+                _formXCoordinate = lMonth.Parent.Width;
+                lMonth.Location = new System.Drawing.Point(((_formXCoordinate / 2) - (lMonth.Width / 2)), lMonth.Location.Y);
+
                 Invalidate();
             }
         }
