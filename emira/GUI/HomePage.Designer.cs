@@ -50,8 +50,9 @@
             this.pHeader.Controls.Add(this.lTitle);
             this.pHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pHeader.Location = new System.Drawing.Point(0, 0);
+            this.pHeader.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pHeader.Name = "pHeader";
-            this.pHeader.Size = new System.Drawing.Size(1030, 30);
+            this.pHeader.Size = new System.Drawing.Size(1373, 37);
             this.pHeader.TabIndex = 1;
             this.pHeader.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pHeader_MouseDown);
             this.pHeader.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pHeader_MouseMove);
@@ -67,9 +68,10 @@
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.ForeColor = System.Drawing.Color.White;
-            this.btnExit.Location = new System.Drawing.Point(980, 0);
+            this.btnExit.Location = new System.Drawing.Point(1307, 0);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(50, 30);
+            this.btnExit.Size = new System.Drawing.Size(67, 37);
             this.btnExit.TabIndex = 2;
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -83,9 +85,10 @@
             this.btnMinimalize.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.btnMinimalize.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.btnMinimalize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMinimalize.Location = new System.Drawing.Point(930, 0);
+            this.btnMinimalize.Location = new System.Drawing.Point(1240, 0);
+            this.btnMinimalize.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnMinimalize.Name = "btnMinimalize";
-            this.btnMinimalize.Size = new System.Drawing.Size(50, 30);
+            this.btnMinimalize.Size = new System.Drawing.Size(67, 37);
             this.btnMinimalize.TabIndex = 3;
             this.btnMinimalize.UseVisualStyleBackColor = true;
             this.btnMinimalize.Click += new System.EventHandler(this.btnMinimalize_Click);
@@ -94,30 +97,35 @@
             // 
             this.lTitle.AutoSize = true;
             this.lTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.lTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lTitle.ForeColor = System.Drawing.Color.White;
             this.lTitle.Location = new System.Drawing.Point(0, 0);
+            this.lTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lTitle.Name = "lTitle";
-            this.lTitle.Size = new System.Drawing.Size(0, 31);
+            this.lTitle.Size = new System.Drawing.Size(231, 36);
             this.lTitle.TabIndex = 2;
+            this.lTitle.Text = "Emira - Főoldal";
             // 
             // pFooter
             // 
             this.pFooter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.pFooter.Controls.Add(this.lFooter);
-            this.pFooter.Location = new System.Drawing.Point(1, 629);
+            this.pFooter.Location = new System.Drawing.Point(1, 774);
+            this.pFooter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pFooter.Name = "pFooter";
-            this.pFooter.Size = new System.Drawing.Size(1028, 20);
+            this.pFooter.Size = new System.Drawing.Size(1371, 25);
             this.pFooter.TabIndex = 6;
             // 
             // lFooter
             // 
             this.lFooter.AutoSize = true;
             this.lFooter.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lFooter.Location = new System.Drawing.Point(422, 2);
+            this.lFooter.Location = new System.Drawing.Point(563, 2);
+            this.lFooter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lFooter.Name = "lFooter";
-            this.lFooter.Size = new System.Drawing.Size(0, 16);
+            this.lFooter.Size = new System.Drawing.Size(0, 20);
             this.lFooter.TabIndex = 0;
+            this.lFooter.Text = "Contact: beesabt@gmail.com";
             // 
             // btnStatistics
             // 
@@ -130,11 +138,12 @@
             this.btnStatistics.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStatistics.ForeColor = System.Drawing.Color.White;
             this.btnStatistics.Image = global::emira.Properties.Resources.piechart_icon_white_100;
-            this.btnStatistics.Location = new System.Drawing.Point(535, 348);
+            this.btnStatistics.Location = new System.Drawing.Point(713, 428);
             this.btnStatistics.Margin = new System.Windows.Forms.Padding(1);
             this.btnStatistics.Name = "btnStatistics";
-            this.btnStatistics.Size = new System.Drawing.Size(440, 240);
+            this.btnStatistics.Size = new System.Drawing.Size(587, 295);
             this.btnStatistics.TabIndex = 5;
+            this.btnStatistics.Text = "Statisztika";
             this.btnStatistics.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.btnStatistics.UseVisualStyleBackColor = false;
             this.btnStatistics.Click += new System.EventHandler(this.btnStatistics_Click);
@@ -150,11 +159,12 @@
             this.btnHolidays.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHolidays.ForeColor = System.Drawing.Color.White;
             this.btnHolidays.Image = global::emira.Properties.Resources.beach_icon_white_50;
-            this.btnHolidays.Location = new System.Drawing.Point(55, 348);
+            this.btnHolidays.Location = new System.Drawing.Point(73, 428);
             this.btnHolidays.Margin = new System.Windows.Forms.Padding(1);
             this.btnHolidays.Name = "btnHolidays";
-            this.btnHolidays.Size = new System.Drawing.Size(440, 240);
+            this.btnHolidays.Size = new System.Drawing.Size(587, 295);
             this.btnHolidays.TabIndex = 4;
+            this.btnHolidays.Text = "Szabadság";
             this.btnHolidays.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.btnHolidays.UseVisualStyleBackColor = false;
             this.btnHolidays.Click += new System.EventHandler(this.btnHolidays_Click);
@@ -170,11 +180,12 @@
             this.btnSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSettings.ForeColor = System.Drawing.Color.White;
             this.btnSettings.Image = global::emira.Properties.Resources.settings_icon_white_50;
-            this.btnSettings.Location = new System.Drawing.Point(535, 69);
+            this.btnSettings.Location = new System.Drawing.Point(713, 85);
             this.btnSettings.Margin = new System.Windows.Forms.Padding(1);
             this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(440, 240);
+            this.btnSettings.Size = new System.Drawing.Size(587, 295);
             this.btnSettings.TabIndex = 3;
+            this.btnSettings.Text = "Beállítások";
             this.btnSettings.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.btnSettings.UseVisualStyleBackColor = false;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
@@ -190,21 +201,22 @@
             this.btnWorkingHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnWorkingHours.ForeColor = System.Drawing.Color.White;
             this.btnWorkingHours.Image = global::emira.Properties.Resources.clock_icon_white_100;
-            this.btnWorkingHours.Location = new System.Drawing.Point(55, 69);
+            this.btnWorkingHours.Location = new System.Drawing.Point(73, 85);
             this.btnWorkingHours.Margin = new System.Windows.Forms.Padding(1);
             this.btnWorkingHours.Name = "btnWorkingHours";
-            this.btnWorkingHours.Size = new System.Drawing.Size(440, 240);
+            this.btnWorkingHours.Size = new System.Drawing.Size(587, 295);
             this.btnWorkingHours.TabIndex = 2;
+            this.btnWorkingHours.Text = "Munkaidő";
             this.btnWorkingHours.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.btnWorkingHours.UseVisualStyleBackColor = false;
             this.btnWorkingHours.Click += new System.EventHandler(this.btnWorkingHours_Click);
             // 
             // HomePage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1030, 650);
+            this.ClientSize = new System.Drawing.Size(1373, 800);
             this.Controls.Add(this.pFooter);
             this.Controls.Add(this.btnStatistics);
             this.Controls.Add(this.pHeader);
@@ -212,6 +224,7 @@
             this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.btnWorkingHours);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "HomePage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Shown += new System.EventHandler(this.MainPage_Shown);
@@ -224,6 +237,7 @@
         }
 
         #endregion
+
         private System.Windows.Forms.Panel pHeader;
         private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.Button btnWorkingHours;

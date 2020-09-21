@@ -102,6 +102,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TaskManager.xsd</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="BusinessLogicLayer\AddRemoveGovernmentHoliday.cs" />
     <Compile Include="BusinessLogicLayer\AddRemoveTask.cs" />
@@ -221,14 +222,17 @@
     <Compile Include="ValueObjects\Person.cs" />
     <None Include="ApplicationFiles\XSDFiles\TaskManager.xsc">
       <DependentUpon>TaskManager.xsd</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="ApplicationFiles\XSDFiles\TaskManager.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>TaskManager.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="ApplicationFiles\XSDFiles\TaskManager.xss">
       <DependentUpon>TaskManager.xsd</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
