@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+
 using emira.BusinessLogicLayer;
-using emira.HelperFunctions;
+using emira.Utilities;
 
 namespace emira.GUI
 {
@@ -33,14 +34,14 @@ namespace emira.GUI
                 if (string.IsNullOrEmpty(tbEmail.Text))
                 {
                     _msgBox = new CustomMsgBox();
-                    _msgBox.Show(lEmail.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Warning);                  
+                    _msgBox.ShowError(lEmail.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Warning);                  
                     return;
                 }
 
                 if (string.IsNullOrEmpty(tbPassword.Text))
                 {
                     _msgBox = new CustomMsgBox();
-                    _msgBox.Show(lPassword.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Warning);                   
+                    _msgBox.ShowError(lPassword.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Warning);                   
                     return;
                 }
 
@@ -67,7 +68,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 

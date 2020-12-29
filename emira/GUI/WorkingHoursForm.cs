@@ -1,32 +1,30 @@
 ﻿using System;
+using System.IO;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Windows.Forms;
 
-using emira.BusinessLogicLayer;
-using emira.HelperFunctions;
-using NLog;
 using Nager.Date;
 using iTextSharp.text;
-using System.IO;
 using iTextSharp.text.pdf;
-using Microsoft.Office.Interop.Word;
+
+using emira.BusinessLogicLayer;
+using emira.Utilities;
 
 namespace emira.GUI
 {
     public partial class WorkingHoursForm : Form
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         int togMove;
         int mValX;
         int mValY;
 
         WorkingHours workingHours;
         List<DataGridViewCell> changedCells = new List<DataGridViewCell>();
+        DataTable dataTable;
         CustomMsgBox customMsgBox;
-        System.Data.DataTable dataTable;
 
         public static string cbYearWithMonthValue = string.Empty;
 
@@ -36,7 +34,7 @@ namespace emira.GUI
 
             // Set the location of the form according to the parent form's location
             // If it is zero then it set to the center of the screen
-            System.Drawing.Point _zeroLocation = new System.Drawing.Point(0, 0);
+            Point _zeroLocation = new Point(0, 0);
 
             if (LocationInfo._location == _zeroLocation)
             {
@@ -73,9 +71,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
@@ -144,7 +140,7 @@ namespace emira.GUI
                 string _acutalTaskName = string.Empty;
 
                 DateTime _today = DateTime.UtcNow;
-                dataTable = new System.Data.DataTable();
+                dataTable = new DataTable();
 
                 if (_today.Month != _month)
                 {
@@ -265,9 +261,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
@@ -450,9 +444,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
@@ -550,9 +542,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
@@ -770,11 +760,13 @@ namespace emira.GUI
 
                     if (_isSuccess)
                     {
-                        MessageBox.Show(Texts.InformationMessages.SuccessfulSave, Texts.Captions.SuccessfulSave, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        customMsgBox = new CustomMsgBox();
+                        customMsgBox.Show(Texts.InformationMessages.SuccessfulSave, Texts.Captions.SuccessfulSave, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
                     }
                     else
                     {
-                        MessageBox.Show(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        customMsgBox = new CustomMsgBox();
+                        customMsgBox.ShowError(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, CustomMsgBox.MsgBoxIcon.Error);
                     }
                 }
 
@@ -782,7 +774,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
@@ -803,7 +795,8 @@ namespace emira.GUI
                     _isSuccess = workingHours.LockMonth(_date, "1");
                     if (!_isSuccess)
                     {
-                        MessageBox.Show(Texts.ErrorMessages.ErrorDuringLock, Texts.Captions.ErrorLock, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        customMsgBox = new CustomMsgBox();
+                        customMsgBox.ShowError(Texts.ErrorMessages.ErrorDuringLock, Texts.Captions.ErrorLock, CustomMsgBox.MsgBoxIcon.Error);
                         return;
                     }
                 }
@@ -815,7 +808,9 @@ namespace emira.GUI
                     column.ReadOnly = true;
                 }
                 btnAddRemoveTask.Enabled = false;
-                MessageBox.Show(Texts.InformationMessages.SuccessfulLocked, Texts.Captions.SuccessLocked, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.InformationMessages.SuccessfulLocked, Texts.Captions.SuccessLocked, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
             }
             else
             {
@@ -825,7 +820,8 @@ namespace emira.GUI
                     _isSuccess = workingHours.LockMonth(_date, "1");
                     if (!_isSuccess)
                     {
-                        MessageBox.Show(Texts.ErrorMessages.ErrorDuringUnlock, Texts.Captions.ErrorUnlock, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        customMsgBox = new CustomMsgBox();
+                        customMsgBox.ShowError(Texts.ErrorMessages.ErrorDuringUnlock, Texts.Captions.ErrorUnlock, CustomMsgBox.MsgBoxIcon.Error);
                         return;
                     }
                 }
@@ -838,7 +834,9 @@ namespace emira.GUI
                 }
                 btnAddRemoveTask.Enabled = true;
                 UpdateWorkingHoursTable();
-                MessageBox.Show(Texts.InformationMessages.SuccessfulUnlocked, Texts.Captions.SuccessfulUnlocked, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.InformationMessages.SuccessfulUnlocked, Texts.Captions.SuccessfulUnlocked, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
             }
         }
 
@@ -851,8 +849,6 @@ namespace emira.GUI
             UpdateWorkingHoursTable();
         }
 
-
-
         private void btnPDF_Click(object sender, EventArgs e)
         {
             try
@@ -863,15 +859,12 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
         private void ExportToPDF(DataGridView dgv, string filename)
         {
-
             try
             {
                 BaseFont _basefont = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1250, BaseFont.EMBEDDED);
@@ -930,22 +923,28 @@ namespace emira.GUI
                 _saveFileDialog.DefaultExt = ".pdf";
                 if (_saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    using (FileStream _stream = new FileStream(_saveFileDialog.FileName, FileMode.Create))
+                    FileStream _stream = new FileStream(_saveFileDialog.FileName, FileMode.Create);
+                    try
                     {
-                        iTextSharp.text.Document _pdfDoc = new iTextSharp.text.Document(PageSize.A4.Rotate(), 10f, 10f, 10f, 0f);
+                        Document _pdfDoc = new Document(PageSize.A4.Rotate(), 10f, 10f, 10f, 0f);
                         PdfWriter.GetInstance(_pdfDoc, _stream);
                         _pdfDoc.Open();
                         _pdfDoc.Add(_pdfTable);
                         _pdfDoc.Close();
+                    }
+                    catch (Exception error)
+                    {
+                        MyLogger.GetInstance().Error(error.Message);
+                    }
+                    finally
+                    {
                         _stream.Close();
                     }
                 }
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
@@ -963,13 +962,9 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
-
-
 
         private void btnExit_Click(object sender, EventArgs e)
         {
@@ -1032,7 +1027,7 @@ namespace emira.GUI
                 // Set location of the label
                 int _formXCoordinate = 0;
                 _formXCoordinate = lMonth.Parent.Width;
-                lMonth.Location = new System.Drawing.Point(((_formXCoordinate / 2) - (lMonth.Width / 2)), lMonth.Location.Y);
+                lMonth.Location = new Point(((_formXCoordinate / 2) - (lMonth.Width / 2)), lMonth.Location.Y);
 
                 Invalidate();
             }
@@ -1045,7 +1040,7 @@ namespace emira.GUI
                 // Set location of the label
                 int _formXCoordinate = 0;
                 _formXCoordinate = lMonth.Parent.Width;
-                lMonth.Location = new System.Drawing.Point(((_formXCoordinate / 2) - (lMonth.Width / 2)), lMonth.Location.Y);
+                lMonth.Location = new Point(((_formXCoordinate / 2) - (lMonth.Width / 2)), lMonth.Location.Y);
 
                 Invalidate();
             }

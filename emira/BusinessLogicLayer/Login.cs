@@ -1,5 +1,5 @@
 ﻿using emira.DataAccessLayer;
-using emira.HelperFunctions;
+using emira.Utilities;
 
 namespace emira.BusinessLogicLayer
 {

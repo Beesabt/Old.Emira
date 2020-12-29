@@ -9,7 +9,6 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 
 using emira.BusinessLogicLayer;
-using emira.HelperFunctions;
 using emira.Utilities;
 
 namespace emira.GUI
@@ -157,10 +156,13 @@ namespace emira.GUI
                 taskModification = new TaskModification();
                 if (taskModification.IsHaveGroups())
                 {
-                    var _result = MessageBox.Show(Texts.WarningMessages.ImportTasks,
+                    customMsgBox = new CustomMsgBox();
+                    var _result = customMsgBox.Show(Texts.WarningMessages.ImportTasks,
                                            Texts.Captions.LossOfData,
-                                           MessageBoxButtons.YesNo,
-                                           MessageBoxIcon.Question);
+                                           CustomMsgBox.MsgBoxIcon.Question,
+                                           CustomMsgBox.Button.YesNo
+                                           );
+
                     if (_result == DialogResult.No)
                     {
                         return;
@@ -201,7 +203,7 @@ namespace emira.GUI
                 if (_validationError)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.ElementsAreNotAllowed, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.ElementsAreNotAllowed, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -215,7 +217,7 @@ namespace emira.GUI
                 if (_groupIDs.Contains(0))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.GroupIDNullIsNotAllowed, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.GroupIDNullIsNotAllowed, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -231,7 +233,7 @@ namespace emira.GUI
                         if (_previousGroupName == _groupNames.ElementAt(i))
                         {
                             customMsgBox = new CustomMsgBox();
-                            customMsgBox.Show(Texts.ErrorMessages.GroupNameUnique, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                            customMsgBox.ShowError(Texts.ErrorMessages.GroupNameUnique, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                             return;
                         }
 
@@ -241,7 +243,7 @@ namespace emira.GUI
                     if (_previousGroupName != _groupNames.ElementAt(i))
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show(Texts.ErrorMessages.GroupIDUnique, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        customMsgBox.ShowError(Texts.ErrorMessages.GroupIDUnique, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                         return;
                     }
                 }
@@ -263,7 +265,7 @@ namespace emira.GUI
                     if (_taskIDsWithoutDuplicates.Count() < _taskIDs.Count())
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show(Texts.ErrorMessages.TaskIDUnique, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        customMsgBox.ShowError(Texts.ErrorMessages.TaskIDUnique, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                         return;
                     }
 
@@ -277,7 +279,7 @@ namespace emira.GUI
                     if (_taskNamesWithoutDuplicates.Count() < _taskNames.Count())
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show(Texts.ErrorMessages.TaskNameUnique, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        customMsgBox.ShowError(Texts.ErrorMessages.TaskNameUnique, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                         return;
                     }
                 }
@@ -375,7 +377,7 @@ namespace emira.GUI
                 if (string.IsNullOrEmpty(cbGroupName.Text))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.ComboboxIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.ComboboxIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -413,7 +415,7 @@ namespace emira.GUI
                 if (string.IsNullOrEmpty(cbGroupName.Text))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.ComboboxIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.ComboboxIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -428,10 +430,12 @@ namespace emira.GUI
 
                 if (dataTable.Rows.Count > 0)
                 {
-                    var _result = MessageBox.Show(Texts.WarningMessages.DeleteTask,
-                                            Texts.Captions.LossOfData,
-                                            MessageBoxButtons.YesNo,
-                                            MessageBoxIcon.Question);
+                    customMsgBox = new CustomMsgBox();
+                    var _result = customMsgBox.Show(Texts.WarningMessages.DeleteTask,
+                                                    Texts.Captions.LossOfData,
+                                                    CustomMsgBox.MsgBoxIcon.Question,
+                                                    CustomMsgBox.Button.YesNo);
+
                     if (_result == DialogResult.No)
                     {
                         return;
@@ -448,7 +452,7 @@ namespace emira.GUI
                 if (!_isSuccess)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error);
                     cbGroupName.Enabled = true;
                     return;
                 }
@@ -484,7 +488,7 @@ namespace emira.GUI
                 if (string.IsNullOrEmpty(cbGroupName.Text))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.ComboboxIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.ComboboxIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -492,7 +496,7 @@ namespace emira.GUI
                 if (!taskModification.TextBoxValueValidation(tbTaskName.Text))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.RequiredFieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.RequiredFieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -515,7 +519,7 @@ namespace emira.GUI
                 if (!_isSuccess)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForTask, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.CheckValuesOfFieldsForTask, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error);
                     cbGroupName.Enabled = true;
                     nupTaskID.Enabled = true;
                     tbTaskName.Enabled = true;
@@ -549,7 +553,7 @@ namespace emira.GUI
                 if (!taskModification.TextBoxValueValidation(tbTaskName.Text))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.RequiredFieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.RequiredFieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -583,7 +587,7 @@ namespace emira.GUI
                 if (!_isSuccess)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForTask, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.CheckValuesOfFieldsForTask, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error);
                     cbGroupName.Enabled = true;
                     nupTaskID.Enabled = true;
                     tbTaskName.Enabled = true;
@@ -624,10 +628,12 @@ namespace emira.GUI
 
                 if (_selected)
                 {
-                    var _result = MessageBox.Show(Texts.WarningMessages.DeleteTask,
-                                            Texts.Captions.LossOfData,
-                                            MessageBoxButtons.YesNo,
-                                            MessageBoxIcon.Question);
+                    customMsgBox = new CustomMsgBox();
+                    var _result = customMsgBox.Show(Texts.WarningMessages.DeleteTask,
+                                                    Texts.Captions.LossOfData,
+                                                    CustomMsgBox.MsgBoxIcon.Question,
+                                                    CustomMsgBox.Button.YesNo);
+
                     if (_result == DialogResult.No)
                     {
                         return;
@@ -647,7 +653,7 @@ namespace emira.GUI
                 if (!_isSuccess)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForTask, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.CheckValuesOfFieldsForTask, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error);
                     cbGroupName.Enabled = true;
                     nupTaskID.Enabled = true;
                     tbTaskName.Enabled = true;
@@ -715,7 +721,7 @@ namespace emira.GUI
                     _actualTaskID = task[Texts.TaskProperties.TaskID].ToString();
                     _actualTaskName = task[Texts.TaskProperties.TaskName].ToString();
 
-                    if(Int32.TryParse(_actualTaskGroupID, out _groupID))
+                    if (Int32.TryParse(_actualTaskGroupID, out _groupID))
                     {
                         if (_previousTaskID == _actualTaskGroupID)
                         {

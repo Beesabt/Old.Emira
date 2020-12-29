@@ -4,19 +4,15 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 using emira.BusinessLogicLayer;
-using emira.HelperFunctions;
-
-using NLog;
-using System.Windows.Forms.DataVisualization.Charting;
 using emira.Utilities;
 
 namespace emira.GUI
 {
     public partial class StatisticsForm : Form
     {
-        CustomMsgBox customMsgBox;
         Statistics statistics;
         DataTable dataTable;
         int togMove;
@@ -135,8 +131,6 @@ namespace emira.GUI
             catch (Exception error)
             {
                 MyLogger.GetInstance().Error(error.Message);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                 return;
             }
         }

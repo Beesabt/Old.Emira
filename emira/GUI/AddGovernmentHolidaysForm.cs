@@ -4,16 +4,15 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
-using NLog;
 using Nager.Date;
-using emira.HelperFunctions;
+
 using emira.BusinessLogicLayer;
+using emira.Utilities;
 
 namespace emira.GUI
 {
     public partial class AddGovernmentHolidaysForm : Form
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         int togMove;
         int mValX;
         int mValY;
@@ -50,9 +49,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
@@ -64,9 +61,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
@@ -94,7 +89,7 @@ namespace emira.GUI
                     if (dtpGovernmentHoliday.Value.ToShortDateString() == publicHoliday.Date.ToShortDateString())
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show(Texts.ErrorMessages.PublicHolidaySelected, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        customMsgBox.ShowError(Texts.ErrorMessages.PublicHolidaySelected, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                         return;
                     }
                 }
@@ -105,7 +100,7 @@ namespace emira.GUI
                 if (_isExist)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.ErrorDateExist, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorDateExist, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -115,7 +110,7 @@ namespace emira.GUI
                 if (_isExist)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.ErrorExistHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorExistHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -128,7 +123,7 @@ namespace emira.GUI
                 if (_isClosed)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.ErrorLockedHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorLockedHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -140,9 +135,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
@@ -176,7 +169,7 @@ namespace emira.GUI
                 if (_isClosed)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.ErrorLockedHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorLockedHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -186,12 +179,12 @@ namespace emira.GUI
                 if (_isSuccess)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.InformationMessages.SuccessfulLocked, Texts.Captions.Information, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.InformationMessages.SuccessfulLocked, Texts.Captions.Information, CustomMsgBox.MsgBoxIcon.Information);
                 }
                 else
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.ErrorDuringCancellation, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorDuringCancellation, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                 }
 
                 // Update government holiday table
@@ -199,9 +192,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
@@ -241,9 +232,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 

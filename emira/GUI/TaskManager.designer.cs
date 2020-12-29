@@ -163,7 +163,7 @@
             this.btnUpdateTask.Name = "btnUpdateTask";
             this.btnUpdateTask.Size = new System.Drawing.Size(130, 40);
             this.btnUpdateTask.TabIndex = 22;
-            this.btnUpdateTask.Text = "Frissít";
+            this.btnUpdateTask.Text = "Módosít";
             this.btnUpdateTask.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnUpdateTask.UseVisualStyleBackColor = false;
             this.btnUpdateTask.Click += new System.EventHandler(this.btnUpdateTask_Click);
@@ -268,7 +268,7 @@
             this.btnUpdateGroup.Name = "btnUpdateGroup";
             this.btnUpdateGroup.Size = new System.Drawing.Size(130, 40);
             this.btnUpdateGroup.TabIndex = 26;
-            this.btnUpdateGroup.Text = "Frissít";
+            this.btnUpdateGroup.Text = "Módosít";
             this.btnUpdateGroup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnUpdateGroup.UseVisualStyleBackColor = false;
             this.btnUpdateGroup.Click += new System.EventHandler(this.btnUpdateGroup_Click);

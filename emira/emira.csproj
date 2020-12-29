@@ -236,7 +236,6 @@
       <DependentUpon>TaskManager.xsd</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ClassDiagram1.cd" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -249,6 +248,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\AddRemoveTaskForm.resx">
       <DependentUpon>AddRemoveTaskForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\CustomMsgBox.resx">
+      <DependentUpon>CustomMsgBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\EmailChange.resx">
       <DependentUpon>EmailChange.cs</DependentUpon>

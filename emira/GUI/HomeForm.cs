@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using emira.HelperFunctions;
+
+using emira.Utilities;
 
 namespace emira.GUI
 {
     public partial class HomeForm : Form
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         CustomMsgBox customMsgBox;
         bool bTogMove;
         int iValX;
@@ -37,16 +37,13 @@ namespace emira.GUI
                 if (GeneralInfo.AnnoyingMessage)
                 {
                     customMsgBox = new CustomMsgBox();
-                    //customMsgBox.Show(Texts.ErrorMessages.DefaultEmailOrPassword, Texts.Captions.DefaultLoginParameters, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
-                    GeneralInfo.AnnoyingMessage = false;
+                    customMsgBox.Show(Texts.InformationMessages.DefaultEmailOrPassword, Texts.Captions.DefaultLoginParameters, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
                     return;
                 }
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 

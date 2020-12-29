@@ -1,8 +1,6 @@
 ﻿using System.Drawing;
-using System.Reflection;
-using System.Resources;
 
-namespace emira.HelperFunctions
+namespace emira.Utilities
 {
     public static class GeneralInfo
     {

@@ -22,7 +22,7 @@ namespace emira.ApplicationFiles.XSDFiles {
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
     [global::System.Xml.Serialization.XmlRootAttribute("TaskModification")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class TaskModification : global::System.Data.DataSet {
+    public partial class TaskModification : System.Data.DataSet {
         
         private Table1DataTable tableTable1;
         
@@ -276,7 +276,7 @@ namespace emira.ApplicationFiles.XSDFiles {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class Table1DataTable : global::System.Data.TypedTableBase<Table1Row> {
+        public partial class Table1DataTable : System.Data.TypedTableBase<Table1Row> {
             
             private global::System.Data.DataColumn columnGroupID;
             

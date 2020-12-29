@@ -6,14 +6,12 @@ using System.Linq;
 using System.Windows.Forms;
 
 using emira.BusinessLogicLayer;
-using emira.HelperFunctions;
-using NLog;
+using emira.Utilities;
 
 namespace emira.GUI
 {
     public partial class AddRemoveTaskForm : Form
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         int togMove;
         int mValX;
         int mValY;
@@ -106,9 +104,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
@@ -130,7 +126,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
+                MyLogger.GetInstance().Error(error.Message);
                 return false;
             }
         }
@@ -178,10 +174,12 @@ namespace emira.GUI
                 // if the user says 'Yes'
                 if (ListCheck(_SelectedItemsAfterLoad, _unSelectedNodes))
                 {
-                    var _result = MessageBox.Show(Texts.WarningMessages.DeleteTask,
-                                            Texts.Captions.LossOfData,
-                                            MessageBoxButtons.YesNo,
-                                            MessageBoxIcon.Question);
+                    customMsgBox = new CustomMsgBox();
+                    var _result = customMsgBox.Show(Texts.WarningMessages.DeleteTask,
+                                      Texts.Captions.LossOfData,
+                                      CustomMsgBox.MsgBoxIcon.Question,
+                                      CustomMsgBox.Button.YesNo);
+                    
                     if (_result == DialogResult.No)
                     {
                         return;
@@ -237,9 +235,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
 
         }
@@ -288,9 +284,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 

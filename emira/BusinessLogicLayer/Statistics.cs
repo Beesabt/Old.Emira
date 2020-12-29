@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 using emira.GUI;
 using emira.DataAccessLayer;
-using emira.HelperFunctions;
+using emira.Utilities;
 
-using NLog;
 using System.Data;
 using System.Globalization;
+
 
 namespace emira.BusinessLogicLayer
 {
     class Statistics
     {
 
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         DatabaseHandler DBHandler;
         DataTable dataTable;
-        CustomMsgBox customMsgBox;
         DateTime today = DateTime.UtcNow;
 
         /// <summary>
@@ -48,9 +45,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
                 return _dates;
             }
         }
@@ -88,9 +83,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
                 return dataTable;
             }
         }

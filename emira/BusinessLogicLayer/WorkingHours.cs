@@ -1,26 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Text;
-
-using emira.GUI;
-using emira.DataAccessLayer;
-using emira.HelperFunctions;
-
-using NLog;
 using System.Windows.Forms;
+
 using Microsoft.Office.Interop.Word;
-using Nager.Date;
+
+using emira.DataAccessLayer;
+using emira.Utilities;
+using emira.GUI;
 
 namespace emira.BusinessLogicLayer
 {
     class WorkingHours
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        CustomMsgBox customMsgBox;
         DatabaseHandler DBHandler;
         System.Data.DataTable dataTable;
         DateTime today = DateTime.UtcNow;
-        CustomMsgBox customMsgBox;
 
         /// <summary>
         /// Get the years and months (back - 6 months, forward - 5 months)
@@ -64,9 +60,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
                 return _dates;
             }
         }
@@ -87,9 +81,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
                 return dataTable;
             }
         }
@@ -109,9 +101,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
                 return dataTable;
             }
         }
@@ -145,9 +135,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
                 return _result;
             }
         }
@@ -201,9 +189,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
                 return _isSuccess;
             }
         }
@@ -257,9 +243,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
                 return _lockIsPossible;
             }
         }
@@ -288,9 +272,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
                 return _isSuccess;
             }
         }
@@ -326,9 +308,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
                 return _sb.ToString();
             }
         }
@@ -350,9 +330,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
                 return _dayOfMonth;
             }
         }
@@ -373,9 +351,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
                 return dataTable;
             }
         }
@@ -395,9 +371,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
                 return _workingHours;
             }
         }
@@ -417,9 +391,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
                 return dataTable;
             }
         }
@@ -544,13 +516,14 @@ namespace emira.BusinessLogicLayer
                 _document = null;
                 _winword.Quit(ref missing, ref missing, ref missing);
                 _winword = null;
-                MessageBox.Show("Document created successfully !");
+
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.InformationMessages.SuccessfulDocumentCreation, Texts.Captions.Information, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
+
             }
             catch (Exception error)
             {
-                Logger.Error(error, "The cell row: " + _cellRow + " column: " + _cellColumn);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message + "The cell row: " + _cellRow + " column: " + _cellColumn);
                 _winword.Quit(ref missing, ref missing, ref missing);
             }
         }

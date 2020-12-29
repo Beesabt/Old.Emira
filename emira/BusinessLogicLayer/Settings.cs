@@ -5,20 +5,16 @@ using System.Text.RegularExpressions;
 
 using emira.DataAccessLayer;
 using emira.ValueObjects;
-using emira.HelperFunctions;
-using emira.GUI;
+using emira.Utilities;
 
 namespace emira.BusinessLogicLayer
 {
     class Settings
     {
-
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         bool bIsSuccess = false;
         DatabaseHandler DBHandler;
         DataTable dataTable;
         Person actualPerson;
-        CustomMsgBox customMsgBox;
 
         /// <summary>
         /// Get the user's name, register number, company name, cost center and position
@@ -100,10 +96,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-
+                MyLogger.GetInstance().Error(error.Message);
                 actualPerson = new Person();
                 return actualPerson;
             }
@@ -335,10 +328,7 @@ namespace emira.BusinessLogicLayer
             }
             catch(Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
-
+                MyLogger.GetInstance().Error(error.Message);
                 actualPerson = new Person();
                 return actualPerson;
             }
@@ -363,9 +353,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
                 return bIsSuccess;
             }
         }
@@ -387,9 +375,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
                 return bIsSuccess;
             }
         }

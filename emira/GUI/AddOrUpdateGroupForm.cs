@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using System.Diagnostics;
 
 using emira.BusinessLogicLayer;
-using emira.HelperFunctions;
 using emira.Utilities;
 
 namespace emira.GUI
@@ -113,7 +112,7 @@ namespace emira.GUI
                     if (!_isSuccess)
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        customMsgBox.ShowError(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                         return;
                     }
 
@@ -139,7 +138,7 @@ namespace emira.GUI
                     if (!_isSuccess)
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        customMsgBox.ShowError(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                         // Freez controls
                         nupGroupID.Enabled = true;
                         tbGroupName.Enabled = true;
@@ -168,8 +167,6 @@ namespace emira.GUI
         {
             Close();
         }
-
-
 
         private void pHeader_MouseUp(object sender, MouseEventArgs e)
         {

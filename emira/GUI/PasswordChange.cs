@@ -3,13 +3,12 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using emira.BusinessLogicLayer;
-using emira.HelperFunctions;
+using emira.Utilities;
 
 namespace emira.GUI
 {
     public partial class PasswordChange : UserControl
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         CustomMsgBox customMsgBox;
         Settings settings;
 
@@ -28,7 +27,7 @@ namespace emira.GUI
                 if (string.IsNullOrEmpty(tbOldPassword.Text.Trim()))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(lOldPassword.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(lOldPassword.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -36,7 +35,7 @@ namespace emira.GUI
                 if (string.IsNullOrEmpty(tbNewPassword.Text.Trim()))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(lNewPassword.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(lNewPassword.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -44,7 +43,7 @@ namespace emira.GUI
                 if (string.IsNullOrEmpty(tbNewPasswordAgain.Text.Trim()))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(lNewPasswordAgain.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(lNewPasswordAgain.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -52,8 +51,17 @@ namespace emira.GUI
                 if (!settings.OldValueValidation(Texts.PersonProperties.Password, tbOldPassword.Text))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.WrongOldPassword, Texts.Captions.WrongOldValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.WrongOldPassword, Texts.Captions.WrongOldValue, CustomMsgBox.MsgBoxIcon.Error);
                     tbOldPassword.Text = string.Empty;
+                    return;
+                }
+
+                // New password is the default
+                if (tbNewPassword.Text == GeneralInfo.DefaultPassword)
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.ShowError(Texts.ErrorMessages.NewPasswordIsDefault, Texts.Captions.NewPasswordIsNotAllowed, CustomMsgBox.MsgBoxIcon.Error);
+                    tbNewPasswordAgain.Text = string.Empty;
                     return;
                 }
 
@@ -61,7 +69,7 @@ namespace emira.GUI
                 if (tbNewPassword.Text != tbNewPasswordAgain.Text)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.NewPasswordsMismatched, Texts.Captions.MissmatchadPasswords, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.NewPasswordsMismatched, Texts.Captions.MissmatchadPasswords, CustomMsgBox.MsgBoxIcon.Error);
                     tbNewPasswordAgain.Text = string.Empty;
                     return;
                 }
@@ -70,7 +78,7 @@ namespace emira.GUI
                 if (tbOldPassword.Text == tbNewPassword.Text)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.NewPasswordSameAsOldPassword, Texts.Captions.NewPasswordIsNotAllowed, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.NewPasswordSameAsOldPassword, Texts.Captions.NewPasswordIsNotAllowed, CustomMsgBox.MsgBoxIcon.Error);
                     tbNewPassword.Text = string.Empty;
                     tbNewPasswordAgain.Text = string.Empty;
                     return;
@@ -80,7 +88,7 @@ namespace emira.GUI
                 if (!settings.IsValidPassword(tbNewPassword.Text))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.NewPasswordIsNotAllowed, Texts.Captions.NewPasswordIsNotAllowed, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.NewPasswordIsNotAllowed, Texts.Captions.NewPasswordIsNotAllowed, CustomMsgBox.MsgBoxIcon.Error);
                     tbNewPassword.Text = string.Empty;
                     tbNewPasswordAgain.Text = string.Empty;
                     return;
@@ -97,11 +105,13 @@ namespace emira.GUI
                     tbOldPassword.Text = string.Empty;
                     tbNewPassword.Text = string.Empty;
                     tbNewPasswordAgain.Text = string.Empty;
+                    if (GeneralInfo.AnnoyingMessage)
+                        GeneralInfo.AnnoyingMessage = false;
                 }
                 else
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, CustomMsgBox.MsgBoxIcon.Error);
                     tbOldPassword.Text = string.Empty;
                 }
 
@@ -109,9 +119,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 

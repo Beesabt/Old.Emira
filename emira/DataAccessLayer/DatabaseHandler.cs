@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 
-using emira.HelperFunctions;
-using emira.GUI;
-using NLog;
+using emira.Utilities;
 
 namespace emira.DataAccessLayer
 {
     class DatabaseHandler
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         string command = string.Empty;
         string sResult = string.Empty;
         int iResult = 0;
@@ -20,7 +17,6 @@ namespace emira.DataAccessLayer
         SQLiteCommand SQLiteCommand;
         DataTable dataTable;
         SQLiteDataAdapter dataAdapter;
-        CustomMsgBox customMsgBox;
 
         public DatabaseHandler()
         {
@@ -33,9 +29,7 @@ namespace emira.DataAccessLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
@@ -57,9 +51,7 @@ namespace emira.DataAccessLayer
             }
             catch (SQLiteException error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
             finally
             {
@@ -90,9 +82,7 @@ namespace emira.DataAccessLayer
             }
             catch (SQLiteException error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
             finally
             {
@@ -114,9 +104,7 @@ namespace emira.DataAccessLayer
             }
             catch (SQLiteException error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
             finally
             {
@@ -140,10 +128,9 @@ namespace emira.DataAccessLayer
                     _vals = _vals.Substring(0, _vals.Length - 1);
                 }
 
-                string command = string.Format("UPDATE {0} SET {1} WHERE {2}", tableName, _vals, where);
                 SQLiteCommand = new SQLiteCommand();
                 SQLiteCommand = sqlite.CreateCommand();
-                SQLiteCommand.CommandText = command;
+                SQLiteCommand.CommandText = string.Format("UPDATE {0} SET {1} WHERE {2}", tableName, _vals, where);
                 sqlite.Open();
 
                 iResult = SQLiteCommand.ExecuteNonQuery();
@@ -152,9 +139,7 @@ namespace emira.DataAccessLayer
             }
             catch (SQLiteException error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
             finally
             {
@@ -178,9 +163,7 @@ namespace emira.DataAccessLayer
             }
             catch (SQLiteException error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
             finally
             {

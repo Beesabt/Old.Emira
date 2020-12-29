@@ -3,14 +3,12 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
-using emira.HelperFunctions;
-using NLog;
+using emira.Utilities;
 
 namespace emira.GUI
 {
     public partial class StatisticsSettingsForm : Form
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         bool bTogMove;
         int iValX;
         int iValY;

@@ -4,13 +4,12 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using emira.BusinessLogicLayer;
-using emira.HelperFunctions;
+using emira.Utilities;
 
 namespace emira.GUI
 {
     public partial class EmailChange : UserControl
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         CustomMsgBox customMsgBox;
         Settings settings;
 
@@ -29,7 +28,7 @@ namespace emira.GUI
                 if (tbOldEmail.Text.Trim() == string.Empty)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(lOldEmail.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(lOldEmail.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -37,7 +36,7 @@ namespace emira.GUI
                 if (tbNewEmail.Text.Trim() == string.Empty)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(lNewEmail.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(lNewEmail.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -45,7 +44,7 @@ namespace emira.GUI
                 if (tbNewEmailAgain.Text.Trim() == string.Empty)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(lNewEmailAgain.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(lNewEmailAgain.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -53,8 +52,17 @@ namespace emira.GUI
                 if (!settings.OldValueValidation(Texts.PersonProperties.Email, tbOldEmail.Text))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.WrongOldEmail, Texts.Captions.WrongOldValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.WrongOldEmail, Texts.Captions.WrongOldValue, CustomMsgBox.MsgBoxIcon.Error);
                     tbOldEmail.Text = string.Empty;
+                    return;
+                }
+
+                // New e-mail address is the default
+                if (tbNewEmail.Text == GeneralInfo.DefaultEmail)
+                {
+                    customMsgBox = new CustomMsgBox();
+                    customMsgBox.ShowError(Texts.ErrorMessages.NewEmailIsDefault, Texts.Captions.NewEmaildIsNotAllowed, CustomMsgBox.MsgBoxIcon.Error);
+                    tbNewEmailAgain.Text = string.Empty;
                     return;
                 }
 
@@ -62,7 +70,7 @@ namespace emira.GUI
                 if (tbNewEmail.Text != tbNewEmailAgain.Text)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.NewEmailMismatched, Texts.Captions.MissmatchadEmails, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.NewEmailMismatched, Texts.Captions.MissmatchadEmails, CustomMsgBox.MsgBoxIcon.Error);
                     tbNewEmailAgain.Text = string.Empty;
                     return;
                 }
@@ -71,7 +79,7 @@ namespace emira.GUI
                 if (tbOldEmail.Text == tbNewEmail.Text)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.NewEmailSameAsOldEmail, Texts.Captions.NewEmaildIsNotAllowed, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.NewEmailSameAsOldEmail, Texts.Captions.NewEmaildIsNotAllowed, CustomMsgBox.MsgBoxIcon.Error);
                     tbNewEmail.Text = string.Empty;
                     tbNewEmailAgain.Text = string.Empty;
                     return;
@@ -82,7 +90,7 @@ namespace emira.GUI
                 if (!email.IsValid(tbNewEmail.Text))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.EmailIsNotValid, Texts.Captions.InvalidEmail, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.EmailIsNotValid, Texts.Captions.InvalidEmail, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -97,20 +105,20 @@ namespace emira.GUI
                     tbOldEmail.Text = string.Empty;
                     tbNewEmail.Text = string.Empty;
                     tbNewEmailAgain.Text = string.Empty;
+                    if (GeneralInfo.AnnoyingMessage)
+                        GeneralInfo.AnnoyingMessage = false;
                 }
                 else
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, CustomMsgBox.MsgBoxIcon.Error);
                     tbOldEmail.Text = string.Empty;
                 }
 
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);              
             }
         }
 

@@ -2,14 +2,12 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-using emira.HelperFunctions;
+using emira.Utilities;
 
 namespace emira.GUI
 {
     public partial class SettingsForm : Form
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        CustomMsgBox customMsgBox;
         bool bTogMove;
         int iValX;
         int iValY;
@@ -39,9 +37,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 

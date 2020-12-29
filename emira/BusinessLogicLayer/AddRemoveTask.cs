@@ -1,16 +1,12 @@
 ﻿using System;
 
 using emira.DataAccessLayer;
-using emira.HelperFunctions;
-using emira.GUI;
-using NLog;
+using emira.Utilities;
 
 namespace emira.BusinessLogicLayer
 {
     class AddRemoveTask
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        CustomMsgBox customMsgBox;
         DatabaseHandler DBHandler;
        
         public void SaveModification(string value, string groupID, string taskID)
@@ -33,9 +29,7 @@ namespace emira.BusinessLogicLayer
             }
             catch(Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }      
         }
 
@@ -48,9 +42,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 

@@ -4,13 +4,13 @@ using System.Drawing;
 
 using emira.BusinessLogicLayer;
 using emira.ValueObjects;
-using emira.HelperFunctions;
+using emira.Utilities;
 
 namespace emira.GUI
 {
     public partial class PersonalInformation : UserControl
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         Settings settings;
         Person person;
         CustomMsgBox customMsgBox;
@@ -41,9 +41,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
@@ -54,7 +52,7 @@ namespace emira.GUI
                 if (string.IsNullOrEmpty(person.Name))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.DataTableNames.Person + Texts.ErrorMessages.UserIDDoesNotExistOrTableIsEmpty, Texts.Captions.PersonalInformationError, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.ShowError(Texts.DataTableNames.Person + Texts.ErrorMessages.UserIDDoesNotExistOrTableIsEmpty, Texts.Captions.PersonalInformationError, CustomMsgBox.MsgBoxIcon.Error);
                     btnChangeData.Enabled = false;
                     return;
                 }
@@ -64,9 +62,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
