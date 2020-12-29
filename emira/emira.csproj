@@ -342,6 +342,7 @@
     <None Include="Resources\pdf_icon_white_32.png" />
     <Content Include="Resources\piechart_icon_white_100.png" />
     <None Include="Resources\pie_chart_icon_color_26.png" />
+    <None Include="Resources\question_icon_color_48.png" />
     <Content Include="Resources\restore_icon_white_26.png" />
     <Content Include="Resources\maximize_icon_white_26.png" />
     <None Include="Resources\save_icon_white_32.png" />

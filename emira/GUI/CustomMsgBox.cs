@@ -33,6 +33,9 @@ namespace emira.GUI
                 case MsgBoxIcon.Error:
                     MsgBox.pbIcon.BackgroundImage = Properties.Resources.error_icon_color_48;
                     break;
+                case MsgBoxIcon.Question:
+                    MsgBox.pbIcon.BackgroundImage = Properties.Resources.question_icon_color_48;
+                    break;
             }
 
             MsgBox.btnClose.Visible = true;
@@ -57,7 +60,7 @@ namespace emira.GUI
                 MsgBox.lMessage.Location = new Point(MsgBox.lMessage.Location.X, MsgBox.pbIcon.Location.Y + MsgBox.pbIcon.Height / 2);
             }
 
-            MsgBox.ShowDialog();
+            dlgResult = MsgBox.ShowDialog();
             return dlgResult;
         }
 
@@ -78,6 +81,9 @@ namespace emira.GUI
                     break;
                 case MsgBoxIcon.Error:
                     MsgBox.pbIcon.BackgroundImage = Properties.Resources.error_icon_color_48;
+                    break;
+                case MsgBoxIcon.Question:
+                    MsgBox.pbIcon.BackgroundImage = Properties.Resources.question_icon_color_48;
                     break;
             }
 
@@ -127,7 +133,7 @@ namespace emira.GUI
                 {
                     int diff = MsgBox.lMessage.Height - MsgBox.pbIcon.Height;
                     MsgBox.btnYes.Location = new Point((MsgBox.Width - MsgBox.btnYes.Width - MsgBox.btnNo.Width) / 3, MsgBox.btnYes.Location.Y + diff + 10);
-                    MsgBox.btnNo.Location = new Point(MsgBox.btnYes.Location.X + MsgBox.btnYes.Width, MsgBox.btnNo.Location.Y + diff + 10);
+                    MsgBox.btnNo.Location = new Point(MsgBox.btnYes.Location.X + MsgBox.btnYes.Width * 2, MsgBox.btnNo.Location.Y + diff + 10);
                     MsgBox.Size = new Size(msgBoxX, MsgBox.Height + diff);
                     MsgBox.lMessage.Location = new Point(MsgBox.lMessage.Location.X, MsgBox.pbIcon.Location.Y);
                 }
@@ -142,7 +148,7 @@ namespace emira.GUI
 
 
 
-            MsgBox.ShowDialog();
+            dlgResult = MsgBox.ShowDialog();
 
             return dlgResult;
         }

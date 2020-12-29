@@ -56,7 +56,7 @@ namespace emira.GUI
                 MyLogger.GetInstance().Error(error.Message);
             }
         }
-
+    
         private void TaskManager_Load(object sender, EventArgs e)
         {
             try
@@ -95,7 +95,26 @@ namespace emira.GUI
                 int _ID = 1;
 
                 // If the user choose the parent node then it returns
-                if (e.Node.Parent == null) return;
+                if (e.Node.Parent == null)
+                {
+                    int _index = -1;
+                    // Get the task ID as int
+                    if (Int32.TryParse(e.Node.Text.Remove(e.Node.Text.IndexOf(' ')), out _index))
+                    {
+                        cbGroupName.SelectedIndex = _index - 1;
+                    }
+                    else
+                    {
+                        MyLogger.GetInstance().Error("TryParse throws false, the value of the taskID was: " + _index);
+                    }
+
+                    UpdateTaskID();
+
+                    // Clean up the task name
+                    tbTaskName.Text = string.Empty;
+
+                    return;
+                }
 
                 // If the user choose the reserved task then it returns
                 if (e.Node.Text.Contains("0_")) return;
@@ -348,6 +367,13 @@ namespace emira.GUI
                 // User can not modify the combobox
                 cbGroupName.Enabled = false;
 
+                // Collect all elements of the group combobox
+                List<string> groupNamesBefore = new List<string>();
+                foreach (string item in cbGroupName.Items)
+                {
+                    groupNamesBefore.Add(item);
+                }
+
                 AddOrUpdateGroupForm _addOrUpdateGroupPage = new AddOrUpdateGroupForm();
                 _addOrUpdateGroupPage.ShowDialog();
 
@@ -357,12 +383,34 @@ namespace emira.GUI
                 // Update the content of the combobox
                 UpdateGroups();
 
+                // Collect all elements of the group combobox
+                List<string> groupNamesAfter = new List<string>();
+                foreach (string item in cbGroupName.Items)
+                {
+                    groupNamesAfter.Add(item);
+                }
+
+                // Select the added group name
+                IEnumerable<string> diffQuery = groupNamesAfter.Where(x => !groupNamesBefore.Contains(x)).ToList();
+                int index = 0;
+                if (Int32.TryParse(diffQuery.First().Split(' ')[0], out index))
+                {
+                    cbGroupName.SelectedIndex = index - 1;
+                }
+                else
+                {
+                    MyLogger.GetInstance().Error("The TryParse throws a false, the value was this: " + diffQuery.First().Split(' ')[0]);
+                }
+
+                // Update the task ID
+                UpdateTaskID();
+
                 // Update the content of the tree view
                 UpdateTreeView();
             }
             catch (Exception error)
             {
-                MyLogger.GetInstance().Error(error.Message);
+                MyLogger.GetInstance().Error(error.Message + ", " + error.TargetSite);
             }
         }
 
@@ -384,6 +432,13 @@ namespace emira.GUI
                 // User can not modify the combobox
                 cbGroupName.Enabled = false;
 
+                // Collect all elements of the group combobox
+                List<string> groupNamesBefore = new List<string>();
+                foreach (string item in cbGroupName.Items)
+                {
+                    groupNamesBefore.Add(item);
+                }
+
                 cbGroupValue = cbGroupName.SelectedItem.ToString();
 
                 AddOrUpdateGroupForm _addOrUpdateGroupPage = new AddOrUpdateGroupForm();
@@ -394,6 +449,28 @@ namespace emira.GUI
 
                 // Update the content of the combobox
                 UpdateGroups();
+
+                // Collect all elements of the group combobox
+                List<string> groupNamesAfter = new List<string>();
+                foreach (string item in cbGroupName.Items)
+                {
+                    groupNamesAfter.Add(item);
+                }
+
+                // Select the added group name
+                IEnumerable<string> diffQuery = groupNamesAfter.Where(x => !groupNamesBefore.Contains(x)).ToList();
+                int index = 0;
+                if (Int32.TryParse(diffQuery.First().Split(' ')[0], out index))
+                {
+                    cbGroupName.SelectedIndex = index - 1;
+                }
+                else
+                {
+                    MyLogger.GetInstance().Error("The TryParse throws a false, the value was this: " + diffQuery.First().Split(' ')[0]);
+                }
+
+                // Update the task ID
+                UpdateTaskID();
 
                 // Update the content of the tree view
                 UpdateTreeView();
@@ -467,6 +544,8 @@ namespace emira.GUI
                 // Update the content of the combobox
                 UpdateGroups();
 
+                // Update task ID
+                UpdateTaskID();
 
                 // Update the content of the tree view
                 UpdateTreeView();
