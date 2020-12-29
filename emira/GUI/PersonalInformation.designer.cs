@@ -80,9 +80,9 @@
             this.lPositionFromDatabase.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lPositionFromDatabase.Location = new System.Drawing.Point(237, 176);
             this.lPositionFromDatabase.Name = "lPositionFromDatabase";
-            this.lPositionFromDatabase.Size = new System.Drawing.Size(92, 25);
+            this.lPositionFromDatabase.Size = new System.Drawing.Size(100, 25);
             this.lPositionFromDatabase.TabIndex = 4;
-            this.lPositionFromDatabase.Text = "Unknown";
+            this.lPositionFromDatabase.Text = "Ismeretlen";
             // 
             // lCostCenterFromDatabase
             // 
@@ -90,9 +90,9 @@
             this.lCostCenterFromDatabase.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lCostCenterFromDatabase.Location = new System.Drawing.Point(237, 132);
             this.lCostCenterFromDatabase.Name = "lCostCenterFromDatabase";
-            this.lCostCenterFromDatabase.Size = new System.Drawing.Size(92, 25);
+            this.lCostCenterFromDatabase.Size = new System.Drawing.Size(100, 25);
             this.lCostCenterFromDatabase.TabIndex = 3;
-            this.lCostCenterFromDatabase.Text = "Unknown";
+            this.lCostCenterFromDatabase.Text = "Ismeretlen";
             // 
             // lRegisterNumber
             // 
@@ -100,9 +100,9 @@
             this.lRegisterNumber.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lRegisterNumber.Location = new System.Drawing.Point(3, 44);
             this.lRegisterNumber.Name = "lRegisterNumber";
-            this.lRegisterNumber.Size = new System.Drawing.Size(150, 25);
+            this.lRegisterNumber.Size = new System.Drawing.Size(98, 25);
             this.lRegisterNumber.TabIndex = 6;
-            this.lRegisterNumber.Text = "Register number";
+            this.lRegisterNumber.Text = "Törzsszám";
             // 
             // lName
             // 
@@ -110,9 +110,9 @@
             this.lName.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lName.Location = new System.Drawing.Point(3, 0);
             this.lName.Name = "lName";
-            this.lName.Size = new System.Drawing.Size(62, 25);
+            this.lName.Size = new System.Drawing.Size(45, 25);
             this.lName.TabIndex = 5;
-            this.lName.Text = "Name";
+            this.lName.Text = "Név";
             // 
             // lCompany
             // 
@@ -120,9 +120,9 @@
             this.lCompany.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lCompany.Location = new System.Drawing.Point(3, 88);
             this.lCompany.Name = "lCompany";
-            this.lCompany.Size = new System.Drawing.Size(92, 25);
+            this.lCompany.Size = new System.Drawing.Size(80, 25);
             this.lCompany.TabIndex = 7;
-            this.lCompany.Text = "Company";
+            this.lCompany.Text = "Cég név";
             // 
             // lCostCenter
             // 
@@ -130,9 +130,9 @@
             this.lCostCenter.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lCostCenter.Location = new System.Drawing.Point(3, 132);
             this.lCostCenter.Name = "lCostCenter";
-            this.lCostCenter.Size = new System.Drawing.Size(107, 25);
+            this.lCostCenter.Size = new System.Drawing.Size(109, 25);
             this.lCostCenter.TabIndex = 8;
-            this.lCostCenter.Text = "Cost center";
+            this.lCostCenter.Text = "Költséghely";
             // 
             // lPosition
             // 
@@ -140,9 +140,9 @@
             this.lPosition.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lPosition.Location = new System.Drawing.Point(3, 176);
             this.lPosition.Name = "lPosition";
-            this.lPosition.Size = new System.Drawing.Size(79, 25);
+            this.lPosition.Size = new System.Drawing.Size(72, 25);
             this.lPosition.TabIndex = 9;
-            this.lPosition.Text = "Position";
+            this.lPosition.Text = "Pozíció";
             // 
             // lNameFromDatabase
             // 
@@ -154,7 +154,7 @@
             this.lNameFromDatabase.Name = "lNameFromDatabase";
             this.lNameFromDatabase.Size = new System.Drawing.Size(590, 25);
             this.lNameFromDatabase.TabIndex = 0;
-            this.lNameFromDatabase.Text = "Unknown";
+            this.lNameFromDatabase.Text = "Ismeretlen";
             // 
             // lRegisterNumberFromDatabase
             // 
@@ -162,9 +162,9 @@
             this.lRegisterNumberFromDatabase.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lRegisterNumberFromDatabase.Location = new System.Drawing.Point(237, 44);
             this.lRegisterNumberFromDatabase.Name = "lRegisterNumberFromDatabase";
-            this.lRegisterNumberFromDatabase.Size = new System.Drawing.Size(92, 25);
+            this.lRegisterNumberFromDatabase.Size = new System.Drawing.Size(100, 25);
             this.lRegisterNumberFromDatabase.TabIndex = 1;
-            this.lRegisterNumberFromDatabase.Text = "Unknown";
+            this.lRegisterNumberFromDatabase.Text = "Ismeretlen";
             // 
             // lCompanyFromDatabase
             // 
@@ -172,9 +172,9 @@
             this.lCompanyFromDatabase.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lCompanyFromDatabase.Location = new System.Drawing.Point(237, 88);
             this.lCompanyFromDatabase.Name = "lCompanyFromDatabase";
-            this.lCompanyFromDatabase.Size = new System.Drawing.Size(92, 25);
+            this.lCompanyFromDatabase.Size = new System.Drawing.Size(100, 25);
             this.lCompanyFromDatabase.TabIndex = 2;
-            this.lCompanyFromDatabase.Text = "Unknown";
+            this.lCompanyFromDatabase.Text = "Ismeretlen";
             // 
             // lPersonalInformation
             // 
@@ -182,9 +182,9 @@
             this.lPersonalInformation.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lPersonalInformation.Location = new System.Drawing.Point(100, 68);
             this.lPersonalInformation.Name = "lPersonalInformation";
-            this.lPersonalInformation.Size = new System.Drawing.Size(312, 37);
+            this.lPersonalInformation.Size = new System.Drawing.Size(344, 37);
             this.lPersonalInformation.TabIndex = 2;
-            this.lPersonalInformation.Text = "Personal information";
+            this.lPersonalInformation.Text = "Személyes információk";
             // 
             // btnChangeData
             // 
@@ -200,7 +200,7 @@
             this.btnChangeData.Name = "btnChangeData";
             this.btnChangeData.Size = new System.Drawing.Size(200, 50);
             this.btnChangeData.TabIndex = 0;
-            this.btnChangeData.Text = "Change data";
+            this.btnChangeData.Text = "Módosítás";
             this.btnChangeData.UseVisualStyleBackColor = false;
             this.btnChangeData.Click += new System.EventHandler(this.btnChangeData_Click);
             // 

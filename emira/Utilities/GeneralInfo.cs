@@ -15,8 +15,10 @@ namespace emira.HelperFunctions
     public static class StatisticsSettingsPersi
     {
         public static string Title { get; set; }
+        public static FontFamily CommonFont { get; set; }
+        public static int CommonSize { get; set; }
         public static int ColorIndex { get; set; }
-        public static int AxisFont { get; set; }
+        public static FontFamily AxisFont { get; set; }
         public static int AxisSize { get; set; }
         public static string AxisXTitle { get; set; }
         public static string AxisYTitle { get; set; }

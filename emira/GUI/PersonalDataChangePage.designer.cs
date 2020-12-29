@@ -141,7 +141,7 @@
             this.gbPersonalInformation.Size = new System.Drawing.Size(610, 115);
             this.gbPersonalInformation.TabIndex = 1;
             this.gbPersonalInformation.TabStop = false;
-            this.gbPersonalInformation.Text = "Personal Information";
+            this.gbPersonalInformation.Text = "Személyes információk";
             // 
             // rbFemale
             // 
@@ -149,10 +149,10 @@
             this.rbFemale.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbFemale.Location = new System.Drawing.Point(222, 77);
             this.rbFemale.Name = "rbFemale";
-            this.rbFemale.Size = new System.Drawing.Size(75, 24);
+            this.rbFemale.Size = new System.Drawing.Size(47, 24);
             this.rbFemale.TabIndex = 9;
             this.rbFemale.TabStop = true;
-            this.rbFemale.Text = "Female";
+            this.rbFemale.Text = "Nő";
             this.rbFemale.UseVisualStyleBackColor = true;
             this.rbFemale.CheckedChanged += new System.EventHandler(this.rbFemale_CheckedChanged);
             // 
@@ -162,10 +162,10 @@
             this.rbMale.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbMale.Location = new System.Drawing.Point(130, 77);
             this.rbMale.Name = "rbMale";
-            this.rbMale.Size = new System.Drawing.Size(60, 24);
+            this.rbMale.Size = new System.Drawing.Size(56, 24);
             this.rbMale.TabIndex = 8;
             this.rbMale.TabStop = true;
-            this.rbMale.Text = "Male";
+            this.rbMale.Text = "Férfi";
             this.rbMale.UseVisualStyleBackColor = true;
             this.rbMale.CheckedChanged += new System.EventHandler(this.rbMale_CheckedChanged);
             // 
@@ -173,11 +173,11 @@
             // 
             this.lGender.AutoSize = true;
             this.lGender.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lGender.Location = new System.Drawing.Point(27, 81);
+            this.lGender.Location = new System.Drawing.Point(27, 79);
             this.lGender.Name = "lGender";
-            this.lGender.Size = new System.Drawing.Size(60, 20);
+            this.lGender.Size = new System.Drawing.Size(44, 20);
             this.lGender.TabIndex = 7;
-            this.lGender.Text = "Gender:";
+            this.lGender.Text = "Nem:";
             // 
             // tbName
             // 
@@ -195,9 +195,9 @@
             this.lName.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lName.Location = new System.Drawing.Point(27, 37);
             this.lName.Name = "lName";
-            this.lName.Size = new System.Drawing.Size(52, 20);
+            this.lName.Size = new System.Drawing.Size(38, 20);
             this.lName.TabIndex = 3;
-            this.lName.Text = "Name:";
+            this.lName.Text = "Név:";
             // 
             // gbCompanyRelatedInformation
             // 
@@ -217,7 +217,7 @@
             this.gbCompanyRelatedInformation.Size = new System.Drawing.Size(610, 230);
             this.gbCompanyRelatedInformation.TabIndex = 2;
             this.gbCompanyRelatedInformation.TabStop = false;
-            this.gbCompanyRelatedInformation.Text = "Company Related Information";
+            this.gbCompanyRelatedInformation.Text = "Céggel kapcsolatos információk";
             // 
             // nupWorkingHours
             // 
@@ -253,11 +253,11 @@
             // 
             this.lWorkingHours.AutoSize = true;
             this.lWorkingHours.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lWorkingHours.Location = new System.Drawing.Point(27, 181);
+            this.lWorkingHours.Location = new System.Drawing.Point(27, 183);
             this.lWorkingHours.Name = "lWorkingHours";
-            this.lWorkingHours.Size = new System.Drawing.Size(107, 20);
+            this.lWorkingHours.Size = new System.Drawing.Size(78, 20);
             this.lWorkingHours.TabIndex = 18;
-            this.lWorkingHours.Text = "Working hours:";
+            this.lWorkingHours.Text = "Munkaidő:";
             // 
             // tbRegisterNumber
             // 
@@ -275,9 +275,9 @@
             this.lRegisterNumber.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lRegisterNumber.Location = new System.Drawing.Point(27, 41);
             this.lRegisterNumber.Name = "lRegisterNumber";
-            this.lRegisterNumber.Size = new System.Drawing.Size(121, 20);
+            this.lRegisterNumber.Size = new System.Drawing.Size(80, 20);
             this.lRegisterNumber.TabIndex = 15;
-            this.lRegisterNumber.Text = "Register number:";
+            this.lRegisterNumber.Text = "Tőrzsszám:";
             // 
             // tbPosition
             // 
@@ -315,9 +315,9 @@
             this.lPosition.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lPosition.Location = new System.Drawing.Point(27, 146);
             this.lPosition.Name = "lPosition";
-            this.lPosition.Size = new System.Drawing.Size(64, 20);
+            this.lPosition.Size = new System.Drawing.Size(59, 20);
             this.lPosition.TabIndex = 12;
-            this.lPosition.Text = "Position:";
+            this.lPosition.Text = "Pozíció:";
             // 
             // lCostCenter
             // 
@@ -325,9 +325,9 @@
             this.lCostCenter.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lCostCenter.Location = new System.Drawing.Point(27, 111);
             this.lCostCenter.Name = "lCostCenter";
-            this.lCostCenter.Size = new System.Drawing.Size(86, 20);
+            this.lCostCenter.Size = new System.Drawing.Size(89, 20);
             this.lCostCenter.TabIndex = 11;
-            this.lCostCenter.Text = "Cost center:";
+            this.lCostCenter.Text = "Költséghely:";
             // 
             // lCompany
             // 
@@ -335,9 +335,9 @@
             this.lCompany.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lCompany.Location = new System.Drawing.Point(27, 76);
             this.lCompany.Name = "lCompany";
-            this.lCompany.Size = new System.Drawing.Size(75, 20);
+            this.lCompany.Size = new System.Drawing.Size(73, 20);
             this.lCompany.TabIndex = 10;
-            this.lCompany.Text = "Company:";
+            this.lCompany.Text = "Cég neve:";
             // 
             // gbHolidayRelatedInformation
             // 
@@ -370,12 +370,12 @@
             this.gbHolidayRelatedInformation.Size = new System.Drawing.Size(610, 450);
             this.gbHolidayRelatedInformation.TabIndex = 2;
             this.gbHolidayRelatedInformation.TabStop = false;
-            this.gbHolidayRelatedInformation.Text = "Holiday Related Information";
+            this.gbHolidayRelatedInformation.Text = "Szabadsággal kapcsolatos információk";
             // 
             // nupExtraHoliday
             // 
             this.nupExtraHoliday.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupExtraHoliday.Location = new System.Drawing.Point(357, 393);
+            this.nupExtraHoliday.Location = new System.Drawing.Point(355, 400);
             this.nupExtraHoliday.Maximum = new decimal(new int[] {
             250,
             0,
@@ -391,16 +391,16 @@
             // 
             this.lExtraHoliday.AutoSize = true;
             this.lExtraHoliday.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lExtraHoliday.Location = new System.Drawing.Point(27, 395);
+            this.lExtraHoliday.Location = new System.Drawing.Point(37, 404);
             this.lExtraHoliday.Name = "lExtraHoliday";
-            this.lExtraHoliday.Size = new System.Drawing.Size(216, 20);
+            this.lExtraHoliday.Size = new System.Drawing.Size(196, 20);
             this.lExtraHoliday.TabIndex = 45;
-            this.lExtraHoliday.Text = "Do you have any extra holiday?";
+            this.lExtraHoliday.Text = "Mennyi pótszabadsága van?";
             // 
             // nupHolidaysLeft
             // 
             this.nupHolidaysLeft.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupHolidaysLeft.Location = new System.Drawing.Point(357, 348);
+            this.nupHolidaysLeft.Location = new System.Drawing.Point(355, 355);
             this.nupHolidaysLeft.Maximum = new decimal(new int[] {
             250,
             0,
@@ -417,43 +417,43 @@
             // 
             this.lHolidaysLeft.AutoSize = true;
             this.lHolidaysLeft.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lHolidaysLeft.Location = new System.Drawing.Point(27, 350);
+            this.lHolidaysLeft.Location = new System.Drawing.Point(37, 359);
             this.lHolidaysLeft.Name = "lHolidaysLeft";
-            this.lHolidaysLeft.Size = new System.Drawing.Size(303, 20);
+            this.lHolidaysLeft.Size = new System.Drawing.Size(245, 20);
             this.lHolidaysLeft.TabIndex = 43;
-            this.lHolidaysLeft.Text = "How many holidays were left from last year?";
+            this.lHolidaysLeft.Text = "Hány szabadsága maradt tavalyról?";
             this.lHolidaysLeft.Visible = false;
             // 
             // cbYesHealthDamage
             // 
             this.cbYesHealthDamage.AutoSize = true;
-            this.cbYesHealthDamage.Location = new System.Drawing.Point(449, 305);
+            this.cbYesHealthDamage.Location = new System.Drawing.Point(447, 312);
             this.cbYesHealthDamage.Name = "cbYesHealthDamage";
-            this.cbYesHealthDamage.Size = new System.Drawing.Size(52, 22);
+            this.cbYesHealthDamage.Size = new System.Drawing.Size(54, 22);
             this.cbYesHealthDamage.TabIndex = 42;
-            this.cbYesHealthDamage.Text = "Yes";
+            this.cbYesHealthDamage.Text = "Igen";
             this.cbYesHealthDamage.UseVisualStyleBackColor = true;
             this.cbYesHealthDamage.CheckedChanged += new System.EventHandler(this.cbYesHealthDamage_CheckedChanged);
             // 
             // cbNoHealthDamage
             // 
             this.cbNoHealthDamage.AutoSize = true;
-            this.cbNoHealthDamage.Location = new System.Drawing.Point(357, 305);
+            this.cbNoHealthDamage.Location = new System.Drawing.Point(355, 312);
             this.cbNoHealthDamage.Name = "cbNoHealthDamage";
-            this.cbNoHealthDamage.Size = new System.Drawing.Size(47, 22);
+            this.cbNoHealthDamage.Size = new System.Drawing.Size(59, 22);
             this.cbNoHealthDamage.TabIndex = 41;
-            this.cbNoHealthDamage.Text = "No";
+            this.cbNoHealthDamage.Text = "Nem";
             this.cbNoHealthDamage.UseVisualStyleBackColor = true;
             this.cbNoHealthDamage.CheckedChanged += new System.EventHandler(this.cbNoHealthDamage_CheckedChanged);
             // 
             // cbYesDisabledChild
             // 
             this.cbYesDisabledChild.AutoSize = true;
-            this.cbYesDisabledChild.Location = new System.Drawing.Point(449, 170);
+            this.cbYesDisabledChild.Location = new System.Drawing.Point(444, 217);
             this.cbYesDisabledChild.Name = "cbYesDisabledChild";
-            this.cbYesDisabledChild.Size = new System.Drawing.Size(52, 22);
+            this.cbYesDisabledChild.Size = new System.Drawing.Size(54, 22);
             this.cbYesDisabledChild.TabIndex = 40;
-            this.cbYesDisabledChild.Text = "Yes";
+            this.cbYesDisabledChild.Text = "Igen";
             this.cbYesDisabledChild.UseVisualStyleBackColor = true;
             this.cbYesDisabledChild.Visible = false;
             this.cbYesDisabledChild.CheckedChanged += new System.EventHandler(this.cbYesDisabledChild_CheckedChanged);
@@ -461,11 +461,11 @@
             // cbNoDisabledChild
             // 
             this.cbNoDisabledChild.AutoSize = true;
-            this.cbNoDisabledChild.Location = new System.Drawing.Point(357, 170);
+            this.cbNoDisabledChild.Location = new System.Drawing.Point(352, 217);
             this.cbNoDisabledChild.Name = "cbNoDisabledChild";
-            this.cbNoDisabledChild.Size = new System.Drawing.Size(47, 22);
+            this.cbNoDisabledChild.Size = new System.Drawing.Size(59, 22);
             this.cbNoDisabledChild.TabIndex = 39;
-            this.cbNoDisabledChild.Text = "No";
+            this.cbNoDisabledChild.Text = "Nem";
             this.cbNoDisabledChild.UseVisualStyleBackColor = true;
             this.cbNoDisabledChild.Visible = false;
             this.cbNoDisabledChild.CheckedChanged += new System.EventHandler(this.cbNoDisabledChild_CheckedChanged);
@@ -473,22 +473,22 @@
             // cbYesChild
             // 
             this.cbYesChild.AutoSize = true;
-            this.cbYesChild.Location = new System.Drawing.Point(449, 80);
+            this.cbYesChild.Location = new System.Drawing.Point(447, 87);
             this.cbYesChild.Name = "cbYesChild";
-            this.cbYesChild.Size = new System.Drawing.Size(52, 22);
+            this.cbYesChild.Size = new System.Drawing.Size(54, 22);
             this.cbYesChild.TabIndex = 38;
-            this.cbYesChild.Text = "Yes";
+            this.cbYesChild.Text = "Igen";
             this.cbYesChild.UseVisualStyleBackColor = true;
             this.cbYesChild.CheckedChanged += new System.EventHandler(this.cbYesChild_CheckedChanged);
             // 
             // cbNoChild
             // 
             this.cbNoChild.AutoSize = true;
-            this.cbNoChild.Location = new System.Drawing.Point(357, 80);
+            this.cbNoChild.Location = new System.Drawing.Point(355, 87);
             this.cbNoChild.Name = "cbNoChild";
-            this.cbNoChild.Size = new System.Drawing.Size(47, 22);
+            this.cbNoChild.Size = new System.Drawing.Size(59, 22);
             this.cbNoChild.TabIndex = 37;
-            this.cbNoChild.Text = "No";
+            this.cbNoChild.Text = "Nem";
             this.cbNoChild.UseVisualStyleBackColor = true;
             this.cbNoChild.CheckedChanged += new System.EventHandler(this.cbNoChild_CheckedChanged);
             // 
@@ -496,37 +496,37 @@
             // 
             this.lHealthDamage.AutoSize = true;
             this.lHealthDamage.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lHealthDamage.Location = new System.Drawing.Point(27, 305);
+            this.lHealthDamage.Location = new System.Drawing.Point(37, 314);
             this.lHealthDamage.Name = "lHealthDamage";
-            this.lHealthDamage.Size = new System.Drawing.Size(235, 20);
+            this.lHealthDamage.Size = new System.Drawing.Size(233, 20);
             this.lHealthDamage.TabIndex = 34;
-            this.lHealthDamage.Text = "Do you have 50% health damage?";
+            this.lHealthDamage.Text = "Van 50%-os egészségkárosodása?";
             // 
             // lDoYouHaveDiasabledChild
             // 
             this.lDoYouHaveDiasabledChild.AutoSize = true;
             this.lDoYouHaveDiasabledChild.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lDoYouHaveDiasabledChild.Location = new System.Drawing.Point(27, 170);
+            this.lDoYouHaveDiasabledChild.Location = new System.Drawing.Point(37, 219);
             this.lDoYouHaveDiasabledChild.Name = "lDoYouHaveDiasabledChild";
-            this.lDoYouHaveDiasabledChild.Size = new System.Drawing.Size(196, 20);
+            this.lDoYouHaveDiasabledChild.Size = new System.Drawing.Size(207, 20);
             this.lDoYouHaveDiasabledChild.TabIndex = 31;
-            this.lDoYouHaveDiasabledChild.Text = "Do you have disabled child?";
+            this.lDoYouHaveDiasabledChild.Text = "Van közöttük fogyatékkal élő?";
             this.lDoYouHaveDiasabledChild.Visible = false;
             // 
             // lDoYouHaveChild
             // 
             this.lDoYouHaveChild.AutoSize = true;
             this.lDoYouHaveChild.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lDoYouHaveChild.Location = new System.Drawing.Point(27, 80);
+            this.lDoYouHaveChild.Location = new System.Drawing.Point(37, 89);
             this.lDoYouHaveChild.Name = "lDoYouHaveChild";
-            this.lDoYouHaveChild.Size = new System.Drawing.Size(147, 20);
+            this.lDoYouHaveChild.Size = new System.Drawing.Size(136, 20);
             this.lDoYouHaveChild.TabIndex = 28;
-            this.lDoYouHaveChild.Text = "Do you have a child?";
+            this.lDoYouHaveChild.Text = "Vannak gyermekei?";
             // 
             // nupNumberOfNewBornBabies
             // 
             this.nupNumberOfNewBornBabies.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupNumberOfNewBornBabies.Location = new System.Drawing.Point(357, 258);
+            this.nupNumberOfNewBornBabies.Location = new System.Drawing.Point(355, 175);
             this.nupNumberOfNewBornBabies.Maximum = new decimal(new int[] {
             10,
             0,
@@ -543,17 +543,17 @@
             // 
             this.lNumberOfNewBornBabies.AutoSize = true;
             this.lNumberOfNewBornBabies.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lNumberOfNewBornBabies.Location = new System.Drawing.Point(27, 260);
+            this.lNumberOfNewBornBabies.Location = new System.Drawing.Point(37, 179);
             this.lNumberOfNewBornBabies.Name = "lNumberOfNewBornBabies";
-            this.lNumberOfNewBornBabies.Size = new System.Drawing.Size(198, 20);
+            this.lNumberOfNewBornBabies.Size = new System.Drawing.Size(194, 20);
             this.lNumberOfNewBornBabies.TabIndex = 26;
-            this.lNumberOfNewBornBabies.Text = "Number of new born babies:";
+            this.lNumberOfNewBornBabies.Text = "Közülük hányan újszülöttek?";
             this.lNumberOfNewBornBabies.Visible = false;
             // 
             // nupNumberOfDisabledChildren
             // 
             this.nupNumberOfDisabledChildren.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupNumberOfDisabledChildren.Location = new System.Drawing.Point(357, 213);
+            this.nupNumberOfDisabledChildren.Location = new System.Drawing.Point(352, 260);
             this.nupNumberOfDisabledChildren.Maximum = new decimal(new int[] {
             30,
             0,
@@ -569,7 +569,7 @@
             // nupNumberOfChildren
             // 
             this.nupNumberOfChildren.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupNumberOfChildren.Location = new System.Drawing.Point(357, 123);
+            this.nupNumberOfChildren.Location = new System.Drawing.Point(355, 130);
             this.nupNumberOfChildren.Maximum = new decimal(new int[] {
             30,
             0,
@@ -587,7 +587,7 @@
             this.dtpDateOfStart.CustomFormat = "yyyy-MM-dd";
             this.dtpDateOfStart.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.dtpDateOfStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpDateOfStart.Location = new System.Drawing.Point(454, 32);
+            this.dtpDateOfStart.Location = new System.Drawing.Point(447, 34);
             this.dtpDateOfStart.MaxDate = new System.DateTime(2219, 12, 31, 0, 0, 0, 0);
             this.dtpDateOfStart.MinDate = new System.DateTime(1909, 1, 1, 0, 0, 0, 0);
             this.dtpDateOfStart.Name = "dtpDateOfStart";
@@ -601,7 +601,7 @@
             this.dtpDateOfBirth.CustomFormat = "yyyy-MM-dd";
             this.dtpDateOfBirth.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.dtpDateOfBirth.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpDateOfBirth.Location = new System.Drawing.Point(130, 32);
+            this.dtpDateOfBirth.Location = new System.Drawing.Point(162, 34);
             this.dtpDateOfBirth.MaxDate = new System.DateTime(2219, 12, 31, 0, 0, 0, 0);
             this.dtpDateOfBirth.MinDate = new System.DateTime(1909, 1, 1, 0, 0, 0, 0);
             this.dtpDateOfBirth.Name = "dtpDateOfBirth";
@@ -614,43 +614,43 @@
             // 
             this.lNumberOfDisabledChildren.AutoSize = true;
             this.lNumberOfDisabledChildren.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lNumberOfDisabledChildren.Location = new System.Drawing.Point(27, 215);
+            this.lNumberOfDisabledChildren.Location = new System.Drawing.Point(37, 262);
             this.lNumberOfDisabledChildren.Name = "lNumberOfDisabledChildren";
-            this.lNumberOfDisabledChildren.Size = new System.Drawing.Size(264, 20);
+            this.lNumberOfDisabledChildren.Size = new System.Drawing.Size(257, 20);
             this.lNumberOfDisabledChildren.TabIndex = 18;
-            this.lNumberOfDisabledChildren.Text = "Number of disabled children under 16:";
+            this.lNumberOfDisabledChildren.Text = "Közülük hányan 16 évnél fiatalabbak?";
             this.lNumberOfDisabledChildren.Visible = false;
             // 
             // lNumberOfChildren
             // 
             this.lNumberOfChildren.AutoSize = true;
             this.lNumberOfChildren.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lNumberOfChildren.Location = new System.Drawing.Point(27, 125);
+            this.lNumberOfChildren.Location = new System.Drawing.Point(37, 134);
             this.lNumberOfChildren.Name = "lNumberOfChildren";
-            this.lNumberOfChildren.Size = new System.Drawing.Size(203, 20);
+            this.lNumberOfChildren.Size = new System.Drawing.Size(257, 20);
             this.lNumberOfChildren.TabIndex = 17;
-            this.lNumberOfChildren.Text = "Number of children under 16:";
+            this.lNumberOfChildren.Text = "Közülük hányan 16 évnél fiatalabbak?";
             this.lNumberOfChildren.Visible = false;
             // 
             // lDateOfStart
             // 
             this.lDateOfStart.AutoSize = true;
             this.lDateOfStart.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lDateOfStart.Location = new System.Drawing.Point(353, 37);
+            this.lDateOfStart.Location = new System.Drawing.Point(330, 39);
             this.lDateOfStart.Name = "lDateOfStart";
-            this.lDateOfStart.Size = new System.Drawing.Size(95, 20);
+            this.lDateOfStart.Size = new System.Drawing.Size(114, 20);
             this.lDateOfStart.TabIndex = 16;
-            this.lDateOfStart.Text = "Date of start:";
+            this.lDateOfStart.Text = "Kezdés dátuma:";
             // 
             // lDateOfBirth
             // 
             this.lDateOfBirth.AutoSize = true;
             this.lDateOfBirth.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lDateOfBirth.Location = new System.Drawing.Point(27, 35);
+            this.lDateOfBirth.Location = new System.Drawing.Point(37, 39);
             this.lDateOfBirth.Name = "lDateOfBirth";
-            this.lDateOfBirth.Size = new System.Drawing.Size(97, 20);
+            this.lDateOfBirth.Size = new System.Drawing.Size(117, 20);
             this.lDateOfBirth.TabIndex = 15;
-            this.lDateOfBirth.Text = "Date of birth:";
+            this.lDateOfBirth.Text = "Születési dátum:";
             // 
             // btnSave
             // 
@@ -666,7 +666,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(145, 40);
             this.btnSave.TabIndex = 3;
-            this.btnSave.Text = "Save";
+            this.btnSave.Text = "Mentés";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -684,7 +684,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(145, 40);
             this.btnCancel.TabIndex = 4;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Text = "Mégse";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 

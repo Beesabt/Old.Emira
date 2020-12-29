@@ -11,12 +11,12 @@ using System.Xml.Schema;
 using emira.BusinessLogicLayer;
 using emira.HelperFunctions;
 using NLog;
+using emira.Utilities;
 
 namespace emira.GUI
 {
     public partial class TaskManager : UserControl
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         CustomMsgBox customMsgBox;
         DataTable dataTable;
         TaskModification taskModification;
@@ -30,6 +30,11 @@ namespace emira.GUI
         public TaskManager()
         {
             InitializeComponent();
+        }
+
+        private void cbGroupName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
         }
 
         private void UpdateGroups()
@@ -55,7 +60,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
+                MyLogger.GetInstance().Error(error.Message);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
@@ -90,7 +95,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
+                MyLogger.GetInstance().Error(error.Message);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
@@ -151,7 +156,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
+                MyLogger.GetInstance().Error(error.Message);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
@@ -309,7 +314,7 @@ namespace emira.GUI
 
             catch (Exception error)
             {
-                Logger.Error(error);
+                MyLogger.GetInstance().Error(error.Message);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
@@ -335,7 +340,7 @@ namespace emira.GUI
                     }
                     catch (Exception error)
                     {
-                        Logger.Error(error);
+                        MyLogger.GetInstance().Error(error.Message);
                         customMsgBox = new CustomMsgBox();
                         customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                         return;
@@ -344,7 +349,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
+                MyLogger.GetInstance().Error(error.Message);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
@@ -374,7 +379,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
+                MyLogger.GetInstance().Error(error.Message);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
@@ -391,7 +396,7 @@ namespace emira.GUI
                 if (string.IsNullOrEmpty(cbGroupName.Text))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.ComboboxIsEmptyForModify, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.Show(Texts.ErrorMessages.ComboboxIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                     return;
                 }
 
@@ -414,7 +419,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
+                MyLogger.GetInstance().Error(error.Message);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
@@ -431,7 +436,7 @@ namespace emira.GUI
                 if (string.IsNullOrEmpty(cbGroupName.Text))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.ComboboxIsEmptyForDelete, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.Show(Texts.ErrorMessages.ComboboxIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                     return;
                 }
 
@@ -474,6 +479,9 @@ namespace emira.GUI
                 // Enable the combobox
                 cbGroupName.Enabled = true;
 
+                // Delete the content of the combobox
+                cbGroupName.Text = string.Empty;
+
 
                 // Update the content of the combobox
                 UpdateGroups();
@@ -484,7 +492,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
+                MyLogger.GetInstance().Error(error.Message);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
@@ -503,7 +511,7 @@ namespace emira.GUI
                 if (string.IsNullOrEmpty(cbGroupName.Text))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show(Texts.ErrorMessages.ComboboxIsEmptyForAdd, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.Show(Texts.ErrorMessages.ComboboxIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                     return;
                 }
 
@@ -553,7 +561,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
+                MyLogger.GetInstance().Error(error.Message);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
@@ -623,7 +631,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
+                MyLogger.GetInstance().Error(error.Message);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
@@ -691,7 +699,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
+                MyLogger.GetInstance().Error(error.Message);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
@@ -762,7 +770,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
+                MyLogger.GetInstance().Error(error.Message);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
@@ -788,7 +796,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
+                MyLogger.GetInstance().Error(error.Message);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
@@ -806,7 +814,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
+                MyLogger.GetInstance().Error(error.Message);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }

@@ -96,9 +96,9 @@
             this.lTaskGroup.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lTaskGroup.Location = new System.Drawing.Point(17, 61);
             this.lTaskGroup.Name = "lTaskGroup";
-            this.lTaskGroup.Size = new System.Drawing.Size(94, 18);
+            this.lTaskGroup.Size = new System.Drawing.Size(92, 18);
             this.lTaskGroup.TabIndex = 24;
-            this.lTaskGroup.Text = "Group name:";
+            this.lTaskGroup.Text = "Csoport név:";
             // 
             // tbTaskName
             // 
@@ -114,9 +114,9 @@
             this.lTaskName.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lTaskName.Location = new System.Drawing.Point(16, 86);
             this.lTaskName.Name = "lTaskName";
-            this.lTaskName.Size = new System.Drawing.Size(87, 18);
+            this.lTaskName.Size = new System.Drawing.Size(89, 18);
             this.lTaskName.TabIndex = 18;
-            this.lTaskName.Text = "Task name:";
+            this.lTaskName.Text = "Feladat név:";
             // 
             // lTaskID
             // 
@@ -124,9 +124,9 @@
             this.lTaskID.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lTaskID.Location = new System.Drawing.Point(17, 38);
             this.lTaskID.Name = "lTaskID";
-            this.lTaskID.Size = new System.Drawing.Size(66, 18);
+            this.lTaskID.Size = new System.Drawing.Size(81, 18);
             this.lTaskID.TabIndex = 16;
-            this.lTaskID.Text = "Task ID:";
+            this.lTaskID.Text = "Feladat ID:";
             // 
             // btnDeleteTask
             // 
@@ -201,7 +201,7 @@
             this.gbGroupSection.Size = new System.Drawing.Size(480, 200);
             this.gbGroupSection.TabIndex = 27;
             this.gbGroupSection.TabStop = false;
-            this.gbGroupSection.Text = "Group section";
+            this.gbGroupSection.Text = "Csoport";
             // 
             // btnDeleteGroup
             // 
@@ -251,6 +251,7 @@
             this.cbGroupName.Size = new System.Drawing.Size(336, 26);
             this.cbGroupName.TabIndex = 28;
             this.cbGroupName.DropDownClosed += new System.EventHandler(this.cbGroupName_DropDownClosed);
+            this.cbGroupName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbGroupName_KeyPress);
             // 
             // btnUpdateGroup
             // 
@@ -287,7 +288,7 @@
             this.gbTaskSection.Size = new System.Drawing.Size(480, 200);
             this.gbTaskSection.TabIndex = 25;
             this.gbTaskSection.TabStop = false;
-            this.gbTaskSection.Text = "Task section";
+            this.gbTaskSection.Text = "Feladat";
             // 
             // nupTaskID
             // 

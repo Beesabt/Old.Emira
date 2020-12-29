@@ -88,7 +88,7 @@
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(104, 30);
             this.btnClose.TabIndex = 8;
-            this.btnClose.Text = "&Close";
+            this.btnClose.Text = "&Bezárás";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Visible = false;
             // 
@@ -99,7 +99,7 @@
             this.btnYes.Name = "btnYes";
             this.btnYes.Size = new System.Drawing.Size(104, 30);
             this.btnYes.TabIndex = 9;
-            this.btnYes.Text = "&Yes";
+            this.btnYes.Text = "&Igen";
             this.btnYes.UseVisualStyleBackColor = true;
             this.btnYes.Visible = false;
             // 
@@ -110,7 +110,7 @@
             this.btnNo.Name = "btnNo";
             this.btnNo.Size = new System.Drawing.Size(104, 30);
             this.btnNo.TabIndex = 10;
-            this.btnNo.Text = "&No";
+            this.btnNo.Text = "&Nem";
             this.btnNo.UseVisualStyleBackColor = true;
             this.btnNo.Visible = false;
             // 

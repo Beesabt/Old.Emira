@@ -115,45 +115,45 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(143, 89);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 18);
+            this.label1.Size = new System.Drawing.Size(68, 18);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Axis X";
+            this.label1.Text = "X tengely";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(404, 89);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(48, 18);
+            this.label2.Size = new System.Drawing.Size(67, 18);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Axis Y";
+            this.label2.Text = "Y tengely";
             // 
             // lAxisTitle
             // 
             this.lAxisTitle.AutoSize = true;
             this.lAxisTitle.Location = new System.Drawing.Point(21, 120);
             this.lAxisTitle.Name = "lAxisTitle";
-            this.lAxisTitle.Size = new System.Drawing.Size(70, 18);
+            this.lAxisTitle.Size = new System.Drawing.Size(87, 18);
             this.lAxisTitle.TabIndex = 4;
-            this.lAxisTitle.Text = "Axis Titel:";
+            this.lAxisTitle.Text = "Tengelycím:";
             // 
             // lTextAlignment
             // 
             this.lTextAlignment.AutoSize = true;
             this.lTextAlignment.Location = new System.Drawing.Point(21, 168);
             this.lTextAlignment.Name = "lTextAlignment";
-            this.lTextAlignment.Size = new System.Drawing.Size(108, 18);
+            this.lTextAlignment.Size = new System.Drawing.Size(116, 18);
             this.lTextAlignment.TabIndex = 5;
-            this.lTextAlignment.Text = "Text Alignment:";
+            this.lTextAlignment.Text = "Szöveg igazítás:";
             // 
             // lTextOrientation
             // 
             this.lTextOrientation.AutoSize = true;
             this.lTextOrientation.Location = new System.Drawing.Point(21, 213);
             this.lTextOrientation.Name = "lTextOrientation";
-            this.lTextOrientation.Size = new System.Drawing.Size(116, 18);
+            this.lTextOrientation.Size = new System.Drawing.Size(105, 18);
             this.lTextOrientation.TabIndex = 6;
-            this.lTextOrientation.Text = "Text Orientation:";
+            this.lTextOrientation.Text = "Szöveg iránya:";
             // 
             // gbAxes
             // 
@@ -180,7 +180,7 @@
             this.gbAxes.Size = new System.Drawing.Size(646, 256);
             this.gbAxes.TabIndex = 7;
             this.gbAxes.TabStop = false;
-            this.gbAxes.Text = "Axes";
+            this.gbAxes.Text = "Tengelyek";
             // 
             // btnAxisTextColor
             // 
@@ -357,7 +357,7 @@
             this.gbCommon.Size = new System.Drawing.Size(646, 161);
             this.gbCommon.TabIndex = 11;
             this.gbCommon.TabStop = false;
-            this.gbCommon.Text = "Common";
+            this.gbCommon.Text = "Általános";
             // 
             // btnCommonTextColor
             // 
@@ -404,9 +404,9 @@
             this.lColor.AutoSize = true;
             this.lColor.Location = new System.Drawing.Point(21, 117);
             this.lColor.Name = "lColor";
-            this.lColor.Size = new System.Drawing.Size(49, 18);
+            this.lColor.Size = new System.Drawing.Size(41, 18);
             this.lColor.TabIndex = 12;
-            this.lColor.Text = "Color:";
+            this.lColor.Text = "Szín:";
             // 
             // cbCommonItalic
             // 
@@ -457,7 +457,7 @@
             this.lTitle.Name = "lTitle";
             this.lTitle.Size = new System.Drawing.Size(39, 18);
             this.lTitle.TabIndex = 0;
-            this.lTitle.Text = "Title:";
+            this.lTitle.Text = "Cím:";
             // 
             // cbCommonFont
             // 
@@ -506,7 +506,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(145, 40);
             this.btnCancel.TabIndex = 13;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Text = "Mégse";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
@@ -525,7 +525,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(145, 40);
             this.btnSave.TabIndex = 12;
-            this.btnSave.Text = "Save";
+            this.btnSave.Text = "Mentés";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 

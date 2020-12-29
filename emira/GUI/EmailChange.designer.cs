@@ -46,9 +46,9 @@
             this.lUsernameChange.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lUsernameChange.Location = new System.Drawing.Point(100, 68);
             this.lUsernameChange.Name = "lUsernameChange";
-            this.lUsernameChange.Size = new System.Drawing.Size(221, 37);
+            this.lUsernameChange.Size = new System.Drawing.Size(328, 37);
             this.lUsernameChange.TabIndex = 5;
-            this.lUsernameChange.Text = "E-mail change";
+            this.lUsernameChange.Text = "E-mail cím változtatás";
             // 
             // btnUNameChange
             // 
@@ -64,7 +64,7 @@
             this.btnUNameChange.Name = "btnUNameChange";
             this.btnUNameChange.Size = new System.Drawing.Size(203, 49);
             this.btnUNameChange.TabIndex = 3;
-            this.btnUNameChange.Text = "Change";
+            this.btnUNameChange.Text = "Mentés";
             this.btnUNameChange.UseVisualStyleBackColor = false;
             this.btnUNameChange.Click += new System.EventHandler(this.btnUNameChange_Click);
             // 
@@ -80,11 +80,11 @@
             // 
             this.lNewEmail.AutoSize = true;
             this.lNewEmail.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lNewEmail.Location = new System.Drawing.Point(252, 255);
+            this.lNewEmail.Location = new System.Drawing.Point(271, 258);
             this.lNewEmail.Name = "lNewEmail";
-            this.lNewEmail.Size = new System.Drawing.Size(93, 21);
+            this.lNewEmail.Size = new System.Drawing.Size(105, 21);
             this.lNewEmail.TabIndex = 7;
-            this.lNewEmail.Text = "New e-mail:";
+            this.lNewEmail.Text = "Új e-mail cím:";
             // 
             // tbNewEmail
             // 
@@ -98,21 +98,21 @@
             // 
             this.lNewEmailAgain.AutoSize = true;
             this.lNewEmailAgain.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lNewEmailAgain.Location = new System.Drawing.Point(210, 328);
+            this.lNewEmailAgain.Location = new System.Drawing.Point(183, 331);
             this.lNewEmailAgain.Name = "lNewEmailAgain";
-            this.lNewEmailAgain.Size = new System.Drawing.Size(135, 21);
+            this.lNewEmailAgain.Size = new System.Drawing.Size(193, 21);
             this.lNewEmailAgain.TabIndex = 8;
-            this.lNewEmailAgain.Text = "New e-mail again:";
+            this.lNewEmailAgain.Text = "Új e-mail cím mégegyszer:";
             // 
             // lOldEmail
             // 
             this.lOldEmail.AutoSize = true;
             this.lOldEmail.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lOldEmail.Location = new System.Drawing.Point(259, 182);
+            this.lOldEmail.Location = new System.Drawing.Point(255, 180);
             this.lOldEmail.Name = "lOldEmail";
-            this.lOldEmail.Size = new System.Drawing.Size(86, 21);
+            this.lOldEmail.Size = new System.Drawing.Size(121, 21);
             this.lOldEmail.TabIndex = 6;
-            this.lOldEmail.Text = "Old e-mail:";
+            this.lOldEmail.Text = "Régi e-mail cím:";
             // 
             // tbOldEmail
             // 

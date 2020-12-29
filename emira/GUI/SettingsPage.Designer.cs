@@ -102,7 +102,7 @@
             this.btnTaskManager.Name = "btnTaskManager";
             this.btnTaskManager.Size = new System.Drawing.Size(180, 85);
             this.btnTaskManager.TabIndex = 5;
-            this.btnTaskManager.Text = "Taszk\r\nmenedzser";
+            this.btnTaskManager.Text = "Feladat\r\n kezelő";
             this.btnTaskManager.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnTaskManager.UseVisualStyleBackColor = false;
             this.btnTaskManager.Click += new System.EventHandler(this.btnTaskManager_Click);

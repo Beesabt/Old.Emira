@@ -153,9 +153,11 @@
     <Compile Include="GUI\WorkingHoursPage.designer.cs">
       <DependentUpon>WorkingHoursPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="HelperFunctions\GeneralInfo.cs" />
+    <Compile Include="Utilities\GeneralInfo.cs" />
     <Compile Include="BusinessLogicLayer\Settings.cs" />
-    <Compile Include="HelperFunctions\Texts.cs" />
+    <Compile Include="Utilities\ILogger.cs" />
+    <Compile Include="Utilities\MyLogger.cs" />
+    <Compile Include="Utilities\Texts.cs" />
     <Compile Include="DataAccessLayer\DatabaseHandler.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GUI\CustomMsgBox.cs">

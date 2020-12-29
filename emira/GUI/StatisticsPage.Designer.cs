@@ -152,9 +152,9 @@
             this.lWhat.Font = new System.Drawing.Font("Tahoma", 11.25F);
             this.lWhat.Location = new System.Drawing.Point(56, 158);
             this.lWhat.Name = "lWhat";
-            this.lWhat.Size = new System.Drawing.Size(190, 18);
+            this.lWhat.Size = new System.Drawing.Size(125, 18);
             this.lWhat.TabIndex = 3;
-            this.lWhat.Text = "What would you like to see?";
+            this.lWhat.Text = "Mit szeretne látni?";
             // 
             // lYear
             // 
@@ -162,9 +162,9 @@
             this.lYear.Font = new System.Drawing.Font("Tahoma", 11.25F);
             this.lYear.Location = new System.Drawing.Point(56, 218);
             this.lYear.Name = "lYear";
-            this.lYear.Size = new System.Drawing.Size(44, 18);
+            this.lYear.Size = new System.Drawing.Size(29, 18);
             this.lYear.TabIndex = 4;
-            this.lYear.Text = "Year:";
+            this.lYear.Text = "Év:";
             // 
             // lMonth
             // 
@@ -172,19 +172,22 @@
             this.lMonth.Font = new System.Drawing.Font("Tahoma", 11.25F);
             this.lMonth.Location = new System.Drawing.Point(56, 278);
             this.lMonth.Name = "lMonth";
-            this.lMonth.Size = new System.Drawing.Size(54, 18);
+            this.lMonth.Size = new System.Drawing.Size(55, 18);
             this.lMonth.TabIndex = 5;
-            this.lMonth.Text = "Month:";
+            this.lMonth.Text = "Hónap:";
             // 
             // cbWhat
             // 
             this.cbWhat.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.cbWhat.FormattingEnabled = true;
+            this.cbWhat.Items.AddRange(new object[] {
+            "Választott hónap szabadságok nélkül",
+            "Választott év szabadságok nélkül"});
             this.cbWhat.Location = new System.Drawing.Point(59, 184);
             this.cbWhat.Name = "cbWhat";
             this.cbWhat.Size = new System.Drawing.Size(324, 26);
             this.cbWhat.TabIndex = 6;
-            this.cbWhat.Text = "Select";
+            this.cbWhat.Text = "Válasszon";
             this.cbWhat.SelectedIndexChanged += new System.EventHandler(this.cbWhat_SelectedIndexChanged);
             this.cbWhat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbWhat_KeyPress);
             // 
@@ -194,9 +197,9 @@
             this.cbYear.FormattingEnabled = true;
             this.cbYear.Location = new System.Drawing.Point(60, 244);
             this.cbYear.Name = "cbYear";
-            this.cbYear.Size = new System.Drawing.Size(76, 26);
+            this.cbYear.Size = new System.Drawing.Size(104, 26);
             this.cbYear.TabIndex = 7;
-            this.cbYear.Text = "Select";
+            this.cbYear.Text = "Válasszon";
             this.cbYear.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbYear_KeyPress);
             // 
             // cbMonth
@@ -207,7 +210,7 @@
             this.cbMonth.Name = "cbMonth";
             this.cbMonth.Size = new System.Drawing.Size(104, 26);
             this.cbMonth.TabIndex = 8;
-            this.cbMonth.Text = "Select";
+            this.cbMonth.Text = "Válasszon";
             this.cbMonth.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbMonth_KeyPress);
             // 
             // rbColumnChart
@@ -217,10 +220,10 @@
             this.rbColumnChart.Image = global::emira.Properties.Resources.bar_chart_icon_color_26;
             this.rbColumnChart.Location = new System.Drawing.Point(60, 364);
             this.rbColumnChart.Name = "rbColumnChart";
-            this.rbColumnChart.Size = new System.Drawing.Size(182, 34);
+            this.rbColumnChart.Size = new System.Drawing.Size(121, 34);
             this.rbColumnChart.TabIndex = 9;
             this.rbColumnChart.TabStop = true;
-            this.rbColumnChart.Text = "Column chart";
+            this.rbColumnChart.Text = "Oszlop";
             this.rbColumnChart.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.rbColumnChart.UseVisualStyleBackColor = true;
             // 
@@ -231,10 +234,10 @@
             this.rbPieChart.Image = global::emira.Properties.Resources.pie_chart_icon_color_26;
             this.rbPieChart.Location = new System.Drawing.Point(59, 423);
             this.rbPieChart.Name = "rbPieChart";
-            this.rbPieChart.Size = new System.Drawing.Size(138, 34);
+            this.rbPieChart.Size = new System.Drawing.Size(87, 34);
             this.rbPieChart.TabIndex = 10;
             this.rbPieChart.TabStop = true;
-            this.rbPieChart.Text = "Pie chart";
+            this.rbPieChart.Text = "Kör";
             this.rbPieChart.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.rbPieChart.UseVisualStyleBackColor = true;
             // 
@@ -251,9 +254,9 @@
             this.btnLoad.Image = global::emira.Properties.Resources.load_icon_white_26;
             this.btnLoad.Location = new System.Drawing.Point(253, 502);
             this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(130, 40);
+            this.btnLoad.Size = new System.Drawing.Size(137, 40);
             this.btnLoad.TabIndex = 11;
-            this.btnLoad.Text = "Load";
+            this.btnLoad.Text = "Betöltés";
             this.btnLoad.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLoad.UseVisualStyleBackColor = false;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
@@ -291,9 +294,9 @@
             this.btnSettings.Image = global::emira.Properties.Resources.settings_icon_white_26;
             this.btnSettings.Location = new System.Drawing.Point(60, 502);
             this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(130, 40);
+            this.btnSettings.Size = new System.Drawing.Size(137, 40);
             this.btnSettings.TabIndex = 13;
-            this.btnSettings.Text = "Settings";
+            this.btnSettings.Text = "Beállítások";
             this.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSettings.UseVisualStyleBackColor = false;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);

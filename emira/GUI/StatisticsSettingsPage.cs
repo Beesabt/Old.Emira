@@ -5,9 +5,6 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 using emira.HelperFunctions;
 using NLog;
-using System.Xml;
-using System.Xml.Linq;
-using System.IO;
 
 namespace emira.GUI
 {
@@ -37,26 +34,36 @@ namespace emira.GUI
             // Set the colors for the combobox
             cbColor.DataSource = Enum.GetValues(typeof(ChartColorPalette));
 
-            // Set the text alignments for the comoboboxes
+            // Set the text alignments for the comboboxes
             cbAxisXTextAlignment.DataSource = Enum.GetValues(typeof(StringAlignment));
             cbAxisYTextAlignment.DataSource = Enum.GetValues(typeof(StringAlignment));
 
-            // Set the text orientations for the comoboboxes
+            // Set the text orientations for the comboboxes
             cbAxisXTextOrientation.DataSource = Enum.GetValues(typeof(TextOrientation));
             cbAxisYTextOrientation.DataSource = Enum.GetValues(typeof(TextOrientation));
 
             // Title
             tbTitle.Text = StatisticsSettingsPersi.Title;
 
+            // Common Font
+            cbCommonFont.SelectedValue = StatisticsSettingsPersi.CommonFont;
+            if (StatisticsSettingsPersi.CommonFont == null)
+                cbCommonFont.SelectedIndex = 1;
+
+            // Common Size
+            cbCommonSize.SelectedIndex = StatisticsSettingsPersi.CommonSize;
+            if (StatisticsSettingsPersi.CommonSize == 0)
+                cbCommonSize.SelectedIndex = 2;
+
             // Color
             cbColor.SelectedIndex = StatisticsSettingsPersi.ColorIndex;
 
-            // Font
-            cbAxisFont.SelectedIndex = StatisticsSettingsPersi.AxisFont;
-            if (StatisticsSettingsPersi.AxisFont == 0)
+            // Axis Font
+            cbAxisFont.SelectedValue = StatisticsSettingsPersi.AxisFont;
+            if (StatisticsSettingsPersi.AxisFont == null)
                 cbAxisFont.SelectedIndex = 1;
 
-            // Size
+            // Axis Size
             cbAxisSize.SelectedIndex = StatisticsSettingsPersi.AxisSize;
             if (StatisticsSettingsPersi.AxisSize == 0)
                 cbAxisSize.SelectedIndex = 2;
@@ -80,11 +87,12 @@ namespace emira.GUI
         private void btnSave_Click(object sender, EventArgs e)
         {
             StatisticsSettingsPersi.Title = tbTitle.Text;
+            StatisticsSettingsPersi.CommonFont = new FontFamily(cbCommonFont.SelectedItem.ToString());
+            StatisticsSettingsPersi.CommonSize = cbCommonSize.SelectedIndex;
 
             StatisticsSettingsPersi.ColorIndex = cbColor.SelectedIndex;
 
-            StatisticsSettingsPersi.AxisFont = cbAxisFont.SelectedIndex;
-
+            StatisticsSettingsPersi.AxisFont = new FontFamily(cbAxisFont.SelectedItem.ToString());
             StatisticsSettingsPersi.AxisSize = cbAxisSize.SelectedIndex;
 
             StatisticsSettingsPersi.AxisXTitle = tbAxisXTitle.Text;

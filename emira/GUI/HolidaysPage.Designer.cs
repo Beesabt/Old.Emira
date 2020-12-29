@@ -220,7 +220,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(117, 34);
             this.btnCancel.TabIndex = 8;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Text = "Mégse";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Visible = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -239,7 +239,7 @@
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(117, 34);
             this.btnAdd.TabIndex = 7;
-            this.btnAdd.Text = "Add";
+            this.btnAdd.Text = "Hozzáad";
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Visible = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
@@ -258,7 +258,7 @@
             this.btnCheck.Name = "btnCheck";
             this.btnCheck.Size = new System.Drawing.Size(113, 34);
             this.btnCheck.TabIndex = 6;
-            this.btnCheck.Text = "Check";
+            this.btnCheck.Text = "Ellenőriz";
             this.btnCheck.UseVisualStyleBackColor = false;
             this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
             // 
@@ -315,9 +315,9 @@
             this.lTitle.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lTitle.Location = new System.Drawing.Point(3, 0);
             this.lTitle.Name = "lTitle";
-            this.lTitle.Size = new System.Drawing.Size(35, 20);
+            this.lTitle.Size = new System.Drawing.Size(105, 20);
             this.lTitle.TabIndex = 0;
-            this.lTitle.Text = "Title";
+            this.lTitle.Text = "Megnevezés";
             // 
             // lFrame
             // 
@@ -325,9 +325,9 @@
             this.lFrame.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lFrame.Location = new System.Drawing.Point(3, 124);
             this.lFrame.Name = "lFrame";
-            this.lFrame.Size = new System.Drawing.Size(54, 20);
+            this.lFrame.Size = new System.Drawing.Size(48, 20);
             this.lFrame.TabIndex = 5;
-            this.lFrame.Text = "Frame";
+            this.lFrame.Text = "Keret";
             // 
             // lNormalHoliday
             // 
@@ -335,9 +335,9 @@
             this.lNormalHoliday.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lNormalHoliday.Location = new System.Drawing.Point(144, 0);
             this.lNormalHoliday.Name = "lNormalHoliday";
-            this.lNormalHoliday.Size = new System.Drawing.Size(118, 20);
+            this.lNormalHoliday.Size = new System.Drawing.Size(88, 20);
             this.lNormalHoliday.TabIndex = 1;
-            this.lNormalHoliday.Text = "Normal holiday";
+            this.lNormalHoliday.Text = "Szabadság";
             // 
             // lSelected
             // 
@@ -345,9 +345,9 @@
             this.lSelected.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lSelected.Location = new System.Drawing.Point(3, 93);
             this.lSelected.Name = "lSelected";
-            this.lSelected.Size = new System.Drawing.Size(74, 20);
+            this.lSelected.Size = new System.Drawing.Size(80, 20);
             this.lSelected.TabIndex = 4;
-            this.lSelected.Text = "Selected";
+            this.lSelected.Text = "Választott";
             // 
             // lFrom
             // 
@@ -355,9 +355,9 @@
             this.lFrom.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lFrom.Location = new System.Drawing.Point(3, 31);
             this.lFrom.Name = "lFrom";
-            this.lFrom.Size = new System.Drawing.Size(44, 20);
+            this.lFrom.Size = new System.Drawing.Size(68, 20);
             this.lFrom.TabIndex = 2;
-            this.lFrom.Text = "From";
+            this.lFrom.Text = "Mikortól";
             // 
             // lTo
             // 
@@ -365,9 +365,9 @@
             this.lTo.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lTo.Location = new System.Drawing.Point(3, 62);
             this.lTo.Name = "lTo";
-            this.lTo.Size = new System.Drawing.Size(24, 20);
+            this.lTo.Size = new System.Drawing.Size(67, 20);
             this.lTo.TabIndex = 3;
-            this.lTo.Text = "To";
+            this.lTo.Text = "Meddig";
             // 
             // dtpFrom
             // 
@@ -427,9 +427,9 @@
             this.lPredictableDays.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lPredictableDays.Location = new System.Drawing.Point(144, 89);
             this.lPredictableDays.Name = "lPredictableDays";
-            this.lPredictableDays.Size = new System.Drawing.Size(79, 20);
+            this.lPredictableDays.Size = new System.Drawing.Size(85, 20);
             this.lPredictableDays.TabIndex = 5;
-            this.lPredictableDays.Text = "Unknown";
+            this.lPredictableDays.Text = "Ismeretlen";
             this.lPredictableDays.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lPredictable
@@ -438,9 +438,9 @@
             this.lPredictable.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lPredictable.Location = new System.Drawing.Point(3, 89);
             this.lPredictable.Name = "lPredictable";
-            this.lPredictable.Size = new System.Drawing.Size(94, 20);
+            this.lPredictable.Size = new System.Drawing.Size(89, 20);
             this.lPredictable.TabIndex = 4;
-            this.lPredictable.Text = "Predictable";
+            this.lPredictable.Text = "Tervezhető";
             this.lPredictable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lAppliedDays
@@ -449,9 +449,9 @@
             this.lAppliedDays.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lAppliedDays.Location = new System.Drawing.Point(144, 49);
             this.lAppliedDays.Name = "lAppliedDays";
-            this.lAppliedDays.Size = new System.Drawing.Size(79, 20);
+            this.lAppliedDays.Size = new System.Drawing.Size(85, 20);
             this.lAppliedDays.TabIndex = 3;
-            this.lAppliedDays.Text = "Unknown";
+            this.lAppliedDays.Text = "Ismeretlen";
             this.lAppliedDays.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lApplied
@@ -460,9 +460,9 @@
             this.lApplied.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lApplied.Location = new System.Drawing.Point(3, 49);
             this.lApplied.Name = "lApplied";
-            this.lApplied.Size = new System.Drawing.Size(66, 20);
+            this.lApplied.Size = new System.Drawing.Size(85, 20);
             this.lApplied.TabIndex = 2;
-            this.lApplied.Text = "Applied";
+            this.lApplied.Text = "Elfogadott";
             this.lApplied.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lAnnualOpeningFrameDays
@@ -471,9 +471,9 @@
             this.lAnnualOpeningFrameDays.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lAnnualOpeningFrameDays.Location = new System.Drawing.Point(144, 0);
             this.lAnnualOpeningFrameDays.Name = "lAnnualOpeningFrameDays";
-            this.lAnnualOpeningFrameDays.Size = new System.Drawing.Size(79, 20);
+            this.lAnnualOpeningFrameDays.Size = new System.Drawing.Size(85, 20);
             this.lAnnualOpeningFrameDays.TabIndex = 1;
-            this.lAnnualOpeningFrameDays.Text = "Unknown";
+            this.lAnnualOpeningFrameDays.Text = "Ismeretlen";
             this.lAnnualOpeningFrameDays.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lAnnualOpeningFrame
@@ -482,9 +482,9 @@
             this.lAnnualOpeningFrame.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lAnnualOpeningFrame.Location = new System.Drawing.Point(3, 0);
             this.lAnnualOpeningFrame.Name = "lAnnualOpeningFrame";
-            this.lAnnualOpeningFrame.Size = new System.Drawing.Size(129, 40);
+            this.lAnnualOpeningFrame.Size = new System.Drawing.Size(124, 20);
             this.lAnnualOpeningFrame.TabIndex = 0;
-            this.lAnnualOpeningFrame.Text = "Annual opening frame";
+            this.lAnnualOpeningFrame.Text = "Éves nyitó keret";
             this.lAnnualOpeningFrame.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // gbHolidaysSoFar
@@ -555,14 +555,14 @@
             this.cbState.IntegralHeight = false;
             this.cbState.ItemHeight = 21;
             this.cbState.Items.AddRange(new object[] {
-            "Actual",
-            "All"});
+            "Aktuális",
+            "Mind"});
             this.cbState.Location = new System.Drawing.Point(224, 46);
             this.cbState.MaxDropDownItems = 5;
             this.cbState.Name = "cbState";
             this.cbState.Size = new System.Drawing.Size(90, 29);
             this.cbState.TabIndex = 3;
-            this.cbState.Text = "Actual";
+            this.cbState.Text = "Aktuális";
             this.cbState.SelectedIndexChanged += new System.EventHandler(this.cbState_SelectedIndexChanged);
             this.cbState.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbState_KeyPress);
             // 

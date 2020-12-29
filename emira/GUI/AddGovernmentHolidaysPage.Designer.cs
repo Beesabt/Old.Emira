@@ -83,9 +83,9 @@
             this.lAddOrRemoveTask.ForeColor = System.Drawing.Color.White;
             this.lAddOrRemoveTask.Location = new System.Drawing.Point(0, 0);
             this.lAddOrRemoveTask.Name = "lAddOrRemoveTask";
-            this.lAddOrRemoveTask.Size = new System.Drawing.Size(326, 28);
+            this.lAddOrRemoveTask.Size = new System.Drawing.Size(206, 28);
             this.lAddOrRemoveTask.TabIndex = 5;
-            this.lAddOrRemoveTask.Text = "Add or remove government holiday";
+            this.lAddOrRemoveTask.Text = "Nemzeti ünnep kezelő";
             // 
             // dtpGovernmentHoliday
             // 
@@ -176,7 +176,7 @@
             this.cbYears.Name = "cbYears";
             this.cbYears.Size = new System.Drawing.Size(88, 28);
             this.cbYears.TabIndex = 9;
-            this.cbYears.Text = "Year";
+            this.cbYears.Text = "Év";
             this.cbYears.SelectedIndexChanged += new System.EventHandler(this.cbYears_SelectedIndexChanged);
             this.cbYears.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbYears_KeyPress);
             // 

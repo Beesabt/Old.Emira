@@ -181,7 +181,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(120, 50);
             this.btnSave.TabIndex = 2;
-            this.btnSave.Text = "Save";
+            this.btnSave.Text = "Mentés";
             this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -238,11 +238,11 @@
             this.btnAddRemoveTask.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnAddRemoveTask.ForeColor = System.Drawing.Color.White;
             this.btnAddRemoveTask.Image = global::emira.Properties.Resources.task_icon_white_32;
-            this.btnAddRemoveTask.Location = new System.Drawing.Point(880, 142);
+            this.btnAddRemoveTask.Location = new System.Drawing.Point(783, 142);
             this.btnAddRemoveTask.Name = "btnAddRemoveTask";
-            this.btnAddRemoveTask.Size = new System.Drawing.Size(120, 50);
+            this.btnAddRemoveTask.Size = new System.Drawing.Size(217, 50);
             this.btnAddRemoveTask.TabIndex = 5;
-            this.btnAddRemoveTask.Text = "Task";
+            this.btnAddRemoveTask.Text = "Feladat hozzáadás";
             this.btnAddRemoveTask.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAddRemoveTask.UseVisualStyleBackColor = false;
             this.btnAddRemoveTask.Click += new System.EventHandler(this.btnAddRemoveTask_Click);
@@ -251,12 +251,12 @@
             // 
             this.cbYearWithMonth.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.cbYearWithMonth.FormattingEnabled = true;
-            this.cbYearWithMonth.Location = new System.Drawing.Point(668, 154);
+            this.cbYearWithMonth.Location = new System.Drawing.Point(621, 154);
             this.cbYearWithMonth.MaxDropDownItems = 12;
             this.cbYearWithMonth.Name = "cbYearWithMonth";
             this.cbYearWithMonth.Size = new System.Drawing.Size(100, 32);
             this.cbYearWithMonth.TabIndex = 6;
-            this.cbYearWithMonth.Text = "Month";
+            this.cbYearWithMonth.Text = "Hónap";
             this.cbYearWithMonth.DropDownClosed += new System.EventHandler(this.cbYearWithMonth_DropDownClosed);
             this.cbYearWithMonth.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbYearWithMonth_KeyPress);
             // 
@@ -316,7 +316,7 @@
             this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNext.Font = new System.Drawing.Font("Century Gothic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnNext.Image = ((System.Drawing.Image)(resources.GetObject("btnNext.Image")));
-            this.btnNext.Location = new System.Drawing.Point(772, 157);
+            this.btnNext.Location = new System.Drawing.Point(725, 157);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(25, 25);
             this.btnNext.TabIndex = 9;
@@ -334,7 +334,7 @@
             this.btnPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPrevious.Font = new System.Drawing.Font("Century Gothic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnPrevious.Image = ((System.Drawing.Image)(resources.GetObject("btnPrevious.Image")));
-            this.btnPrevious.Location = new System.Drawing.Point(639, 157);
+            this.btnPrevious.Location = new System.Drawing.Point(592, 157);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(25, 25);
             this.btnPrevious.TabIndex = 8;
@@ -350,9 +350,9 @@
             this.lMonth.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lMonth.Location = new System.Drawing.Point(459, 219);
             this.lMonth.Name = "lMonth";
-            this.lMonth.Size = new System.Drawing.Size(113, 39);
+            this.lMonth.Size = new System.Drawing.Size(118, 39);
             this.lMonth.TabIndex = 10;
-            this.lMonth.Text = "Month";
+            this.lMonth.Text = "Hónap";
             // 
             // btnLock
             // 
@@ -369,7 +369,7 @@
             this.btnLock.Name = "btnLock";
             this.btnLock.Size = new System.Drawing.Size(120, 50);
             this.btnLock.TabIndex = 11;
-            this.btnLock.Text = "Lock";
+            this.btnLock.Text = "Lezárás";
             this.btnLock.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLock.UseVisualStyleBackColor = false;
             this.btnLock.Click += new System.EventHandler(this.btnLock_Click);

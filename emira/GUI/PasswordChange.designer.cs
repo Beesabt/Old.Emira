@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PasswordChange));
             this.lPasswordChange = new System.Windows.Forms.Label();
             this.btnPasswordChange = new System.Windows.Forms.Button();
             this.tbNewPasswordAgain = new System.Windows.Forms.TextBox();
@@ -48,9 +49,9 @@
             this.lPasswordChange.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lPasswordChange.Location = new System.Drawing.Point(100, 68);
             this.lPasswordChange.Name = "lPasswordChange";
-            this.lPasswordChange.Size = new System.Drawing.Size(272, 37);
+            this.lPasswordChange.Size = new System.Drawing.Size(269, 37);
             this.lPasswordChange.TabIndex = 7;
-            this.lPasswordChange.Text = "Password change";
+            this.lPasswordChange.Text = "Jelszó változtatás";
             // 
             // btnPasswordChange
             // 
@@ -66,7 +67,7 @@
             this.btnPasswordChange.Name = "btnPasswordChange";
             this.btnPasswordChange.Size = new System.Drawing.Size(203, 49);
             this.btnPasswordChange.TabIndex = 3;
-            this.btnPasswordChange.Text = "Change";
+            this.btnPasswordChange.Text = "Mentés";
             this.btnPasswordChange.UseVisualStyleBackColor = false;
             this.btnPasswordChange.Click += new System.EventHandler(this.btnPasswordChange_Click);
             // 
@@ -84,19 +85,19 @@
             this.lOldPassword.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lOldPassword.Location = new System.Drawing.Point(259, 182);
             this.lOldPassword.Name = "lOldPassword";
-            this.lOldPassword.Size = new System.Drawing.Size(109, 21);
+            this.lOldPassword.Size = new System.Drawing.Size(87, 21);
             this.lOldPassword.TabIndex = 4;
-            this.lOldPassword.Text = "Old password:";
+            this.lOldPassword.Text = "Régi jelszó:";
             // 
             // lNewPassword
             // 
             this.lNewPassword.AutoSize = true;
             this.lNewPassword.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lNewPassword.Location = new System.Drawing.Point(252, 255);
+            this.lNewPassword.Location = new System.Drawing.Point(275, 258);
             this.lNewPassword.Name = "lNewPassword";
-            this.lNewPassword.Size = new System.Drawing.Size(116, 21);
+            this.lNewPassword.Size = new System.Drawing.Size(71, 21);
             this.lNewPassword.TabIndex = 5;
-            this.lNewPassword.Text = "New password:";
+            this.lNewPassword.Text = "Új jelszó:";
             // 
             // tbNewPassword
             // 
@@ -112,9 +113,9 @@
             this.lNewPasswordAgain.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lNewPasswordAgain.Location = new System.Drawing.Point(210, 328);
             this.lNewPasswordAgain.Name = "lNewPasswordAgain";
-            this.lNewPasswordAgain.Size = new System.Drawing.Size(158, 21);
+            this.lNewPasswordAgain.Size = new System.Drawing.Size(159, 21);
             this.lNewPasswordAgain.TabIndex = 6;
-            this.lNewPasswordAgain.Text = "New password again:";
+            this.lNewPasswordAgain.Text = "Új jelszó mégegyszer:";
             // 
             // tbOldPassword
             // 
@@ -135,8 +136,7 @@
             this.pbPasswordInformation.Size = new System.Drawing.Size(26, 26);
             this.pbPasswordInformation.TabIndex = 9;
             this.pbPasswordInformation.TabStop = false;
-            this.ttPasswordInformation.SetToolTip(this.pbPasswordInformation, "Your password has to be at least 8 characters long.\r\nMust contain at least one lo" +
-        "wer case letter, one upper case letter, one digit.");
+            this.ttPasswordInformation.SetToolTip(this.pbPasswordInformation, resources.GetString("pbPasswordInformation.ToolTip"));
             // 
             // ttPasswordInformation
             // 

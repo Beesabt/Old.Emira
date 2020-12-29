@@ -134,7 +134,7 @@ namespace emira.GUI
                 DataGridViewTextBoxColumn _totalColumn = new DataGridViewTextBoxColumn()
                 {
                     Name = "TotalHoursHeader",
-                    HeaderText = "Total"
+                    HeaderText = "Összes"
                 };
                 dgvWorkingHours.Columns.Add(_totalColumn);
 
@@ -162,7 +162,7 @@ namespace emira.GUI
                         dgvWorkingHours.Rows.Add(_row);
                     }
 
-                    if (btnLock.Text == "Unlock")
+                    if (btnLock.Text == Texts.Button.Unlock)
                     {
                         // AddRemoveTask button is disabled
                         btnAddRemoveTask.Enabled = false;
@@ -195,7 +195,7 @@ namespace emira.GUI
                     // And AddRemoveTask button is enabled it is is not locked
                     foreach (DataGridViewColumn column in dgvWorkingHours.Columns)
                     {
-                        if (btnLock.Text == "Unlock")
+                        if (btnLock.Text == Texts.Button.Unlock)
                         {
                             column.ReadOnly = true;
                             btnAddRemoveTask.Enabled = false;
@@ -222,7 +222,7 @@ namespace emira.GUI
                 // Add 'Summary' row in the end of the rows
                 DataGridViewRow _totalHoursRow = new DataGridViewRow();
                 _totalHoursRow.CreateCells(dgvWorkingHours);
-                _totalHoursRow.HeaderCell.Value = "Total hours:";
+                _totalHoursRow.HeaderCell.Value = "Összes óra:";
                 dgvWorkingHours.Rows.Add(_totalHoursRow);
 
                 // Add hours from Catalog
@@ -795,7 +795,7 @@ namespace emira.GUI
             // Get the date from the dropdown list and the column header text
             _date = cbYearWithMonth.SelectedItem.ToString();
 
-            if (btnLock.Text == "Lock")
+            if (btnLock.Text == Texts.Button.Lock)
             {
                 // Check whether any records exists for the month before lock
                 if (workingHours.CheckBeforeLock(_date))
@@ -808,7 +808,7 @@ namespace emira.GUI
                     }
                 }
 
-                btnLock.Text = "Unlock";
+                btnLock.Text = Texts.Button.Unlock;
                 btnLock.Image = Properties.Resources.unlock_icon_white_32;
                 foreach (DataGridViewColumn column in dgvWorkingHours.Columns)
                 {
@@ -830,7 +830,7 @@ namespace emira.GUI
                     }
                 }
 
-                btnLock.Text = "Lock";
+                btnLock.Text = Texts.Button.Lock;
                 btnLock.Image = Properties.Resources.lock_icon_white_32;
                 foreach (DataGridViewColumn column in dgvWorkingHours.Columns)
                 {
@@ -1072,11 +1072,11 @@ namespace emira.GUI
         }
 
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            System.Drawing.Rectangle borderRectangle = new System.Drawing.Rectangle(0, 0, ClientRectangle.Width - 1, ClientRectangle.Height - 1);
-            e.Graphics.DrawRectangle(Pens.Black, borderRectangle);
-            base.OnPaint(e);
-        }
+        //protected override void OnPaint(PaintEventArgs e)
+        //{
+        //    System.Drawing.Rectangle borderRectangle = new System.Drawing.Rectangle(0, 0, ClientRectangle.Width - 1, ClientRectangle.Height - 1);
+        //    e.Graphics.DrawRectangle(Pens.Black, borderRectangle);
+        //    base.OnPaint(e);
+        //}
     }
 }

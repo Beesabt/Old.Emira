@@ -10,12 +10,12 @@ using emira.HelperFunctions;
 
 using NLog;
 using System.Windows.Forms.DataVisualization.Charting;
+using emira.Utilities;
 
 namespace emira.GUI
 {
     public partial class StatisticsPage : Form
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         CustomMsgBox customMsgBox;
         Statistics statistics;
         DataTable dataTable;
@@ -42,8 +42,6 @@ namespace emira.GUI
             }
 
             // Load the content of the 'What' combobox
-            cbWhat.Items.Add("Breakdown of current month without holidays");
-            cbWhat.Items.Add("Breakdown of current year without holidays");
             cbWhat.SelectedIndex = 0;
 
             statistics = new Statistics();
@@ -85,6 +83,9 @@ namespace emira.GUI
                 Double _actualNumberOfHour = 0;
                 statistics = new Statistics();
                 dataTable = new DataTable();
+
+                if (chart == null)
+                    return;
 
                 // Make the chart visible
                 chart.Visible = true;
@@ -133,7 +134,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
+                MyLogger.GetInstance().Error(error.Message);
                 customMsgBox = new CustomMsgBox();
                 customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                 return;
@@ -146,19 +147,61 @@ namespace emira.GUI
             chart.Titles.Clear();
 
             // Title
-            chart.Titles.Add(StatisticsSettingsPersi.Title);
+            Title title = new Title();
+            if (StatisticsSettingsPersi.CommonFont == null)
+            {
+                title.Font = new Font("Arial", 14);
+            }
+            else
+            {
+                title.Font = new Font(StatisticsSettingsPersi.CommonFont, StatisticsSettingsPersi.CommonSize);
+            }
+            if (string.IsNullOrEmpty(StatisticsSettingsPersi.Title))
+            {
+                // Set default text
+                chart.Titles.Add("Név");
+            }
+            else
+            {
+                chart.Titles.Add(StatisticsSettingsPersi.Title);
+            } 
 
             // Color
             chart.Series[0].Palette = (ChartColorPalette)StatisticsSettingsPersi.ColorIndex;
 
             // Axis X
-            //chart.ChartAreas[0].AxisX.TitleFont.
+            if (StatisticsSettingsPersi.AxisFont == null)
+            {
+                chart.ChartAreas[0].AxisX.TitleFont = new Font("Arial", 14);
+            }
+            else
+            {
+                chart.ChartAreas[0].AxisX.TitleFont = new Font(StatisticsSettingsPersi.AxisFont, StatisticsSettingsPersi.AxisSize);
+            }            
             chart.ChartAreas[0].AxisX.Title = StatisticsSettingsPersi.AxisXTitle;
+            if (string.IsNullOrEmpty(StatisticsSettingsPersi.AxisXTitle))
+            {
+                // Set default text
+                chart.ChartAreas[0].AxisX.Title = "X tengely";
+            }
             chart.ChartAreas[0].AxisX.TitleAlignment = (StringAlignment)StatisticsSettingsPersi.XTextAlignment;
             chart.ChartAreas[0].AxisX.TextOrientation = (TextOrientation)StatisticsSettingsPersi.XTextOrientation;
 
             // Axis Y
+            if (StatisticsSettingsPersi.AxisFont == null)
+            {
+                chart.ChartAreas[0].AxisY.TitleFont = new Font("Arial", 14);
+            }
+            else
+            {
+                chart.ChartAreas[0].AxisY.TitleFont = new Font(StatisticsSettingsPersi.AxisFont, StatisticsSettingsPersi.AxisSize);
+            }
             chart.ChartAreas[0].AxisY.Title = StatisticsSettingsPersi.AxisYTitle;
+            if (string.IsNullOrEmpty(StatisticsSettingsPersi.AxisYTitle))
+            {
+                // Set default text
+                chart.ChartAreas[0].AxisY.Title = "Y tengely";
+            }
             chart.ChartAreas[0].AxisY.TitleAlignment = (StringAlignment)StatisticsSettingsPersi.YTextAlignment;
             chart.ChartAreas[0].AxisY.TextOrientation = (TextOrientation)StatisticsSettingsPersi.YTextOrientation;
         }
