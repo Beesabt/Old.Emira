@@ -314,9 +314,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="ApplicationFiles\Icon\Emira.ico" />
     <None Include="Resources\add_icon_white_26.png" />
     <None Include="Resources\add_task_icon_white_26.png" />
