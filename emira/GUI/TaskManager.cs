@@ -10,7 +10,6 @@ using System.Xml.Schema;
 
 using emira.BusinessLogicLayer;
 using emira.HelperFunctions;
-using NLog;
 using emira.Utilities;
 
 namespace emira.GUI
@@ -30,11 +29,6 @@ namespace emira.GUI
         public TaskManager()
         {
             InitializeComponent();
-        }
-
-        private void cbGroupName_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = true;
         }
 
         private void UpdateGroups()
@@ -61,8 +55,6 @@ namespace emira.GUI
             catch (Exception error)
             {
                 MyLogger.GetInstance().Error(error.Message);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -78,13 +70,8 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message + "\r\n\r\n" + error.GetBaseException().ToString(), error.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MyLogger.GetInstance().Error(error.Message);
             }
-        }
-
-        private void nupTaskID_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = true;
         }
 
         private void cbGroupName_DropDownClosed(object sender, EventArgs e)
@@ -96,8 +83,6 @@ namespace emira.GUI
             catch (Exception error)
             {
                 MyLogger.GetInstance().Error(error.Message);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -110,10 +95,10 @@ namespace emira.GUI
                 string _taskName = string.Empty;
                 int _ID = 1;
 
-                // If the user chose the parent node then it returns
+                // If the user choose the parent node then it returns
                 if (e.Node.Parent == null) return;
 
-                // If the user chose the reserved task then it returns
+                // If the user choose the reserved task then it returns
                 if (e.Node.Text.Contains("0_")) return;
 
                 // Get the group name
@@ -143,9 +128,14 @@ namespace emira.GUI
                     tbTaskName.Text = _taskName;
 
                     // Get the task ID as int
-                    Int32.TryParse(_taskID, out _ID);
-
-                    nupTaskID.Value = _ID;
+                    if (Int32.TryParse(_taskID, out _ID))
+                    {
+                        nupTaskID.Value = _ID;
+                    }
+                    else
+                    {
+                        MyLogger.GetInstance().Error("TryParse throws false, the value of the taskID was: " + _taskID);
+                    }
                 }
                 else
                 {
@@ -157,12 +147,8 @@ namespace emira.GUI
             catch (Exception error)
             {
                 MyLogger.GetInstance().Error(error.Message);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
-
-
 
         private void btnImport_Click(object sender, EventArgs e)
         {
@@ -215,7 +201,7 @@ namespace emira.GUI
                 if (_validationError)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show("Az elem(ek) nem felelnek meg a típusnak!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.Show(Texts.ErrorMessages.ElementsAreNotAllowed, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                     return;
                 }
 
@@ -229,7 +215,7 @@ namespace emira.GUI
                 if (_groupIDs.Contains(0))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.Show("The group ID can not be 0, it is reserved!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                    customMsgBox.Show(Texts.ErrorMessages.GroupIDNullIsNotAllowed, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                     return;
                 }
 
@@ -245,7 +231,7 @@ namespace emira.GUI
                         if (_previousGroupName == _groupNames.ElementAt(i))
                         {
                             customMsgBox = new CustomMsgBox();
-                            customMsgBox.Show("The group name has to be unique!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                            customMsgBox.Show(Texts.ErrorMessages.GroupNameUnique, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                             return;
                         }
 
@@ -255,7 +241,7 @@ namespace emira.GUI
                     if (_previousGroupName != _groupNames.ElementAt(i))
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show("The group ID has to be unique!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        customMsgBox.Show(Texts.ErrorMessages.GroupIDUnique, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                         return;
                     }
                 }
@@ -277,7 +263,7 @@ namespace emira.GUI
                     if (_taskIDsWithoutDuplicates.Count() < _taskIDs.Count())
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show("The task ID has to be unique under the group!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        customMsgBox.Show(Texts.ErrorMessages.TaskIDUnique, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                         return;
                     }
 
@@ -291,7 +277,7 @@ namespace emira.GUI
                     if (_taskNamesWithoutDuplicates.Count() < _taskNames.Count())
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show("The task Name has to be unique under the group!", Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        customMsgBox.Show(Texts.ErrorMessages.TaskNameUnique, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                         return;
                     }
                 }
@@ -309,14 +295,11 @@ namespace emira.GUI
                 UpdateGroups();
 
                 customMsgBox = new CustomMsgBox();
-                customMsgBox.Show("Import OK!", Texts.Captions.Information, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
+                customMsgBox.Show(Texts.InformationMessages.SuccessfulImported, Texts.Captions.Information, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
             }
-
             catch (Exception error)
             {
                 MyLogger.GetInstance().Error(error.Message);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -337,12 +320,12 @@ namespace emira.GUI
                     try
                     {
                         _dataSet.WriteXml(_saveFileDialog.FileName);
+                        customMsgBox = new CustomMsgBox();
+                        customMsgBox.Show(Texts.InformationMessages.SuccessfulExported, Texts.Captions.Information, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
                     }
                     catch (Exception error)
                     {
                         MyLogger.GetInstance().Error(error.Message);
-                        customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                         return;
                     }
                 }
@@ -350,8 +333,6 @@ namespace emira.GUI
             catch (Exception error)
             {
                 MyLogger.GetInstance().Error(error.Message);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -365,7 +346,7 @@ namespace emira.GUI
                 // User can not modify the combobox
                 cbGroupName.Enabled = false;
 
-                AddOrUpdateGroupPage _addOrUpdateGroupPage = new AddOrUpdateGroupPage();
+                AddOrUpdateGroupForm _addOrUpdateGroupPage = new AddOrUpdateGroupForm();
                 _addOrUpdateGroupPage.ShowDialog();
 
                 // Combobox enabled again
@@ -380,8 +361,6 @@ namespace emira.GUI
             catch (Exception error)
             {
                 MyLogger.GetInstance().Error(error.Message);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -405,7 +384,7 @@ namespace emira.GUI
 
                 cbGroupValue = cbGroupName.SelectedItem.ToString();
 
-                AddOrUpdateGroupPage _addOrUpdateGroupPage = new AddOrUpdateGroupPage();
+                AddOrUpdateGroupForm _addOrUpdateGroupPage = new AddOrUpdateGroupForm();
                 _addOrUpdateGroupPage.ShowDialog();
 
                 // Combobox enabled again
@@ -420,8 +399,6 @@ namespace emira.GUI
             catch (Exception error)
             {
                 MyLogger.GetInstance().Error(error.Message);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -493,12 +470,8 @@ namespace emira.GUI
             catch (Exception error)
             {
                 MyLogger.GetInstance().Error(error.Message);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
-
-
 
         private void btnAddTask_Click(object sender, EventArgs e)
         {
@@ -562,8 +535,6 @@ namespace emira.GUI
             catch (Exception error)
             {
                 MyLogger.GetInstance().Error(error.Message);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -632,8 +603,6 @@ namespace emira.GUI
             catch (Exception error)
             {
                 MyLogger.GetInstance().Error(error.Message);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -700,8 +669,6 @@ namespace emira.GUI
             catch (Exception error)
             {
                 MyLogger.GetInstance().Error(error.Message);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -748,15 +715,20 @@ namespace emira.GUI
                     _actualTaskID = task[Texts.TaskProperties.TaskID].ToString();
                     _actualTaskName = task[Texts.TaskProperties.TaskName].ToString();
 
-                    Int32.TryParse(_actualTaskGroupID, out _groupID);
-
-                    if (_previousTaskID == _actualTaskGroupID)
+                    if(Int32.TryParse(_actualTaskGroupID, out _groupID))
                     {
-                        tvGroupsAndTasks.Nodes[_groupID].Nodes.Add(_actualTaskGroupID + "_" + _actualTaskID + " " + _actualTaskName);
+                        if (_previousTaskID == _actualTaskGroupID)
+                        {
+                            tvGroupsAndTasks.Nodes[_groupID].Nodes.Add(_actualTaskGroupID + "_" + _actualTaskID + " " + _actualTaskName);
+                        }
+                        else
+                        {
+                            tvGroupsAndTasks.Nodes[_groupID].Nodes.Add(_actualTaskGroupID + "_" + _actualTaskID + " " + _actualTaskName);
+                        }
                     }
                     else
                     {
-                        tvGroupsAndTasks.Nodes[_groupID].Nodes.Add(_actualTaskGroupID + "_" + _actualTaskID + " " + _actualTaskName);
+                        MyLogger.GetInstance().Error("TryParse throws false, the value of the taskID was: " + _actualTaskGroupID);
                     }
                 }
 
@@ -771,8 +743,6 @@ namespace emira.GUI
             catch (Exception error)
             {
                 MyLogger.GetInstance().Error(error.Message);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -797,8 +767,6 @@ namespace emira.GUI
             catch (Exception error)
             {
                 MyLogger.GetInstance().Error(error.Message);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
@@ -815,11 +783,18 @@ namespace emira.GUI
             catch (Exception error)
             {
                 MyLogger.GetInstance().Error(error.Message);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
             }
         }
 
+        private void cbGroupName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void nupTaskID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {

@@ -6,7 +6,7 @@ using emira.HelperFunctions;
 
 namespace emira.GUI
 {
-    public partial class SettingsPage : Form
+    public partial class SettingsForm : Form
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         CustomMsgBox customMsgBox;
@@ -14,7 +14,7 @@ namespace emira.GUI
         int iValX;
         int iValY;
 
-        public SettingsPage()
+        public SettingsForm()
         {
             InitializeComponent();
 
@@ -91,7 +91,7 @@ namespace emira.GUI
         {
             LocationInfo._location = this.Location;
             Cursor.Current = Cursors.WaitCursor;
-            HomePage _homePage = new HomePage();
+            HomeForm _homePage = new HomeForm();
             _homePage.Show();
             Hide();
             Cursor.Current = Cursors.Default;

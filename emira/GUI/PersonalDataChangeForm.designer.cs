@@ -1,6 +1,6 @@
 ﻿namespace emira.GUI
 {
-    partial class PersonalDataChangePage
+    partial class PersonalDataChangeForm
     {
         /// <summary>
         /// Required designer variable.

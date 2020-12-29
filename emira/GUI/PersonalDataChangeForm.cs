@@ -11,7 +11,7 @@ using NLog;
 
 namespace emira.GUI
 {
-    public partial class PersonalDataChangePage : Form
+    public partial class PersonalDataChangeForm : Form
     {
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -23,7 +23,7 @@ namespace emira.GUI
         Person person;
         CustomMsgBox customMsgBox;
 
-        public PersonalDataChangePage()
+        public PersonalDataChangeForm()
         {
             InitializeComponent();
         }

@@ -219,6 +219,17 @@ namespace emira.HelperFunctions
             //            "* The Task ID already exists with another Task name\r\n" +
             //            "* The Task name alraedy exists with another Task ID or with the same";
 
+            public static string ElementsAreNotAllowed = "Az elem(ek) nem felelnek meg a típusnak!";
+
+            public static string GroupIDNullIsNotAllowed = "A csoport ID nem lehet nulla (0), a program által foglalt!";
+
+            public static string GroupNameUnique = "A csoport nevének egyedinek kell lennie!";
+
+            public static string GroupIDUnique = "A csoport ID-nak egyedinek kell lennie!";
+
+            public static string TaskIDUnique = "A feladat ID-jának egyedinek kell lennie a csoport alatt!";
+
+            public static string TaskNameUnique = "A feladat nevének egyedinek kell lennie a csoport alatt!";
             #endregion
 
             #region WorkingHours
@@ -284,6 +295,10 @@ namespace emira.HelperFunctions
             public static string SuccessfulLocked = "Az adatok le vannak zárva."; //"Data has been locked.";
 
             public static string SuccessfulUnlocked = "Az adatok feloldva."; //"Data has been unlocked.";
+
+            public static string SuccessfulImported = "Az importálás sikeres volt.";
+
+            public static string SuccessfulExported = "Az exportálás sikeres volt.";
         }
 
         public static class WarningMessages

@@ -8,14 +8,14 @@ using NLog;
 
 namespace emira.GUI
 {
-    public partial class StatisticsSettingsPage : Form
+    public partial class StatisticsSettingsForm : Form
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         bool bTogMove;
         int iValX;
         int iValY;
 
-        public StatisticsSettingsPage()
+        public StatisticsSettingsForm()
         {
             InitializeComponent();
 

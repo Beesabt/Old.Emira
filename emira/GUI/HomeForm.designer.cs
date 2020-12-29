@@ -1,6 +1,6 @@
 ﻿namespace emira.GUI
 {
-    partial class HomePage
+    partial class HomeForm
     {
         /// <summary>
         /// Required designer variable.

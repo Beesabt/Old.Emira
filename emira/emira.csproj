@@ -111,47 +111,47 @@
     <Compile Include="BusinessLogicLayer\Statistics.cs" />
     <Compile Include="BusinessLogicLayer\TaskModification.cs" />
     <Compile Include="BusinessLogicLayer\WorkingHours.cs" />
-    <Compile Include="GUI\AddGovernmentHolidaysPage.cs">
+    <Compile Include="GUI\AddGovernmentHolidaysForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\AddGovernmentHolidaysPage.Designer.cs">
-      <DependentUpon>AddGovernmentHolidaysPage.cs</DependentUpon>
+    <Compile Include="GUI\AddGovernmentHolidaysForm.Designer.cs">
+      <DependentUpon>AddGovernmentHolidaysForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\AddOrUpdateGroupPage.cs">
+    <Compile Include="GUI\AddOrUpdateGroupForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\AddOrUpdateGroupPage.Designer.cs">
-      <DependentUpon>AddOrUpdateGroupPage.cs</DependentUpon>
+    <Compile Include="GUI\AddOrUpdateGroupForm.Designer.cs">
+      <DependentUpon>AddOrUpdateGroupForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\AddRemoveTaskPage.cs">
+    <Compile Include="GUI\AddRemoveTaskForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\AddRemoveTaskPage.designer.cs">
-      <DependentUpon>AddRemoveTaskPage.cs</DependentUpon>
+    <Compile Include="GUI\AddRemoveTaskForm.designer.cs">
+      <DependentUpon>AddRemoveTaskForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\HolidaysPage.cs">
+    <Compile Include="GUI\HolidaysForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\HolidaysPage.designer.cs">
-      <DependentUpon>HolidaysPage.cs</DependentUpon>
+    <Compile Include="GUI\HolidaysForm.designer.cs">
+      <DependentUpon>HolidaysForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\StatisticsPage.cs">
+    <Compile Include="GUI\StatisticsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\StatisticsPage.Designer.cs">
-      <DependentUpon>StatisticsPage.cs</DependentUpon>
+    <Compile Include="GUI\StatisticsForm.Designer.cs">
+      <DependentUpon>StatisticsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\StatisticsSettingsPage.cs">
+    <Compile Include="GUI\StatisticsSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\StatisticsSettingsPage.Designer.cs">
-      <DependentUpon>StatisticsSettingsPage.cs</DependentUpon>
+    <Compile Include="GUI\StatisticsSettingsForm.Designer.cs">
+      <DependentUpon>StatisticsSettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\WorkingHoursPage.cs">
+    <Compile Include="GUI\WorkingHoursForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\WorkingHoursPage.designer.cs">
-      <DependentUpon>WorkingHoursPage.cs</DependentUpon>
+    <Compile Include="GUI\WorkingHoursForm.designer.cs">
+      <DependentUpon>WorkingHoursForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\GeneralInfo.cs" />
     <Compile Include="BusinessLogicLayer\Settings.cs" />
@@ -172,11 +172,11 @@
     <Compile Include="GUI\EmailChange.designer.cs">
       <DependentUpon>EmailChange.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\HomePage.cs">
+    <Compile Include="GUI\HomeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\HomePage.designer.cs">
-      <DependentUpon>HomePage.cs</DependentUpon>
+    <Compile Include="GUI\HomeForm.designer.cs">
+      <DependentUpon>HomeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\LoginPage.cs">
       <SubType>Form</SubType>
@@ -190,11 +190,11 @@
     <Compile Include="GUI\PasswordChange.designer.cs">
       <DependentUpon>PasswordChange.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\PersonalDataChangePage.cs">
+    <Compile Include="GUI\PersonalDataChangeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\PersonalDataChangePage.designer.cs">
-      <DependentUpon>PersonalDataChangePage.cs</DependentUpon>
+    <Compile Include="GUI\PersonalDataChangeForm.designer.cs">
+      <DependentUpon>PersonalDataChangeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\PersonalInformation.cs">
       <SubType>UserControl</SubType>
@@ -202,11 +202,11 @@
     <Compile Include="GUI\PersonalInformation.designer.cs">
       <DependentUpon>PersonalInformation.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\SettingsPage.cs">
+    <Compile Include="GUI\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\SettingsPage.designer.cs">
-      <DependentUpon>SettingsPage.cs</DependentUpon>
+    <Compile Include="GUI\SettingsForm.designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\TaskManager.cs">
       <SubType>UserControl</SubType>
@@ -236,30 +236,28 @@
       <DependentUpon>TaskManager.xsd</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="ClassDiagram1.cd" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Resources\word_icon_white_32.png" />
-    <EmbeddedResource Include="GUI\AddGovernmentHolidaysPage.resx">
-      <DependentUpon>AddGovernmentHolidaysPage.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\AddGovernmentHolidaysForm.resx">
+      <DependentUpon>AddGovernmentHolidaysForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\AddOrUpdateGroupPage.resx">
-      <DependentUpon>AddOrUpdateGroupPage.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\AddOrUpdateGroupForm.resx">
+      <DependentUpon>AddOrUpdateGroupForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\AddRemoveTaskPage.resx">
-      <DependentUpon>AddRemoveTaskPage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\CustomMsgBox.resx">
-      <DependentUpon>CustomMsgBox.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\AddRemoveTaskForm.resx">
+      <DependentUpon>AddRemoveTaskForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\EmailChange.resx">
       <DependentUpon>EmailChange.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\HolidaysPage.resx">
-      <DependentUpon>HolidaysPage.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\HolidaysForm.resx">
+      <DependentUpon>HolidaysForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\HomePage.resx">
-      <DependentUpon>HomePage.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\HomeForm.resx">
+      <DependentUpon>HomeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\LoginPage.resx">
       <DependentUpon>LoginPage.cs</DependentUpon>
@@ -267,26 +265,26 @@
     <EmbeddedResource Include="GUI\PasswordChange.resx">
       <DependentUpon>PasswordChange.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\PersonalDataChangePage.resx">
-      <DependentUpon>PersonalDataChangePage.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\PersonalDataChangeForm.resx">
+      <DependentUpon>PersonalDataChangeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\PersonalInformation.resx">
       <DependentUpon>PersonalInformation.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\SettingsPage.resx">
-      <DependentUpon>SettingsPage.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\StatisticsPage.resx">
-      <DependentUpon>StatisticsPage.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\StatisticsForm.resx">
+      <DependentUpon>StatisticsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\StatisticsSettingsPage.resx">
-      <DependentUpon>StatisticsSettingsPage.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\StatisticsSettingsForm.resx">
+      <DependentUpon>StatisticsSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\TaskManager.resx">
       <DependentUpon>TaskManager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\WorkingHoursPage.resx">
-      <DependentUpon>WorkingHoursPage.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\WorkingHoursForm.resx">
+      <DependentUpon>WorkingHoursForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -14,7 +14,7 @@ using emira.Utilities;
 
 namespace emira.GUI
 {
-    public partial class StatisticsPage : Form
+    public partial class StatisticsForm : Form
     {
         CustomMsgBox customMsgBox;
         Statistics statistics;
@@ -23,7 +23,7 @@ namespace emira.GUI
         int mValX;
         int mValY;
 
-        public StatisticsPage()
+        public StatisticsForm()
         {
             InitializeComponent();
 
@@ -208,7 +208,7 @@ namespace emira.GUI
 
         private void btnSettings_Click(object sender, EventArgs e)
         {
-            StatisticsSettingsPage _statisticsSettingsPage = new StatisticsSettingsPage();
+            StatisticsSettingsForm _statisticsSettingsPage = new StatisticsSettingsForm();
             _statisticsSettingsPage.ShowDialog();
             ChartSettings();
         }
@@ -254,7 +254,7 @@ namespace emira.GUI
         {
             LocationInfo._location = this.Location;
             System.Windows.Forms.Cursor.Current = Cursors.WaitCursor;
-            HomePage _homePage = new HomePage();
+            HomeForm _homePage = new HomeForm();
             _homePage.Show();
             Hide();
             System.Windows.Forms.Cursor.Current = Cursors.Default;

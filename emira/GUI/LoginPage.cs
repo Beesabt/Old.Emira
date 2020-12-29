@@ -12,7 +12,7 @@ namespace emira.GUI
         int _iValX;
         int _iValY;
         Login _login;
-        HomePage _homePage;
+        HomeForm _homePage;
         CustomMsgBox _msgBox;
 
         public LoginPage()
@@ -60,7 +60,7 @@ namespace emira.GUI
 
                 // Wait until everything is loaded
                 Cursor.Current = Cursors.WaitCursor;
-                _homePage = new HomePage();
+                _homePage = new HomeForm();
                 _homePage.Show();
                 Hide();
                 Cursor.Current = Cursors.Default;           

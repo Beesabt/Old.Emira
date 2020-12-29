@@ -5,7 +5,7 @@ using emira.HelperFunctions;
 
 namespace emira.GUI
 {
-    public partial class HomePage : Form
+    public partial class HomeForm : Form
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         CustomMsgBox customMsgBox;
@@ -13,7 +13,7 @@ namespace emira.GUI
         int iValX;
         int iValY;
 
-        public HomePage()
+        public HomeForm()
         {
             InitializeComponent();
 
@@ -54,7 +54,7 @@ namespace emira.GUI
         {
             LocationInfo._location = this.Location;
             Cursor.Current = Cursors.WaitCursor;
-            WorkingHoursPage _workingHoursPage = new WorkingHoursPage();
+            WorkingHoursForm _workingHoursPage = new WorkingHoursForm();
             _workingHoursPage.Show();
             Hide();
             Cursor.Current = Cursors.Default;
@@ -64,7 +64,7 @@ namespace emira.GUI
         {
             LocationInfo._location = this.Location;
             Cursor.Current = Cursors.WaitCursor;
-            SettingsPage _settingsPage = new SettingsPage();
+            SettingsForm _settingsPage = new SettingsForm();
             _settingsPage.Show();
             Hide();
             Cursor.Current = Cursors.Default;
@@ -74,7 +74,7 @@ namespace emira.GUI
         {
             LocationInfo._location = this.Location;
             Cursor.Current = Cursors.WaitCursor;
-            HolidaysPage _holidaysPage = new HolidaysPage();
+            HolidaysForm _holidaysPage = new HolidaysForm();
             _holidaysPage.Show();
             Hide();
             Cursor.Current = Cursors.Default;
@@ -84,7 +84,7 @@ namespace emira.GUI
         {
             LocationInfo._location = this.Location;
             Cursor.Current = Cursors.WaitCursor;
-            StatisticsPage _statisticsPage = new StatisticsPage();
+            StatisticsForm _statisticsPage = new StatisticsForm();
             _statisticsPage.Show();
             Hide();
             Cursor.Current = Cursors.Default;

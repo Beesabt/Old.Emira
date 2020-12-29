@@ -1,6 +1,6 @@
 ﻿namespace emira.GUI
 {
-    partial class StatisticsSettingsPage
+    partial class StatisticsSettingsForm
     {
         /// <summary>
         /// Required designer variable.

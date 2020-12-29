@@ -16,7 +16,7 @@ using Microsoft.Office.Interop.Word;
 
 namespace emira.GUI
 {
-    public partial class WorkingHoursPage : Form
+    public partial class WorkingHoursForm : Form
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         int togMove;
@@ -30,7 +30,7 @@ namespace emira.GUI
 
         public static string cbYearWithMonthValue = string.Empty;
 
-        public WorkingHoursPage()
+        public WorkingHoursForm()
         {
             InitializeComponent();
 
@@ -846,7 +846,7 @@ namespace emira.GUI
         {
             cbYearWithMonthValue = cbYearWithMonth.SelectedItem.ToString();
 
-            AddRemoveTaskPage _addRemoveTaskPage = new AddRemoveTaskPage();
+            AddRemoveTaskForm _addRemoveTaskPage = new AddRemoveTaskForm();
             _addRemoveTaskPage.ShowDialog();
             UpdateWorkingHoursTable();
         }
@@ -1015,7 +1015,7 @@ namespace emira.GUI
         {
             LocationInfo._location = this.Location;
             Cursor.Current = Cursors.WaitCursor;
-            HomePage _homePage = new HomePage();
+            HomeForm _homePage = new HomeForm();
             _homePage.Show();
             Hide();
             Cursor.Current = Cursors.Default;
@@ -1071,12 +1071,11 @@ namespace emira.GUI
             }
         }
 
-
-        //protected override void OnPaint(PaintEventArgs e)
-        //{
-        //    System.Drawing.Rectangle borderRectangle = new System.Drawing.Rectangle(0, 0, ClientRectangle.Width - 1, ClientRectangle.Height - 1);
-        //    e.Graphics.DrawRectangle(Pens.Black, borderRectangle);
-        //    base.OnPaint(e);
-        //}
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            System.Drawing.Rectangle borderRectangle = new System.Drawing.Rectangle(0, 0, ClientRectangle.Width - 1, ClientRectangle.Height - 1);
+            e.Graphics.DrawRectangle(Pens.Black, borderRectangle);
+            base.OnPaint(e);
+        }
     }
 }

@@ -11,7 +11,7 @@ using emira.BusinessLogicLayer;
 
 namespace emira.GUI
 {
-    public partial class AddGovernmentHolidaysPage : Form
+    public partial class AddGovernmentHolidaysForm : Form
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         int togMove;
@@ -23,7 +23,7 @@ namespace emira.GUI
         DataTable dataTable;
         BindingSource bindingSource;
 
-        public AddGovernmentHolidaysPage()
+        public AddGovernmentHolidaysForm()
         {
             InitializeComponent();
 

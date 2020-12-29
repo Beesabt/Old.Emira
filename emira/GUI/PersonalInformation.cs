@@ -58,7 +58,7 @@ namespace emira.GUI
                     btnChangeData.Enabled = false;
                     return;
                 }
-                PersonalDataChangePage _dataChangePage = new PersonalDataChangePage();
+                PersonalDataChangeForm _dataChangePage = new PersonalDataChangeForm();
                 _dataChangePage.ShowDialog();
                 tlpPersonalInformation.Invalidate();
             }

@@ -1,6 +1,6 @@
 ﻿namespace emira.GUI
 {
-    partial class AddOrUpdateGroupPage
+    partial class AddOrUpdateGroupForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddOrUpdateGroupPage));
             this.lGroupID = new System.Windows.Forms.Label();
             this.lGroupName = new System.Windows.Forms.Label();
             this.nupGroupID = new System.Windows.Forms.NumericUpDown();
@@ -158,7 +157,7 @@
             // btnExit
             // 
             this.btnExit.BackColor = System.Drawing.Color.Transparent;
-            this.btnExit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnExit.BackgroundImage")));
+            this.btnExit.BackgroundImage = global::emira.Properties.Resources.close_icon_white_26;
             this.btnExit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnExit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(103)))), ((int)(((byte)(184)))));
             this.btnExit.FlatAppearance.BorderSize = 0;
@@ -172,7 +171,7 @@
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // AddOrUpdateGroupPage
+            // AddOrUpdateGroupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -186,9 +185,9 @@
             this.Controls.Add(this.lGroupName);
             this.Controls.Add(this.lGroupID);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "AddOrUpdateGroupPage";
+            this.Name = "AddOrUpdateGroupForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "AddModifyGroupPage";
+            this.Text = "AddModifyGroupForm";
             this.Load += new System.EventHandler(this.AddOrUpdateGroupPage_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nupGroupID)).EndInit();
             this.pHeader.ResumeLayout(false);

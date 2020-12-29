@@ -11,7 +11,7 @@ using NLog;
 
 namespace emira.GUI
 {
-    public partial class AddRemoveTaskPage : Form
+    public partial class AddRemoveTaskForm : Form
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         int togMove;
@@ -24,7 +24,7 @@ namespace emira.GUI
 
         List<TreeNode> _SelectedItemsAfterLoad = new List<TreeNode>();
 
-        public AddRemoveTaskPage()
+        public AddRemoveTaskForm()
         {
             InitializeComponent();
         }

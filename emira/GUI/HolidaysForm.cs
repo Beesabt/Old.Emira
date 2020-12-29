@@ -14,7 +14,7 @@ using Nager.Date;
 
 namespace emira.GUI
 {
-    public partial class HolidaysPage : Form
+    public partial class HolidaysForm : Form
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         int togMove;
@@ -25,7 +25,7 @@ namespace emira.GUI
         BindingSource bindingSource;
         CustomMsgBox customMsgBox;
 
-        public HolidaysPage()
+        public HolidaysForm()
         {
             InitializeComponent();
 
@@ -416,7 +416,7 @@ namespace emira.GUI
 
         private void btnAddGovernmentHoliday_Click(object sender, EventArgs e)
         {
-            AddGovernmentHolidaysPage _addGovernmentHolidaysPage = new AddGovernmentHolidaysPage();
+            AddGovernmentHolidaysForm _addGovernmentHolidaysPage = new AddGovernmentHolidaysForm();
             _addGovernmentHolidaysPage.ShowDialog();
         }
 
@@ -526,7 +526,7 @@ namespace emira.GUI
         {
             LocationInfo._location = this.Location;
             Cursor.Current = Cursors.WaitCursor;
-            HomePage _homePage = new HomePage();
+            HomeForm _homePage = new HomeForm();
             _homePage.Show();
             Hide();
             Cursor.Current = Cursors.Default;

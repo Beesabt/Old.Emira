@@ -1,6 +1,6 @@
 ﻿namespace emira.GUI
 {
-    partial class AddRemoveTaskPage
+    partial class AddRemoveTaskForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddRemoveTaskPage));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddRemoveTaskForm));
             this.tvAddOrRemoveTask = new System.Windows.Forms.TreeView();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();

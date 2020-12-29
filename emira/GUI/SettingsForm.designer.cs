@@ -1,6 +1,6 @@
 ﻿namespace emira.GUI
 {
-    partial class SettingsPage
+    partial class SettingsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsPage));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.pMenuBar = new System.Windows.Forms.Panel();
             this.btnPersonalInformation = new System.Windows.Forms.Button();
             this.btnTaskManager = new System.Windows.Forms.Button();

@@ -5,12 +5,12 @@ using System.Diagnostics;
 
 using emira.BusinessLogicLayer;
 using emira.HelperFunctions;
+using emira.Utilities;
 
 namespace emira.GUI
 {
-    public partial class AddOrUpdateGroupPage : Form
+    public partial class AddOrUpdateGroupForm : Form
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         int togMove;
         int mValX;
         int mValY;
@@ -19,7 +19,7 @@ namespace emira.GUI
         CustomMsgBox customMsgBox;
         TaskModification taskModification;
 
-        public AddOrUpdateGroupPage()
+        public AddOrUpdateGroupForm()
         {
             InitializeComponent();
         }
@@ -88,9 +88,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
@@ -115,7 +113,7 @@ namespace emira.GUI
                     if (!_isSuccess)
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                         return;
                     }
 
@@ -141,7 +139,7 @@ namespace emira.GUI
                     if (!_isSuccess)
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.InvalidValue, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                        customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
                         // Freez controls
                         nupGroupID.Enabled = true;
                         tbGroupName.Enabled = true;
@@ -157,9 +155,7 @@ namespace emira.GUI
             }
             catch (Exception error)
             {
-                Logger.Error(error);
-                customMsgBox = new CustomMsgBox();
-                customMsgBox.Show(Texts.ErrorMessages.SomethingUnexpectedHappened, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error, CustomMsgBox.Button.Close);
+                MyLogger.GetInstance().Error(error.Message);
             }
         }
 
