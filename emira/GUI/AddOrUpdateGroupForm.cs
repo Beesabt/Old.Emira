@@ -112,7 +112,7 @@ namespace emira.GUI
                     if (!_isSuccess)
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.ShowError(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
+                        customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                         return;
                     }
 
@@ -138,7 +138,7 @@ namespace emira.GUI
                     if (!_isSuccess)
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.ShowError(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
+                        customMsgBox.Show(Texts.ErrorMessages.CheckValuesOfFieldsForGroup, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                         // Freez controls
                         nupGroupID.Enabled = true;
                         tbGroupName.Enabled = true;

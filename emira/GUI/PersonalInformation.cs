@@ -52,7 +52,7 @@ namespace emira.GUI
                 if (string.IsNullOrEmpty(person.Name))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.DataTableNames.Person + Texts.ErrorMessages.UserIDDoesNotExistOrTableIsEmpty, Texts.Captions.PersonalInformationError, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.DataTableNames.Person + Texts.ErrorMessages.UserIDDoesNotExistOrTableIsEmpty, Texts.Captions.PersonalInformationError, CustomMsgBox.MsgBoxIcon.Error);
                     btnChangeData.Enabled = false;
                     return;
                 }

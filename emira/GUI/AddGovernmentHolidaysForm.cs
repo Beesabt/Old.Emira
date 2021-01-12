@@ -89,7 +89,7 @@ namespace emira.GUI
                     if (dtpGovernmentHoliday.Value.ToShortDateString() == publicHoliday.Date.ToShortDateString())
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.ShowError(Texts.ErrorMessages.PublicHolidaySelected, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
+                        customMsgBox.Show(Texts.ErrorMessages.PublicHolidaySelected, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                         return;
                     }
                 }
@@ -100,7 +100,7 @@ namespace emira.GUI
                 if (_isExist)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorDateExist, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorDateExist, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -110,7 +110,7 @@ namespace emira.GUI
                 if (_isExist)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorExistHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorExistHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -123,7 +123,7 @@ namespace emira.GUI
                 if (_isClosed)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorLockedHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorLockedHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -169,7 +169,7 @@ namespace emira.GUI
                 if (_isClosed)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorLockedHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorLockedHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -179,12 +179,12 @@ namespace emira.GUI
                 if (_isSuccess)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.InformationMessages.SuccessfulLocked, Texts.Captions.Information, CustomMsgBox.MsgBoxIcon.Information);
+                    customMsgBox.Show(Texts.InformationMessages.SuccessfulLocked, Texts.Captions.Information, CustomMsgBox.MsgBoxIcon.Information);
                 }
                 else
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorDuringCancellation, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorDuringCancellation, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                 }
 
                 // Update government holiday table

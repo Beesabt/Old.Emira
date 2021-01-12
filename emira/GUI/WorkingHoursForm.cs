@@ -766,7 +766,7 @@ namespace emira.GUI
                     else
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.ShowError(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, CustomMsgBox.MsgBoxIcon.Error);
+                        customMsgBox.Show(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, CustomMsgBox.MsgBoxIcon.Error);
                     }
                 }
 
@@ -796,7 +796,7 @@ namespace emira.GUI
                     if (!_isSuccess)
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.ShowError(Texts.ErrorMessages.ErrorDuringLock, Texts.Captions.ErrorLock, CustomMsgBox.MsgBoxIcon.Error);
+                        customMsgBox.Show(Texts.ErrorMessages.ErrorDuringLock, Texts.Captions.ErrorLock, CustomMsgBox.MsgBoxIcon.Error);
                         return;
                     }
                 }
@@ -821,7 +821,7 @@ namespace emira.GUI
                     if (!_isSuccess)
                     {
                         customMsgBox = new CustomMsgBox();
-                        customMsgBox.ShowError(Texts.ErrorMessages.ErrorDuringUnlock, Texts.Captions.ErrorUnlock, CustomMsgBox.MsgBoxIcon.Error);
+                        customMsgBox.Show(Texts.ErrorMessages.ErrorDuringUnlock, Texts.Captions.ErrorUnlock, CustomMsgBox.MsgBoxIcon.Error);
                         return;
                     }
                 }
@@ -958,7 +958,7 @@ namespace emira.GUI
                 _period = cbYearWithMonth.SelectedItem.ToString().Replace('-', '_');
                 _path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 workingHours = new WorkingHours();
-                workingHours.ExportToMSWord(dgvWorkingHours, _path + "\\" + _period + "_Munkaidonaplo");
+                workingHours.ExportToMSWord2(dgvWorkingHours, _path + "\\" + _period + "_Munkaidonaplo", cbYearWithMonth.SelectedItem.ToString());
             }
             catch (Exception error)
             {

@@ -538,7 +538,7 @@ namespace emira.GUI
                 if (string.IsNullOrEmpty(tbName.Text.Trim()))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(lName.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(lName.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     tbName.Focus();
                     return;
                 }
@@ -546,7 +546,7 @@ namespace emira.GUI
                 if (string.IsNullOrEmpty(tbCompany.Text.Trim()))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(lCompany.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(lCompany.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     tbCompany.Focus();
                     return;
                 }
@@ -555,7 +555,7 @@ namespace emira.GUI
                 if (!System.Text.RegularExpressions.Regex.IsMatch(tbName.Text, @"^[a-zA-Z\s\.-]*$"))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(lRegisterNumber.Text.Trim(':') + Texts.ErrorMessages.TextField, Texts.Captions.TextField, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(lRegisterNumber.Text.Trim(':') + Texts.ErrorMessages.TextField, Texts.Captions.TextField, CustomMsgBox.MsgBoxIcon.Error);
                     tbName.Focus();
                     return;
                 }
@@ -564,7 +564,7 @@ namespace emira.GUI
                 if (!System.Text.RegularExpressions.Regex.IsMatch(tbRegisterNumber.Text, "^[0-9]*$"))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(lRegisterNumber.Text.Trim(':') + Texts.ErrorMessages.NumericField, Texts.Captions.NumericField, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(lRegisterNumber.Text.Trim(':') + Texts.ErrorMessages.NumericField, Texts.Captions.NumericField, CustomMsgBox.MsgBoxIcon.Error);
                     lRegisterNumber.Focus();
                     return;
                 }
@@ -573,7 +573,7 @@ namespace emira.GUI
                 if (dtpDateOfBirth.Value > DateTime.Today.AddYears(-16))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.WorkNotAllowed15, Texts.Captions.BirthOfDateError, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.WorkNotAllowed15, Texts.Captions.BirthOfDateError, CustomMsgBox.MsgBoxIcon.Error);
                     dtpDateOfBirth.Focus();
                     return;
                 }
@@ -582,7 +582,7 @@ namespace emira.GUI
                 if (dtpDateOfBirth.Value <= DateTime.Today.AddYears(-100))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.WorkNotAllowed100, Texts.Captions.BirthOfDateError, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.WorkNotAllowed100, Texts.Captions.BirthOfDateError, CustomMsgBox.MsgBoxIcon.Error);
                     dtpDateOfBirth.Focus();
                     return;
                 }
@@ -591,7 +591,7 @@ namespace emira.GUI
                 if (dtpDateOfBirth.Value > dtpDateOfStart.Value)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.StartOfDateTooSmall, Texts.Captions.StartOfDateError, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.StartOfDateTooSmall, Texts.Captions.StartOfDateError, CustomMsgBox.MsgBoxIcon.Error);
                     dtpDateOfStart.Focus();
                     return;
                 }
@@ -600,7 +600,7 @@ namespace emira.GUI
                 if (dtpDateOfStart.Value > DateTime.Today)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.StartOfDateBiggerThanTodayDate, Texts.Captions.StartOfDateError, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.StartOfDateBiggerThanTodayDate, Texts.Captions.StartOfDateError, CustomMsgBox.MsgBoxIcon.Error);
                     dtpDateOfStart.Focus();
                     return;
                 }
@@ -609,7 +609,7 @@ namespace emira.GUI
                 if (cbYesDisabledChild.Checked && nupNumberOfDisabledChildren.Value == 0)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.DisabledChildrenIsNull, Texts.Captions.NumberOfTheChildrenError, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.DisabledChildrenIsNull, Texts.Captions.NumberOfTheChildrenError, CustomMsgBox.MsgBoxIcon.Error);
                     nupNumberOfDisabledChildren.Focus();
                     return;
                 }
@@ -618,7 +618,7 @@ namespace emira.GUI
                 if (nupNumberOfChildren.Value == 0 && nupNumberOfDisabledChildren.Value == 0 && nupNumberOfNewBornBabies.Value == 0 && cbYesChild.Checked)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.NumberOfChildren, Texts.Captions.NumberOfTheChildrenError, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.NumberOfChildren, Texts.Captions.NumberOfTheChildrenError, CustomMsgBox.MsgBoxIcon.Error);
                     nupNumberOfChildren.Focus();
                     return;
                 }
@@ -653,7 +653,7 @@ namespace emira.GUI
                 else
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, CustomMsgBox.MsgBoxIcon.Error);
                 }
             }
             catch (Exception error)

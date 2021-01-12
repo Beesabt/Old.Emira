@@ -28,7 +28,7 @@ namespace emira.GUI
                 if (tbOldEmail.Text.Trim() == string.Empty)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(lOldEmail.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(lOldEmail.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -36,7 +36,7 @@ namespace emira.GUI
                 if (tbNewEmail.Text.Trim() == string.Empty)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(lNewEmail.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(lNewEmail.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -44,7 +44,7 @@ namespace emira.GUI
                 if (tbNewEmailAgain.Text.Trim() == string.Empty)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(lNewEmailAgain.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(lNewEmailAgain.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -52,7 +52,7 @@ namespace emira.GUI
                 if (!settings.OldValueValidation(Texts.PersonProperties.Email, tbOldEmail.Text))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.WrongOldEmail, Texts.Captions.WrongOldValue, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.WrongOldEmail, Texts.Captions.WrongOldValue, CustomMsgBox.MsgBoxIcon.Error);
                     tbOldEmail.Text = string.Empty;
                     return;
                 }
@@ -61,7 +61,7 @@ namespace emira.GUI
                 if (tbNewEmail.Text == GeneralInfo.DefaultEmail)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.NewEmailIsDefault, Texts.Captions.NewEmaildIsNotAllowed, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.NewEmailIsDefault, Texts.Captions.NewEmaildIsNotAllowed, CustomMsgBox.MsgBoxIcon.Error);
                     tbNewEmailAgain.Text = string.Empty;
                     return;
                 }
@@ -70,7 +70,7 @@ namespace emira.GUI
                 if (tbNewEmail.Text != tbNewEmailAgain.Text)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.NewEmailMismatched, Texts.Captions.MissmatchadEmails, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.NewEmailMismatched, Texts.Captions.MissmatchadEmails, CustomMsgBox.MsgBoxIcon.Error);
                     tbNewEmailAgain.Text = string.Empty;
                     return;
                 }
@@ -79,7 +79,7 @@ namespace emira.GUI
                 if (tbOldEmail.Text == tbNewEmail.Text)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.NewEmailSameAsOldEmail, Texts.Captions.NewEmaildIsNotAllowed, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.NewEmailSameAsOldEmail, Texts.Captions.NewEmaildIsNotAllowed, CustomMsgBox.MsgBoxIcon.Error);
                     tbNewEmail.Text = string.Empty;
                     tbNewEmailAgain.Text = string.Empty;
                     return;
@@ -90,7 +90,7 @@ namespace emira.GUI
                 if (!email.IsValid(tbNewEmail.Text))
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.EmailIsNotValid, Texts.Captions.InvalidEmail, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.EmailIsNotValid, Texts.Captions.InvalidEmail, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -111,7 +111,7 @@ namespace emira.GUI
                 else
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.ErrorSave, CustomMsgBox.MsgBoxIcon.Error);
                     tbOldEmail.Text = string.Empty;
                 }
 

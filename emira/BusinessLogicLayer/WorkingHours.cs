@@ -60,7 +60,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                MyLogger.GetInstance().Error(error.Message);
+                MyLogger.GetInstance().Error(error.Message + ", " + error.TargetSite);
                 return _dates;
             }
         }
@@ -81,7 +81,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                MyLogger.GetInstance().Error(error.Message);
+                MyLogger.GetInstance().Error(error.Message + ", " + error.TargetSite);
                 return dataTable;
             }
         }
@@ -101,7 +101,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                MyLogger.GetInstance().Error(error.Message);
+                MyLogger.GetInstance().Error(error.Message + ", " + error.TargetSite);
                 return dataTable;
             }
         }
@@ -135,7 +135,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                MyLogger.GetInstance().Error(error.Message);
+                MyLogger.GetInstance().Error(error.Message + ", " + error.TargetSite);
                 return _result;
             }
         }
@@ -189,7 +189,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                MyLogger.GetInstance().Error(error.Message);
+                MyLogger.GetInstance().Error(error.Message + ", " + error.TargetSite);
                 return _isSuccess;
             }
         }
@@ -243,7 +243,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                MyLogger.GetInstance().Error(error.Message);
+                MyLogger.GetInstance().Error(error.Message + ", " + error.TargetSite);
                 return _lockIsPossible;
             }
         }
@@ -272,7 +272,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                MyLogger.GetInstance().Error(error.Message);
+                MyLogger.GetInstance().Error(error.Message + ", " + error.TargetSite);
                 return _isSuccess;
             }
         }
@@ -308,7 +308,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                MyLogger.GetInstance().Error(error.Message);
+                MyLogger.GetInstance().Error(error.Message + ", " + error.TargetSite);
                 return _sb.ToString();
             }
         }
@@ -330,7 +330,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                MyLogger.GetInstance().Error(error.Message);
+                MyLogger.GetInstance().Error(error.Message + ", " + error.TargetSite);
                 return _dayOfMonth;
             }
         }
@@ -351,7 +351,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                MyLogger.GetInstance().Error(error.Message);
+                MyLogger.GetInstance().Error(error.Message + ", " + error.TargetSite);
                 return dataTable;
             }
         }
@@ -371,7 +371,7 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                MyLogger.GetInstance().Error(error.Message);
+                MyLogger.GetInstance().Error(error.Message + ", " + error.TargetSite);
                 return _workingHours;
             }
         }
@@ -391,10 +391,188 @@ namespace emira.BusinessLogicLayer
             }
             catch (Exception error)
             {
-                MyLogger.GetInstance().Error(error.Message);
+                MyLogger.GetInstance().Error(error.Message + ", " + error.TargetSite);
                 return dataTable;
             }
         }
+
+        public void ExportToMSWord2(DataGridView dgv, object filename, string selectedInterval)
+        {
+            int _cellRow = 0;
+            int _cellColumn = 0;
+
+            //Create a missing variable for missing value  
+            object missing = System.Reflection.Missing.Value;
+
+            //Create an instance for word app  
+            Microsoft.Office.Interop.Word.Application _winword = new Microsoft.Office.Interop.Word.Application();
+
+            try
+            {
+                //Set animation status for word application  
+                _winword.ShowAnimation = false;
+
+                //Set status for word application is to be visible or not.  
+                _winword.Visible = false;
+
+                // Open the template
+                Document _document = _winword.Documents.Open(@"C:\Users\Eszti\Desktop\Emira_Template.docx");
+
+                ContentControls _emiraTemplate = _document.SelectContentControlsByTag("Emira_Template");
+
+                foreach (ContentControl item in _emiraTemplate)
+                {
+                    switch (item.Title)
+                    {
+                        case "Company Name":
+                            item.SetPlaceholderText(null, null, "Emira");
+                            break;
+                        case "Employee Name":
+                            item.SetPlaceholderText(null, null, "Miss Kira");
+                            break;
+                        case "Employee Position":
+                            item.SetPlaceholderText(null, null, "Miss Kira");
+                            break;
+                        case "All Days":
+                            item.SetPlaceholderText(null, null, "Miss Kira");
+                            break;
+                        case "All Hours":
+                            item.SetPlaceholderText(null, null, "Miss Kira");
+                            break;
+                        case "Completed Hours":
+                            item.SetPlaceholderText(null, null, "Miss Kira");
+                            break;
+                        case "Overtime":
+                            item.SetPlaceholderText(null, null, "Miss Kira");
+                            break;
+                        case "Holidays":
+                            item.SetPlaceholderText(null, null, "Miss Kira");
+                            break;
+                        case "Absence":
+                            item.SetPlaceholderText(null, null, "Miss Kira");
+                            break;
+                        case "Interval":
+                            item.SetPlaceholderText(null, null, selectedInterval);
+                            break;
+                        case "Date":
+                            item.SetPlaceholderText(null, null, today.ToShortDateString());
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                // Find the text
+                Paragraph _paragraph = _document.Content.Paragraphs.Add(ref missing);
+                foreach (Paragraph item in _document.Paragraphs)
+                {
+                    if(item.Range.Text.Contains("<working_hours_table_place>"))
+                    {
+                        _paragraph = item;
+                    }
+                }
+
+                if (_paragraph != null)
+                {
+                    // Create the table 
+                    Table _wordTable = _document.Tables.Add(_paragraph.Range, dgv.RowCount + 1, dgv.ColumnCount + 1, ref missing, ref missing);
+
+                    // Border of the table
+                    _wordTable.Borders.InsideLineStyle = WdLineStyle.wdLineStyleSingle;
+                    _wordTable.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleSingle;
+
+                    // Headers
+                    string[] _columnsText = new string[dgv.ColumnCount + 1];
+                    _columnsText[0] = "Feladat";
+                    foreach (DataGridViewColumn column in dgv.Columns)
+                    {
+                        _columnsText[column.Index + 1] = column.HeaderText;
+                    }
+
+                    int _numberOfCells = dgv.Rows[0].Cells.Count;
+                    string[,] _rowsText = new string[dgv.RowCount, _numberOfCells + 1];
+
+
+                    for (int i = 0; i < dgv.RowCount; i++)
+                    {
+                        _rowsText[i, 0] = dgv.Rows[i].HeaderCell.Value.ToString();
+                        for (int j = 0; j < _numberOfCells; j++)
+                        {
+                            if (dgv.Rows[i].Cells[j].Value == null)
+                            {
+                                dgv.Rows[i].Cells[j].Value = string.Empty;
+                            }
+                            _rowsText[i, j + 1] = dgv.Rows[i].Cells[j].Value.ToString();
+                        }
+                    }
+
+                    foreach (Row row in _wordTable.Rows)
+                    {
+                        foreach (Cell cell in row.Cells)
+                        {
+                            // Set the table format
+                            cell.Range.Font.Name = "verdana";
+                            cell.Range.Font.Size = 8;
+                            cell.Shading.BackgroundPatternColor = WdColor.wdColorGray25;
+
+                            // Center alignment for cells  
+                            cell.VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+                            cell.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+
+                            //Header row  
+                            if (cell.RowIndex == 1)
+                            {
+                                cell.Range.Text = _columnsText[cell.ColumnIndex - 1];
+                            }
+
+                            //Data row  
+                            else
+                            {
+                                _cellRow = cell.RowIndex;
+                                _cellColumn = cell.ColumnIndex;
+                                cell.Range.Text = _rowsText[cell.RowIndex - 2, cell.ColumnIndex - 1];
+                                cell.Shading.BackgroundPatternColor = WdColor.wdColorWhite;
+                            }
+
+                            // Set cell padding
+                            cell.TopPadding = 0.1F;
+                            cell.BottomPadding = 0.1F;
+                            cell.LeftPadding = 0.1F;
+                            cell.RightPadding = 0.1F;
+                        }
+                    }
+
+                    // Table is the center of the document
+                    _wordTable.Rows.Alignment = WdRowAlignment.wdAlignRowCenter;
+
+                    // Width               
+                    //_document.Tables[1].AllowAutoFit = true;
+                    //_document.Tables[1].AutoFitBehavior(WdAutoFitBehavior.wdAutoFitWindow);
+                }
+
+               
+
+                //Save the document
+                _document.SaveAs2(ref filename);
+                _document.Close(ref missing, ref missing, ref missing);
+                _document = null;
+                //_winword.Quit(ref missing, ref missing, ref missing);
+                _winword = null;
+
+                customMsgBox = new CustomMsgBox();
+                customMsgBox.Show(Texts.InformationMessages.SuccessfulDocumentCreation, Texts.Captions.Information, CustomMsgBox.MsgBoxIcon.Information, CustomMsgBox.Button.OK);
+            }
+            catch (Exception error)
+            {
+                MyLogger.GetInstance().Error(error.Message + ", " + error.TargetSite);
+            }
+            finally
+            {
+                _winword.Quit(ref missing, ref missing, ref missing);
+            }
+        }
+
+
 
         /// <summary>
         /// Export the working days into a word document
@@ -514,7 +692,7 @@ namespace emira.BusinessLogicLayer
                 _document.SaveAs2(ref filename);
                 _document.Close(ref missing, ref missing, ref missing);
                 _document = null;
-                _winword.Quit(ref missing, ref missing, ref missing);
+                //_winword.Quit(ref missing, ref missing, ref missing);
                 _winword = null;
 
                 customMsgBox = new CustomMsgBox();
@@ -524,6 +702,9 @@ namespace emira.BusinessLogicLayer
             catch (Exception error)
             {
                 MyLogger.GetInstance().Error(error.Message + "The cell row: " + _cellRow + " column: " + _cellColumn);
+            }
+            finally
+            {
                 _winword.Quit(ref missing, ref missing, ref missing);
             }
         }

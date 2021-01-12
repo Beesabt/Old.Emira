@@ -226,7 +226,7 @@ namespace emira.BusinessLogicLayer
                 if (actualPerson.DateOfBirth == null)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.WarningMessages.PersonInformationMissing, Texts.Captions.Warning, CustomMsgBox.MsgBoxIcon.Warning);
+                    customMsgBox.Show(Texts.WarningMessages.PersonInformationMissing, Texts.Captions.Warning, CustomMsgBox.MsgBoxIcon.Warning);
                     return _holidays;
                 }
 

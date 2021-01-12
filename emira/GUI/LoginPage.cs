@@ -34,14 +34,14 @@ namespace emira.GUI
                 if (string.IsNullOrEmpty(tbEmail.Text))
                 {
                     _msgBox = new CustomMsgBox();
-                    _msgBox.ShowError(lEmail.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Warning);                  
+                    _msgBox.Show(lEmail.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Warning);                  
                     return;
                 }
 
                 if (string.IsNullOrEmpty(tbPassword.Text))
                 {
                     _msgBox = new CustomMsgBox();
-                    _msgBox.ShowError(lPassword.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Warning);                   
+                    _msgBox.Show(lPassword.Text.Trim(':') + Texts.ErrorMessages.FieldIsEmpty, Texts.Captions.EmptyRequiredField, CustomMsgBox.MsgBoxIcon.Warning);                   
                     return;
                 }
 

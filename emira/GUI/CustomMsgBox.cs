@@ -16,14 +16,18 @@ namespace emira.GUI
             InitializeComponent();
         }
 
-        public DialogResult ShowError(string text, string caption, MsgBoxIcon icon)
+        public DialogResult Show(string text, string caption, MsgBoxIcon icon, Button button = Button.Close)
         {
             DialogResult dlgResult = DialogResult.None;
             MsgBox = new CustomMsgBox();
             MsgBox.lCaption.Text = caption;
             MsgBox.lMessage.Text = text;
+
             switch (icon)
             {
+                case MsgBoxIcon.None:
+                    MsgBox.pbIcon.Visible = false;
+                    break;
                 case MsgBoxIcon.Information:
                     MsgBox.pbIcon.BackgroundImage = Properties.Resources.info_icon_color_48;
                     break;
@@ -38,119 +42,80 @@ namespace emira.GUI
                     break;
             }
 
-            MsgBox.btnClose.Visible = true;
-
-            // Resize the message box
-            int msgBoxX = MsgBox.pbIcon.Width + MsgBox.lMessage.Width + 60;
-
-            MsgBox.btnExit.Location = new Point(msgBoxX - MsgBox.btnExit.Width - 1, MsgBox.btnExit.Location.Y);
-            MsgBox.pHeader.Size = new Size(msgBoxX - 2, MsgBox.pHeader.Height);
-
-            if (MsgBox.lMessage.Height > MsgBox.pbIcon.Height)
+            switch (button)
             {
-                int diff = MsgBox.lMessage.Height - MsgBox.pbIcon.Height;
-                MsgBox.btnClose.Location = new Point((MsgBox.Width - MsgBox.btnClose.Width) / 2, MsgBox.btnClose.Location.Y + diff + 10);
-                MsgBox.Size = new Size(msgBoxX, MsgBox.Height + diff);
-                MsgBox.lMessage.Location = new Point(MsgBox.lMessage.Location.X, MsgBox.pbIcon.Location.Y);
-            }
-            else
-            {
-                MsgBox.Size = new Size(msgBoxX, MsgBox.Height);
-                MsgBox.btnClose.Location = new Point((MsgBox.Width - MsgBox.btnClose.Width) / 2, MsgBox.btnClose.Location.Y);
-                MsgBox.lMessage.Location = new Point(MsgBox.lMessage.Location.X, MsgBox.pbIcon.Location.Y + MsgBox.pbIcon.Height / 2);
+                case Button.OK:
+                    MsgBox.btnClose.Visible = true;
+                    MsgBox.btnClose.Text = "&OK";
+
+                    //// Resize the message box
+                    Resize(MsgBox, false);
+                    break;
+                case Button.YesNo:
+                    MsgBox.btnYes.Visible = true;
+                    MsgBox.btnNo.Visible = true;
+
+                    //// Resize the message box
+                    Resize(MsgBox, true);
+                    break;
+                case Button.Close:
+                    MsgBox.btnClose.Visible = true;
+                    MsgBox.btnClose.Text = "&Bezárás";
+
+                    //// Resize the message box
+                    Resize(MsgBox, false);
+                    break;
+                default:
+                    break;
             }
 
             dlgResult = MsgBox.ShowDialog();
+
             return dlgResult;
         }
 
-        public DialogResult Show(string text, string caption, MsgBoxIcon icon, Button button)
+        private new void Resize(CustomMsgBox MsgBox, bool YesNO)
         {
-            DialogResult dlgResult = DialogResult.None;
-            MsgBox = new CustomMsgBox();
-            MsgBox.lCaption.Text = caption;
-            MsgBox.lMessage.Text = text;
+            // New MsgBox X coordinate
+            int msgBoxXCoordinate = MsgBox.pbIcon.Width + MsgBox.lMessage.Width + 60;
 
-            switch (icon)
+            // New location for the Exit button
+            MsgBox.btnExit.Location = new Point(msgBoxXCoordinate - MsgBox.btnExit.Width - 1, MsgBox.btnExit.Location.Y);
+
+            // New size for the pHeader panel
+            MsgBox.pHeader.Size = new Size(msgBoxXCoordinate - 2, MsgBox.pHeader.Height);
+
+            // If the message bigger than the icon then the message is moved down the msgbox Y coordinate is also changed and the button(s) 
+            if (MsgBox.lMessage.Height > MsgBox.pbIcon.Height)
             {
-                case MsgBoxIcon.Information:
-                    MsgBox.pbIcon.BackgroundImage = Properties.Resources.info_icon_color_48;
-                    break;
-                case MsgBoxIcon.Warning:
-                    MsgBox.pbIcon.BackgroundImage = Properties.Resources.warning_icon_color_48;
-                    break;
-                case MsgBoxIcon.Error:
-                    MsgBox.pbIcon.BackgroundImage = Properties.Resources.error_icon_color_48;
-                    break;
-                case MsgBoxIcon.Question:
-                    MsgBox.pbIcon.BackgroundImage = Properties.Resources.question_icon_color_48;
-                    break;
-            }
-
-            if (button == Button.OK)
-            {
-                MsgBox.btnClose.Visible = true;
-                MsgBox.btnClose.Text = "&OK";
-
-                // Resize the message box
-                int msgBoxX = MsgBox.pbIcon.Width + MsgBox.lMessage.Width + 60;
-
-                MsgBox.btnExit.Location = new Point(msgBoxX - MsgBox.btnExit.Width - 1, MsgBox.btnExit.Location.Y);
-                MsgBox.pHeader.Size = new Size(msgBoxX - 2, MsgBox.pHeader.Height);
-
-                if (MsgBox.lMessage.Height > MsgBox.pbIcon.Height)
+                int diff = MsgBox.lMessage.Height - MsgBox.pbIcon.Height;
+                MsgBox.Size = new Size(msgBoxXCoordinate, MsgBox.Height + diff);
+                MsgBox.lMessage.Location = new Point(MsgBox.lMessage.Location.X, MsgBox.pbIcon.Location.Y);
+                if (YesNO)
                 {
-                    int diff = MsgBox.lMessage.Height - MsgBox.pbIcon.Height;
-                    MsgBox.btnClose.Location = new Point((MsgBox.Width - MsgBox.btnClose.Width) / 2, MsgBox.btnClose.Location.Y + diff + 10);
-                    MsgBox.Size = new Size(msgBoxX, MsgBox.Height + diff);
-                    MsgBox.lMessage.Location = new Point(MsgBox.lMessage.Location.X, MsgBox.pbIcon.Location.Y);
+                    MsgBox.btnYes.Location = new Point((MsgBox.Width - MsgBox.btnYes.Width - MsgBox.btnNo.Width) / 3, MsgBox.btnYes.Location.Y + diff + 10);
+                    MsgBox.btnNo.Location = new Point(MsgBox.btnYes.Location.X + MsgBox.btnYes.Width * 2, MsgBox.btnNo.Location.Y + diff + 10);
                 }
                 else
                 {
-                    MsgBox.Size = new Size(msgBoxX, MsgBox.Height);
-                    MsgBox.btnClose.Location = new Point((MsgBox.Width - MsgBox.btnClose.Width) / 2, MsgBox.btnClose.Location.Y);
-                    MsgBox.lMessage.Location = new Point(MsgBox.lMessage.Location.X, MsgBox.pbIcon.Location.Y + MsgBox.pbIcon.Height / 2);
+
+                    MsgBox.btnClose.Location = new Point((MsgBox.Width - MsgBox.btnClose.Width) / 2, MsgBox.btnClose.Location.Y + diff + 10);
                 }
             }
             else
             {
-                MsgBox.btnYes.Visible = true;
-                MsgBox.btnNo.Visible = true;
-
-                //// Resize the message box
-
-                // New MsgBox X coordinate
-                int msgBoxX = MsgBox.pbIcon.Width + MsgBox.lMessage.Width + 60;
-
-                // New location for the Exit button
-                MsgBox.btnExit.Location = new Point(msgBoxX - MsgBox.btnExit.Width - 1, MsgBox.btnExit.Location.Y);
-
-                // New size for the pHeader panel
-                MsgBox.pHeader.Size = new Size(msgBoxX - 2, MsgBox.pHeader.Height);
-
-                // If the message bigger than the icon then the message is moved down the msgbox Y coordinate is also changed and the button(s) 
-                if (MsgBox.lMessage.Height > MsgBox.pbIcon.Height)
+                MsgBox.Size = new Size(msgBoxXCoordinate, MsgBox.Height);
+                MsgBox.lMessage.Location = new Point(MsgBox.lMessage.Location.X, MsgBox.pbIcon.Location.Y + MsgBox.pbIcon.Height / 2);
+                if (YesNO)
                 {
-                    int diff = MsgBox.lMessage.Height - MsgBox.pbIcon.Height;
-                    MsgBox.btnYes.Location = new Point((MsgBox.Width - MsgBox.btnYes.Width - MsgBox.btnNo.Width) / 3, MsgBox.btnYes.Location.Y + diff + 10);
-                    MsgBox.btnNo.Location = new Point(MsgBox.btnYes.Location.X + MsgBox.btnYes.Width * 2, MsgBox.btnNo.Location.Y + diff + 10);
-                    MsgBox.Size = new Size(msgBoxX, MsgBox.Height + diff);
-                    MsgBox.lMessage.Location = new Point(MsgBox.lMessage.Location.X, MsgBox.pbIcon.Location.Y);
+                    MsgBox.btnYes.Location = new Point((MsgBox.Width - MsgBox.btnYes.Width - MsgBox.btnNo.Width) / 3, MsgBox.btnYes.Location.Y);
+                    MsgBox.btnNo.Location = new Point(MsgBox.btnYes.Location.X + MsgBox.btnYes.Width, MsgBox.btnNo.Location.Y);
                 }
                 else
                 {
-                    MsgBox.Size = new Size(msgBoxX, MsgBox.Height);
-                    MsgBox.btnYes.Location = new Point((MsgBox.Width - MsgBox.btnYes.Width - MsgBox.btnNo.Width) / 3, MsgBox.btnYes.Location.Y);
-                    MsgBox.btnNo.Location = new Point(MsgBox.btnYes.Location.X + MsgBox.btnYes.Width, MsgBox.btnNo.Location.Y);
-                    MsgBox.lMessage.Location = new Point(MsgBox.lMessage.Location.X, MsgBox.pbIcon.Location.Y + MsgBox.pbIcon.Height / 2);
+                    MsgBox.btnClose.Location = new Point((MsgBox.Width - MsgBox.btnClose.Width) / 2, MsgBox.btnClose.Location.Y);
                 }
             }
-
-
-
-            dlgResult = MsgBox.ShowDialog();
-
-            return dlgResult;
         }
 
         public enum MsgBoxIcon
@@ -166,6 +131,7 @@ namespace emira.GUI
         {
             OK = 0,
             YesNo = 1,
+            Close = 2
         }
 
         private void btnExit_Click(object sender, EventArgs e)

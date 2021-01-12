@@ -344,7 +344,7 @@ namespace emira.GUI
                 {
                     MyLogger.GetInstance().Error(Texts.ErrorMessages.ErrorDuringSave);
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorDuringSave, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -434,7 +434,7 @@ namespace emira.GUI
                 if (_isClosed)
                 {
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorLockedHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorLockedHoliday, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
@@ -445,7 +445,7 @@ namespace emira.GUI
                 {
                     MyLogger.GetInstance().Error(Texts.ErrorMessages.ErrorDuringCancellation);
                     customMsgBox = new CustomMsgBox();
-                    customMsgBox.ShowError(Texts.ErrorMessages.ErrorDuringCancellation, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
+                    customMsgBox.Show(Texts.ErrorMessages.ErrorDuringCancellation, Texts.Captions.Error, CustomMsgBox.MsgBoxIcon.Error);
                     return;
                 }
 
