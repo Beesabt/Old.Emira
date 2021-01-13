@@ -178,11 +178,11 @@
     <Compile Include="GUI\HomeForm.designer.cs">
       <DependentUpon>HomeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\LoginPage.cs">
+    <Compile Include="GUI\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\LoginPage.designer.cs">
-      <DependentUpon>LoginPage.cs</DependentUpon>
+    <Compile Include="GUI\LoginForm.designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\PasswordChange.cs">
       <SubType>UserControl</SubType>
@@ -261,8 +261,8 @@
     <EmbeddedResource Include="GUI\HomeForm.resx">
       <DependentUpon>HomeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\LoginPage.resx">
-      <DependentUpon>LoginPage.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\PasswordChange.resx">
       <DependentUpon>PasswordChange.cs</DependentUpon>

@@ -118,11 +118,18 @@ namespace emira.Utilities
         {
             #region General
 
-            public static string ErrorDuringSave = "Hiba történt a mentés sórán, próbálja újra.";
+            public static string ErrorDuringSave = "Hiba történt a mentés során, próbálja újra.";
 
             #endregion
 
             public const string FieldIsEmpty = "FieldIsEmpty";
+
+            #region Login
+
+            public const string WrongEmailPassword = "A megadott e-mail cím és jelszó páros nem megfelelő.\n"
+                                                    + "Kérem próbálja újra!";
+
+            #endregion
 
             #region PersonalInformation
 
@@ -256,7 +263,8 @@ namespace emira.Utilities
 
         public static class InformationMessages
         {
-            public const string DefaultEmailOrPassword = "Kérem az Ön adatainak védelmében változtassa meg az alapértemezetten kapott felhasználónevet és jelszót!";
+            public const string DefaultEmailOrPassword = "Kérem az Ön adatainak védelmében változtassa meg\n"
+                                                        + "az alapértemezetten kapott felhasználónevet és jelszót!";
 
             public const string PasswordChanged = "A jelszó sikeresen megváltozott.";
 
@@ -307,10 +315,12 @@ namespace emira.Utilities
             public const string Warning = "Figyelmeztetés";
 
 
+            public const string LoginFailed = "Bejelentkezés sikertelen";
+
 
             public const string EmptyRequiredField = "Üres kötelező mező";
 
-            public const string DefaultLoginParameters = "Alapértemezett bejelentkezési adatok";
+            public const string DefaultLoginParameters = "Alapértemezet bejelentkezési adatok";
 
             public const string PersonalInformationError = "Személyes adatok hiba";
 

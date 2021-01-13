@@ -136,8 +136,7 @@ namespace emira.GUI
                     cbNoHealthDamage.Checked = true;
                 }
 
-                int _actaulYear = DateTime.Today.Year;
-                if (person.DateOfStart.Year == _actaulYear)
+                if (person.DateOfStart.Year != DateTime.Today.Year)
                 {
                     lHolidaysLeft.Show();
                     nupHolidaysLeft.Show();
@@ -250,7 +249,7 @@ namespace emira.GUI
 
         private void dtpDateOfStart_ValueChanged(object sender, EventArgs e)
         {
-            if (dtpDateOfStart.Value.Year == DateTime.Today.Year)
+            if (dtpDateOfStart.Value.Year != DateTime.Today.Year)
             {
                 // Show controls
                 lHolidaysLeft.Show();

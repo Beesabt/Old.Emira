@@ -143,7 +143,7 @@
             this.btnPassword.Name = "btnPassword";
             this.btnPassword.Size = new System.Drawing.Size(180, 85);
             this.btnPassword.TabIndex = 3;
-            this.btnPassword.Text = "Jelszó változtatás";
+            this.btnPassword.Text = "Jelszó módosítás";
             this.btnPassword.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnPassword.UseVisualStyleBackColor = false;
             this.btnPassword.Click += new System.EventHandler(this.btnPassword_Click);
@@ -165,7 +165,7 @@
             this.btnEmail.Name = "btnEmail";
             this.btnEmail.Size = new System.Drawing.Size(180, 85);
             this.btnEmail.TabIndex = 4;
-            this.btnEmail.Text = "E-mail\r\n változtatás";
+            this.btnEmail.Text = "E-mail\r\n módosítás";
             this.btnEmail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnEmail.UseVisualStyleBackColor = false;
             this.btnEmail.Click += new System.EventHandler(this.btnEmail_Click);
@@ -277,7 +277,7 @@
             this.UCtaskManager.Size = new System.Drawing.Size(1030, 535);
             this.UCtaskManager.TabIndex = 3;
             // 
-            // SettingsPage
+            // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -289,7 +289,7 @@
             this.Controls.Add(this.pHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "SettingsPage";
+            this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Load += new System.EventHandler(this.SettingsPage_Load);
             this.pMenuBar.ResumeLayout(false);

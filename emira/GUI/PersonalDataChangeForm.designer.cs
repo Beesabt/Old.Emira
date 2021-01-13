@@ -107,9 +107,9 @@
             this.lDataChange.ForeColor = System.Drawing.Color.White;
             this.lDataChange.Location = new System.Drawing.Point(0, 0);
             this.lDataChange.Name = "lDataChange";
-            this.lDataChange.Size = new System.Drawing.Size(134, 30);
+            this.lDataChange.Size = new System.Drawing.Size(158, 30);
             this.lDataChange.TabIndex = 4;
-            this.lDataChange.Text = "Data Change";
+            this.lDataChange.Text = "Adat módosítás";
             // 
             // btnExit
             // 
@@ -141,7 +141,7 @@
             this.gbPersonalInformation.Size = new System.Drawing.Size(610, 115);
             this.gbPersonalInformation.TabIndex = 1;
             this.gbPersonalInformation.TabStop = false;
-            this.gbPersonalInformation.Text = "Személyes információk";
+            this.gbPersonalInformation.Text = "Személyes adatok";
             // 
             // rbFemale
             // 
@@ -217,7 +217,7 @@
             this.gbCompanyRelatedInformation.Size = new System.Drawing.Size(610, 230);
             this.gbCompanyRelatedInformation.TabIndex = 2;
             this.gbCompanyRelatedInformation.TabStop = false;
-            this.gbCompanyRelatedInformation.Text = "Céggel kapcsolatos információk";
+            this.gbCompanyRelatedInformation.Text = "Céggel kapcsolatos adatok";
             // 
             // nupWorkingHours
             // 
@@ -370,12 +370,12 @@
             this.gbHolidayRelatedInformation.Size = new System.Drawing.Size(610, 450);
             this.gbHolidayRelatedInformation.TabIndex = 2;
             this.gbHolidayRelatedInformation.TabStop = false;
-            this.gbHolidayRelatedInformation.Text = "Szabadsággal kapcsolatos információk";
+            this.gbHolidayRelatedInformation.Text = "Szabadsággal kapcsolatos adatok";
             // 
             // nupExtraHoliday
             // 
             this.nupExtraHoliday.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupExtraHoliday.Location = new System.Drawing.Point(355, 400);
+            this.nupExtraHoliday.Location = new System.Drawing.Point(334, 402);
             this.nupExtraHoliday.Maximum = new decimal(new int[] {
             250,
             0,
@@ -400,7 +400,7 @@
             // nupHolidaysLeft
             // 
             this.nupHolidaysLeft.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupHolidaysLeft.Location = new System.Drawing.Point(355, 355);
+            this.nupHolidaysLeft.Location = new System.Drawing.Point(334, 357);
             this.nupHolidaysLeft.Maximum = new decimal(new int[] {
             250,
             0,
@@ -427,7 +427,7 @@
             // cbYesHealthDamage
             // 
             this.cbYesHealthDamage.AutoSize = true;
-            this.cbYesHealthDamage.Location = new System.Drawing.Point(447, 312);
+            this.cbYesHealthDamage.Location = new System.Drawing.Point(334, 314);
             this.cbYesHealthDamage.Name = "cbYesHealthDamage";
             this.cbYesHealthDamage.Size = new System.Drawing.Size(54, 22);
             this.cbYesHealthDamage.TabIndex = 42;
@@ -438,7 +438,7 @@
             // cbNoHealthDamage
             // 
             this.cbNoHealthDamage.AutoSize = true;
-            this.cbNoHealthDamage.Location = new System.Drawing.Point(355, 312);
+            this.cbNoHealthDamage.Location = new System.Drawing.Point(447, 314);
             this.cbNoHealthDamage.Name = "cbNoHealthDamage";
             this.cbNoHealthDamage.Size = new System.Drawing.Size(59, 22);
             this.cbNoHealthDamage.TabIndex = 41;
@@ -449,7 +449,7 @@
             // cbYesDisabledChild
             // 
             this.cbYesDisabledChild.AutoSize = true;
-            this.cbYesDisabledChild.Location = new System.Drawing.Point(444, 217);
+            this.cbYesDisabledChild.Location = new System.Drawing.Point(334, 219);
             this.cbYesDisabledChild.Name = "cbYesDisabledChild";
             this.cbYesDisabledChild.Size = new System.Drawing.Size(54, 22);
             this.cbYesDisabledChild.TabIndex = 40;
@@ -461,7 +461,7 @@
             // cbNoDisabledChild
             // 
             this.cbNoDisabledChild.AutoSize = true;
-            this.cbNoDisabledChild.Location = new System.Drawing.Point(352, 217);
+            this.cbNoDisabledChild.Location = new System.Drawing.Point(447, 219);
             this.cbNoDisabledChild.Name = "cbNoDisabledChild";
             this.cbNoDisabledChild.Size = new System.Drawing.Size(59, 22);
             this.cbNoDisabledChild.TabIndex = 39;
@@ -473,7 +473,7 @@
             // cbYesChild
             // 
             this.cbYesChild.AutoSize = true;
-            this.cbYesChild.Location = new System.Drawing.Point(447, 87);
+            this.cbYesChild.Location = new System.Drawing.Point(334, 89);
             this.cbYesChild.Name = "cbYesChild";
             this.cbYesChild.Size = new System.Drawing.Size(54, 22);
             this.cbYesChild.TabIndex = 38;
@@ -484,7 +484,7 @@
             // cbNoChild
             // 
             this.cbNoChild.AutoSize = true;
-            this.cbNoChild.Location = new System.Drawing.Point(355, 87);
+            this.cbNoChild.Location = new System.Drawing.Point(447, 89);
             this.cbNoChild.Name = "cbNoChild";
             this.cbNoChild.Size = new System.Drawing.Size(59, 22);
             this.cbNoChild.TabIndex = 37;
@@ -526,7 +526,7 @@
             // nupNumberOfNewBornBabies
             // 
             this.nupNumberOfNewBornBabies.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupNumberOfNewBornBabies.Location = new System.Drawing.Point(355, 175);
+            this.nupNumberOfNewBornBabies.Location = new System.Drawing.Point(334, 177);
             this.nupNumberOfNewBornBabies.Maximum = new decimal(new int[] {
             10,
             0,
@@ -553,7 +553,7 @@
             // nupNumberOfDisabledChildren
             // 
             this.nupNumberOfDisabledChildren.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupNumberOfDisabledChildren.Location = new System.Drawing.Point(352, 260);
+            this.nupNumberOfDisabledChildren.Location = new System.Drawing.Point(334, 260);
             this.nupNumberOfDisabledChildren.Maximum = new decimal(new int[] {
             30,
             0,
@@ -569,7 +569,7 @@
             // nupNumberOfChildren
             // 
             this.nupNumberOfChildren.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nupNumberOfChildren.Location = new System.Drawing.Point(355, 130);
+            this.nupNumberOfChildren.Location = new System.Drawing.Point(334, 132);
             this.nupNumberOfChildren.Maximum = new decimal(new int[] {
             30,
             0,
@@ -638,9 +638,9 @@
             this.lDateOfStart.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lDateOfStart.Location = new System.Drawing.Point(330, 39);
             this.lDateOfStart.Name = "lDateOfStart";
-            this.lDateOfStart.Size = new System.Drawing.Size(114, 20);
+            this.lDateOfStart.Size = new System.Drawing.Size(106, 20);
             this.lDateOfStart.TabIndex = 16;
-            this.lDateOfStart.Text = "Kezdés dátuma:";
+            this.lDateOfStart.Text = "Kezdés dátum:";
             // 
             // lDateOfBirth
             // 
@@ -688,7 +688,7 @@
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // PersonalDataChangePage
+            // PersonalDataChangeForm
             // 
             this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -703,7 +703,7 @@
             this.Controls.Add(this.gbPersonalInformation);
             this.Controls.Add(this.pHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "PersonalDataChangePage";
+            this.Name = "PersonalDataChangeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DataChangePage";
             this.Load += new System.EventHandler(this.DataChangePage_Load);

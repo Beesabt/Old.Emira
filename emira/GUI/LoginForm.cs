@@ -7,7 +7,7 @@ using emira.Utilities;
 
 namespace emira.GUI
 {
-    partial class LoginPage : Form
+    partial class LoginForm : Form
     {
         bool _bTogMove;
         int _iValX;
@@ -16,7 +16,7 @@ namespace emira.GUI
         HomeForm _homePage;
         CustomMsgBox _msgBox;
 
-        public LoginPage()
+        public LoginForm()
         {
             InitializeComponent();
         }
@@ -50,7 +50,7 @@ namespace emira.GUI
                 if (!_login.LoginValidation(tbEmail.Text, tbPassword.Text))
                 {
                     _msgBox = new CustomMsgBox();
-                    //_msgBox.Show(Texts.ErrorMessages.WrongEmailPassword, Texts.Captions.LoginFailed, CustomMsgBox.MsgBoxIcon.Error);
+                    _msgBox.Show(Texts.ErrorMessages.WrongEmailPassword, Texts.Captions.LoginFailed, CustomMsgBox.MsgBoxIcon.Error);
                     tbPassword.Text = string.Empty;
                     tbEmail.Text = string.Empty;
                     return;

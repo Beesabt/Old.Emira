@@ -49,9 +49,9 @@
             this.lPasswordChange.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lPasswordChange.Location = new System.Drawing.Point(100, 68);
             this.lPasswordChange.Name = "lPasswordChange";
-            this.lPasswordChange.Size = new System.Drawing.Size(269, 37);
+            this.lPasswordChange.Size = new System.Drawing.Size(263, 37);
             this.lPasswordChange.TabIndex = 7;
-            this.lPasswordChange.Text = "Jelszó változtatás";
+            this.lPasswordChange.Text = "Jelszó módosítás";
             // 
             // btnPasswordChange
             // 
@@ -111,11 +111,11 @@
             // 
             this.lNewPasswordAgain.AutoSize = true;
             this.lNewPasswordAgain.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lNewPasswordAgain.Location = new System.Drawing.Point(210, 328);
+            this.lNewPasswordAgain.Location = new System.Drawing.Point(183, 328);
             this.lNewPasswordAgain.Name = "lNewPasswordAgain";
-            this.lNewPasswordAgain.Size = new System.Drawing.Size(159, 21);
+            this.lNewPasswordAgain.Size = new System.Drawing.Size(163, 21);
             this.lNewPasswordAgain.TabIndex = 6;
-            this.lNewPasswordAgain.Text = "Új jelszó mégegyszer:";
+            this.lNewPasswordAgain.Text = "Új jelszó még egyszer:";
             // 
             // tbOldPassword
             // 
