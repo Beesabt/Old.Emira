@@ -239,7 +239,11 @@ namespace emira.BusinessLogicLayer
 
 
                 // Days after age of the user
-                if (25 <= _age && _age < 28)
+                if (_age < 18)
+                {
+                    _holidays += 5;
+                }
+                else if (25 <= _age && _age < 28)
                 {
                     _holidays += 1;
                 }
