@@ -197,7 +197,7 @@
             this.btnPDF.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnPDF.ForeColor = System.Drawing.Color.White;
             this.btnPDF.Image = global::emira.Properties.Resources.pdf_icon_white_32;
-            this.btnPDF.Location = new System.Drawing.Point(282, 142);
+            this.btnPDF.Location = new System.Drawing.Point(294, 142);
             this.btnPDF.Name = "btnPDF";
             this.btnPDF.Size = new System.Drawing.Size(120, 50);
             this.btnPDF.TabIndex = 3;
@@ -217,7 +217,7 @@
             this.btnMSWord.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnMSWord.ForeColor = System.Drawing.Color.White;
             this.btnMSWord.Image = global::emira.Properties.Resources.word_icon_white_32;
-            this.btnMSWord.Location = new System.Drawing.Point(408, 142);
+            this.btnMSWord.Location = new System.Drawing.Point(420, 142);
             this.btnMSWord.Name = "btnMSWord";
             this.btnMSWord.Size = new System.Drawing.Size(140, 50);
             this.btnMSWord.TabIndex = 4;
@@ -367,14 +367,14 @@
             this.btnLock.Image = global::emira.Properties.Resources.lock_icon_white_32;
             this.btnLock.Location = new System.Drawing.Point(156, 142);
             this.btnLock.Name = "btnLock";
-            this.btnLock.Size = new System.Drawing.Size(120, 50);
+            this.btnLock.Size = new System.Drawing.Size(132, 50);
             this.btnLock.TabIndex = 11;
             this.btnLock.Text = "Lezárás";
             this.btnLock.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLock.UseVisualStyleBackColor = false;
             this.btnLock.Click += new System.EventHandler(this.btnLock_Click);
             // 
-            // WorkingHoursPage
+            // WorkingHoursForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -393,7 +393,7 @@
             this.Controls.Add(this.pMenuBar);
             this.Controls.Add(this.pHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "WorkingHoursPage";
+            this.Name = "WorkingHoursForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Load += new System.EventHandler(this.WorkingHours_Load);
             this.pHeader.ResumeLayout(false);
