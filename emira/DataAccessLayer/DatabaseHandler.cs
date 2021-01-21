@@ -33,7 +33,6 @@ namespace emira.DataAccessLayer
             }
         }
 
-
         private int ExecuteScalar(string command)
         {
             try
